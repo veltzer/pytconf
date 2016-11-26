@@ -1,0 +1,24 @@
+================== params.py ==================
+import pyconf
+
+class Params:
+	param_name = pyconf.param(...)  # type: int
+
+	# or
+
+	@pyconf.param(...)
+	param_name  # type: int
+
+
+================= main.py ===================
+import Params
+
+def main():
+	# throws exceptions if values are missing
+	Params.load()
+
+=================== anywhere_else.py ===========
+import Params
+
+def user():
+	print(Params.param_name)
