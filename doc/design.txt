@@ -15,10 +15,15 @@ import Params
 
 def main():
 	# throws exceptions if values are missing
-	Params.load()
+	params_registry.load()
 
 =================== anywhere_else.py ===========
 import Params
 
 def user():
 	print(Params.param_name)
+
+
+Question:
+- what if you have params in severl places in your software?
+	Cant the params register them selves to some global registry?
