@@ -6,7 +6,7 @@ class ConfigTotal(Config):
     """
     Parameters to select the total number of items to fetch
     """
-    num = create_int(default=10, help="help for num")
+    num = create_int(default=10, help_string="help for num")
 
 
 @register_cli(

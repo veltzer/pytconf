@@ -8,14 +8,14 @@ from enum import Enum
 
 from typing import Union, List, Any, Callable, Type, Dict, Set
 
-from pyconf.color_utils import print_highlight, color_hi, print_title, color_ok, color_warn, print_warn
-from pyconf.enum_utils import str_to_enum_value, enum_type_to_list_str
-from pyconf.convert import convert_string_to_int, convert_int_to_string, \
+from pytconf.color_utils import print_highlight, color_hi, print_title, color_ok, color_warn, print_warn
+from pytconf.enum_utils import str_to_enum_value, enum_type_to_list_str
+from pytconf.convert import convert_string_to_int, convert_int_to_string, \
     convert_string_to_list_int, \
     convert_list_int_to_string, convert_string_to_list_str, convert_list_str_to_string, convert_string_to_string, \
     convert_string_to_bool, convert_bool_to_string, convert_string_to_int_or_none, convert_int_or_none_to_string, \
     convert_string_to_int_default
-from pyconf.enum_subset import EnumSubset
+from pytconf.enum_subset import EnumSubset
 
 _configs = set()
 _config_names = set()
@@ -98,12 +98,12 @@ class Param(object):
 
     def __init__(
             self,
-            help=NO_HELP,
+            help_string=NO_HELP,
             default=NO_DEFAULT,
             type_name=None,
     ):
         super(Param, self).__init__()
-        self.help = help
+        self.help_string = help_string
         self.default = default
         self.type_name = type_name
 
@@ -137,7 +137,7 @@ class ParamFunctions(Param):
 
     def __init__(
             self,
-            help=NO_HELP,
+            help_string=NO_HELP,
             default=NO_DEFAULT,
             type_name=None,
             function_s2t=None,  # type: Callable
@@ -145,7 +145,7 @@ class ParamFunctions(Param):
             function_t2s=None,  # type: Callable
     ):
         super(ParamFunctions, self).__init__(
-            help=help,
+            help_string=help_string,
             default=default,
             type_name=type_name,
         )
@@ -169,13 +169,13 @@ class ParamFunctions(Param):
 class ParamFilename(Param):
     def __init__(
             self,
-            help=NO_HELP,
+            help_string=NO_HELP,
             default=NO_DEFAULT,
             type_name=None,
             suffixes=None,  # type: List[str]
     ):
         super(ParamFilename, self).__init__(
-            help=help,
+            help_string=help_string,
             default=default,
             type_name=type_name,
         )
@@ -196,17 +196,17 @@ class ParamFilename(Param):
             return "allowed suffixes are {}".format(self.suffixes)
 
 
-def create_int(help=NO_HELP, default=NO_DEFAULT):
+def create_int(help_string=NO_HELP, default=NO_DEFAULT):
     # type: (str, Union[int, NO_DEFAULT_TYPE]) -> int
     """
     Create an int parameter
-    :param help:
+    :param help_string:
     :param default:
     :return:
     """
     # noinspection PyTypeChecker
     return ParamFunctions(
-        help=help,
+        help_string=help_string,
         default=default,
         type_name="int",
         function_s2t=convert_string_to_int,
@@ -215,17 +215,17 @@ def create_int(help=NO_HELP, default=NO_DEFAULT):
     )
 
 
-def create_list_int(help=NO_HELP, default=NO_DEFAULT):
+def create_list_int(help_string=NO_HELP, default=NO_DEFAULT):
     # type: (str, Union[List[int], NO_DEFAULT_TYPE]) -> List[int]
     """
     Create a List[int] parameter
-    :param help:
+    :param help_string:
     :param default:
     :return:
     """
     # noinspection PyTypeChecker
     return ParamFunctions(
-        help=help,
+        help_string=help_string,
         default=default,
         type_name="List[int]",
         function_s2t=convert_string_to_list_int,
@@ -233,17 +233,17 @@ def create_list_int(help=NO_HELP, default=NO_DEFAULT):
     )
 
 
-def create_list_str(help=NO_HELP, default=NO_DEFAULT):
+def create_list_str(help_string=NO_HELP, default=NO_DEFAULT):
     # type: (str, Union[List[str], NO_DEFAULT_TYPE]) -> List[str]
     """
     Create a List[str] parameter
-    :param help:
+    :param help_string:
     :param default:
     :return:
     """
     # noinspection PyTypeChecker
     return ParamFunctions(
-        help=help,
+        help_string=help_string,
         default=default,
         type_name="List[str]",
         function_s2t=convert_string_to_list_str,
@@ -251,17 +251,17 @@ def create_list_str(help=NO_HELP, default=NO_DEFAULT):
     )
 
 
-def create_int_or_none(help=NO_HELP, default=NO_DEFAULT):
+def create_int_or_none(help_string=NO_HELP, default=NO_DEFAULT):
     # type: (str, Union[int, None, NO_DEFAULT_TYPE]) -> Union[int, None]
     """
     Create an int parameter
-    :param help:
+    :param help_string:
     :param default:
     :return:
     """
     # noinspection PyTypeChecker
     return ParamFunctions(
-        help=help,
+        help_string=help_string,
         default=default,
         type_name="Union[int, None]",
         function_s2t=convert_string_to_int_or_none,
@@ -269,17 +269,17 @@ def create_int_or_none(help=NO_HELP, default=NO_DEFAULT):
     )
 
 
-def create_str(help=NO_HELP, default=NO_DEFAULT):
+def create_str(help_string=NO_HELP, default=NO_DEFAULT):
     # type: (str, Union[str, NO_DEFAULT_TYPE]) -> str
     """
     Create a string parameter
-    :param help:
+    :param help_string:
     :param default:
     :return:
     """
     # noinspection PyTypeChecker
     return ParamFunctions(
-        help=help,
+        help_string=help_string,
         default=default,
         type_name="str",
         function_s2t=convert_string_to_string,
@@ -287,17 +287,17 @@ def create_str(help=NO_HELP, default=NO_DEFAULT):
     )
 
 
-def create_bool(help=NO_HELP, default=NO_DEFAULT):
+def create_bool(help_string=NO_HELP, default=NO_DEFAULT):
     # type: (str, Union[bool, NO_DEFAULT_TYPE]) -> bool
     """
     Create a bool parameter
-    :param help:
+    :param help_string:
     :param default:
     :return:
     """
     # noinspection PyTypeChecker
     return ParamFunctions(
-        help=help,
+        help_string=help_string,
         default=default,
         type_name="bool",
         function_s2t=convert_string_to_bool,
@@ -305,36 +305,36 @@ def create_bool(help=NO_HELP, default=NO_DEFAULT):
     )
 
 
-def create_new_file(help=NO_HELP, default=NO_DEFAULT, suffixes=None):
+def create_new_file(help_string=NO_HELP, default=NO_DEFAULT, suffixes=None):
     # type: (str, Union[str, NO_DEFAULT_TYPE], Union[List[str], None]) -> str
     """
     Create a new file parameter
-    :param help:
+    :param help_string:
     :param default:
     :param suffixes:
     :return:
     """
     # noinspection PyTypeChecker
     return ParamFilename(
-        help=help,
+        help_string=help_string,
         default=default,
         type_name="new_file",
         suffixes=suffixes,
     )
 
 
-def create_existing_file(help=NO_HELP, default=NO_DEFAULT, suffixes=None):
+def create_existing_file(help_string=NO_HELP, default=NO_DEFAULT, suffixes=None):
     # type: (str, Union[str, NO_DEFAULT_TYPE], Union[List[str], None]) -> str
     """
     Create a new file parameter
-    :param help:
+    :param help_string:
     :param default:
     :param suffixes:
     :return:
     """
     # noinspection PyTypeChecker
     return ParamFilename(
-        help=help,
+        help_string=help_string,
         default=default,
         type_name="existing_file",
         suffixes=suffixes,
@@ -344,12 +344,12 @@ def create_existing_file(help=NO_HELP, default=NO_DEFAULT, suffixes=None):
 class ParamEnum(Param):
     def __init__(
             self,
-            help=NO_HELP,
+            help_string=NO_HELP,
             default=NO_DEFAULT,
             enum_type=None,  # type: Type[Enum]
     ):
         super(ParamEnum, self).__init__(
-            help=help,
+            help_string=help_string,
             default=default,
             type_name="enum",
         )
@@ -370,18 +370,18 @@ class ParamEnum(Param):
         return "allowed values {}".format(enum_type_to_list_str(self.enum_type))
 
 
-def create_enum(enum_type, help=NO_HELP, default=NO_DEFAULT):
+def create_enum(enum_type, help_string=NO_HELP, default=NO_DEFAULT):
     # type: (Type[Enum], str, Union[Any, NO_DEFAULT_TYPE]) -> Type[Enum]
     """
     Create an enum config
     :param enum_type:
-    :param help:
+    :param help_string:
     :param default:
     :return:
     """
     # noinspection PyTypeChecker
     return ParamEnum(
-        help=help,
+        help_string=help_string,
         default=default,
         enum_type=enum_type,
     )
@@ -390,12 +390,12 @@ def create_enum(enum_type, help=NO_HELP, default=NO_DEFAULT):
 class ParamEnumSubset(Param):
     def __init__(
             self,
-            help=NO_HELP,
+            help_string=NO_HELP,
             default=NO_DEFAULT,
             enum_type=None,  # type: Type[Enum]
     ):
         super(ParamEnumSubset, self).__init__(
-            help=help,
+            help_string=help_string,
             default=default,
             type_name="enum",
         )
@@ -420,18 +420,18 @@ class ParamEnumSubset(Param):
         return "allowed values {}".format(enum_type_to_list_str(self.enum_type))
 
 
-def create_enum_subset(enum_type, help=NO_HELP, default=NO_DEFAULT):
+def create_enum_subset(enum_type, help_string=NO_HELP, default=NO_DEFAULT):
     # type: (Type[Enum], str, Union[Set[Type[Enum]], NO_DEFAULT_TYPE]) -> EnumSubset
     """
     Create an enum config
     :param enum_type:
-    :param help:
+    :param help_string:
     :param default:
     :return:
     """
     # noinspection PyTypeChecker
     return ParamEnumSubset(
-        help=help,
+        help_string=help_string,
         default=default,
         enum_type=enum_type,
     )

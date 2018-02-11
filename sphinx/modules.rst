@@ -1,5 +1,5 @@
 pytconf
-======
+=======
 
 .. toctree::
    :maxdepth: 4

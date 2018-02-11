@@ -1,11 +1,11 @@
 pytconf package
-==============
+===============
 
 Submodules
 ----------
 
 pytconf\.color\_utils module
----------------------------
+----------------------------
 
 .. automodule:: pytconf.color_utils
     :members:
@@ -13,7 +13,7 @@ pytconf\.color\_utils module
     :show-inheritance:
 
 pytconf\.config module
----------------------
+----------------------
 
 .. automodule:: pytconf.config
     :members:
@@ -21,7 +21,7 @@ pytconf\.config module
     :show-inheritance:
 
 pytconf\.convert module
-----------------------
+-----------------------
 
 .. automodule:: pytconf.convert
     :members:
@@ -29,7 +29,7 @@ pytconf\.convert module
     :show-inheritance:
 
 pytconf\.enum\_subset module
----------------------------
+----------------------------
 
 .. automodule:: pytconf.enum_subset
     :members:
@@ -37,7 +37,7 @@ pytconf\.enum\_subset module
     :show-inheritance:
 
 pytconf\.enum\_utils module
---------------------------
+---------------------------
 
 .. automodule:: pytconf.enum_utils
     :members:
@@ -45,7 +45,7 @@ pytconf\.enum\_utils module
     :show-inheritance:
 
 pytconf\.extended\_enum module
------------------------------
+------------------------------
 
 .. automodule:: pytconf.extended_enum
     :members:

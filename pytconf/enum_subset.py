@@ -3,7 +3,7 @@ from enum import Enum
 
 from typing import Type, List
 
-from pyconf.enum_utils import str_to_enum_value
+from pytconf.enum_utils import str_to_enum_value
 
 
 class EnumSubset(object):

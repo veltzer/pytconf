@@ -1,6 +1,6 @@
 from enum import Enum
 
-from pyconf.enum_subset import EnumSubset
+from pytconf.enum_subset import EnumSubset
 
 
 class ExtendedEnum(Enum):
