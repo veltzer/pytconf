@@ -22,7 +22,7 @@ setuptools.setup(
         'click',
         'argparse',
         'optparse',
-        'command line parsing',
+        'command-line-parser',
         'configuration',
     ],
     url='https://veltzer.github.io/pyconf',

@@ -19,7 +19,7 @@ project_keywords = [
     'click',
     'argparse',
     'optparse',
-    'command line parsing',
+    'command-line-parser',
     'configuration',
 ]
 project_license = 'MIT'
