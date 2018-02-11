@@ -1,0 +1,606 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>pyconf package &#8212; pyconf 0.0.1 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="pyconf" href="modules.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="pyconf-package">
+<h1>pyconf package<a class="headerlink" href="#pyconf-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-pyconf.color_utils">
+<span id="pyconf-color-utils-module"></span><h2>pyconf.color_utils module<a class="headerlink" href="#module-pyconf.color_utils" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="pyconf.color_utils.color_hi">
+<code class="descclassname">pyconf.color_utils.</code><code class="descname">color_hi</code><span class="sig-paren">(</span><em>text</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyconf/color_utils.html#color_hi"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyconf.color_utils.color_hi" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="pyconf.color_utils.color_ok">
+<code class="descclassname">pyconf.color_utils.</code><code class="descname">color_ok</code><span class="sig-paren">(</span><em>text</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyconf/color_utils.html#color_ok"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyconf.color_utils.color_ok" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="pyconf.color_utils.color_warn">
+<code class="descclassname">pyconf.color_utils.</code><code class="descname">color_warn</code><span class="sig-paren">(</span><em>text</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyconf/color_utils.html#color_warn"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyconf.color_utils.color_warn" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="pyconf.color_utils.print_highlight">
+<code class="descclassname">pyconf.color_utils.</code><code class="descname">print_highlight</code><span class="sig-paren">(</span><em>text</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyconf/color_utils.html#print_highlight"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyconf.color_utils.print_highlight" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="pyconf.color_utils.print_title">
+<code class="descclassname">pyconf.color_utils.</code><code class="descname">print_title</code><span class="sig-paren">(</span><em>text</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyconf/color_utils.html#print_title"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyconf.color_utils.print_title" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="pyconf.color_utils.print_warn">
+<code class="descclassname">pyconf.color_utils.</code><code class="descname">print_warn</code><span class="sig-paren">(</span><em>text</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyconf/color_utils.html#print_warn"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyconf.color_utils.print_warn" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-pyconf.config">
+<span id="pyconf-config-module"></span><h2>pyconf.config module<a class="headerlink" href="#module-pyconf.config" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyconf.config.Config">
+<em class="property">class </em><code class="descclassname">pyconf.config.</code><code class="descname">Config</code><a class="reference internal" href="_modules/pyconf/config.html#Config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyconf.config.Config" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dl class="classmethod">
+<dt id="pyconf.config.Config.get_attributes">
+<em class="property">classmethod </em><code class="descname">get_attributes</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyconf/config.html#Config.get_attributes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyconf.config.Config.get_attributes" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="pyconf.config.Config.get_param_by_name">
+<em class="property">classmethod </em><code class="descname">get_param_by_name</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyconf/config.html#Config.get_param_by_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyconf.config.Config.get_param_by_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="pyconf.config.Config.get_params">
+<em class="property">classmethod </em><code class="descname">get_params</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyconf/config.html#Config.get_params"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyconf.config.Config.get_params" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pyconf.config.MetaConfig">
+<em class="property">class </em><code class="descclassname">pyconf.config.</code><code class="descname">MetaConfig</code><span class="sig-paren">(</span><em>name</em>, <em>bases</em>, <em>cls_dict</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyconf/config.html#MetaConfig"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyconf.config.MetaConfig" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">type</span></code></p>
+<p>base class for all configs</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="pyconf.config.Param">
+<em class="property">class </em><code class="descclassname">pyconf.config.</code><code class="descname">Param</code><span class="sig-paren">(</span><em>help='No help for this configuration option'</em>, <em>default={}</em>, <em>type_name=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyconf/config.html#Param"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyconf.config.Param" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="pyconf.config.Param.get_type_name">
+<code class="descname">get_type_name</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyconf/config.html#Param.get_type_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyconf.config.Param.get_type_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyconf.config.Param.more_help">
+<code class="descname">more_help</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyconf/config.html#Param.more_help"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyconf.config.Param.more_help" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyconf.config.Param.s2t">
+<code class="descname">s2t</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyconf/config.html#Param.s2t"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyconf.config.Param.s2t" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyconf.config.Param.s2t_generate_from_default">
+<code class="descname">s2t_generate_from_default</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyconf/config.html#Param.s2t_generate_from_default"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyconf.config.Param.s2t_generate_from_default" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyconf.config.Param.t2s">
+<code class="descname">t2s</code><span class="sig-paren">(</span><em>t</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyconf/config.html#Param.t2s"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyconf.config.Param.t2s" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pyconf.config.ParamEnum">
+<em class="property">class </em><code class="descclassname">pyconf.config.</code><code class="descname">ParamEnum</code><span class="sig-paren">(</span><em>help='No help for this configuration option'</em>, <em>default={}</em>, <em>enum_type=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyconf/config.html#ParamEnum"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyconf.config.ParamEnum" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyconf.config.Param" title="pyconf.config.Param"><code class="xref py py-class docutils literal"><span class="pre">pyconf.config.Param</span></code></a></p>
+<dl class="method">
+<dt id="pyconf.config.ParamEnum.get_type_name">
+<code class="descname">get_type_name</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyconf/config.html#ParamEnum.get_type_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyconf.config.ParamEnum.get_type_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyconf.config.ParamEnum.more_help">
+<code class="descname">more_help</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyconf/config.html#ParamEnum.more_help"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyconf.config.ParamEnum.more_help" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyconf.config.ParamEnum.s2t">
+<code class="descname">s2t</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyconf/config.html#ParamEnum.s2t"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyconf.config.ParamEnum.s2t" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyconf.config.ParamEnum.t2s">
+<code class="descname">t2s</code><span class="sig-paren">(</span><em>t</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyconf/config.html#ParamEnum.t2s"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyconf.config.ParamEnum.t2s" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pyconf.config.ParamEnumSubset">
+<em class="property">class </em><code class="descclassname">pyconf.config.</code><code class="descname">ParamEnumSubset</code><span class="sig-paren">(</span><em>help='No help for this configuration option'</em>, <em>default={}</em>, <em>enum_type=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyconf/config.html#ParamEnumSubset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyconf.config.ParamEnumSubset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyconf.config.Param" title="pyconf.config.Param"><code class="xref py py-class docutils literal"><span class="pre">pyconf.config.Param</span></code></a></p>
+<dl class="method">
+<dt id="pyconf.config.ParamEnumSubset.get_type_name">
+<code class="descname">get_type_name</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyconf/config.html#ParamEnumSubset.get_type_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyconf.config.ParamEnumSubset.get_type_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyconf.config.ParamEnumSubset.more_help">
+<code class="descname">more_help</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyconf/config.html#ParamEnumSubset.more_help"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyconf.config.ParamEnumSubset.more_help" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyconf.config.ParamEnumSubset.s2t">
+<code class="descname">s2t</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyconf/config.html#ParamEnumSubset.s2t"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyconf.config.ParamEnumSubset.s2t" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyconf.config.ParamEnumSubset.s2t_generate_from_default">
+<code class="descname">s2t_generate_from_default</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyconf/config.html#ParamEnumSubset.s2t_generate_from_default"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyconf.config.ParamEnumSubset.s2t_generate_from_default" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyconf.config.ParamEnumSubset.t2s">
+<code class="descname">t2s</code><span class="sig-paren">(</span><em>t</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyconf/config.html#ParamEnumSubset.t2s"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyconf.config.ParamEnumSubset.t2s" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pyconf.config.ParamFilename">
+<em class="property">class </em><code class="descclassname">pyconf.config.</code><code class="descname">ParamFilename</code><span class="sig-paren">(</span><em>help='No help for this configuration option'</em>, <em>default={}</em>, <em>type_name=None</em>, <em>suffixes=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyconf/config.html#ParamFilename"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyconf.config.ParamFilename" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyconf.config.Param" title="pyconf.config.Param"><code class="xref py py-class docutils literal"><span class="pre">pyconf.config.Param</span></code></a></p>
+<dl class="method">
+<dt id="pyconf.config.ParamFilename.more_help">
+<code class="descname">more_help</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyconf/config.html#ParamFilename.more_help"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyconf.config.ParamFilename.more_help" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyconf.config.ParamFilename.s2t">
+<code class="descname">s2t</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyconf/config.html#ParamFilename.s2t"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyconf.config.ParamFilename.s2t" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyconf.config.ParamFilename.t2s">
+<code class="descname">t2s</code><span class="sig-paren">(</span><em>t</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyconf/config.html#ParamFilename.t2s"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyconf.config.ParamFilename.t2s" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pyconf.config.ParamFunctions">
+<em class="property">class </em><code class="descclassname">pyconf.config.</code><code class="descname">ParamFunctions</code><span class="sig-paren">(</span><em>help='No help for this configuration option'</em>, <em>default={}</em>, <em>type_name=None</em>, <em>function_s2t=None</em>, <em>function_s2t_generate_from_default=None</em>, <em>function_t2s=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyconf/config.html#ParamFunctions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyconf.config.ParamFunctions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyconf.config.Param" title="pyconf.config.Param"><code class="xref py py-class docutils literal"><span class="pre">pyconf.config.Param</span></code></a></p>
+<p>Parent class of all parameters of configuration</p>
+<dl class="method">
+<dt id="pyconf.config.ParamFunctions.s2t">
+<code class="descname">s2t</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyconf/config.html#ParamFunctions.s2t"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyconf.config.ParamFunctions.s2t" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyconf.config.ParamFunctions.s2t_generate_from_default">
+<code class="descname">s2t_generate_from_default</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyconf/config.html#ParamFunctions.s2t_generate_from_default"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyconf.config.ParamFunctions.s2t_generate_from_default" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyconf.config.ParamFunctions.t2s">
+<code class="descname">t2s</code><span class="sig-paren">(</span><em>t</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyconf/config.html#ParamFunctions.t2s"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyconf.config.ParamFunctions.t2s" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="pyconf.config.config_arg_parse_and_launch">
+<code class="descclassname">pyconf.config.</code><code class="descname">config_arg_parse_and_launch</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyconf/config.html#config_arg_parse_and_launch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyconf.config.config_arg_parse_and_launch" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="pyconf.config.create_bool">
+<code class="descclassname">pyconf.config.</code><code class="descname">create_bool</code><span class="sig-paren">(</span><em>help='No help for this configuration option'</em>, <em>default={}</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyconf/config.html#create_bool"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyconf.config.create_bool" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a bool parameter
+:param help:
+:param default:
+:return:</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyconf.config.create_enum">
+<code class="descclassname">pyconf.config.</code><code class="descname">create_enum</code><span class="sig-paren">(</span><em>enum_type</em>, <em>help='No help for this configuration option'</em>, <em>default={}</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyconf/config.html#create_enum"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyconf.config.create_enum" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create an enum config
+:param enum_type:
+:param help:
+:param default:
+:return:</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyconf.config.create_enum_subset">
+<code class="descclassname">pyconf.config.</code><code class="descname">create_enum_subset</code><span class="sig-paren">(</span><em>enum_type</em>, <em>help='No help for this configuration option'</em>, <em>default={}</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyconf/config.html#create_enum_subset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyconf.config.create_enum_subset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create an enum config
+:param enum_type:
+:param help:
+:param default:
+:return:</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyconf.config.create_existing_file">
+<code class="descclassname">pyconf.config.</code><code class="descname">create_existing_file</code><span class="sig-paren">(</span><em>help='No help for this configuration option'</em>, <em>default={}</em>, <em>suffixes=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyconf/config.html#create_existing_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyconf.config.create_existing_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a new file parameter
+:param help:
+:param default:
+:param suffixes:
+:return:</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyconf.config.create_int">
+<code class="descclassname">pyconf.config.</code><code class="descname">create_int</code><span class="sig-paren">(</span><em>help='No help for this configuration option'</em>, <em>default={}</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyconf/config.html#create_int"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyconf.config.create_int" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create an int parameter
+:param help:
+:param default:
+:return:</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyconf.config.create_int_or_none">
+<code class="descclassname">pyconf.config.</code><code class="descname">create_int_or_none</code><span class="sig-paren">(</span><em>help='No help for this configuration option'</em>, <em>default={}</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyconf/config.html#create_int_or_none"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyconf.config.create_int_or_none" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create an int parameter
+:param help:
+:param default:
+:return:</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyconf.config.create_list_int">
+<code class="descclassname">pyconf.config.</code><code class="descname">create_list_int</code><span class="sig-paren">(</span><em>help='No help for this configuration option'</em>, <em>default={}</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyconf/config.html#create_list_int"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyconf.config.create_list_int" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a List[int] parameter
+:param help:
+:param default:
+:return:</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyconf.config.create_list_str">
+<code class="descclassname">pyconf.config.</code><code class="descname">create_list_str</code><span class="sig-paren">(</span><em>help='No help for this configuration option'</em>, <em>default={}</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyconf/config.html#create_list_str"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyconf.config.create_list_str" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a List[str] parameter
+:param help:
+:param default:
+:return:</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyconf.config.create_new_file">
+<code class="descclassname">pyconf.config.</code><code class="descname">create_new_file</code><span class="sig-paren">(</span><em>help='No help for this configuration option'</em>, <em>default={}</em>, <em>suffixes=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyconf/config.html#create_new_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyconf.config.create_new_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a new file parameter
+:param help:
+:param default:
+:param suffixes:
+:return:</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyconf.config.create_str">
+<code class="descclassname">pyconf.config.</code><code class="descname">create_str</code><span class="sig-paren">(</span><em>help='No help for this configuration option'</em>, <em>default={}</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyconf/config.html#create_str"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyconf.config.create_str" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a string parameter
+:param help:
+:param default:
+:return:</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyconf.config.parse_args">
+<code class="descclassname">pyconf.config.</code><code class="descname">parse_args</code><span class="sig-paren">(</span><em>command_selected</em>, <em>flags</em>, <em>_free</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyconf/config.html#parse_args"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyconf.config.parse_args" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parse the args and fill the global data
+Currently we disregard the free parameters
+:param command_selected:
+:param flags:
+:param _free:
+:return:</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyconf.config.register_cli">
+<code class="descclassname">pyconf.config.</code><code class="descname">register_cli</code><span class="sig-paren">(</span><em>configs=()</em>, <em>suggest_configs=()</em>, <em>group='default'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyconf/config.html#register_cli"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyconf.config.register_cli" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="pyconf.config.register_config">
+<code class="descclassname">pyconf.config.</code><code class="descname">register_config</code><span class="sig-paren">(</span><em>cls</em>, <em>name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyconf/config.html#register_config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyconf.config.register_config" title="Permalink to this definition">¶</a></dt>
+<dd><p>register a configuration class
+:param cls:
+:param name:
+:return:</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyconf.config.register_function_group">
+<code class="descclassname">pyconf.config.</code><code class="descname">register_function_group</code><span class="sig-paren">(</span><em>function_group_name</em>, <em>function_group_description</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyconf/config.html#register_function_group"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyconf.config.register_function_group" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="pyconf.config.register_main">
+<code class="descclassname">pyconf.config.</code><code class="descname">register_main</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyconf/config.html#register_main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyconf.config.register_main" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="pyconf.config.show_general_help">
+<code class="descclassname">pyconf.config.</code><code class="descname">show_general_help</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyconf/config.html#show_general_help"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyconf.config.show_general_help" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="pyconf.config.show_help_for_command">
+<code class="descclassname">pyconf.config.</code><code class="descname">show_help_for_command</code><span class="sig-paren">(</span><em>command_selected</em>, <em>show_help_full</em>, <em>show_help_suggest</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyconf/config.html#show_help_for_command"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyconf.config.show_help_for_command" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="pyconf.config.show_help_for_config">
+<code class="descclassname">pyconf.config.</code><code class="descname">show_help_for_config</code><span class="sig-paren">(</span><em>config</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyconf/config.html#show_help_for_config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyconf.config.show_help_for_config" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-pyconf.convert">
+<span id="pyconf-convert-module"></span><h2>pyconf.convert module<a class="headerlink" href="#module-pyconf.convert" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="pyconf.convert.convert_bool_to_string">
+<code class="descclassname">pyconf.convert.</code><code class="descname">convert_bool_to_string</code><span class="sig-paren">(</span><em>b</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyconf/convert.html#convert_bool_to_string"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyconf.convert.convert_bool_to_string" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="pyconf.convert.convert_int_or_none_to_string">
+<code class="descclassname">pyconf.convert.</code><code class="descname">convert_int_or_none_to_string</code><span class="sig-paren">(</span><em>v</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyconf/convert.html#convert_int_or_none_to_string"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyconf.convert.convert_int_or_none_to_string" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="pyconf.convert.convert_int_to_string">
+<code class="descclassname">pyconf.convert.</code><code class="descname">convert_int_to_string</code><span class="sig-paren">(</span><em>i</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyconf/convert.html#convert_int_to_string"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyconf.convert.convert_int_to_string" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="pyconf.convert.convert_list_int_to_string">
+<code class="descclassname">pyconf.convert.</code><code class="descname">convert_list_int_to_string</code><span class="sig-paren">(</span><em>li</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyconf/convert.html#convert_list_int_to_string"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyconf.convert.convert_list_int_to_string" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="pyconf.convert.convert_list_str_to_string">
+<code class="descclassname">pyconf.convert.</code><code class="descname">convert_list_str_to_string</code><span class="sig-paren">(</span><em>li</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyconf/convert.html#convert_list_str_to_string"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyconf.convert.convert_list_str_to_string" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="pyconf.convert.convert_string_to_bool">
+<code class="descclassname">pyconf.convert.</code><code class="descname">convert_string_to_bool</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyconf/convert.html#convert_string_to_bool"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyconf.convert.convert_string_to_bool" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="pyconf.convert.convert_string_to_int">
+<code class="descclassname">pyconf.convert.</code><code class="descname">convert_string_to_int</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyconf/convert.html#convert_string_to_int"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyconf.convert.convert_string_to_int" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="pyconf.convert.convert_string_to_int_default">
+<code class="descclassname">pyconf.convert.</code><code class="descname">convert_string_to_int_default</code><span class="sig-paren">(</span><em>i</em>, <em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyconf/convert.html#convert_string_to_int_default"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyconf.convert.convert_string_to_int_default" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="pyconf.convert.convert_string_to_int_or_none">
+<code class="descclassname">pyconf.convert.</code><code class="descname">convert_string_to_int_or_none</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyconf/convert.html#convert_string_to_int_or_none"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyconf.convert.convert_string_to_int_or_none" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="pyconf.convert.convert_string_to_list_int">
+<code class="descclassname">pyconf.convert.</code><code class="descname">convert_string_to_list_int</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyconf/convert.html#convert_string_to_list_int"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyconf.convert.convert_string_to_list_int" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="pyconf.convert.convert_string_to_list_str">
+<code class="descclassname">pyconf.convert.</code><code class="descname">convert_string_to_list_str</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyconf/convert.html#convert_string_to_list_str"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyconf.convert.convert_string_to_list_str" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="pyconf.convert.convert_string_to_string">
+<code class="descclassname">pyconf.convert.</code><code class="descname">convert_string_to_string</code><span class="sig-paren">(</span><em>e</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyconf/convert.html#convert_string_to_string"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyconf.convert.convert_string_to_string" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-pyconf.enum_subset">
+<span id="pyconf-enum-subset-module"></span><h2>pyconf.enum_subset module<a class="headerlink" href="#module-pyconf.enum_subset" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyconf.enum_subset.EnumSubset">
+<em class="property">class </em><code class="descclassname">pyconf.enum_subset.</code><code class="descname">EnumSubset</code><span class="sig-paren">(</span><em>enum_type</em>, <em>list_of_values</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyconf/enum_subset.html#EnumSubset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyconf.enum_subset.EnumSubset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="pyconf.enum_subset.EnumSubset.add">
+<code class="descname">add</code><span class="sig-paren">(</span><em>enum_value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyconf/enum_subset.html#EnumSubset.add"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyconf.enum_subset.EnumSubset.add" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyconf.enum_subset.EnumSubset.delete">
+<code class="descname">delete</code><span class="sig-paren">(</span><em>enum_value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyconf/enum_subset.html#EnumSubset.delete"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyconf.enum_subset.EnumSubset.delete" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="pyconf.enum_subset.EnumSubset.from_string">
+<em class="property">classmethod </em><code class="descname">from_string</code><span class="sig-paren">(</span><em>e</em>, <em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyconf/enum_subset.html#EnumSubset.from_string"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyconf.enum_subset.EnumSubset.from_string" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyconf.enum_subset.EnumSubset.has_value">
+<code class="descname">has_value</code><span class="sig-paren">(</span><em>item</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyconf/enum_subset.html#EnumSubset.has_value"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyconf.enum_subset.EnumSubset.has_value" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyconf.enum_subset.EnumSubset.list_of_strings">
+<code class="descname">list_of_strings</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyconf/enum_subset.html#EnumSubset.list_of_strings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyconf.enum_subset.EnumSubset.list_of_strings" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyconf.enum_subset.EnumSubset.to_string">
+<code class="descname">to_string</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyconf/enum_subset.html#EnumSubset.to_string"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyconf.enum_subset.EnumSubset.to_string" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyconf.enum_subset.EnumSubset.yield_values">
+<code class="descname">yield_values</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyconf/enum_subset.html#EnumSubset.yield_values"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyconf.enum_subset.EnumSubset.yield_values" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyconf.enum_utils">
+<span id="pyconf-enum-utils-module"></span><h2>pyconf.enum_utils module<a class="headerlink" href="#module-pyconf.enum_utils" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="pyconf.enum_utils.enum_int_to_name">
+<code class="descclassname">pyconf.enum_utils.</code><code class="descname">enum_int_to_name</code><span class="sig-paren">(</span><em>i</em>, <em>e</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyconf/enum_utils.html#enum_int_to_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyconf.enum_utils.enum_int_to_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="pyconf.enum_utils.enum_type_to_list_str">
+<code class="descclassname">pyconf.enum_utils.</code><code class="descname">enum_type_to_list_str</code><span class="sig-paren">(</span><em>e</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyconf/enum_utils.html#enum_type_to_list_str"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyconf.enum_utils.enum_type_to_list_str" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="pyconf.enum_utils.enum_value_to_str">
+<code class="descclassname">pyconf.enum_utils.</code><code class="descname">enum_value_to_str</code><span class="sig-paren">(</span><em>ev</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyconf/enum_utils.html#enum_value_to_str"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyconf.enum_utils.enum_value_to_str" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="pyconf.enum_utils.list_of_names_to_multi_enum_value">
+<code class="descclassname">pyconf.enum_utils.</code><code class="descname">list_of_names_to_multi_enum_value</code><span class="sig-paren">(</span><em>s</em>, <em>e</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyconf/enum_utils.html#list_of_names_to_multi_enum_value"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyconf.enum_utils.list_of_names_to_multi_enum_value" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="pyconf.enum_utils.multi_enum_value_to_list_of_names">
+<code class="descclassname">pyconf.enum_utils.</code><code class="descname">multi_enum_value_to_list_of_names</code><span class="sig-paren">(</span><em>t</em>, <em>e</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyconf/enum_utils.html#multi_enum_value_to_list_of_names"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyconf.enum_utils.multi_enum_value_to_list_of_names" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="pyconf.enum_utils.str_to_enum_int">
+<code class="descclassname">pyconf.enum_utils.</code><code class="descname">str_to_enum_int</code><span class="sig-paren">(</span><em>s</em>, <em>e</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyconf/enum_utils.html#str_to_enum_int"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyconf.enum_utils.str_to_enum_int" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="pyconf.enum_utils.str_to_enum_value">
+<code class="descclassname">pyconf.enum_utils.</code><code class="descname">str_to_enum_value</code><span class="sig-paren">(</span><em>s</em>, <em>e</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyconf/enum_utils.html#str_to_enum_value"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyconf.enum_utils.str_to_enum_value" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-pyconf.extended_enum">
+<span id="pyconf-extended-enum-module"></span><h2>pyconf.extended_enum module<a class="headerlink" href="#module-pyconf.extended_enum" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyconf.extended_enum.ExtendedEnum">
+<em class="property">class </em><code class="descclassname">pyconf.extended_enum.</code><code class="descname">ExtendedEnum</code><a class="reference internal" href="_modules/pyconf/extended_enum.html#ExtendedEnum"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyconf.extended_enum.ExtendedEnum" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">enum.Enum</span></code></p>
+<p>An enumeration.</p>
+<dl class="classmethod">
+<dt id="pyconf.extended_enum.ExtendedEnum.get_enum_subset_all">
+<em class="property">classmethod </em><code class="descname">get_enum_subset_all</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyconf/extended_enum.html#ExtendedEnum.get_enum_subset_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyconf.extended_enum.ExtendedEnum.get_enum_subset_all" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="pyconf.extended_enum.ExtendedEnum.get_list_of_all_values">
+<em class="property">classmethod </em><code class="descname">get_list_of_all_values</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyconf/extended_enum.html#ExtendedEnum.get_list_of_all_values"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyconf.extended_enum.ExtendedEnum.get_list_of_all_values" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyconf">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-pyconf" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="modules.html">pyconf</a><ul>
+      <li>Previous: <a href="modules.html" title="previous chapter">pyconf</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017, Mark Veltzer.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.7</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="_sources/pyconf.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
