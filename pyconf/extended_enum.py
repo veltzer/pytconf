@@ -1,6 +1,6 @@
 from enum import Enum
 
-from modules.data_vault.lib.pyconf.enum_subset import EnumSubset
+from pyconf.enum_subset import EnumSubset
 
 
 class ExtendedEnum(Enum):

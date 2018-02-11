@@ -1,28 +1,50 @@
 import setuptools
 
-import pyconf.version
-
+"""
+The documentation can be found at:
+http://setuptools.readthedocs.io/en/latest/setuptools.html
+"""
 setuptools.setup(
+    # the first three fields are a must according to the documentation
     name='pyconf',
-    version=pyconf.version.version_str,
+    version='0.0.1',
+    packages=[
+        'pyconf',
+    ],
+    # from here all is optional
     description='pyconf handles configuration, config files and command line parsing',
     long_description='pyconf handles configuration, config files and command line parsing',
-    url='https://veltzer.github.io/pyconf',
-    download_url='https://github.com/veltzer/pyconf',
     author='Mark Veltzer',
     author_email='mark.veltzer@gmail.com',
     maintainer='Mark Veltzer',
     maintainer_email='mark.veltzer@gmail.com',
+    keywords=[
+        'click',
+        'argparse',
+        'optparse',
+        'command line parsing',
+        'configuration',
+    ],
+    url='https://veltzer.github.io/pyconf',
+    download_url='https://github.com/veltzer/pyconf',
     license='MIT',
-    platforms=['python'],
-    classifiers=[
-        'Development Status :: 3 - Alpha',
-        'Intended Audience :: Developers',
-        'Programming Language :: Python :: 2.7',
+    platforms=[
+        'python2',
     ],
-    keywords='click argparse optparse command lineparsing',
-    packages=setuptools.find_packages(),
     install_requires=[
-        'enum',  # for Enum
+        'enum34',
+        'termcolor',
     ],
+    classifiers=[
+        'Development Status :: 4 - Beta',
+        'Environment :: Console',
+        'Operating System :: OS Independent',
+        'Programming Language :: Python',
+        'Topic :: Utilities',
+    ],
+    data_files=[
+    ],
+    entry_points={'console_scripts': [
+    ]},
+    python_requires='>=2.7',
 )
