@@ -6,14 +6,14 @@ http://setuptools.readthedocs.io/en/latest/setuptools.html
 """
 setuptools.setup(
     # the first three fields are a must according to the documentation
-    name='pyconf',
+    name='pytconf',
     version='0.0.1',
     packages=[
-        'pyconf',
+        'pytconf',
     ],
     # from here all is optional
-    description='pyconf handles configuration, config files and command line parsing',
-    long_description='pyconf handles configuration, config files and command line parsing',
+    description='pytconf handles configuration, config files and command line parsing',
+    long_description='pytconf handles configuration, config files and command line parsing',
     author='Mark Veltzer',
     author_email='mark.veltzer@gmail.com',
     maintainer='Mark Veltzer',
@@ -25,8 +25,8 @@ setuptools.setup(
         'command-line-parser',
         'configuration',
     ],
-    url='https://veltzer.github.io/pyconf',
-    download_url='https://github.com/veltzer/pyconf',
+    url='https://veltzer.github.io/pytconf',
+    download_url='https://github.com/veltzer/pytconf',
     license='MIT',
     platforms=[
         'python2',

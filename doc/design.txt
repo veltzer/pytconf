@@ -1,12 +1,12 @@
 ================== params.py ==================
-import pyconf
+import pytconf
 
 class Params:
-	param_name = pyconf.param(...)  # type: int
+	param_name = pytconf.param(...)  # type: int
 
 	# or
 
-	@pyconf.param(...)
+	@pytconf.param(...)
 	param_name  # type: int
 
 

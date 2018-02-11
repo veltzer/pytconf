@@ -1,6 +1,4 @@
-import pylogconf.core
-
-from modules.data_vault.lib.pyconf.config import register_main, config_arg_parse_and_launch, Config, \
+from pytconf.config import register_main, config_arg_parse_and_launch, Config, \
     register_cli, create_int
 
 
@@ -27,10 +25,8 @@ def command():
 @register_main()
 def main():
     """
-    Data Vault is your way to get data in Twiggle.
-    Author: Mark Veltzer <mark@twiggle.com>
+    This is a test
     """
-    pylogconf.core.setup()
     config_arg_parse_and_launch()
 
 
