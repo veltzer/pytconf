@@ -1,53 +1,53 @@
-pyconf package
+pytconf package
 ==============
 
 Submodules
 ----------
 
-pyconf\.color\_utils module
+pytconf\.color\_utils module
 ---------------------------
 
-.. automodule:: pyconf.color_utils
+.. automodule:: pytconf.color_utils
     :members:
     :undoc-members:
     :show-inheritance:
 
-pyconf\.config module
+pytconf\.config module
 ---------------------
 
-.. automodule:: pyconf.config
+.. automodule:: pytconf.config
     :members:
     :undoc-members:
     :show-inheritance:
 
-pyconf\.convert module
+pytconf\.convert module
 ----------------------
 
-.. automodule:: pyconf.convert
+.. automodule:: pytconf.convert
     :members:
     :undoc-members:
     :show-inheritance:
 
-pyconf\.enum\_subset module
+pytconf\.enum\_subset module
 ---------------------------
 
-.. automodule:: pyconf.enum_subset
+.. automodule:: pytconf.enum_subset
     :members:
     :undoc-members:
     :show-inheritance:
 
-pyconf\.enum\_utils module
+pytconf\.enum\_utils module
 --------------------------
 
-.. automodule:: pyconf.enum_utils
+.. automodule:: pytconf.enum_utils
     :members:
     :undoc-members:
     :show-inheritance:
 
-pyconf\.extended\_enum module
+pytconf\.extended\_enum module
 -----------------------------
 
-.. automodule:: pyconf.extended_enum
+.. automodule:: pytconf.extended_enum
     :members:
     :undoc-members:
     :show-inheritance:
@@ -56,7 +56,7 @@ pyconf\.extended\_enum module
 Module contents
 ---------------
 
-.. automodule:: pyconf
+.. automodule:: pytconf
     :members:
     :undoc-members:
     :show-inheritance:

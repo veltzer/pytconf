@@ -1,7 +1,7 @@
-pyconf
+pytconf
 ======
 
 .. toctree::
    :maxdepth: 4
 
-   pyconf
+   pytconf
