@@ -14,10 +14,10 @@ run_requires = [
 ]
 
 dev_requires = [
-    'pyclassifiers',  # for programmatic classifiers
-    'pypitools',  # for upload etc
-    'pydmt',  # for building
-    'Sphinx',  # for the sphinx builder
+#    'pyclassifiers',  # for programmatic classifiers
+#    'pypitools',  # for upload etc
+#    'pydmt',  # for building
+#    'Sphinx',  # for the sphinx builder
 ]
 
 install_requires = list(setup_requires)

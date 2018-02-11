@@ -25,5 +25,5 @@ def user():
 
 
 Question:
-- what if you have params in severl places in your software?
+- what if you have params in several places in your software?
 	Cant the params register them selves to some global registry?

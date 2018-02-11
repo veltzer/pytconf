@@ -115,7 +115,7 @@ html_sidebars = {
 # -- Options for HTMLHelp output ------------------------------------------
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'pytconfdoc'
+htmlhelp_basename = 'pytconf_doc'
 
 
 # -- Options for LaTeX output ---------------------------------------------

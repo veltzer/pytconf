@@ -1,3 +1,5 @@
+from __future__ import division
+
 from typing import List, Union
 
 
@@ -30,7 +32,7 @@ def convert_string_to_int_default(i, s):
     if s.startswith("*"):
         return i*int(s[1:])
     if s.startswith("/"):
-        return i/int(s[1:])
+        return i//int(s[1:])
 
 
 def convert_int_to_string(i):
