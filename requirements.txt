@@ -2,3 +2,8 @@
 # production requirements
 enum34
 termcolor
+# dev requirements
+pyclassifiers
+pypitools
+pydmt
+Sphinx

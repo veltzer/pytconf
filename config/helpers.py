@@ -1,6 +1,9 @@
 from typing import List
 
 import os
+import subprocess
+
+import sys
 
 
 def array_indented(level: int, l: List[str], quote_char='\'', comma_after=False) -> str:
@@ -30,3 +33,18 @@ def find_packages(path: str) -> List[str]:
     for root, _dir, files in os.walk(path):
         if '__init__.py' in files:
             yield root.replace("/", ".")
+
+
+def in_2():
+    return sys.version_info[0] == 2
+
+
+def in_3():
+    return sys.version_info[0] == 3
+
+
+def help_check_output(*args, **kwargs):
+    if in_2():
+        return subprocess.check_output(*args, **kwargs).decode()
+    if in_3():
+        return subprocess.check_output(*args, **kwargs)
