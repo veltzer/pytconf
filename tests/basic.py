@@ -1,5 +1,5 @@
 from pytconf.config import register_main, config_arg_parse_and_launch, Config, \
-    register_cli, create_int
+    register_endpoint, create_int
 
 
 class ConfigTotal(Config):
@@ -9,7 +9,7 @@ class ConfigTotal(Config):
     num = create_int(default=10, help_string="help for num")
 
 
-@register_cli(
+@register_endpoint(
     configs=[
         ConfigTotal,
     ],
