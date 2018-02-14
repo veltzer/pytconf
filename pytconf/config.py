@@ -665,9 +665,6 @@ def config_arg_parse_and_launch():
     if len(errors) > 0:
         show_help = True
 
-    if len(free_args) > 0:
-        errors.append("free args are not allowed")
-
     if "help" in special_flags:
         show_help = True
     if "help-suggest" in special_flags:
@@ -684,9 +681,14 @@ def config_arg_parse_and_launch():
             command_selected = command
         else:
             errors.append("Unknown command [{}]".format(command))
+
     if len(function_name_to_callable) == 1:
         for name in function_name_to_callable.keys():
             command_selected = name
+
+    if len(free_args) > 0:
+        errors.append("free args are not allowed")
+
     if show_help or errors:
         show_errors(errors)
         if command_selected:
