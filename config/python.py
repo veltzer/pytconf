@@ -13,6 +13,10 @@ run_requires = [
     'termcolor',  # for printing in colors
 ]
 
+test_requres = [
+    'pylogconf',  # for nices logging
+]
+
 dev_requires = [
     'pyclassifiers',  # for programmatic classifiers
     'pypitools',  # for upload etc

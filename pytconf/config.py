@@ -63,10 +63,11 @@ class MetaConfig(type):
 
 
 class Config(object):
-    __metaclass__ = MetaConfig
     """
         base class for all configs
     """
+    __metaclass__ = MetaConfig
+
     @classmethod
     def get_attributes(cls):
         # type: (Any) -> List[str]
@@ -77,6 +78,7 @@ class Config(object):
     @classmethod
     def get_params(cls):
         # type: (Any) -> Dict[str, Param]
+        print(PARAMS_ATTRIBUTE)
         return getattr(cls, PARAMS_ATTRIBUTE)
 
     @classmethod
@@ -473,7 +475,17 @@ def register_endpoint(configs=(), suggest_configs=(), group=DEFAULT_GROUP_NAME):
     return identity
 
 
+def show_errors(errors):
+    # type: (List[str]) -> None
+    if errors:
+        print()
+        for error in errors:
+            print_warn(error)
+        print()
+
+
 def show_general_help():
+    # type: () -> None
     print("Usage: {} [OPTIONS] COMMAND [ARGS]...".format(main_function.__name__))
     doc = main_function.__doc__
     if doc is not None:
@@ -554,14 +566,14 @@ def show_help_for_config(config):
     print()
 
 
-def parse_args(command_selected, flags, _free):
-    # type: (str, List[str], List[str]) -> bool
+def parse_args(command_selected, flags, _free_args):
+    # type: (str, Dict[str, str], List[str]) -> bool
     """
     Parse the args and fill the global data
     Currently we disregard the free parameters
     :param command_selected:
     :param flags:
-    :param _free:
+    :param _free_args:
     :return:
     """
     configs = function_name_to_configs[command_selected]
@@ -576,44 +588,36 @@ def parse_args(command_selected, flags, _free):
             attribute_to_config[attribute] = config
 
     # set the flags into the "default" field
-    for flag in flags:
-        if "==" in flag:
-            split_by_equal = flag.split('==')
-            if len(split_by_equal) != 2:
-                raise ValueError("flag [{}] is not legal".format(flag))
-            edit = True
-        else:
-            split_by_equal = flag.split('=')
-            if len(split_by_equal) != 2:
-                raise ValueError("flag [{}] is not legal".format(flag))
-            edit = False
-        flag_raw, value = split_by_equal
+    unknown_flags = []
+    for flag_raw, value in flags.items():
+        edit = value.startswith('=')
         if flag_raw not in attribute_to_config:
-            raise ValueError("flag [{}] not found".format(flag_raw))
+            unknown_flags.append(flag_raw)
         config = attribute_to_config[flag_raw]
         param = config.get_param_by_name(flag_raw)
         if edit:
-            v = param.s2t_generate_from_default(value)
+            v = param.s2t_generate_from_default(value[1:])
         else:
             v = param.s2t(value)
         setattr(config, flag_raw, v)
 
     # check for missing parameters and show help if there are any missing
-    error = False
     missing_parameters = []
     for config in configs:
         for attribute in config.get_attributes():
             value = getattr(config, attribute)
             if value is NO_DEFAULT:
                 missing_parameters.append(attribute)
-                error = True
-    if error:
-        print()
-        print_warn("missing parameters [{}]".format(",".join(missing_parameters)))
+    if unknown_flags or missing_parameters:
+        if missing_parameters:
+            print()
+            print_warn("missing parameters [{}]".format(",".join(missing_parameters)))
+        if unknown_flags:
+            print()
+            print_warn("unknown flags [{}]".format(",".join(unknown_flags)))
         print("problems found, not running")
         print()
         show_help_for_command(command_selected, show_help_full=False, show_help_suggest=False)
-
         return False
 
     # move all default values to place
@@ -628,12 +632,34 @@ def parse_args(command_selected, flags, _free):
 
 def config_arg_parse_and_launch():
     # we don't need the first argument which is the script path
-    args = sys.argv[1:]
-    no_flags = [s for s in args if not s.startswith("--")]
-    flags = [s[2:] for s in args if s.startswith("--")]
+    args = sys.argv[1:]  # type: List[str]
+    # name of arg and it's value
+    flags = dict()  # type: Dict[str, str]
+    errors = []  # type: List[str]
+    free_args = []
+    while args:
+        current = args.pop(0)
+        if current.startswith("--"):
+            real = current[2:]
+            number_of_equals = real.count("=")
+            if number_of_equals == 1:
+                flag_name, flag_value = real.split("=")
+                flags[flag_name] = flag_value
+            elif number_of_equals == 0:
+                if args:
+                    more = args.pop(0)
+                    flags[real] = more
+                else:
+                    errors.append("argument [{}] needs a follow-up argument".format(current))
+            else:
+                errors.append("can not parse argument [{}]".format(current))
+        else:
+            free_args.append(current)
     show_help = False
     show_help_full = False
     show_help_suggest = False
+    if len(errors) > 0:
+        show_help = True
     if "help" in flags or len(args) == 0:
         show_help = True
     if "help-suggest" in flags or len(args) == 0:
@@ -643,31 +669,24 @@ def config_arg_parse_and_launch():
         show_help = True
         show_help_full = True
     command_selected = None
-    if len(no_flags) >= 1:
-        command_selected = no_flags[0]
-        if command_selected in function_name_to_callable:
-            help_general = False
+    if len(free_args) >= 1:
+        command = free_args.pop(0)
+        if command in function_name_to_callable:
+            command_selected = command
         else:
-            print()
-            print("Unknown command [{}]".format(command_selected))
-            print()
-            show_help = True
-            help_general = True
+            errors.append("Unknown command [{}]".format(command))
     else:
         show_help = True
-        help_general = True
-    if show_help:
-        if help_general:
-            if len(function_name_to_callable) > 1:
-                show_general_help()
-            else:
-                show_help_for_command(command_selected, show_help_full, show_help_suggest)
-        else:
+    if len(function_name_to_callable) == 1:
+        for name in function_name_to_callable.keys():
+            command_selected = name
+    if show_help or errors:
+        show_errors(errors)
+        if command_selected:
             show_help_for_command(command_selected, show_help_full, show_help_suggest)
+        else:
+            show_general_help()
     else:
         f = function_name_to_callable[command_selected]
-        if parse_args(command_selected, flags, no_flags[1:]):
+        if parse_args(command_selected, flags, free_args):
             f()
-        else:
-            # show_help_for_command(command_selected)
-            pass
