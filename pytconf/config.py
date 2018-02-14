@@ -22,6 +22,7 @@ _config_names = set()
 
 PARAMS_ATTRIBUTE = "_params"
 DEFAULT_GROUP_NAME = "default"
+NON_MANDATORY_COMMANDS = {"help", "help-suggest", "help-all"}
 
 
 def register_config(cls, name):
@@ -78,7 +79,6 @@ class Config(object):
     @classmethod
     def get_params(cls):
         # type: (Any) -> Dict[str, Param]
-        print(PARAMS_ATTRIBUTE)
         return getattr(cls, PARAMS_ATTRIBUTE)
 
     @classmethod
@@ -649,10 +649,10 @@ def config_arg_parse_and_launch():
                 if args:
                     more = args.pop(0)
                     flags[real] = more
-                else:
-                    errors.append("argument [{}] needs a follow-up argument".format(current))
+                elif real not in NON_MANDATORY_COMMANDS:
+                    errors.append("argument [{}] needs a follow-up argument".format(real))
             else:
-                errors.append("can not parse argument [{}]".format(current))
+                errors.append("can not parse argument [{}]".format(real))
         else:
             free_args.append(current)
     show_help = False
