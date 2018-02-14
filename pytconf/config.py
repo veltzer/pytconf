@@ -665,6 +665,9 @@ def config_arg_parse_and_launch():
     if len(errors) > 0:
         show_help = True
 
+    if len(free_args) > 0:
+        errors.append("free args are not allowed")
+
     if "help" in special_flags:
         show_help = True
     if "help-suggest" in special_flags:

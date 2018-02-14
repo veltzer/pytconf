@@ -706,6 +706,9 @@
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">errors</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
         <span class="n">show_help</span> <span class="o">=</span> <span class="kc">True</span>
 
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">free_args</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">errors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;free args are not allowed&quot;</span><span class="p">)</span>
+
     <span class="k">if</span> <span class="s2">&quot;help&quot;</span> <span class="ow">in</span> <span class="n">special_flags</span><span class="p">:</span>
         <span class="n">show_help</span> <span class="o">=</span> <span class="kc">True</span>
     <span class="k">if</span> <span class="s2">&quot;help-suggest&quot;</span> <span class="ow">in</span> <span class="n">special_flags</span><span class="p">:</span>
