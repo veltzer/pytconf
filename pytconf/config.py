@@ -22,7 +22,7 @@ _config_names = set()
 
 PARAMS_ATTRIBUTE = "_params"
 DEFAULT_GROUP_NAME = "default"
-NON_MANDATORY_COMMANDS = {"help", "help-suggest", "help-all"}
+SPECIAL_COMMANDS = {"help", "help-suggest", "help-all"}
 
 
 def register_config(cls, name):
@@ -635,6 +635,7 @@ def config_arg_parse_and_launch():
     args = sys.argv[1:]  # type: List[str]
     # name of arg and it's value
     flags = dict()  # type: Dict[str, str]
+    special_flags = set()
     errors = []  # type: List[str]
     free_args = []
     while args:
@@ -649,7 +650,9 @@ def config_arg_parse_and_launch():
                 if args:
                     more = args.pop(0)
                     flags[real] = more
-                elif real not in NON_MANDATORY_COMMANDS:
+                elif real in SPECIAL_COMMANDS:
+                    special_flags.add(real)
+                else:
                     errors.append("argument [{}] needs a follow-up argument".format(real))
             else:
                 errors.append("can not parse argument [{}]".format(real))
@@ -658,16 +661,19 @@ def config_arg_parse_and_launch():
     show_help = False
     show_help_full = False
     show_help_suggest = False
+
     if len(errors) > 0:
         show_help = True
-    if "help" in flags or len(args) == 0:
+
+    if "help" in special_flags:
         show_help = True
-    if "help-suggest" in flags or len(args) == 0:
+    if "help-suggest" in special_flags:
         show_help = True
         show_help_suggest = True
-    if "help-all" in flags or len(args) == 0:
+    if "help-all" in special_flags:
         show_help = True
         show_help_full = True
+
     command_selected = None
     if len(free_args) >= 1:
         command = free_args.pop(0)
@@ -675,8 +681,6 @@ def config_arg_parse_and_launch():
             command_selected = command
         else:
             errors.append("Unknown command [{}]".format(command))
-    else:
-        show_help = True
     if len(function_name_to_callable) == 1:
         for name in function_name_to_callable.keys():
             command_selected = name
