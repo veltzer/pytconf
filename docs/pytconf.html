@@ -83,6 +83,7 @@
 <dt id="pytconf.config.Config">
 <em class="property">class </em><code class="descclassname">pytconf.config.</code><code class="descname">Config</code><a class="reference internal" href="_modules/pytconf/config.html#Config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.config.Config" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>base class for all configs</p>
 <dl class="classmethod">
 <dt id="pytconf.config.Config.get_attributes">
 <em class="property">classmethod </em><code class="descname">get_attributes</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytconf/config.html#Config.get_attributes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.config.Config.get_attributes" title="Permalink to this definition">¶</a></dt>
@@ -339,12 +340,12 @@
 
 <dl class="function">
 <dt id="pytconf.config.parse_args">
-<code class="descclassname">pytconf.config.</code><code class="descname">parse_args</code><span class="sig-paren">(</span><em>command_selected</em>, <em>flags</em>, <em>_free</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytconf/config.html#parse_args"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.config.parse_args" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pytconf.config.</code><code class="descname">parse_args</code><span class="sig-paren">(</span><em>command_selected</em>, <em>flags</em>, <em>_free_args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytconf/config.html#parse_args"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.config.parse_args" title="Permalink to this definition">¶</a></dt>
 <dd><p>Parse the args and fill the global data
 Currently we disregard the free parameters
 :param command_selected:
 :param flags:
-:param _free:
+:param _free_args:
 :return:</p>
 </dd></dl>
 
@@ -370,6 +371,11 @@ Currently we disregard the free parameters
 <dl class="function">
 <dt id="pytconf.config.register_main">
 <code class="descclassname">pytconf.config.</code><code class="descname">register_main</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytconf/config.html#register_main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.config.register_main" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="pytconf.config.show_errors">
+<code class="descclassname">pytconf.config.</code><code class="descname">show_errors</code><span class="sig-paren">(</span><em>errors</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytconf/config.html#show_errors"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.config.show_errors" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
