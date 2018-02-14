@@ -557,7 +557,7 @@ def show_help_for_config(config):
         print("    {} [{}]: {} [{}]".format(
             color_hi(name),
             param.get_type_name(),
-            param.help,
+            param.help_string,
             default,
         ))
         more_help = param.more_help()
