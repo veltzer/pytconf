@@ -502,7 +502,7 @@
     <span class="k">return</span> <span class="n">identity</span></div>
 
 
-<div class="viewcode-block" id="register_cli"><a class="viewcode-back" href="../../pytconf.html#pytconf.config.register_cli">[docs]</a><span class="k">def</span> <span class="nf">register_cli</span><span class="p">(</span><span class="n">configs</span><span class="o">=</span><span class="p">(),</span> <span class="n">suggest_configs</span><span class="o">=</span><span class="p">(),</span> <span class="n">group</span><span class="o">=</span><span class="n">DEFAULT_GROUP_NAME</span><span class="p">):</span>
+<div class="viewcode-block" id="register_endpoint"><a class="viewcode-back" href="../../pytconf.html#pytconf.config.register_endpoint">[docs]</a><span class="k">def</span> <span class="nf">register_endpoint</span><span class="p">(</span><span class="n">configs</span><span class="o">=</span><span class="p">(),</span> <span class="n">suggest_configs</span><span class="o">=</span><span class="p">(),</span> <span class="n">group</span><span class="o">=</span><span class="n">DEFAULT_GROUP_NAME</span><span class="p">):</span>
     <span class="c1"># type: (List[Callable], List[Callable]) -&gt; Callable</span>
     <span class="k">def</span> <span class="nf">identity</span><span class="p">(</span><span class="n">f</span><span class="p">):</span>
         <span class="n">function_name</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="vm">__name__</span>
