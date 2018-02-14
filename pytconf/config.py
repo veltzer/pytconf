@@ -461,7 +461,7 @@ def register_main():
     return identity
 
 
-def register_cli(configs=(), suggest_configs=(), group=DEFAULT_GROUP_NAME):
+def register_endpoint(configs=(), suggest_configs=(), group=DEFAULT_GROUP_NAME):
     # type: (List[Callable], List[Callable]) -> Callable
     def identity(f):
         function_name = f.__name__
