@@ -10,6 +10,7 @@ class EnumSubset(object):
     def __init__(self, enum_type, list_of_values):
         # type: (Type[Enum], List[Type[Enum]]) -> None
         self.enum_type = enum_type
+        # TODO: this should actually be an ordered set
         self.selected = OrderedDict()
         for value in list_of_values:
             self.add(value)
