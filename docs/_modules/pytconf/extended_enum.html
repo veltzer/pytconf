@@ -4,20 +4,12 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
+        <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>pytconf.extended_enum &#8212; pytconf 0.0.1 documentation</title>
     <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '../../',
-        VERSION:     '0.0.1',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true,
-        SOURCELINK_SUFFIX: '.txt'
-      };
-    </script>
+    <script type="text/javascript" src="../../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
@@ -29,8 +21,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
 
-  </head>
-  <body>
+  </head><body>
   
 
     <div class="document">
@@ -40,32 +31,57 @@
             
   <h1>Source code for pytconf.extended_enum</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">enum</span> <span class="k">import</span> <span class="n">Enum</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="k">import</span> <span class="n">Type</span>
-
-<span class="kn">from</span> <span class="nn">pytconf.enum_subset</span> <span class="k">import</span> <span class="n">EnumSubset</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="k">import</span> <span class="n">Type</span><span class="p">,</span> <span class="n">List</span>
 
 
 <div class="viewcode-block" id="ExtendedEnum"><a class="viewcode-back" href="../../pytconf.html#pytconf.extended_enum.ExtendedEnum">[docs]</a><span class="k">class</span> <span class="nc">ExtendedEnum</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
 
-<div class="viewcode-block" id="ExtendedEnum.get_list_of_all_values"><a class="viewcode-back" href="../../pytconf.html#pytconf.extended_enum.ExtendedEnum.get_list_of_all_values">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">get_list_of_all_values</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
-        <span class="k">return</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">cls</span><span class="o">.</span><span class="n">__members__</span><span class="o">.</span><span class="n">values</span><span class="p">()]</span></div>
+        <span class="k">return</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">cls</span><span class="o">.</span><span class="n">__members__</span><span class="o">.</span><span class="n">values</span><span class="p">()]</span>
 
-<div class="viewcode-block" id="ExtendedEnum.get_enum_subset_all"><a class="viewcode-back" href="../../pytconf.html#pytconf.extended_enum.ExtendedEnum.get_enum_subset_all">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">get_enum_subset_all</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">EnumSubset</span><span class="p">(</span>
-            <span class="n">enum_type</span><span class="o">=</span><span class="bp">cls</span><span class="o">.</span><span class="vm">__class__</span><span class="p">,</span>
-            <span class="n">list_of_values</span><span class="o">=</span><span class="bp">cls</span><span class="o">.</span><span class="n">get_list_of_all_values</span><span class="p">()</span>
-        <span class="p">)</span></div>
-
-<div class="viewcode-block" id="ExtendedEnum.from_string"><a class="viewcode-back" href="../../pytconf.html#pytconf.extended_enum.ExtendedEnum.from_string">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">from_string</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">s</span><span class="p">):</span>
         <span class="c1"># type: (str) -&gt; Type[Enum]</span>
         <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">cls</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">s</span> <span class="o">==</span> <span class="n">x</span><span class="o">.</span><span class="n">name</span><span class="p">:</span>
-                <span class="k">return</span> <span class="n">x</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;cannot find value [</span><span class="si">{}</span><span class="s2">]&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">s</span><span class="p">))</span></div></div>
+                <span class="k">return</span> <span class="n">x</span></div>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;cannot find value [</span><span class="si">{}</span><span class="s2">]&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">s</span><span class="p">))</span>
 
+
+<div class="viewcode-block" id="enum_type_to_list_str"><a class="viewcode-back" href="../../pytconf.html#pytconf.extended_enum.enum_type_to_list_str">[docs]</a><span class="k">def</span> <span class="nf">enum_type_to_list_str</span><span class="p">(</span><span class="n">e</span><span class="p">):</span>
+    <span class="c1"># type: (Type[Enum]) -&gt; List[str]</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">e</span><span class="p">]</span></div>
+    <span class="k">return</span> <span class="n">a</span>
+
+
+<div class="viewcode-block" id="enum_value_to_str"><a class="viewcode-back" href="../../pytconf.html#pytconf.extended_enum.enum_value_to_str">[docs]</a><span class="k">def</span> <span class="nf">enum_value_to_str</span><span class="p">(</span><span class="n">ev</span><span class="p">):</span>
+    <span class="c1"># type: (Type[Enum]) -&gt; str</span></div>
+    <span class="k">return</span> <span class="n">ev</span><span class="o">.</span><span class="n">name</span>
+
+
+<div class="viewcode-block" id="str_to_enum_value"><a class="viewcode-back" href="../../pytconf.html#pytconf.extended_enum.str_to_enum_value">[docs]</a><span class="k">def</span> <span class="nf">str_to_enum_value</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">e</span><span class="p">):</span>
+    <span class="c1"># type: (str, Type[Enum]) -&gt; Type[Enum]</span>
+    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">s</span> <span class="o">==</span> <span class="n">x</span><span class="o">.</span><span class="n">name</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">x</span></div>
+    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;cannot find value [</span><span class="si">{}</span><span class="s2">]&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">s</span><span class="p">))</span>
+
+
+<div class="viewcode-block" id="str_to_enum_int"><a class="viewcode-back" href="../../pytconf.html#pytconf.extended_enum.str_to_enum_int">[docs]</a><span class="k">def</span> <span class="nf">str_to_enum_int</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">e</span><span class="p">):</span>
+    <span class="c1"># type: (str, Type[Enum]) -&gt; int</span>
+    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">s</span> <span class="o">==</span> <span class="n">x</span><span class="o">.</span><span class="n">name</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">x</span><span class="o">.</span><span class="n">value</span></div>
+    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;cannot find value [</span><span class="si">{}</span><span class="s2">]&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">s</span><span class="p">))</span>
+
+
+<div class="viewcode-block" id="enum_int_to_name"><a class="viewcode-back" href="../../pytconf.html#pytconf.extended_enum.enum_int_to_name">[docs]</a><span class="k">def</span> <span class="nf">enum_int_to_name</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">e</span><span class="p">):</span>
+    <span class="c1"># type: (int, Type[Enum]) -&gt; str</span>
+    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="n">x</span><span class="o">.</span><span class="n">value</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">x</span><span class="o">.</span><span class="n">name</span></div>
+    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;cannot find value [</span><span class="si">{}</span><span class="s2">]&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
 </pre></div>
 
           </div>
@@ -83,12 +99,14 @@
 </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="../../search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -99,7 +117,7 @@
       &copy;2017, Mark Veltzer.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.7</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.0</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
       
     </div>

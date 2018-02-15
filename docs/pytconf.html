@@ -4,20 +4,12 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
+        <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>pytconf package &#8212; pytconf 0.0.1 documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    './',
-        VERSION:     '0.0.1',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true,
-        SOURCELINK_SUFFIX: '.txt'
-      };
-    </script>
+    <script type="text/javascript" src="_static/documentation_options.js"></script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
@@ -30,8 +22,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
 
-  </head>
-  <body>
+  </head><body>
   
 
     <div class="document">
@@ -82,7 +73,7 @@
 <dl class="class">
 <dt id="pytconf.config.Config">
 <em class="property">class </em><code class="descclassname">pytconf.config.</code><code class="descname">Config</code><a class="reference internal" href="_modules/pytconf/config.html#Config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.config.Config" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>base class for all configs</p>
 <dl class="classmethod">
 <dt id="pytconf.config.Config.get_attributes">
@@ -104,14 +95,14 @@
 <dl class="class">
 <dt id="pytconf.config.MetaConfig">
 <em class="property">class </em><code class="descclassname">pytconf.config.</code><code class="descname">MetaConfig</code><span class="sig-paren">(</span><em>name</em>, <em>bases</em>, <em>cls_dict</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytconf/config.html#MetaConfig"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.config.MetaConfig" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">type</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">type</span></code></p>
 <p>base class for all configs</p>
 </dd></dl>
 
 <dl class="class">
 <dt id="pytconf.config.Param">
 <em class="property">class </em><code class="descclassname">pytconf.config.</code><code class="descname">Param</code><span class="sig-paren">(</span><em>help_string='No help for this configuration option'</em>, <em>default={}</em>, <em>type_name=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytconf/config.html#Param"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.config.Param" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <dl class="method">
 <dt id="pytconf.config.Param.get_type_name">
 <code class="descname">get_type_name</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytconf/config.html#Param.get_type_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.config.Param.get_type_name" title="Permalink to this definition">¶</a></dt>
@@ -142,7 +133,7 @@
 <dl class="class">
 <dt id="pytconf.config.ParamEnum">
 <em class="property">class </em><code class="descclassname">pytconf.config.</code><code class="descname">ParamEnum</code><span class="sig-paren">(</span><em>help_string='No help for this configuration option'</em>, <em>default={}</em>, <em>enum_type=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytconf/config.html#ParamEnum"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.config.ParamEnum" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#pytconf.config.Param" title="pytconf.config.Param"><code class="xref py py-class docutils literal"><span class="pre">pytconf.config.Param</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#pytconf.config.Param" title="pytconf.config.Param"><code class="xref py py-class docutils literal notranslate"><span class="pre">pytconf.config.Param</span></code></a></p>
 <dl class="method">
 <dt id="pytconf.config.ParamEnum.get_type_name">
 <code class="descname">get_type_name</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytconf/config.html#ParamEnum.get_type_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.config.ParamEnum.get_type_name" title="Permalink to this definition">¶</a></dt>
@@ -168,7 +159,7 @@
 <dl class="class">
 <dt id="pytconf.config.ParamEnumSubset">
 <em class="property">class </em><code class="descclassname">pytconf.config.</code><code class="descname">ParamEnumSubset</code><span class="sig-paren">(</span><em>help_string='No help for this configuration option'</em>, <em>default={}</em>, <em>enum_type=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytconf/config.html#ParamEnumSubset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.config.ParamEnumSubset" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#pytconf.config.Param" title="pytconf.config.Param"><code class="xref py py-class docutils literal"><span class="pre">pytconf.config.Param</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#pytconf.config.Param" title="pytconf.config.Param"><code class="xref py py-class docutils literal notranslate"><span class="pre">pytconf.config.Param</span></code></a></p>
 <dl class="method">
 <dt id="pytconf.config.ParamEnumSubset.get_type_name">
 <code class="descname">get_type_name</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytconf/config.html#ParamEnumSubset.get_type_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.config.ParamEnumSubset.get_type_name" title="Permalink to this definition">¶</a></dt>
@@ -199,7 +190,7 @@
 <dl class="class">
 <dt id="pytconf.config.ParamFilename">
 <em class="property">class </em><code class="descclassname">pytconf.config.</code><code class="descname">ParamFilename</code><span class="sig-paren">(</span><em>help_string='No help for this configuration option'</em>, <em>default={}</em>, <em>type_name=None</em>, <em>suffixes=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytconf/config.html#ParamFilename"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.config.ParamFilename" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#pytconf.config.Param" title="pytconf.config.Param"><code class="xref py py-class docutils literal"><span class="pre">pytconf.config.Param</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#pytconf.config.Param" title="pytconf.config.Param"><code class="xref py py-class docutils literal notranslate"><span class="pre">pytconf.config.Param</span></code></a></p>
 <dl class="method">
 <dt id="pytconf.config.ParamFilename.more_help">
 <code class="descname">more_help</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytconf/config.html#ParamFilename.more_help"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.config.ParamFilename.more_help" title="Permalink to this definition">¶</a></dt>
@@ -220,7 +211,7 @@
 <dl class="class">
 <dt id="pytconf.config.ParamFunctions">
 <em class="property">class </em><code class="descclassname">pytconf.config.</code><code class="descname">ParamFunctions</code><span class="sig-paren">(</span><em>help_string='No help for this configuration option'</em>, <em>default={}</em>, <em>type_name=None</em>, <em>function_s2t=None</em>, <em>function_s2t_generate_from_default=None</em>, <em>function_t2s=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytconf/config.html#ParamFunctions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.config.ParamFunctions" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#pytconf.config.Param" title="pytconf.config.Param"><code class="xref py py-class docutils literal"><span class="pre">pytconf.config.Param</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#pytconf.config.Param" title="pytconf.config.Param"><code class="xref py py-class docutils literal notranslate"><span class="pre">pytconf.config.Param</span></code></a></p>
 <p>Parent class of all parameters of configuration</p>
 <dl class="method">
 <dt id="pytconf.config.ParamFunctions.s2t">
@@ -462,7 +453,7 @@ Currently we disregard the free parameters
 <dl class="class">
 <dt id="pytconf.enum_subset.EnumSubset">
 <em class="property">class </em><code class="descclassname">pytconf.enum_subset.</code><code class="descname">EnumSubset</code><span class="sig-paren">(</span><em>enum_type</em>, <em>list_of_values</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytconf/enum_subset.html#EnumSubset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.enum_subset.EnumSubset" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <dl class="method">
 <dt id="pytconf.enum_subset.EnumSubset.add">
 <code class="descname">add</code><span class="sig-paren">(</span><em>enum_value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytconf/enum_subset.html#EnumSubset.add"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.enum_subset.EnumSubset.add" title="Permalink to this definition">¶</a></dt>
@@ -471,6 +462,11 @@ Currently we disregard the free parameters
 <dl class="method">
 <dt id="pytconf.enum_subset.EnumSubset.delete">
 <code class="descname">delete</code><span class="sig-paren">(</span><em>enum_value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytconf/enum_subset.html#EnumSubset.delete"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.enum_subset.EnumSubset.delete" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="pytconf.enum_subset.EnumSubset.from_enum_all">
+<em class="property">classmethod </em><code class="descname">from_enum_all</code><span class="sig-paren">(</span><em>e</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytconf/enum_subset.html#EnumSubset.from_enum_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.enum_subset.EnumSubset.from_enum_all" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="classmethod">
@@ -505,42 +501,9 @@ Currently we disregard the free parameters
 
 </dd></dl>
 
-</div>
-<div class="section" id="module-pytconf.enum_utils">
-<span id="pytconf-enum-utils-module"></span><h2>pytconf.enum_utils module<a class="headerlink" href="#module-pytconf.enum_utils" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
-<dt id="pytconf.enum_utils.enum_int_to_name">
-<code class="descclassname">pytconf.enum_utils.</code><code class="descname">enum_int_to_name</code><span class="sig-paren">(</span><em>i</em>, <em>e</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytconf/enum_utils.html#enum_int_to_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.enum_utils.enum_int_to_name" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
-<dt id="pytconf.enum_utils.enum_type_to_list_str">
-<code class="descclassname">pytconf.enum_utils.</code><code class="descname">enum_type_to_list_str</code><span class="sig-paren">(</span><em>e</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytconf/enum_utils.html#enum_type_to_list_str"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.enum_utils.enum_type_to_list_str" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
-<dt id="pytconf.enum_utils.enum_value_to_str">
-<code class="descclassname">pytconf.enum_utils.</code><code class="descname">enum_value_to_str</code><span class="sig-paren">(</span><em>ev</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytconf/enum_utils.html#enum_value_to_str"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.enum_utils.enum_value_to_str" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
-<dt id="pytconf.enum_utils.list_of_names_to_multi_enum_value">
-<code class="descclassname">pytconf.enum_utils.</code><code class="descname">list_of_names_to_multi_enum_value</code><span class="sig-paren">(</span><em>s</em>, <em>e</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytconf/enum_utils.html#list_of_names_to_multi_enum_value"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.enum_utils.list_of_names_to_multi_enum_value" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
-<dt id="pytconf.enum_utils.multi_enum_value_to_list_of_names">
-<code class="descclassname">pytconf.enum_utils.</code><code class="descname">multi_enum_value_to_list_of_names</code><span class="sig-paren">(</span><em>t</em>, <em>e</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytconf/enum_utils.html#multi_enum_value_to_list_of_names"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.enum_utils.multi_enum_value_to_list_of_names" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
-<dt id="pytconf.enum_utils.str_to_enum_int">
-<code class="descclassname">pytconf.enum_utils.</code><code class="descname">str_to_enum_int</code><span class="sig-paren">(</span><em>s</em>, <em>e</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytconf/enum_utils.html#str_to_enum_int"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.enum_utils.str_to_enum_int" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
-<dt id="pytconf.enum_utils.str_to_enum_value">
-<code class="descclassname">pytconf.enum_utils.</code><code class="descname">str_to_enum_value</code><span class="sig-paren">(</span><em>s</em>, <em>e</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytconf/enum_utils.html#str_to_enum_value"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.enum_utils.str_to_enum_value" title="Permalink to this definition">¶</a></dt>
+<dt id="pytconf.enum_subset.enum_subset_to_str">
+<code class="descclassname">pytconf.enum_subset.</code><code class="descname">enum_subset_to_str</code><span class="sig-paren">(</span><em>e</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytconf/enum_subset.html#enum_subset_to_str"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.enum_subset.enum_subset_to_str" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </div>
@@ -549,24 +512,34 @@ Currently we disregard the free parameters
 <dl class="class">
 <dt id="pytconf.extended_enum.ExtendedEnum">
 <em class="property">class </em><code class="descclassname">pytconf.extended_enum.</code><code class="descname">ExtendedEnum</code><a class="reference internal" href="_modules/pytconf/extended_enum.html#ExtendedEnum"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.extended_enum.ExtendedEnum" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">enum.Enum</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">enum.Enum</span></code></p>
 <p>An enumeration.</p>
-<dl class="classmethod">
-<dt id="pytconf.extended_enum.ExtendedEnum.from_string">
-<em class="property">classmethod </em><code class="descname">from_string</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytconf/extended_enum.html#ExtendedEnum.from_string"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.extended_enum.ExtendedEnum.from_string" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="classmethod">
-<dt id="pytconf.extended_enum.ExtendedEnum.get_enum_subset_all">
-<em class="property">classmethod </em><code class="descname">get_enum_subset_all</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytconf/extended_enum.html#ExtendedEnum.get_enum_subset_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.extended_enum.ExtendedEnum.get_enum_subset_all" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="classmethod">
-<dt id="pytconf.extended_enum.ExtendedEnum.get_list_of_all_values">
-<em class="property">classmethod </em><code class="descname">get_list_of_all_values</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytconf/extended_enum.html#ExtendedEnum.get_list_of_all_values"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.extended_enum.ExtendedEnum.get_list_of_all_values" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 </dd></dl>
+
+<dl class="function">
+<dt id="pytconf.extended_enum.enum_int_to_name">
+<code class="descclassname">pytconf.extended_enum.</code><code class="descname">enum_int_to_name</code><span class="sig-paren">(</span><em>i</em>, <em>e</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytconf/extended_enum.html#enum_int_to_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.extended_enum.enum_int_to_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="pytconf.extended_enum.enum_type_to_list_str">
+<code class="descclassname">pytconf.extended_enum.</code><code class="descname">enum_type_to_list_str</code><span class="sig-paren">(</span><em>e</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytconf/extended_enum.html#enum_type_to_list_str"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.extended_enum.enum_type_to_list_str" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="pytconf.extended_enum.enum_value_to_str">
+<code class="descclassname">pytconf.extended_enum.</code><code class="descname">enum_value_to_str</code><span class="sig-paren">(</span><em>ev</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytconf/extended_enum.html#enum_value_to_str"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.extended_enum.enum_value_to_str" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="pytconf.extended_enum.str_to_enum_int">
+<code class="descclassname">pytconf.extended_enum.</code><code class="descname">str_to_enum_int</code><span class="sig-paren">(</span><em>s</em>, <em>e</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytconf/extended_enum.html#str_to_enum_int"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.extended_enum.str_to_enum_int" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="pytconf.extended_enum.str_to_enum_value">
+<code class="descclassname">pytconf.extended_enum.</code><code class="descname">str_to_enum_value</code><span class="sig-paren">(</span><em>s</em>, <em>e</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytconf/extended_enum.html#str_to_enum_value"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.extended_enum.str_to_enum_value" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </div>
 <div class="section" id="module-pytconf">
@@ -591,12 +564,14 @@ Currently we disregard the free parameters
 </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -607,7 +582,7 @@ Currently we disregard the free parameters
       &copy;2017, Mark Veltzer.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.7</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.0</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
       
       |

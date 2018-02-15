@@ -7,3 +7,5 @@ pyclassifiers
 pypitools
 pydmt
 Sphinx
+# test requirements
+pylogconf

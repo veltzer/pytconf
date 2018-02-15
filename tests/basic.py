@@ -1,7 +1,5 @@
 import sys
 
-import pylogconf
-
 from pytconf.config import register_main, config_arg_parse_and_launch, Config, \
     register_endpoint, create_int
 
