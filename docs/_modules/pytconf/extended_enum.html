@@ -40,6 +40,7 @@
             
   <h1>Source code for pytconf.extended_enum</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">enum</span> <span class="k">import</span> <span class="n">Enum</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="k">import</span> <span class="n">Type</span>
 
 <span class="kn">from</span> <span class="nn">pytconf.enum_subset</span> <span class="k">import</span> <span class="n">EnumSubset</span>
 
@@ -55,7 +56,16 @@
         <span class="k">return</span> <span class="n">EnumSubset</span><span class="p">(</span>
             <span class="n">enum_type</span><span class="o">=</span><span class="bp">cls</span><span class="o">.</span><span class="vm">__class__</span><span class="p">,</span>
             <span class="n">list_of_values</span><span class="o">=</span><span class="bp">cls</span><span class="o">.</span><span class="n">get_list_of_all_values</span><span class="p">()</span>
-        <span class="p">)</span></div></div>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="ExtendedEnum.from_string"><a class="viewcode-back" href="../../pytconf.html#pytconf.extended_enum.ExtendedEnum.from_string">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_string</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">s</span><span class="p">):</span>
+        <span class="c1"># type: (str) -&gt; Type[Enum]</span>
+        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">cls</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">s</span> <span class="o">==</span> <span class="n">x</span><span class="o">.</span><span class="n">name</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">x</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;cannot find value [</span><span class="si">{}</span><span class="s2">]&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">s</span><span class="p">))</span></div></div>
+
 </pre></div>
 
           </div>
