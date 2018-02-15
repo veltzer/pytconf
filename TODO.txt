@@ -1,3 +1,8 @@
 - do correct collection of arguments (--foo=bar and --foo bar)
 - gather all the create_* function together into a static class.
 	This will enable users to auto complete all the creators.
+- once myenv supports more than one virtual env have this project
+	have:
+		- virtual env for 2.7 running.
+		- virtual env for 3.6 running.
+		- virtual env for development tools (pypitools etc).
