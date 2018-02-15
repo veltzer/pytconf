@@ -26,6 +26,9 @@ class EnumSubset(object):
         for value in self.selected.keys():
             yield value
 
+    def values(self):
+        return self.selected.keys()
+
     def __contains__(self, item):
         return item in self.selected
 
