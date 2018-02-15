@@ -3,10 +3,18 @@ from enum import Enum
 
 from typing import Type, List
 
-from pytconf.enum_utils import str_to_enum_value
+from pytconf.extended_enum import str_to_enum_value, ExtendedEnum
 
 
 class EnumSubset(object):
+    @classmethod
+    def from_enum_all(cls, e):
+        # type: (Type[ExtendedEnum]) -> EnumSubset
+        return EnumSubset(
+            enum_type=e,
+            list_of_values=e.get_list_of_all_values(),
+        )
+
     def __init__(self, enum_type, list_of_values):
         # type: (Type[Enum], List[Type[Enum]]) -> None
         self.enum_type = enum_type
@@ -53,3 +61,7 @@ class EnumSubset(object):
     def to_string(self):
         return ",".join(self.list_of_strings())
 
+
+def enum_subset_to_str(e):
+    # type: (EnumSubset) -> str
+    return e.to_string()

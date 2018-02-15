@@ -9,13 +9,13 @@ from enum import Enum
 from typing import Union, List, Any, Callable, Type, Dict, Set
 
 from pytconf.color_utils import print_highlight, color_hi, print_title, color_ok, color_warn, print_warn
-from pytconf.enum_utils import str_to_enum_value, enum_type_to_list_str
 from pytconf.convert import convert_string_to_int, convert_int_to_string, \
     convert_string_to_list_int, \
     convert_list_int_to_string, convert_string_to_list_str, convert_list_str_to_string, convert_string_to_string, \
     convert_string_to_bool, convert_bool_to_string, convert_string_to_int_or_none, convert_int_or_none_to_string, \
     convert_string_to_int_default
 from pytconf.enum_subset import EnumSubset
+from pytconf.extended_enum import str_to_enum_value, enum_type_to_list_str
 
 _configs = set()
 _config_names = set()

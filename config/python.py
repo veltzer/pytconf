@@ -13,8 +13,8 @@ run_requires = [
     'termcolor',  # for printing in colors
 ]
 
-test_requres = [
-    'pylogconf',  # for nices logging
+test_requires = [
+    'pylogconf',  # for nicer logging
 ]
 
 dev_requires = [
