@@ -730,7 +730,7 @@
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">free_args</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
         <span class="n">errors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;free args are not allowed&quot;</span><span class="p">)</span>
 
-    <span class="k">if</span> <span class="n">show_help</span> <span class="ow">or</span> <span class="n">errors</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">show_help</span> <span class="ow">or</span> <span class="n">errors</span> <span class="ow">or</span> <span class="n">command_selected</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">show_errors</span><span class="p">(</span><span class="n">errors</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">command_selected</span><span class="p">:</span>
             <span class="n">show_help_for_command</span><span class="p">(</span><span class="n">command_selected</span><span class="p">,</span> <span class="n">show_help_full</span><span class="p">,</span> <span class="n">show_help_suggest</span><span class="p">)</span>
