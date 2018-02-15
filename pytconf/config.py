@@ -689,7 +689,7 @@ def config_arg_parse_and_launch():
     if len(free_args) > 0:
         errors.append("free args are not allowed")
 
-    if show_help or errors:
+    if show_help or errors or command_selected is None:
         show_errors(errors)
         if command_selected:
             show_help_for_command(command_selected, show_help_full, show_help_suggest)
