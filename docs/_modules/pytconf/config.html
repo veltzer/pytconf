@@ -77,7 +77,7 @@
         <span class="k">if</span> <span class="n">name</span> <span class="o">!=</span> <span class="s2">&quot;Config&quot;</span><span class="p">:</span>
             <span class="n">params_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
             <span class="n">cls_dict</span><span class="p">[</span><span class="n">PARAMS_ATTRIBUTE</span><span class="p">]</span> <span class="o">=</span> <span class="n">params_dict</span>
-            <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">cls_dict</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+            <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">cls_dict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
                 <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">Param</span><span class="p">):</span>
                     <span class="c1"># assert d.default is not NO_DEFAULT</span>
                     <span class="n">params_dict</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">d</span>
@@ -581,7 +581,7 @@
         <span class="n">print_title</span><span class="p">(</span><span class="s2">&quot;  </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">doc</span><span class="p">))</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">print_title</span><span class="p">(</span><span class="s2">&quot;  Undocumented parameter set&quot;</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">param</span> <span class="ow">in</span> <span class="n">config</span><span class="o">.</span><span class="n">get_params</span><span class="p">()</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+    <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">param</span> <span class="ow">in</span> <span class="n">config</span><span class="o">.</span><span class="n">get_params</span><span class="p">()</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
         <span class="k">if</span> <span class="n">param</span><span class="o">.</span><span class="n">default</span> <span class="ow">is</span> <span class="n">NO_DEFAULT</span><span class="p">:</span>
             <span class="n">default</span> <span class="o">=</span> <span class="n">color_warn</span><span class="p">(</span><span class="s2">&quot;MANDATORY&quot;</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
