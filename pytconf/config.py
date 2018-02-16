@@ -63,7 +63,7 @@ class MetaConfig(type):
         super(MetaConfig, cls).__init__(name, bases, cls_dict)
 
 
-class Config(object):
+class Config(object, metaclass=MetaConfig):
     """
         base class for all configs
     """
