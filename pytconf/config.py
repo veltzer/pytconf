@@ -45,7 +45,7 @@ class MetaConfig(type):
         if name != "Config":
             params_dict = dict()
             cls_dict[PARAMS_ATTRIBUTE] = params_dict
-            for k, d in cls_dict.iteritems():
+            for k, d in cls_dict.items():
                 if isinstance(d, Param):
                     # assert d.default is not NO_DEFAULT
                     params_dict[k] = d
@@ -549,7 +549,7 @@ def show_help_for_config(config):
         print_title("  {}".format(doc))
     else:
         print_title("  Undocumented parameter set")
-    for name, param in config.get_params().iteritems():
+    for name, param in config.get_params().items():
         if param.default is NO_DEFAULT:
             default = color_warn("MANDATORY")
         else:
