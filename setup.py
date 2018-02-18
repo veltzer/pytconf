@@ -7,7 +7,7 @@ http://setuptools.readthedocs.io/en/latest/setuptools.html
 setuptools.setup(
     # the first three fields are a must according to the documentation
     name='pytconf',
-    version='0.0.15',
+    version='0.0.16',
     packages=[
         'pytconf',
     ],
@@ -34,6 +34,7 @@ setuptools.setup(
     install_requires=[
         'enum34',
         'termcolor',
+        'six',
     ],
     classifiers=[
         'Development Status :: 4 - Beta',

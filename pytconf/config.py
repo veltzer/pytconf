@@ -17,6 +17,8 @@ from pytconf.convert import convert_string_to_int, convert_int_to_string, \
 from pytconf.enum_subset import EnumSubset
 from pytconf.extended_enum import str_to_enum_value, enum_type_to_list_str
 
+from six import with_metaclass
+
 _configs = set()
 _config_names = set()
 
@@ -63,11 +65,10 @@ class MetaConfig(type):
         super(MetaConfig, cls).__init__(name, bases, cls_dict)
 
 
-class Config(object, metaclass=MetaConfig):
+class Config(with_metaclass(MetaConfig, object)):
     """
         base class for all configs
     """
-    __metaclass__ = MetaConfig
 
     @classmethod
     def get_attributes(cls):
