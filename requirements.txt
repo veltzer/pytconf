@@ -2,6 +2,7 @@
 # production requirements
 enum34
 termcolor
+six
 # dev requirements
 pyclassifiers
 pypitools
