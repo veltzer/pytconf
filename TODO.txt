@@ -6,3 +6,5 @@
 		- virtual env for 2.7 running.
 		- virtual env for 3.6 running.
 		- virtual env for development tools (pypitools etc).
+- make each parameters have a suggester class attached. This will suggest
+	values to a user that needs to put this parameter in.
