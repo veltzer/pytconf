@@ -1,14 +1,14 @@
 import sys
 
 from pytconf.config import register_main, config_arg_parse_and_launch, Config, \
-    register_endpoint, create_int
+    register_endpoint, ParamCreator
 
 
 class ConfigTotal(Config):
     """
     Parameters to select the total number of items to fetch
     """
-    num = create_int(default=10, help_string="help for num")
+    num = ParamCreator.create_int(default=10, help_string="help for num")
 
 
 @register_endpoint(
