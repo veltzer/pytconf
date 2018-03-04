@@ -8,3 +8,6 @@
 		- virtual env for development tools (pypitools etc).
 - make each parameters have a suggester class attached. This will suggest
 	values to a user that needs to put this parameter in.
+- make each parameter have a gui attached to be filled by gui.
+- make sure that we can easily create a app based on pytconf without much
+	fanface (groups, main etc).
