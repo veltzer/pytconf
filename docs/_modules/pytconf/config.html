@@ -49,7 +49,7 @@
 <span class="kn">from</span> <span class="nn">pytconf.enum_subset</span> <span class="k">import</span> <span class="n">EnumSubset</span>
 <span class="kn">from</span> <span class="nn">pytconf.extended_enum</span> <span class="k">import</span> <span class="n">str_to_enum_value</span><span class="p">,</span> <span class="n">enum_type_to_list_str</span>
 
-<span class="kn">import</span> <span class="nn">six</span>
+<span class="kn">from</span> <span class="nn">six</span> <span class="k">import</span> <span class="n">with_metaclass</span>
 
 <span class="n">_configs</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
 <span class="n">_config_names</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
@@ -97,11 +97,10 @@
         <span class="nb">super</span><span class="p">(</span><span class="n">MetaConfig</span><span class="p">,</span> <span class="bp">cls</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">bases</span><span class="p">,</span> <span class="n">cls_dict</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="Config"><a class="viewcode-back" href="../../pytconf.html#pytconf.config.Config">[docs]</a><span class="k">class</span> <span class="nc">Config</span><span class="p">(</span><span class="nb">object</span><span class="p">,</span> <span class="n">metaclass</span><span class="o">=</span><span class="n">MetaConfig</span><span class="p">):</span>
+<div class="viewcode-block" id="Config"><a class="viewcode-back" href="../../pytconf.html#pytconf.config.Config">[docs]</a><span class="k">class</span> <span class="nc">Config</span><span class="p">(</span><span class="n">with_metaclass</span><span class="p">(</span><span class="n">MetaConfig</span><span class="p">,</span> <span class="nb">object</span><span class="p">)):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        base class for all configs</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">__metaclass__</span> <span class="o">=</span> <span class="n">MetaConfig</span>
 
 <div class="viewcode-block" id="Config.get_attributes"><a class="viewcode-back" href="../../pytconf.html#pytconf.config.Config.get_attributes">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">get_attributes</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
@@ -420,6 +419,49 @@
         <span class="n">help_string</span><span class="o">=</span><span class="n">help_string</span><span class="p">,</span>
         <span class="n">default</span><span class="o">=</span><span class="n">default</span><span class="p">,</span>
         <span class="n">enum_type</span><span class="o">=</span><span class="n">enum_type</span><span class="p">,</span></div>
+    <span class="p">)</span>
+
+
+<div class="viewcode-block" id="ParamChoice"><a class="viewcode-back" href="../../pytconf.html#pytconf.config.ParamChoice">[docs]</a><span class="k">class</span> <span class="nc">ParamChoice</span><span class="p">(</span><span class="n">Param</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">help_string</span><span class="o">=</span><span class="n">NO_HELP</span><span class="p">,</span>
+            <span class="n">default</span><span class="o">=</span><span class="n">NO_DEFAULT</span><span class="p">,</span>
+            <span class="n">choice_list</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>  <span class="c1"># type: List[str]</span>
+    <span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ParamChoice</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="n">help_string</span><span class="o">=</span><span class="n">help_string</span><span class="p">,</span>
+            <span class="n">default</span><span class="o">=</span><span class="n">default</span><span class="p">,</span>
+            <span class="n">type_name</span><span class="o">=</span><span class="s2">&quot;Choice&quot;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">choice_list</span> <span class="o">=</span> <span class="n">choice_list</span>
+
+<div class="viewcode-block" id="ParamChoice.s2t"><a class="viewcode-back" href="../../pytconf.html#pytconf.config.ParamChoice.s2t">[docs]</a>    <span class="k">def</span> <span class="nf">s2t</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">):</span>
+        <span class="c1"># type: (str) -&gt; Any</span></div>
+        <span class="k">return</span> <span class="n">s</span>
+
+<div class="viewcode-block" id="ParamChoice.t2s"><a class="viewcode-back" href="../../pytconf.html#pytconf.config.ParamChoice.t2s">[docs]</a>    <span class="k">def</span> <span class="nf">t2s</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
+        <span class="c1"># type: (Any) -&gt; str</span></div>
+        <span class="k">return</span> <span class="n">t</span>
+
+<div class="viewcode-block" id="ParamChoice.more_help"><a class="viewcode-back" href="../../pytconf.html#pytconf.config.ParamChoice.more_help">[docs]</a>    <span class="k">def</span> <span class="nf">more_help</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div></div>
+        <span class="k">return</span> <span class="s2">&quot;allowed values </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">choice_list</span><span class="p">))</span>
+
+
+<div class="viewcode-block" id="create_choice"><a class="viewcode-back" href="../../pytconf.html#pytconf.config.create_choice">[docs]</a><span class="k">def</span> <span class="nf">create_choice</span><span class="p">(</span><span class="n">choice_list</span><span class="p">,</span> <span class="n">help_string</span><span class="o">=</span><span class="n">NO_HELP</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">NO_DEFAULT</span><span class="p">):</span>
+    <span class="c1"># type: (List[str], str, Union[Any, NO_DEFAULT_TYPE]) -&gt; str</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Create a choice config</span>
+<span class="sd">    :param choice_list:</span>
+<span class="sd">    :param help_string:</span>
+<span class="sd">    :param default:</span>
+<span class="sd">    :return:</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># noinspection PyTypeChecker</span>
+    <span class="k">return</span> <span class="n">ParamChoice</span><span class="p">(</span>
+        <span class="n">help_string</span><span class="o">=</span><span class="n">help_string</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="n">default</span><span class="p">,</span>
+        <span class="n">choice_list</span><span class="o">=</span><span class="n">choice_list</span><span class="p">,</span></div>
     <span class="p">)</span>
 
 

@@ -131,6 +131,27 @@
 </dd></dl>
 
 <dl class="class">
+<dt id="pytconf.config.ParamChoice">
+<em class="property">class </em><code class="descclassname">pytconf.config.</code><code class="descname">ParamChoice</code><span class="sig-paren">(</span><em>help_string='No help for this configuration option'</em>, <em>default={}</em>, <em>choice_list=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytconf/config.html#ParamChoice"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.config.ParamChoice" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pytconf.config.Param" title="pytconf.config.Param"><code class="xref py py-class docutils literal notranslate"><span class="pre">pytconf.config.Param</span></code></a></p>
+<dl class="method">
+<dt id="pytconf.config.ParamChoice.more_help">
+<code class="descname">more_help</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytconf/config.html#ParamChoice.more_help"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.config.ParamChoice.more_help" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pytconf.config.ParamChoice.s2t">
+<code class="descname">s2t</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytconf/config.html#ParamChoice.s2t"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.config.ParamChoice.s2t" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pytconf.config.ParamChoice.t2s">
+<code class="descname">t2s</code><span class="sig-paren">(</span><em>t</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytconf/config.html#ParamChoice.t2s"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.config.ParamChoice.t2s" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
 <dt id="pytconf.config.ParamEnum">
 <em class="property">class </em><code class="descclassname">pytconf.config.</code><code class="descname">ParamEnum</code><span class="sig-paren">(</span><em>help_string='No help for this configuration option'</em>, <em>default={}</em>, <em>enum_type=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytconf/config.html#ParamEnum"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.config.ParamEnum" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#pytconf.config.Param" title="pytconf.config.Param"><code class="xref py py-class docutils literal notranslate"><span class="pre">pytconf.config.Param</span></code></a></p>
@@ -239,6 +260,16 @@
 <dt id="pytconf.config.create_bool">
 <code class="descclassname">pytconf.config.</code><code class="descname">create_bool</code><span class="sig-paren">(</span><em>help_string='No help for this configuration option'</em>, <em>default={}</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytconf/config.html#create_bool"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.config.create_bool" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a bool parameter
+:param help_string:
+:param default:
+:return:</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pytconf.config.create_choice">
+<code class="descclassname">pytconf.config.</code><code class="descname">create_choice</code><span class="sig-paren">(</span><em>choice_list</em>, <em>help_string='No help for this configuration option'</em>, <em>default={}</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytconf/config.html#create_choice"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.config.create_choice" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a choice config
+:param choice_list:
 :param help_string:
 :param default:
 :return:</p>
