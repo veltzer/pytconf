@@ -390,6 +390,49 @@ def create_enum(enum_type, help_string=NO_HELP, default=NO_DEFAULT):
     )
 
 
+class ParamChoice(Param):
+    def __init__(
+            self,
+            help_string=NO_HELP,
+            default=NO_DEFAULT,
+            choice_list=None,  # type: List[str]
+    ):
+        super(ParamChoice, self).__init__(
+            help_string=help_string,
+            default=default,
+            type_name="Choice",
+        )
+        self.choice_list = choice_list
+
+    def s2t(self, s):
+        # type: (str) -> Any
+        return s
+
+    def t2s(self, t):
+        # type: (Any) -> str
+        return t
+
+    def more_help(self):
+        return "allowed values {}".format(",".join(self.choice_list))
+
+
+def create_choice(choice_list, help_string=NO_HELP, default=NO_DEFAULT):
+    # type: (List[str], str, Union[Any, NO_DEFAULT_TYPE]) -> str
+    """
+    Create a choice config
+    :param choice_list:
+    :param help_string:
+    :param default:
+    :return:
+    """
+    # noinspection PyTypeChecker
+    return ParamChoice(
+        help_string=help_string,
+        default=default,
+        choice_list=choice_list,
+    )
+
+
 class ParamEnumSubset(Param):
     def __init__(
             self,
