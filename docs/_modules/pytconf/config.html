@@ -231,151 +231,6 @@
             <span class="k">return</span> <span class="s2">&quot;allowed suffixes are </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">suffixes</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="create_int"><a class="viewcode-back" href="../../pytconf.html#pytconf.config.create_int">[docs]</a><span class="k">def</span> <span class="nf">create_int</span><span class="p">(</span><span class="n">help_string</span><span class="o">=</span><span class="n">NO_HELP</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">NO_DEFAULT</span><span class="p">):</span>
-    <span class="c1"># type: (str, Union[int, NO_DEFAULT_TYPE]) -&gt; int</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Create an int parameter</span>
-<span class="sd">    :param help_string:</span>
-<span class="sd">    :param default:</span>
-<span class="sd">    :return:</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="c1"># noinspection PyTypeChecker</span>
-    <span class="k">return</span> <span class="n">ParamFunctions</span><span class="p">(</span>
-        <span class="n">help_string</span><span class="o">=</span><span class="n">help_string</span><span class="p">,</span>
-        <span class="n">default</span><span class="o">=</span><span class="n">default</span><span class="p">,</span>
-        <span class="n">type_name</span><span class="o">=</span><span class="s2">&quot;int&quot;</span><span class="p">,</span>
-        <span class="n">function_s2t</span><span class="o">=</span><span class="n">convert_string_to_int</span><span class="p">,</span>
-        <span class="n">function_t2s</span><span class="o">=</span><span class="n">convert_int_to_string</span><span class="p">,</span>
-        <span class="n">function_s2t_generate_from_default</span><span class="o">=</span><span class="n">convert_string_to_int_default</span><span class="p">,</span></div>
-    <span class="p">)</span>
-
-
-<div class="viewcode-block" id="create_list_int"><a class="viewcode-back" href="../../pytconf.html#pytconf.config.create_list_int">[docs]</a><span class="k">def</span> <span class="nf">create_list_int</span><span class="p">(</span><span class="n">help_string</span><span class="o">=</span><span class="n">NO_HELP</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">NO_DEFAULT</span><span class="p">):</span>
-    <span class="c1"># type: (str, Union[List[int], NO_DEFAULT_TYPE]) -&gt; List[int]</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Create a List[int] parameter</span>
-<span class="sd">    :param help_string:</span>
-<span class="sd">    :param default:</span>
-<span class="sd">    :return:</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="c1"># noinspection PyTypeChecker</span>
-    <span class="k">return</span> <span class="n">ParamFunctions</span><span class="p">(</span>
-        <span class="n">help_string</span><span class="o">=</span><span class="n">help_string</span><span class="p">,</span>
-        <span class="n">default</span><span class="o">=</span><span class="n">default</span><span class="p">,</span>
-        <span class="n">type_name</span><span class="o">=</span><span class="s2">&quot;List[int]&quot;</span><span class="p">,</span>
-        <span class="n">function_s2t</span><span class="o">=</span><span class="n">convert_string_to_list_int</span><span class="p">,</span>
-        <span class="n">function_t2s</span><span class="o">=</span><span class="n">convert_list_int_to_string</span><span class="p">,</span></div>
-    <span class="p">)</span>
-
-
-<div class="viewcode-block" id="create_list_str"><a class="viewcode-back" href="../../pytconf.html#pytconf.config.create_list_str">[docs]</a><span class="k">def</span> <span class="nf">create_list_str</span><span class="p">(</span><span class="n">help_string</span><span class="o">=</span><span class="n">NO_HELP</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">NO_DEFAULT</span><span class="p">):</span>
-    <span class="c1"># type: (str, Union[List[str], NO_DEFAULT_TYPE]) -&gt; List[str]</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Create a List[str] parameter</span>
-<span class="sd">    :param help_string:</span>
-<span class="sd">    :param default:</span>
-<span class="sd">    :return:</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="c1"># noinspection PyTypeChecker</span>
-    <span class="k">return</span> <span class="n">ParamFunctions</span><span class="p">(</span>
-        <span class="n">help_string</span><span class="o">=</span><span class="n">help_string</span><span class="p">,</span>
-        <span class="n">default</span><span class="o">=</span><span class="n">default</span><span class="p">,</span>
-        <span class="n">type_name</span><span class="o">=</span><span class="s2">&quot;List[str]&quot;</span><span class="p">,</span>
-        <span class="n">function_s2t</span><span class="o">=</span><span class="n">convert_string_to_list_str</span><span class="p">,</span>
-        <span class="n">function_t2s</span><span class="o">=</span><span class="n">convert_list_str_to_string</span><span class="p">,</span></div>
-    <span class="p">)</span>
-
-
-<div class="viewcode-block" id="create_int_or_none"><a class="viewcode-back" href="../../pytconf.html#pytconf.config.create_int_or_none">[docs]</a><span class="k">def</span> <span class="nf">create_int_or_none</span><span class="p">(</span><span class="n">help_string</span><span class="o">=</span><span class="n">NO_HELP</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">NO_DEFAULT</span><span class="p">):</span>
-    <span class="c1"># type: (str, Union[int, None, NO_DEFAULT_TYPE]) -&gt; Union[int, None]</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Create an int parameter</span>
-<span class="sd">    :param help_string:</span>
-<span class="sd">    :param default:</span>
-<span class="sd">    :return:</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="c1"># noinspection PyTypeChecker</span>
-    <span class="k">return</span> <span class="n">ParamFunctions</span><span class="p">(</span>
-        <span class="n">help_string</span><span class="o">=</span><span class="n">help_string</span><span class="p">,</span>
-        <span class="n">default</span><span class="o">=</span><span class="n">default</span><span class="p">,</span>
-        <span class="n">type_name</span><span class="o">=</span><span class="s2">&quot;Union[int, None]&quot;</span><span class="p">,</span>
-        <span class="n">function_s2t</span><span class="o">=</span><span class="n">convert_string_to_int_or_none</span><span class="p">,</span>
-        <span class="n">function_t2s</span><span class="o">=</span><span class="n">convert_int_or_none_to_string</span><span class="p">,</span></div>
-    <span class="p">)</span>
-
-
-<div class="viewcode-block" id="create_str"><a class="viewcode-back" href="../../pytconf.html#pytconf.config.create_str">[docs]</a><span class="k">def</span> <span class="nf">create_str</span><span class="p">(</span><span class="n">help_string</span><span class="o">=</span><span class="n">NO_HELP</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">NO_DEFAULT</span><span class="p">):</span>
-    <span class="c1"># type: (str, Union[str, NO_DEFAULT_TYPE]) -&gt; str</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Create a string parameter</span>
-<span class="sd">    :param help_string:</span>
-<span class="sd">    :param default:</span>
-<span class="sd">    :return:</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="c1"># noinspection PyTypeChecker</span>
-    <span class="k">return</span> <span class="n">ParamFunctions</span><span class="p">(</span>
-        <span class="n">help_string</span><span class="o">=</span><span class="n">help_string</span><span class="p">,</span>
-        <span class="n">default</span><span class="o">=</span><span class="n">default</span><span class="p">,</span>
-        <span class="n">type_name</span><span class="o">=</span><span class="s2">&quot;str&quot;</span><span class="p">,</span>
-        <span class="n">function_s2t</span><span class="o">=</span><span class="n">convert_string_to_string</span><span class="p">,</span>
-        <span class="n">function_t2s</span><span class="o">=</span><span class="n">convert_string_to_string</span><span class="p">,</span></div>
-    <span class="p">)</span>
-
-
-<div class="viewcode-block" id="create_bool"><a class="viewcode-back" href="../../pytconf.html#pytconf.config.create_bool">[docs]</a><span class="k">def</span> <span class="nf">create_bool</span><span class="p">(</span><span class="n">help_string</span><span class="o">=</span><span class="n">NO_HELP</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">NO_DEFAULT</span><span class="p">):</span>
-    <span class="c1"># type: (str, Union[bool, NO_DEFAULT_TYPE]) -&gt; bool</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Create a bool parameter</span>
-<span class="sd">    :param help_string:</span>
-<span class="sd">    :param default:</span>
-<span class="sd">    :return:</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="c1"># noinspection PyTypeChecker</span>
-    <span class="k">return</span> <span class="n">ParamFunctions</span><span class="p">(</span>
-        <span class="n">help_string</span><span class="o">=</span><span class="n">help_string</span><span class="p">,</span>
-        <span class="n">default</span><span class="o">=</span><span class="n">default</span><span class="p">,</span>
-        <span class="n">type_name</span><span class="o">=</span><span class="s2">&quot;bool&quot;</span><span class="p">,</span>
-        <span class="n">function_s2t</span><span class="o">=</span><span class="n">convert_string_to_bool</span><span class="p">,</span>
-        <span class="n">function_t2s</span><span class="o">=</span><span class="n">convert_bool_to_string</span><span class="p">,</span></div>
-    <span class="p">)</span>
-
-
-<div class="viewcode-block" id="create_new_file"><a class="viewcode-back" href="../../pytconf.html#pytconf.config.create_new_file">[docs]</a><span class="k">def</span> <span class="nf">create_new_file</span><span class="p">(</span><span class="n">help_string</span><span class="o">=</span><span class="n">NO_HELP</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">NO_DEFAULT</span><span class="p">,</span> <span class="n">suffixes</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-    <span class="c1"># type: (str, Union[str, NO_DEFAULT_TYPE], Union[List[str], None]) -&gt; str</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Create a new file parameter</span>
-<span class="sd">    :param help_string:</span>
-<span class="sd">    :param default:</span>
-<span class="sd">    :param suffixes:</span>
-<span class="sd">    :return:</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="c1"># noinspection PyTypeChecker</span>
-    <span class="k">return</span> <span class="n">ParamFilename</span><span class="p">(</span>
-        <span class="n">help_string</span><span class="o">=</span><span class="n">help_string</span><span class="p">,</span>
-        <span class="n">default</span><span class="o">=</span><span class="n">default</span><span class="p">,</span>
-        <span class="n">type_name</span><span class="o">=</span><span class="s2">&quot;new_file&quot;</span><span class="p">,</span>
-        <span class="n">suffixes</span><span class="o">=</span><span class="n">suffixes</span><span class="p">,</span></div>
-    <span class="p">)</span>
-
-
-<div class="viewcode-block" id="create_existing_file"><a class="viewcode-back" href="../../pytconf.html#pytconf.config.create_existing_file">[docs]</a><span class="k">def</span> <span class="nf">create_existing_file</span><span class="p">(</span><span class="n">help_string</span><span class="o">=</span><span class="n">NO_HELP</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">NO_DEFAULT</span><span class="p">,</span> <span class="n">suffixes</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-    <span class="c1"># type: (str, Union[str, NO_DEFAULT_TYPE], Union[List[str], None]) -&gt; str</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Create a new file parameter</span>
-<span class="sd">    :param help_string:</span>
-<span class="sd">    :param default:</span>
-<span class="sd">    :param suffixes:</span>
-<span class="sd">    :return:</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="c1"># noinspection PyTypeChecker</span>
-    <span class="k">return</span> <span class="n">ParamFilename</span><span class="p">(</span>
-        <span class="n">help_string</span><span class="o">=</span><span class="n">help_string</span><span class="p">,</span>
-        <span class="n">default</span><span class="o">=</span><span class="n">default</span><span class="p">,</span>
-        <span class="n">type_name</span><span class="o">=</span><span class="s2">&quot;existing_file&quot;</span><span class="p">,</span>
-        <span class="n">suffixes</span><span class="o">=</span><span class="n">suffixes</span><span class="p">,</span></div>
-    <span class="p">)</span>
-
-
 <div class="viewcode-block" id="ParamEnum"><a class="viewcode-back" href="../../pytconf.html#pytconf.config.ParamEnum">[docs]</a><span class="k">class</span> <span class="nc">ParamEnum</span><span class="p">(</span><span class="n">Param</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span>
             <span class="bp">self</span><span class="p">,</span>
@@ -403,66 +258,6 @@
 
 <div class="viewcode-block" id="ParamEnum.more_help"><a class="viewcode-back" href="../../pytconf.html#pytconf.config.ParamEnum.more_help">[docs]</a>    <span class="k">def</span> <span class="nf">more_help</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div></div>
         <span class="k">return</span> <span class="s2">&quot;allowed values </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">enum_type_to_list_str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">enum_type</span><span class="p">))</span>
-
-
-<div class="viewcode-block" id="create_enum"><a class="viewcode-back" href="../../pytconf.html#pytconf.config.create_enum">[docs]</a><span class="k">def</span> <span class="nf">create_enum</span><span class="p">(</span><span class="n">enum_type</span><span class="p">,</span> <span class="n">help_string</span><span class="o">=</span><span class="n">NO_HELP</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">NO_DEFAULT</span><span class="p">):</span>
-    <span class="c1"># type: (Type[Enum], str, Union[Any, NO_DEFAULT_TYPE]) -&gt; Type[Enum]</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Create an enum config</span>
-<span class="sd">    :param enum_type:</span>
-<span class="sd">    :param help_string:</span>
-<span class="sd">    :param default:</span>
-<span class="sd">    :return:</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="c1"># noinspection PyTypeChecker</span>
-    <span class="k">return</span> <span class="n">ParamEnum</span><span class="p">(</span>
-        <span class="n">help_string</span><span class="o">=</span><span class="n">help_string</span><span class="p">,</span>
-        <span class="n">default</span><span class="o">=</span><span class="n">default</span><span class="p">,</span>
-        <span class="n">enum_type</span><span class="o">=</span><span class="n">enum_type</span><span class="p">,</span></div>
-    <span class="p">)</span>
-
-
-<div class="viewcode-block" id="ParamChoice"><a class="viewcode-back" href="../../pytconf.html#pytconf.config.ParamChoice">[docs]</a><span class="k">class</span> <span class="nc">ParamChoice</span><span class="p">(</span><span class="n">Param</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span>
-            <span class="bp">self</span><span class="p">,</span>
-            <span class="n">help_string</span><span class="o">=</span><span class="n">NO_HELP</span><span class="p">,</span>
-            <span class="n">default</span><span class="o">=</span><span class="n">NO_DEFAULT</span><span class="p">,</span>
-            <span class="n">choice_list</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>  <span class="c1"># type: List[str]</span>
-    <span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">ParamChoice</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
-            <span class="n">help_string</span><span class="o">=</span><span class="n">help_string</span><span class="p">,</span>
-            <span class="n">default</span><span class="o">=</span><span class="n">default</span><span class="p">,</span>
-            <span class="n">type_name</span><span class="o">=</span><span class="s2">&quot;Choice&quot;</span><span class="p">,</span>
-        <span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">choice_list</span> <span class="o">=</span> <span class="n">choice_list</span>
-
-<div class="viewcode-block" id="ParamChoice.s2t"><a class="viewcode-back" href="../../pytconf.html#pytconf.config.ParamChoice.s2t">[docs]</a>    <span class="k">def</span> <span class="nf">s2t</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">):</span>
-        <span class="c1"># type: (str) -&gt; Any</span></div>
-        <span class="k">return</span> <span class="n">s</span>
-
-<div class="viewcode-block" id="ParamChoice.t2s"><a class="viewcode-back" href="../../pytconf.html#pytconf.config.ParamChoice.t2s">[docs]</a>    <span class="k">def</span> <span class="nf">t2s</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
-        <span class="c1"># type: (Any) -&gt; str</span></div>
-        <span class="k">return</span> <span class="n">t</span>
-
-<div class="viewcode-block" id="ParamChoice.more_help"><a class="viewcode-back" href="../../pytconf.html#pytconf.config.ParamChoice.more_help">[docs]</a>    <span class="k">def</span> <span class="nf">more_help</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div></div>
-        <span class="k">return</span> <span class="s2">&quot;allowed values </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">choice_list</span><span class="p">))</span>
-
-
-<div class="viewcode-block" id="create_choice"><a class="viewcode-back" href="../../pytconf.html#pytconf.config.create_choice">[docs]</a><span class="k">def</span> <span class="nf">create_choice</span><span class="p">(</span><span class="n">choice_list</span><span class="p">,</span> <span class="n">help_string</span><span class="o">=</span><span class="n">NO_HELP</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">NO_DEFAULT</span><span class="p">):</span>
-    <span class="c1"># type: (List[str], str, Union[Any, NO_DEFAULT_TYPE]) -&gt; str</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Create a choice config</span>
-<span class="sd">    :param choice_list:</span>
-<span class="sd">    :param help_string:</span>
-<span class="sd">    :param default:</span>
-<span class="sd">    :return:</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="c1"># noinspection PyTypeChecker</span>
-    <span class="k">return</span> <span class="n">ParamChoice</span><span class="p">(</span>
-        <span class="n">help_string</span><span class="o">=</span><span class="n">help_string</span><span class="p">,</span>
-        <span class="n">default</span><span class="o">=</span><span class="n">default</span><span class="p">,</span>
-        <span class="n">choice_list</span><span class="o">=</span><span class="n">choice_list</span><span class="p">,</span></div>
-    <span class="p">)</span>
 
 
 <div class="viewcode-block" id="ParamEnumSubset"><a class="viewcode-back" href="../../pytconf.html#pytconf.config.ParamEnumSubset">[docs]</a><span class="k">class</span> <span class="nc">ParamEnumSubset</span><span class="p">(</span><span class="n">Param</span><span class="p">):</span>
@@ -498,21 +293,232 @@
         <span class="k">return</span> <span class="s2">&quot;allowed values </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">enum_type_to_list_str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">enum_type</span><span class="p">))</span>
 
 
-<div class="viewcode-block" id="create_enum_subset"><a class="viewcode-back" href="../../pytconf.html#pytconf.config.create_enum_subset">[docs]</a><span class="k">def</span> <span class="nf">create_enum_subset</span><span class="p">(</span><span class="n">enum_type</span><span class="p">,</span> <span class="n">help_string</span><span class="o">=</span><span class="n">NO_HELP</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">NO_DEFAULT</span><span class="p">):</span>
-    <span class="c1"># type: (Type[Enum], str, Union[Set[Type[Enum]], NO_DEFAULT_TYPE]) -&gt; EnumSubset</span>
+<div class="viewcode-block" id="ParamChoice"><a class="viewcode-back" href="../../pytconf.html#pytconf.config.ParamChoice">[docs]</a><span class="k">class</span> <span class="nc">ParamChoice</span><span class="p">(</span><span class="n">Param</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">help_string</span><span class="o">=</span><span class="n">NO_HELP</span><span class="p">,</span>
+            <span class="n">default</span><span class="o">=</span><span class="n">NO_DEFAULT</span><span class="p">,</span>
+            <span class="n">choice_list</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>  <span class="c1"># type: List[str]</span>
+    <span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ParamChoice</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="n">help_string</span><span class="o">=</span><span class="n">help_string</span><span class="p">,</span>
+            <span class="n">default</span><span class="o">=</span><span class="n">default</span><span class="p">,</span>
+            <span class="n">type_name</span><span class="o">=</span><span class="s2">&quot;Choice&quot;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">choice_list</span> <span class="o">=</span> <span class="n">choice_list</span>
+
+<div class="viewcode-block" id="ParamChoice.s2t"><a class="viewcode-back" href="../../pytconf.html#pytconf.config.ParamChoice.s2t">[docs]</a>    <span class="k">def</span> <span class="nf">s2t</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">):</span>
+        <span class="c1"># type: (str) -&gt; Any</span></div>
+        <span class="k">return</span> <span class="n">s</span>
+
+<div class="viewcode-block" id="ParamChoice.t2s"><a class="viewcode-back" href="../../pytconf.html#pytconf.config.ParamChoice.t2s">[docs]</a>    <span class="k">def</span> <span class="nf">t2s</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
+        <span class="c1"># type: (Any) -&gt; str</span></div>
+        <span class="k">return</span> <span class="n">t</span>
+
+<div class="viewcode-block" id="ParamChoice.more_help"><a class="viewcode-back" href="../../pytconf.html#pytconf.config.ParamChoice.more_help">[docs]</a>    <span class="k">def</span> <span class="nf">more_help</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div></div>
+        <span class="k">return</span> <span class="s2">&quot;allowed values </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">choice_list</span><span class="p">))</span>
+
+
+<div class="viewcode-block" id="ParamCreator"><a class="viewcode-back" href="../../pytconf.html#pytconf.config.ParamCreator">[docs]</a><span class="k">class</span> <span class="nc">ParamCreator</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Create an enum config</span>
-<span class="sd">    :param enum_type:</span>
-<span class="sd">    :param help_string:</span>
-<span class="sd">    :param default:</span>
-<span class="sd">    :return:</span>
+<span class="sd">    Static namespace with all the param creation functions.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="c1"># noinspection PyTypeChecker</span>
-    <span class="k">return</span> <span class="n">ParamEnumSubset</span><span class="p">(</span>
-        <span class="n">help_string</span><span class="o">=</span><span class="n">help_string</span><span class="p">,</span>
-        <span class="n">default</span><span class="o">=</span><span class="n">default</span><span class="p">,</span>
-        <span class="n">enum_type</span><span class="o">=</span><span class="n">enum_type</span><span class="p">,</span></div>
-    <span class="p">)</span>
+
+<div class="viewcode-block" id="ParamCreator.create_int"><a class="viewcode-back" href="../../pytconf.html#pytconf.config.ParamCreator.create_int">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">create_int</span><span class="p">(</span><span class="n">help_string</span><span class="o">=</span><span class="n">NO_HELP</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">NO_DEFAULT</span><span class="p">):</span>
+        <span class="c1"># type: (str, Union[int, NO_DEFAULT_TYPE]) -&gt; int</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create an int parameter</span>
+<span class="sd">        :param help_string:</span>
+<span class="sd">        :param default:</span>
+<span class="sd">        :return:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># noinspection PyTypeChecker</span>
+        <span class="k">return</span> <span class="n">ParamFunctions</span><span class="p">(</span>
+            <span class="n">help_string</span><span class="o">=</span><span class="n">help_string</span><span class="p">,</span>
+            <span class="n">default</span><span class="o">=</span><span class="n">default</span><span class="p">,</span>
+            <span class="n">type_name</span><span class="o">=</span><span class="s2">&quot;int&quot;</span><span class="p">,</span>
+            <span class="n">function_s2t</span><span class="o">=</span><span class="n">convert_string_to_int</span><span class="p">,</span>
+            <span class="n">function_t2s</span><span class="o">=</span><span class="n">convert_int_to_string</span><span class="p">,</span>
+            <span class="n">function_s2t_generate_from_default</span><span class="o">=</span><span class="n">convert_string_to_int_default</span><span class="p">,</span></div>
+        <span class="p">)</span>
+
+<div class="viewcode-block" id="ParamCreator.create_list_int"><a class="viewcode-back" href="../../pytconf.html#pytconf.config.ParamCreator.create_list_int">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">create_list_int</span><span class="p">(</span><span class="n">help_string</span><span class="o">=</span><span class="n">NO_HELP</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">NO_DEFAULT</span><span class="p">):</span>
+        <span class="c1"># type: (str, Union[List[int], NO_DEFAULT_TYPE]) -&gt; List[int]</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create a List[int] parameter</span>
+<span class="sd">        :param help_string:</span>
+<span class="sd">        :param default:</span>
+<span class="sd">        :return:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># noinspection PyTypeChecker</span>
+        <span class="k">return</span> <span class="n">ParamFunctions</span><span class="p">(</span>
+            <span class="n">help_string</span><span class="o">=</span><span class="n">help_string</span><span class="p">,</span>
+            <span class="n">default</span><span class="o">=</span><span class="n">default</span><span class="p">,</span>
+            <span class="n">type_name</span><span class="o">=</span><span class="s2">&quot;List[int]&quot;</span><span class="p">,</span>
+            <span class="n">function_s2t</span><span class="o">=</span><span class="n">convert_string_to_list_int</span><span class="p">,</span>
+            <span class="n">function_t2s</span><span class="o">=</span><span class="n">convert_list_int_to_string</span><span class="p">,</span></div>
+        <span class="p">)</span>
+
+<div class="viewcode-block" id="ParamCreator.create_list_str"><a class="viewcode-back" href="../../pytconf.html#pytconf.config.ParamCreator.create_list_str">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">create_list_str</span><span class="p">(</span><span class="n">help_string</span><span class="o">=</span><span class="n">NO_HELP</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">NO_DEFAULT</span><span class="p">):</span>
+        <span class="c1"># type: (str, Union[List[str], NO_DEFAULT_TYPE]) -&gt; List[str]</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create a List[str] parameter</span>
+<span class="sd">        :param help_string:</span>
+<span class="sd">        :param default:</span>
+<span class="sd">        :return:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># noinspection PyTypeChecker</span>
+        <span class="k">return</span> <span class="n">ParamFunctions</span><span class="p">(</span>
+            <span class="n">help_string</span><span class="o">=</span><span class="n">help_string</span><span class="p">,</span>
+            <span class="n">default</span><span class="o">=</span><span class="n">default</span><span class="p">,</span>
+            <span class="n">type_name</span><span class="o">=</span><span class="s2">&quot;List[str]&quot;</span><span class="p">,</span>
+            <span class="n">function_s2t</span><span class="o">=</span><span class="n">convert_string_to_list_str</span><span class="p">,</span>
+            <span class="n">function_t2s</span><span class="o">=</span><span class="n">convert_list_str_to_string</span><span class="p">,</span></div>
+        <span class="p">)</span>
+
+<div class="viewcode-block" id="ParamCreator.create_int_or_none"><a class="viewcode-back" href="../../pytconf.html#pytconf.config.ParamCreator.create_int_or_none">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">create_int_or_none</span><span class="p">(</span><span class="n">help_string</span><span class="o">=</span><span class="n">NO_HELP</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">NO_DEFAULT</span><span class="p">):</span>
+        <span class="c1"># type: (str, Union[int, None, NO_DEFAULT_TYPE]) -&gt; Union[int, None]</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create an int parameter</span>
+<span class="sd">        :param help_string:</span>
+<span class="sd">        :param default:</span>
+<span class="sd">        :return:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># noinspection PyTypeChecker</span>
+        <span class="k">return</span> <span class="n">ParamFunctions</span><span class="p">(</span>
+            <span class="n">help_string</span><span class="o">=</span><span class="n">help_string</span><span class="p">,</span>
+            <span class="n">default</span><span class="o">=</span><span class="n">default</span><span class="p">,</span>
+            <span class="n">type_name</span><span class="o">=</span><span class="s2">&quot;Union[int, None]&quot;</span><span class="p">,</span>
+            <span class="n">function_s2t</span><span class="o">=</span><span class="n">convert_string_to_int_or_none</span><span class="p">,</span>
+            <span class="n">function_t2s</span><span class="o">=</span><span class="n">convert_int_or_none_to_string</span><span class="p">,</span></div>
+        <span class="p">)</span>
+
+<div class="viewcode-block" id="ParamCreator.create_str"><a class="viewcode-back" href="../../pytconf.html#pytconf.config.ParamCreator.create_str">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">create_str</span><span class="p">(</span><span class="n">help_string</span><span class="o">=</span><span class="n">NO_HELP</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">NO_DEFAULT</span><span class="p">):</span>
+        <span class="c1"># type: (str, Union[str, NO_DEFAULT_TYPE]) -&gt; str</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create a string parameter</span>
+<span class="sd">        :param help_string:</span>
+<span class="sd">        :param default:</span>
+<span class="sd">        :return:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># noinspection PyTypeChecker</span>
+        <span class="k">return</span> <span class="n">ParamFunctions</span><span class="p">(</span>
+            <span class="n">help_string</span><span class="o">=</span><span class="n">help_string</span><span class="p">,</span>
+            <span class="n">default</span><span class="o">=</span><span class="n">default</span><span class="p">,</span>
+            <span class="n">type_name</span><span class="o">=</span><span class="s2">&quot;str&quot;</span><span class="p">,</span>
+            <span class="n">function_s2t</span><span class="o">=</span><span class="n">convert_string_to_string</span><span class="p">,</span>
+            <span class="n">function_t2s</span><span class="o">=</span><span class="n">convert_string_to_string</span><span class="p">,</span></div>
+        <span class="p">)</span>
+
+<div class="viewcode-block" id="ParamCreator.create_bool"><a class="viewcode-back" href="../../pytconf.html#pytconf.config.ParamCreator.create_bool">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">create_bool</span><span class="p">(</span><span class="n">help_string</span><span class="o">=</span><span class="n">NO_HELP</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">NO_DEFAULT</span><span class="p">):</span>
+        <span class="c1"># type: (str, Union[bool, NO_DEFAULT_TYPE]) -&gt; bool</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create a bool parameter</span>
+<span class="sd">        :param help_string:</span>
+<span class="sd">        :param default:</span>
+<span class="sd">        :return:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># noinspection PyTypeChecker</span>
+        <span class="k">return</span> <span class="n">ParamFunctions</span><span class="p">(</span>
+            <span class="n">help_string</span><span class="o">=</span><span class="n">help_string</span><span class="p">,</span>
+            <span class="n">default</span><span class="o">=</span><span class="n">default</span><span class="p">,</span>
+            <span class="n">type_name</span><span class="o">=</span><span class="s2">&quot;bool&quot;</span><span class="p">,</span>
+            <span class="n">function_s2t</span><span class="o">=</span><span class="n">convert_string_to_bool</span><span class="p">,</span>
+            <span class="n">function_t2s</span><span class="o">=</span><span class="n">convert_bool_to_string</span><span class="p">,</span></div>
+        <span class="p">)</span>
+
+<div class="viewcode-block" id="ParamCreator.create_new_file"><a class="viewcode-back" href="../../pytconf.html#pytconf.config.ParamCreator.create_new_file">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">create_new_file</span><span class="p">(</span><span class="n">help_string</span><span class="o">=</span><span class="n">NO_HELP</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">NO_DEFAULT</span><span class="p">,</span> <span class="n">suffixes</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="c1"># type: (str, Union[str, NO_DEFAULT_TYPE], Union[List[str], None]) -&gt; str</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create a new file parameter</span>
+<span class="sd">        :param help_string:</span>
+<span class="sd">        :param default:</span>
+<span class="sd">        :param suffixes:</span>
+<span class="sd">        :return:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># noinspection PyTypeChecker</span>
+        <span class="k">return</span> <span class="n">ParamFilename</span><span class="p">(</span>
+            <span class="n">help_string</span><span class="o">=</span><span class="n">help_string</span><span class="p">,</span>
+            <span class="n">default</span><span class="o">=</span><span class="n">default</span><span class="p">,</span>
+            <span class="n">type_name</span><span class="o">=</span><span class="s2">&quot;new_file&quot;</span><span class="p">,</span>
+            <span class="n">suffixes</span><span class="o">=</span><span class="n">suffixes</span><span class="p">,</span></div>
+        <span class="p">)</span>
+
+<div class="viewcode-block" id="ParamCreator.create_existing_file"><a class="viewcode-back" href="../../pytconf.html#pytconf.config.ParamCreator.create_existing_file">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">create_existing_file</span><span class="p">(</span><span class="n">help_string</span><span class="o">=</span><span class="n">NO_HELP</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">NO_DEFAULT</span><span class="p">,</span> <span class="n">suffixes</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="c1"># type: (str, Union[str, NO_DEFAULT_TYPE], Union[List[str], None]) -&gt; str</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create a new file parameter</span>
+<span class="sd">        :param help_string:</span>
+<span class="sd">        :param default:</span>
+<span class="sd">        :param suffixes:</span>
+<span class="sd">        :return:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># noinspection PyTypeChecker</span>
+        <span class="k">return</span> <span class="n">ParamFilename</span><span class="p">(</span>
+            <span class="n">help_string</span><span class="o">=</span><span class="n">help_string</span><span class="p">,</span>
+            <span class="n">default</span><span class="o">=</span><span class="n">default</span><span class="p">,</span>
+            <span class="n">type_name</span><span class="o">=</span><span class="s2">&quot;existing_file&quot;</span><span class="p">,</span>
+            <span class="n">suffixes</span><span class="o">=</span><span class="n">suffixes</span><span class="p">,</span></div>
+        <span class="p">)</span>
+
+<div class="viewcode-block" id="ParamCreator.create_choice"><a class="viewcode-back" href="../../pytconf.html#pytconf.config.ParamCreator.create_choice">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">create_choice</span><span class="p">(</span><span class="n">choice_list</span><span class="p">,</span> <span class="n">help_string</span><span class="o">=</span><span class="n">NO_HELP</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">NO_DEFAULT</span><span class="p">):</span>
+        <span class="c1"># type: (List[str], str, Union[Any, NO_DEFAULT_TYPE]) -&gt; str</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create a choice config</span>
+<span class="sd">        :param choice_list:</span>
+<span class="sd">        :param help_string:</span>
+<span class="sd">        :param default:</span>
+<span class="sd">        :return:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># noinspection PyTypeChecker</span>
+        <span class="k">return</span> <span class="n">ParamChoice</span><span class="p">(</span>
+            <span class="n">help_string</span><span class="o">=</span><span class="n">help_string</span><span class="p">,</span>
+            <span class="n">default</span><span class="o">=</span><span class="n">default</span><span class="p">,</span>
+            <span class="n">choice_list</span><span class="o">=</span><span class="n">choice_list</span><span class="p">,</span></div>
+        <span class="p">)</span>
+
+<div class="viewcode-block" id="ParamCreator.create_enum"><a class="viewcode-back" href="../../pytconf.html#pytconf.config.ParamCreator.create_enum">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">create_enum</span><span class="p">(</span><span class="n">enum_type</span><span class="p">,</span> <span class="n">help_string</span><span class="o">=</span><span class="n">NO_HELP</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">NO_DEFAULT</span><span class="p">):</span>
+        <span class="c1"># type: (Type[Enum], str, Union[Any, NO_DEFAULT_TYPE]) -&gt; Type[Enum]</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create an enum config</span>
+<span class="sd">        :param enum_type:</span>
+<span class="sd">        :param help_string:</span>
+<span class="sd">        :param default:</span>
+<span class="sd">        :return:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># noinspection PyTypeChecker</span>
+        <span class="k">return</span> <span class="n">ParamEnum</span><span class="p">(</span>
+            <span class="n">help_string</span><span class="o">=</span><span class="n">help_string</span><span class="p">,</span>
+            <span class="n">default</span><span class="o">=</span><span class="n">default</span><span class="p">,</span>
+            <span class="n">enum_type</span><span class="o">=</span><span class="n">enum_type</span><span class="p">,</span></div>
+        <span class="p">)</span>
+
+<div class="viewcode-block" id="ParamCreator.create_enum_subset"><a class="viewcode-back" href="../../pytconf.html#pytconf.config.ParamCreator.create_enum_subset">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">create_enum_subset</span><span class="p">(</span><span class="n">enum_type</span><span class="p">,</span> <span class="n">help_string</span><span class="o">=</span><span class="n">NO_HELP</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">NO_DEFAULT</span><span class="p">):</span>
+        <span class="c1"># type: (Type[Enum], str, Union[Set[Type[Enum]], NO_DEFAULT_TYPE]) -&gt; EnumSubset</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create an enum config</span>
+<span class="sd">        :param enum_type:</span>
+<span class="sd">        :param help_string:</span>
+<span class="sd">        :param default:</span>
+<span class="sd">        :return:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># noinspection PyTypeChecker</span>
+        <span class="k">return</span> <span class="n">ParamEnumSubset</span><span class="p">(</span>
+            <span class="n">help_string</span><span class="o">=</span><span class="n">help_string</span><span class="p">,</span>
+            <span class="n">default</span><span class="o">=</span><span class="n">default</span><span class="p">,</span>
+            <span class="n">enum_type</span><span class="o">=</span><span class="n">enum_type</span><span class="p">,</span></div></div>
+        <span class="p">)</span>
 
 
 <span class="n">function_name_to_configs</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>  <span class="c1"># type: Dict[str, List[Config]]</span>

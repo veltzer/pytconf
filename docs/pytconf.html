@@ -152,6 +152,117 @@
 </dd></dl>
 
 <dl class="class">
+<dt id="pytconf.config.ParamCreator">
+<em class="property">class </em><code class="descclassname">pytconf.config.</code><code class="descname">ParamCreator</code><a class="reference internal" href="_modules/pytconf/config.html#ParamCreator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.config.ParamCreator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Static namespace with all the param creation functions.</p>
+<dl class="staticmethod">
+<dt id="pytconf.config.ParamCreator.create_bool">
+<em class="property">static </em><code class="descname">create_bool</code><span class="sig-paren">(</span><em>default={}</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytconf/config.html#ParamCreator.create_bool"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.config.ParamCreator.create_bool" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a bool parameter
+:param help_string:
+:param default:
+:return:</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="pytconf.config.ParamCreator.create_choice">
+<em class="property">static </em><code class="descname">create_choice</code><span class="sig-paren">(</span><em>help_string='No help for this configuration option'</em>, <em>default={}</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytconf/config.html#ParamCreator.create_choice"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.config.ParamCreator.create_choice" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a choice config
+:param choice_list:
+:param help_string:
+:param default:
+:return:</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="pytconf.config.ParamCreator.create_enum">
+<em class="property">static </em><code class="descname">create_enum</code><span class="sig-paren">(</span><em>help_string='No help for this configuration option'</em>, <em>default={}</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytconf/config.html#ParamCreator.create_enum"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.config.ParamCreator.create_enum" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create an enum config
+:param enum_type:
+:param help_string:
+:param default:
+:return:</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="pytconf.config.ParamCreator.create_enum_subset">
+<em class="property">static </em><code class="descname">create_enum_subset</code><span class="sig-paren">(</span><em>help_string='No help for this configuration option'</em>, <em>default={}</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytconf/config.html#ParamCreator.create_enum_subset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.config.ParamCreator.create_enum_subset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create an enum config
+:param enum_type:
+:param help_string:
+:param default:
+:return:</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="pytconf.config.ParamCreator.create_existing_file">
+<em class="property">static </em><code class="descname">create_existing_file</code><span class="sig-paren">(</span><em>default={}</em>, <em>suffixes=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytconf/config.html#ParamCreator.create_existing_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.config.ParamCreator.create_existing_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a new file parameter
+:param help_string:
+:param default:
+:param suffixes:
+:return:</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="pytconf.config.ParamCreator.create_int">
+<em class="property">static </em><code class="descname">create_int</code><span class="sig-paren">(</span><em>default={}</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytconf/config.html#ParamCreator.create_int"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.config.ParamCreator.create_int" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create an int parameter
+:param help_string:
+:param default:
+:return:</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="pytconf.config.ParamCreator.create_int_or_none">
+<em class="property">static </em><code class="descname">create_int_or_none</code><span class="sig-paren">(</span><em>default={}</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytconf/config.html#ParamCreator.create_int_or_none"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.config.ParamCreator.create_int_or_none" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create an int parameter
+:param help_string:
+:param default:
+:return:</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="pytconf.config.ParamCreator.create_list_int">
+<em class="property">static </em><code class="descname">create_list_int</code><span class="sig-paren">(</span><em>default={}</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytconf/config.html#ParamCreator.create_list_int"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.config.ParamCreator.create_list_int" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a List[int] parameter
+:param help_string:
+:param default:
+:return:</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="pytconf.config.ParamCreator.create_list_str">
+<em class="property">static </em><code class="descname">create_list_str</code><span class="sig-paren">(</span><em>default={}</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytconf/config.html#ParamCreator.create_list_str"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.config.ParamCreator.create_list_str" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a List[str] parameter
+:param help_string:
+:param default:
+:return:</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="pytconf.config.ParamCreator.create_new_file">
+<em class="property">static </em><code class="descname">create_new_file</code><span class="sig-paren">(</span><em>default={}</em>, <em>suffixes=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytconf/config.html#ParamCreator.create_new_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.config.ParamCreator.create_new_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a new file parameter
+:param help_string:
+:param default:
+:param suffixes:
+:return:</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="pytconf.config.ParamCreator.create_str">
+<em class="property">static </em><code class="descname">create_str</code><span class="sig-paren">(</span><em>default={}</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytconf/config.html#ParamCreator.create_str"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.config.ParamCreator.create_str" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a string parameter
+:param help_string:
+:param default:
+:return:</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
 <dt id="pytconf.config.ParamEnum">
 <em class="property">class </em><code class="descclassname">pytconf.config.</code><code class="descname">ParamEnum</code><span class="sig-paren">(</span><em>help_string='No help for this configuration option'</em>, <em>default={}</em>, <em>enum_type=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytconf/config.html#ParamEnum"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.config.ParamEnum" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#pytconf.config.Param" title="pytconf.config.Param"><code class="xref py py-class docutils literal notranslate"><span class="pre">pytconf.config.Param</span></code></a></p>
@@ -255,110 +366,6 @@
 <dt id="pytconf.config.config_arg_parse_and_launch">
 <code class="descclassname">pytconf.config.</code><code class="descname">config_arg_parse_and_launch</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytconf/config.html#config_arg_parse_and_launch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.config.config_arg_parse_and_launch" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
-
-<dl class="function">
-<dt id="pytconf.config.create_bool">
-<code class="descclassname">pytconf.config.</code><code class="descname">create_bool</code><span class="sig-paren">(</span><em>help_string='No help for this configuration option'</em>, <em>default={}</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytconf/config.html#create_bool"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.config.create_bool" title="Permalink to this definition">¶</a></dt>
-<dd><p>Create a bool parameter
-:param help_string:
-:param default:
-:return:</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="pytconf.config.create_choice">
-<code class="descclassname">pytconf.config.</code><code class="descname">create_choice</code><span class="sig-paren">(</span><em>choice_list</em>, <em>help_string='No help for this configuration option'</em>, <em>default={}</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytconf/config.html#create_choice"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.config.create_choice" title="Permalink to this definition">¶</a></dt>
-<dd><p>Create a choice config
-:param choice_list:
-:param help_string:
-:param default:
-:return:</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="pytconf.config.create_enum">
-<code class="descclassname">pytconf.config.</code><code class="descname">create_enum</code><span class="sig-paren">(</span><em>enum_type</em>, <em>help_string='No help for this configuration option'</em>, <em>default={}</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytconf/config.html#create_enum"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.config.create_enum" title="Permalink to this definition">¶</a></dt>
-<dd><p>Create an enum config
-:param enum_type:
-:param help_string:
-:param default:
-:return:</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="pytconf.config.create_enum_subset">
-<code class="descclassname">pytconf.config.</code><code class="descname">create_enum_subset</code><span class="sig-paren">(</span><em>enum_type</em>, <em>help_string='No help for this configuration option'</em>, <em>default={}</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytconf/config.html#create_enum_subset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.config.create_enum_subset" title="Permalink to this definition">¶</a></dt>
-<dd><p>Create an enum config
-:param enum_type:
-:param help_string:
-:param default:
-:return:</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="pytconf.config.create_existing_file">
-<code class="descclassname">pytconf.config.</code><code class="descname">create_existing_file</code><span class="sig-paren">(</span><em>help_string='No help for this configuration option'</em>, <em>default={}</em>, <em>suffixes=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytconf/config.html#create_existing_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.config.create_existing_file" title="Permalink to this definition">¶</a></dt>
-<dd><p>Create a new file parameter
-:param help_string:
-:param default:
-:param suffixes:
-:return:</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="pytconf.config.create_int">
-<code class="descclassname">pytconf.config.</code><code class="descname">create_int</code><span class="sig-paren">(</span><em>help_string='No help for this configuration option'</em>, <em>default={}</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytconf/config.html#create_int"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.config.create_int" title="Permalink to this definition">¶</a></dt>
-<dd><p>Create an int parameter
-:param help_string:
-:param default:
-:return:</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="pytconf.config.create_int_or_none">
-<code class="descclassname">pytconf.config.</code><code class="descname">create_int_or_none</code><span class="sig-paren">(</span><em>help_string='No help for this configuration option'</em>, <em>default={}</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytconf/config.html#create_int_or_none"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.config.create_int_or_none" title="Permalink to this definition">¶</a></dt>
-<dd><p>Create an int parameter
-:param help_string:
-:param default:
-:return:</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="pytconf.config.create_list_int">
-<code class="descclassname">pytconf.config.</code><code class="descname">create_list_int</code><span class="sig-paren">(</span><em>help_string='No help for this configuration option'</em>, <em>default={}</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytconf/config.html#create_list_int"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.config.create_list_int" title="Permalink to this definition">¶</a></dt>
-<dd><p>Create a List[int] parameter
-:param help_string:
-:param default:
-:return:</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="pytconf.config.create_list_str">
-<code class="descclassname">pytconf.config.</code><code class="descname">create_list_str</code><span class="sig-paren">(</span><em>help_string='No help for this configuration option'</em>, <em>default={}</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytconf/config.html#create_list_str"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.config.create_list_str" title="Permalink to this definition">¶</a></dt>
-<dd><p>Create a List[str] parameter
-:param help_string:
-:param default:
-:return:</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="pytconf.config.create_new_file">
-<code class="descclassname">pytconf.config.</code><code class="descname">create_new_file</code><span class="sig-paren">(</span><em>help_string='No help for this configuration option'</em>, <em>default={}</em>, <em>suffixes=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytconf/config.html#create_new_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.config.create_new_file" title="Permalink to this definition">¶</a></dt>
-<dd><p>Create a new file parameter
-:param help_string:
-:param default:
-:param suffixes:
-:return:</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="pytconf.config.create_str">
-<code class="descclassname">pytconf.config.</code><code class="descname">create_str</code><span class="sig-paren">(</span><em>help_string='No help for this configuration option'</em>, <em>default={}</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytconf/config.html#create_str"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.config.create_str" title="Permalink to this definition">¶</a></dt>
-<dd><p>Create a string parameter
-:param help_string:
-:param default:
-:return:</p>
-</dd></dl>
 
 <dl class="function">
 <dt id="pytconf.config.parse_args">
