@@ -1,4 +1,10 @@
 - do correct collection of arguments (--foo=bar and --foo bar)
+- find how to make it easy for people using pytconf to find all the
+	"create_XXX" functions.
+	currently they have to import each one seperated.
+	Maybe one static class that has all of these are members?
+	Maybe the "Config" parent can have all of these as members?
+	...
 - gather all the create_* function together into a static class.
 	This will enable users to auto complete all the creators.
 - once myenv supports more than one virtual env have this project
