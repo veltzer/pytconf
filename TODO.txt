@@ -9,5 +9,20 @@
 - make each parameters have a suggester class attached. This will suggest
 	values to a user that needs to put this parameter in.
 - make each parameter have a gui attached to be filled by gui.
+	this means that I could run an app that needs parameters and just fill
+	then out using tui.
+- have each class of configuration remember recent values users used to fill
+	them out. The we can use them for:
+	- auto filling the boxes in the tui for running the code.
+	- showing them in the --help to remind people of latest values.
+	- reminding people of latest values.
+		app --filename @show_recent
+	Things to think about:
+	- how can we share recent values between parameters?
+	For instance: I want recent files to be shared between:
+		ConfigInput.filename
+	and:
+		ConfigOutput.filename
+	how do we achieve that?
 - make sure that we can easily create a app based on pytconf without much
 	fanfare (groups, main etc).
