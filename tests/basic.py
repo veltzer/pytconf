@@ -26,11 +26,11 @@ def command():
 
 @register_main()
 def main():
+    """
+        This is a test
+    """
     if sys.version_info[0] != 2:
         raise ValueError("only test this with python2")
-    """
-    This is a test
-    """
     config_arg_parse_and_launch()
 
 
