@@ -506,6 +506,24 @@ class ParamCreator(object):
             enum_type=enum_type,
         )
 
+    @staticmethod
+    def create_existing_bucket(help_string=NO_HELP, default=NO_DEFAULT):
+        # type: (str, Union[str, NO_DEFAULT_TYPE]) -> str
+        """
+        Create a bucket name on gcp
+        :param help_string:
+        :param default:
+        :return:
+        """
+        # noinspection PyTypeChecker
+        return ParamFunctions(
+            help_string=help_string,
+            default=default,
+            type_name="bucket_name",
+            function_s2t=convert_string_to_string,
+            function_t2s=convert_string_to_string,
+        )
+
 
 function_name_to_configs = dict()  # type: Dict[str, List[Config]]
 function_name_to_suggest_configs = dict()  # type: Dict[str, List[Config]]
