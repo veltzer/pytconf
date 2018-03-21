@@ -438,6 +438,24 @@ class ParamCreator(object):
         )
 
     @staticmethod
+    def create_existing_folder(help_string=NO_HELP, default=NO_DEFAULT, suffixes=None):
+        # type: (str, Union[str, NO_DEFAULT_TYPE], Union[List[str], None]) -> str
+        """
+        Create a new folder parameter
+        :param help_string:
+        :param default:
+        :param suffixes:
+        :return:
+        """
+        # noinspection PyTypeChecker
+        return ParamFilename(
+            help_string=help_string,
+            default=default,
+            type_name="existing_folder",
+            suffixes=suffixes,
+        )
+
+    @staticmethod
     def create_choice(choice_list, help_string=NO_HELP, default=NO_DEFAULT):
         # type: (List[str], str, Union[Any, NO_DEFAULT_TYPE]) -> str
         """
