@@ -535,7 +535,25 @@
         <span class="k">return</span> <span class="n">ParamEnumSubset</span><span class="p">(</span>
             <span class="n">help_string</span><span class="o">=</span><span class="n">help_string</span><span class="p">,</span>
             <span class="n">default</span><span class="o">=</span><span class="n">default</span><span class="p">,</span>
-            <span class="n">enum_type</span><span class="o">=</span><span class="n">enum_type</span><span class="p">,</span></div></div>
+            <span class="n">enum_type</span><span class="o">=</span><span class="n">enum_type</span><span class="p">,</span></div>
+        <span class="p">)</span>
+
+<div class="viewcode-block" id="ParamCreator.create_existing_bucket"><a class="viewcode-back" href="../../pytconf.html#pytconf.config.ParamCreator.create_existing_bucket">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">create_existing_bucket</span><span class="p">(</span><span class="n">help_string</span><span class="o">=</span><span class="n">NO_HELP</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">NO_DEFAULT</span><span class="p">):</span>
+        <span class="c1"># type: (str, Union[str, NO_DEFAULT_TYPE]) -&gt; str</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create a bucket name on gcp</span>
+<span class="sd">        :param help_string:</span>
+<span class="sd">        :param default:</span>
+<span class="sd">        :return:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># noinspection PyTypeChecker</span>
+        <span class="k">return</span> <span class="n">ParamFunctions</span><span class="p">(</span>
+            <span class="n">help_string</span><span class="o">=</span><span class="n">help_string</span><span class="p">,</span>
+            <span class="n">default</span><span class="o">=</span><span class="n">default</span><span class="p">,</span>
+            <span class="n">type_name</span><span class="o">=</span><span class="s2">&quot;bucket_name&quot;</span><span class="p">,</span>
+            <span class="n">function_s2t</span><span class="o">=</span><span class="n">convert_string_to_string</span><span class="p">,</span>
+            <span class="n">function_t2s</span><span class="o">=</span><span class="n">convert_string_to_string</span><span class="p">,</span></div></div>
         <span class="p">)</span>
 
 
