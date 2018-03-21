@@ -469,6 +469,24 @@
             <span class="n">suffixes</span><span class="o">=</span><span class="n">suffixes</span><span class="p">,</span></div>
         <span class="p">)</span>
 
+<div class="viewcode-block" id="ParamCreator.create_existing_folder"><a class="viewcode-back" href="../../pytconf.html#pytconf.config.ParamCreator.create_existing_folder">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">create_existing_folder</span><span class="p">(</span><span class="n">help_string</span><span class="o">=</span><span class="n">NO_HELP</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">NO_DEFAULT</span><span class="p">,</span> <span class="n">suffixes</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="c1"># type: (str, Union[str, NO_DEFAULT_TYPE], Union[List[str], None]) -&gt; str</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create a new folder parameter</span>
+<span class="sd">        :param help_string:</span>
+<span class="sd">        :param default:</span>
+<span class="sd">        :param suffixes:</span>
+<span class="sd">        :return:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># noinspection PyTypeChecker</span>
+        <span class="k">return</span> <span class="n">ParamFilename</span><span class="p">(</span>
+            <span class="n">help_string</span><span class="o">=</span><span class="n">help_string</span><span class="p">,</span>
+            <span class="n">default</span><span class="o">=</span><span class="n">default</span><span class="p">,</span>
+            <span class="n">type_name</span><span class="o">=</span><span class="s2">&quot;existing_folder&quot;</span><span class="p">,</span>
+            <span class="n">suffixes</span><span class="o">=</span><span class="n">suffixes</span><span class="p">,</span></div>
+        <span class="p">)</span>
+
 <div class="viewcode-block" id="ParamCreator.create_choice"><a class="viewcode-back" href="../../pytconf.html#pytconf.config.ParamCreator.create_choice">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">create_choice</span><span class="p">(</span><span class="n">choice_list</span><span class="p">,</span> <span class="n">help_string</span><span class="o">=</span><span class="n">NO_HELP</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">NO_DEFAULT</span><span class="p">):</span>
         <span class="c1"># type: (List[str], str, Union[Any, NO_DEFAULT_TYPE]) -&gt; str</span>
