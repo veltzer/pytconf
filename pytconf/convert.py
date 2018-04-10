@@ -42,7 +42,7 @@ def convert_int_to_string(i):
 
 def convert_string_to_bool(s):
     # type: (str) -> bool
-    if s in {"true", "True", "yes", "Yes", "1", "y", "Y", "t", "T"}:
+    if s in {"TRUE", "true", "True", "yes", "Yes", "1", "y", "Y", "t", "T"}:
         return True
     return False
 
