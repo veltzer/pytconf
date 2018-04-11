@@ -523,7 +523,7 @@
 
 <div class="viewcode-block" id="ParamCreator.create_enum_subset"><a class="viewcode-back" href="../../pytconf.html#pytconf.config.ParamCreator.create_enum_subset">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">create_enum_subset</span><span class="p">(</span><span class="n">enum_type</span><span class="p">,</span> <span class="n">help_string</span><span class="o">=</span><span class="n">NO_HELP</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">NO_DEFAULT</span><span class="p">):</span>
-        <span class="c1"># type: (Type[Enum], str, Union[Set[Type[Enum]], NO_DEFAULT_TYPE]) -&gt; EnumSubset</span>
+        <span class="c1"># type: (Type[Enum], str, EnumSubset) -&gt; EnumSubset</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Create an enum config</span>
 <span class="sd">        :param enum_type:</span>
@@ -582,7 +582,7 @@
 
 
 <div class="viewcode-block" id="register_endpoint"><a class="viewcode-back" href="../../pytconf.html#pytconf.config.register_endpoint">[docs]</a><span class="k">def</span> <span class="nf">register_endpoint</span><span class="p">(</span><span class="n">configs</span><span class="o">=</span><span class="p">(),</span> <span class="n">suggest_configs</span><span class="o">=</span><span class="p">(),</span> <span class="n">group</span><span class="o">=</span><span class="n">DEFAULT_GROUP_NAME</span><span class="p">):</span>
-    <span class="c1"># type: (List[Callable], List[Callable]) -&gt; Callable</span>
+    <span class="c1"># type: (List[Config], List[Config]) -&gt; Callable</span>
     <span class="k">def</span> <span class="nf">identity</span><span class="p">(</span><span class="n">f</span><span class="p">):</span>
         <span class="n">function_name</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="vm">__name__</span>
         <span class="n">function_name_to_callable</span><span class="p">[</span><span class="n">function_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">f</span>

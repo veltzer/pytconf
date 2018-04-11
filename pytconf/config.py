@@ -491,7 +491,7 @@ class ParamCreator(object):
 
     @staticmethod
     def create_enum_subset(enum_type, help_string=NO_HELP, default=NO_DEFAULT):
-        # type: (Type[Enum], str, Union[Set[Type[Enum]], NO_DEFAULT_TYPE]) -> EnumSubset
+        # type: (Type[Enum], str, EnumSubset) -> EnumSubset
         """
         Create an enum config
         :param enum_type:
@@ -550,7 +550,7 @@ def register_main():
 
 
 def register_endpoint(configs=(), suggest_configs=(), group=DEFAULT_GROUP_NAME):
-    # type: (List[Callable], List[Callable]) -> Callable
+    # type: (List[Config], List[Config]) -> Callable
     def identity(f):
         function_name = f.__name__
         function_name_to_callable[function_name] = f

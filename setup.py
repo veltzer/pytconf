@@ -7,7 +7,7 @@ http://setuptools.readthedocs.io/en/latest/setuptools.html
 setuptools.setup(
     # the first three fields are a must according to the documentation
     name='pytconf',
-    version='0.0.21',
+    version='0.0.22',
     packages=[
         'pytconf',
     ],
