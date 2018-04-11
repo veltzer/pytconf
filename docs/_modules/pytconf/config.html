@@ -40,6 +40,8 @@
 
 <span class="kn">from</span> <span class="nn">typing</span> <span class="k">import</span> <span class="n">Union</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Type</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Set</span>
 
+<span class="kn">from</span> <span class="nn">yattag</span> <span class="k">import</span> <span class="n">Doc</span>
+
 <span class="kn">from</span> <span class="nn">pytconf.color_utils</span> <span class="k">import</span> <span class="n">print_highlight</span><span class="p">,</span> <span class="n">color_hi</span><span class="p">,</span> <span class="n">print_title</span><span class="p">,</span> <span class="n">color_ok</span><span class="p">,</span> <span class="n">color_warn</span><span class="p">,</span> <span class="n">print_warn</span>
 <span class="kn">from</span> <span class="nn">pytconf.convert</span> <span class="k">import</span> <span class="n">convert_string_to_int</span><span class="p">,</span> <span class="n">convert_int_to_string</span><span class="p">,</span> \
     <span class="n">convert_string_to_list_int</span><span class="p">,</span> \
@@ -305,32 +307,33 @@
 
 <div class="viewcode-block" id="PytconfConf.get_html"><a class="viewcode-back" href="../../pytconf.html#pytconf.config.PytconfConf.get_html">[docs]</a>    <span class="k">def</span> <span class="nf">get_html</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="c1"># type: () -&gt; None</span>
-        <span class="n">doc</span><span class="p">,</span> <span class="n">tag</span><span class="p">,</span> <span class="n">text</span> <span class="o">=</span> <span class="n">Doc</span><span class="p">()</span><span class="o">.</span><span class="n">tagtext</span><span class="p">()</span>
-        <span class="n">doc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">main_function</span><span class="o">.</span><span class="vm">__doc__</span>
-        <span class="k">if</span> <span class="n">doc</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">()</span>
-            <span class="n">doc</span> <span class="o">=</span> <span class="n">doc</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
-            <span class="n">doc</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="s2">&quot;  </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">strip</span><span class="p">()),</span> <span class="n">doc</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)))</span>
-            <span class="n">print_highlight</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">doc</span><span class="p">))</span>
-        <span class="nb">print</span><span class="p">()</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Options:&quot;</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;  --help         Show mandatory help&quot;</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;  --help-suggest Show mandatory+suggestions help&quot;</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;  --help-all    Show all help&quot;</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">()</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Commands:&quot;</span><span class="p">)</span>
-        <span class="k">for</span> <span class="n">function_group</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">function_group_list</span><span class="p">:</span>
-            <span class="n">description</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">function_group_descriptions</span><span class="p">[</span><span class="n">function_group</span><span class="p">]</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;  </span><span class="si">{}</span><span class="s2">: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">function_group</span><span class="p">,</span> <span class="n">description</span><span class="p">))</span>
-            <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">function_group_names</span><span class="p">[</span><span class="n">function_group</span><span class="p">]):</span>
-                <span class="n">f</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">function_name_to_callable</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
-                <span class="n">doc</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="vm">__doc__</span>
-                <span class="k">if</span> <span class="n">doc</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-                    <span class="n">print_highlight</span><span class="p">(</span><span class="s2">&quot;    </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">))</span>
-                <span class="k">else</span><span class="p">:</span>
+        <span class="n">document</span><span class="p">,</span> <span class="n">tag</span><span class="p">,</span> <span class="n">text</span> <span class="o">=</span> <span class="n">Doc</span><span class="p">()</span><span class="o">.</span><span class="n">tagtext</span><span class="p">()</span>
+        <span class="k">with</span> <span class="n">tag</span><span class="p">(</span><span class="s1">&#39;html&#39;</span><span class="p">):</span>
+            <span class="k">with</span> <span class="n">tag</span><span class="p">(</span><span class="s1">&#39;body&#39;</span><span class="p">):</span>
+                <span class="n">doc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">main_function</span><span class="o">.</span><span class="vm">__doc__</span>
+                <span class="k">if</span> <span class="n">doc</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                     <span class="n">doc</span> <span class="o">=</span> <span class="n">doc</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
-                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;    </span><span class="si">{}</span><span class="s2">: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">color_hi</span><span class="p">(</span><span class="n">name</span><span class="p">),</span> <span class="n">doc</span><span class="p">))</span>
-            <span class="nb">print</span><span class="p">()</span></div></div>
+                    <span class="k">with</span> <span class="n">tag</span><span class="p">(</span><span class="s1">&#39;h1&#39;</span><span class="p">):</span>
+                        <span class="n">text</span><span class="p">(</span><span class="n">doc</span><span class="p">)</span>
+                    <span class="k">with</span> <span class="n">tag</span><span class="p">(</span><span class="s1">&#39;h1&#39;</span><span class="p">):</span>
+                        <span class="n">text</span><span class="p">(</span><span class="s2">&quot;Commands:&quot;</span><span class="p">)</span>
+                        <span class="k">for</span> <span class="n">function_group</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">function_group_list</span><span class="p">:</span>
+                            <span class="n">description</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">function_group_descriptions</span><span class="p">[</span><span class="n">function_group</span><span class="p">]</span>
+                            <span class="k">with</span> <span class="n">tag</span><span class="p">(</span><span class="s1">&#39;h2&#39;</span><span class="p">):</span>
+                                <span class="n">text</span><span class="p">(</span><span class="n">function_group</span><span class="p">)</span>
+                                <span class="n">text</span><span class="p">(</span><span class="n">description</span><span class="p">)</span>
+                                <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">function_group_names</span><span class="p">[</span><span class="n">function_group</span><span class="p">]):</span>
+                                    <span class="n">f</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">function_name_to_callable</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
+                                    <span class="n">doc</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="vm">__doc__</span>
+                                    <span class="k">if</span> <span class="n">doc</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                                        <span class="k">with</span> <span class="n">tag</span><span class="p">(</span><span class="s1">&#39;h3&#39;</span><span class="p">):</span>
+                                            <span class="n">text</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+                                    <span class="k">else</span><span class="p">:</span>
+                                        <span class="n">doc</span> <span class="o">=</span> <span class="n">doc</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+                                        <span class="n">text</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+                                        <span class="n">text</span><span class="p">(</span><span class="n">doc</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">document</span><span class="o">.</span><span class="n">getvalue</span><span class="p">()</span></div></div>
+
 
 <span class="n">_pytconf</span> <span class="o">=</span> <span class="n">PytconfConf</span><span class="p">()</span>
 
