@@ -3,6 +3,7 @@
 enum34
 termcolor
 six
+yattag
 # dev requirements
 pyclassifiers
 pypitools

@@ -35,6 +35,7 @@ setuptools.setup(
         'enum34',
         'termcolor',
         'six',
+        'yattag',
     ],
     classifiers=[
         'Development Status :: 4 - Beta',

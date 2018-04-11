@@ -5,6 +5,7 @@
       <w>optparse</w>
       <w>pytconf</w>
       <w>termcolor</w>
+      <w>yattag</w>
     </words>
   </dictionary>
 </component>
