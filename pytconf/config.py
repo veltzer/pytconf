@@ -8,6 +8,8 @@ from enum import Enum
 
 from typing import Union, List, Any, Callable, Type, Dict, Set
 
+from yattag import Doc
+
 from pytconf.color_utils import print_highlight, color_hi, print_title, color_ok, color_warn, print_warn
 from pytconf.convert import convert_string_to_int, convert_int_to_string, \
     convert_string_to_list_int, \
@@ -19,24 +21,301 @@ from pytconf.extended_enum import str_to_enum_value, enum_type_to_list_str
 
 from six import with_metaclass
 
-_configs = set()
-_config_names = set()
-
 PARAMS_ATTRIBUTE = "_params"
 DEFAULT_GROUP_NAME = "default"
 SPECIAL_COMMANDS = {"help", "help-suggest", "help-all"}
 
 
-def register_config(cls, name):
+class PytconfConf(object):
+    def __init__(self):
+        self._configs = set()
+        self._config_names = set()
+        self.main_function = None
+        self.function_name_to_configs = dict()  # type: Dict[str, List[Config]]
+        self.function_name_to_suggest_configs = dict()  # type: Dict[str, List[Config]]
+        self.function_name_to_callable = dict()  # type: Dict[str, Callable]
+        self.function_group_names = defaultdict(set)  # type: Dict[str, Set[str]]
+        self.function_group_descriptions = dict()  # type: Dict[str, str]
+        self.function_group_list = []
+
+    def register_main(self, f):
+        self.main_function = f
+
+    def register_config(self, cls, name):
+        """
+        register a configuration class
+        :param cls:
+        :param name:
+        :return:
+        """
+        self._configs.add(cls)
+        self._config_names.add(name)
+
+    @classmethod
+    def print_errors(cls, errors):
+        # type: (List[str]) -> None
+        if errors:
+            print()
+            for error in errors:
+                print_warn(error)
+            print()
+
+    def show_general_help(self):
+        # type: () -> None
+        print("Usage: {} [OPTIONS] COMMAND [ARGS]...".format(self.main_function.__name__))
+        doc = self.main_function.__doc__
+        if doc is not None:
+            print()
+            doc = doc.strip()
+            doc = "\n".join(map(lambda x: "  {}".format(x.strip()), doc.split("\n")))
+            print_highlight("{}".format(doc))
+        print()
+        print("Options:")
+        print("  --help         Show mandatory help")
+        print("  --help-suggest Show mandatory+suggestions help")
+        print("  --help-all    Show all help")
+        print()
+        print("Commands:")
+        for function_group in self.function_group_list:
+            description = self.function_group_descriptions[function_group]
+            print("  {}: {}".format(function_group, description))
+            for name in sorted(self.function_group_names[function_group]):
+                f = self.function_name_to_callable[name]
+                doc = f.__doc__
+                if doc is None:
+                    print_highlight("    {}".format(name))
+                else:
+                    doc = doc.strip()
+                    print("    {}: {}".format(color_hi(name), doc))
+            print()
+
+    def show_help_for_command(self, command_selected, show_help_full, show_help_suggest):
+        # type: (str, bool, bool) -> None
+
+        print("Usage: {} {} [OPTIONS] [ARGS]...".format(
+            self.main_function.__name__,
+            command_selected,
+        ))
+        function_selected = self.function_name_to_callable[command_selected]
+        doc = function_selected.__doc__
+        if doc is not None:
+            doc = doc.strip()
+            print()
+            print_highlight("  {}".format(doc))
+        print()
+        print("Options:")
+        print()
+        for config in self.function_name_to_configs[command_selected]:
+            self.show_help_for_config(config)
+        if show_help_suggest:
+            for config in self.function_name_to_suggest_configs[command_selected]:
+                self.show_help_for_config(config)
+        if show_help_full:
+            for config in self._configs:
+                self.show_help_for_config(config)
+
+    @classmethod
+    def show_help_for_config(cls, config):
+        if config == Config:
+            return
+        doc = config.__doc__
+        if doc is not None:
+            doc = doc.strip()
+            print_title("  {}".format(doc))
+        else:
+            print_title("  Undocumented parameter set")
+        for name, param in config.get_params().items():
+            if param.default is NO_DEFAULT:
+                default = color_warn("MANDATORY")
+            else:
+                default = color_ok(param.t2s(param.default))
+            print("    {} [{}]: {} [{}]".format(
+                color_hi(name),
+                param.get_type_name(),
+                param.help_string,
+                default,
+            ))
+            more_help = param.more_help()
+            if more_help is not None:
+                print("      {}".format(more_help))
+        print()
+
+    def parse_args(self, command_selected, flags, _free_args):
+        # type: (str, Dict[str, str], List[str]) -> bool
+        """
+        Parse the args and fill the global data
+        Currently we disregard the free parameters
+        :param command_selected:
+        :param flags:
+        :param _free_args:
+        :return:
+        """
+        configs = self.function_name_to_configs[command_selected]
+        suggested_configs = self.function_name_to_suggest_configs[command_selected]
+
+        # create the attribute_to_config map
+        attribute_to_config = dict()  # type: Dict[str, Config]
+        for config in itertools.chain(configs, suggested_configs):
+            for attribute in config.get_attributes():
+                if attribute in attribute_to_config:
+                    raise ValueError("attribute [{}] double".format(attribute))
+                attribute_to_config[attribute] = config
+
+        # set the flags into the "default" field
+        unknown_flags = []
+        for flag_raw, value in flags.items():
+            edit = value.startswith('=')
+            if flag_raw not in attribute_to_config:
+                unknown_flags.append(flag_raw)
+            config = attribute_to_config[flag_raw]
+            param = config.get_param_by_name(flag_raw)
+            if edit:
+                v = param.s2t_generate_from_default(value[1:])
+            else:
+                v = param.s2t(value)
+            setattr(config, flag_raw, v)
+
+        # check for missing parameters and show help if there are any missing
+        missing_parameters = []
+        for config in configs:
+            for attribute in config.get_attributes():
+                value = getattr(config, attribute)
+                if value is NO_DEFAULT:
+                    missing_parameters.append(attribute)
+        if unknown_flags or missing_parameters:
+            if missing_parameters:
+                print()
+                print_warn("missing parameters [{}]".format(",".join(missing_parameters)))
+            if unknown_flags:
+                print()
+                print_warn("unknown flags [{}]".format(",".join(unknown_flags)))
+            print("problems found, not running")
+            print()
+            self.show_help_for_command(command_selected, show_help_full=False, show_help_suggest=False)
+            return False
+
+        # move all default values to place
+        for config in itertools.chain(configs, self._configs):
+            for attribute in config.get_attributes():
+                param = getattr(config, attribute)  # type: Param
+                if isinstance(param, Param):
+                    if param.default is not NO_DEFAULT:
+                        setattr(config, attribute, param.default)
+        return True
+
+    def config_arg_parse_and_launch(self):
+        # we don't need the first argument which is the script path
+        args = sys.argv[1:]  # type: List[str]
+        # name of arg and it's value
+        flags = dict()  # type: Dict[str, str]
+        special_flags = set()
+        errors = []  # type: List[str]
+        free_args = []
+        while args:
+            current = args.pop(0)
+            if current.startswith("--"):
+                real = current[2:]
+                number_of_equals = real.count("=")
+                if number_of_equals == 1:
+                    flag_name, flag_value = real.split("=")
+                    flags[flag_name] = flag_value
+                elif number_of_equals == 0:
+                    if args:
+                        more = args.pop(0)
+                        flags[real] = more
+                    elif real in SPECIAL_COMMANDS:
+                        special_flags.add(real)
+                    else:
+                        errors.append("argument [{}] needs a follow-up argument".format(real))
+                else:
+                    errors.append("can not parse argument [{}]".format(real))
+            else:
+                free_args.append(current)
+        show_help = False
+        show_help_full = False
+        show_help_suggest = False
+
+        if len(errors) > 0:
+            show_help = True
+
+        if "help" in special_flags:
+            show_help = True
+        if "help-suggest" in special_flags:
+            show_help = True
+            show_help_suggest = True
+        if "help-all" in special_flags:
+            show_help = True
+            show_help_full = True
+
+        command_selected = None
+        if len(free_args) >= 1:
+            command = free_args.pop(0)
+            if command in self.function_name_to_callable:
+                command_selected = command
+            else:
+                errors.append("Unknown command [{}]".format(command))
+
+        if len(self.function_name_to_callable) == 1:
+            for name in self.function_name_to_callable.keys():
+                command_selected = name
+
+        if len(free_args) > 0:
+            errors.append("free args are not allowed")
+
+        if show_help or errors or command_selected is None:
+            self.print_errors(errors)
+            if command_selected:
+                self.show_help_for_command(command_selected, show_help_full, show_help_suggest)
+            else:
+                self.show_general_help()
+        else:
+            f = self.function_name_to_callable[command_selected]
+            if self.parse_args(command_selected, flags, free_args):
+                f()
+
+    def get_html(self):
+        # type: () -> None
+        document, tag, text = Doc().tagtext()
+        with tag('html'):
+            with tag('body'):
+                doc = self.main_function.__doc__
+                if doc is not None:
+                    doc = doc.strip()
+                    with tag('h1'):
+                        text(doc)
+                    with tag('h1'):
+                        text("Commands:")
+                        for function_group in self.function_group_list:
+                            description = self.function_group_descriptions[function_group]
+                            with tag('h2'):
+                                text(function_group)
+                                text(description)
+                                for name in sorted(self.function_group_names[function_group]):
+                                    f = self.function_name_to_callable[name]
+                                    doc = f.__doc__
+                                    if doc is None:
+                                        with tag('h3'):
+                                            text(name)
+                                    else:
+                                        doc = doc.strip()
+                                        text(name)
+                                        text(doc)
+        return document.getvalue()
+
+
+_pytconf = PytconfConf()
+
+
+def get_pytconf():
+    return _pytconf
+
+
+def config_arg_parse_and_launch():
     """
-    register a configuration class
-    :param cls:
-    :param name:
+    backwards compatibility function
     :return:
     """
-    _configs.add(cls)
-    _config_names.add(name)
-    # print("registered [{}]".format(name))
+    get_pytconf().config_arg_parse_and_launch()
 
 
 class MetaConfig(type):
@@ -60,7 +339,7 @@ class MetaConfig(type):
         #     register_config(cls, name)
         #     # print("was subclassed by " + name)
         if name != "Config":
-            register_config(cls, name)
+            get_pytconf().register_config(cls, name)
         # print(name, cls_dict)
         super(MetaConfig, cls).__init__(name, bases, cls_dict)
 
@@ -525,26 +804,17 @@ class ParamCreator(object):
         )
 
 
-function_name_to_configs = dict()  # type: Dict[str, List[Config]]
-function_name_to_suggest_configs = dict()  # type: Dict[str, List[Config]]
-function_name_to_callable = dict()  # type: Dict[str, Callable]
-main_function = None  # type: function
-function_group_names = defaultdict(set)  # type: Dict[str, Set[str]]
-function_group_descriptions = dict()  # type: Dict[str, str]
-function_group_list = []
-
-
 def register_function_group(function_group_name, function_group_description):
     # type: (str, str) -> None
-    function_group_descriptions[function_group_name] = function_group_description
-    function_group_list.append(function_group_name)
+    pt = get_pytconf()
+    pt.function_group_descriptions[function_group_name] = function_group_description
+    pt.function_group_list.append(function_group_name)
 
 
 def register_main():
     # type: () -> Callable
     def identity(f):
-        global main_function
-        main_function = f
+        get_pytconf().register_main(f)
         return f
     return identity
 
@@ -552,236 +822,17 @@ def register_main():
 def register_endpoint(configs=(), suggest_configs=(), group=DEFAULT_GROUP_NAME):
     # type: (List[Config], List[Config]) -> Callable
     def identity(f):
+        pt = get_pytconf()
         function_name = f.__name__
-        function_name_to_callable[function_name] = f
-        function_name_to_configs[function_name] = configs
-        function_name_to_suggest_configs[function_name] = suggest_configs
-        function_group_names[group].add(function_name)
+        pt.function_name_to_callable[function_name] = f
+        pt.function_name_to_configs[function_name] = configs
+        pt.function_name_to_suggest_configs[function_name] = suggest_configs
+        pt.function_group_names[group].add(function_name)
         return f
     return identity
 
 
-def show_errors(errors):
-    # type: (List[str]) -> None
-    if errors:
-        print()
-        for error in errors:
-            print_warn(error)
-        print()
 
 
-def show_general_help():
-    # type: () -> None
-    print("Usage: {} [OPTIONS] COMMAND [ARGS]...".format(main_function.__name__))
-    doc = main_function.__doc__
-    if doc is not None:
-        print()
-        doc = doc.strip()
-        doc = "\n".join(map(lambda x: "  {}".format(x.strip()), doc.split("\n")))
-        print_highlight("{}".format(doc))
-    print()
-    print("Options:")
-    print("  --help         Show mandatory help")
-    print("  --help-suggest Show mandatory+suggestions help")
-    print("  --help-all    Show all help")
-    print()
-    print("Commands:")
-    for function_group in function_group_list:
-        description = function_group_descriptions[function_group]
-        print("  {}: {}".format(function_group, description))
-        for name in sorted(function_group_names[function_group]):
-            f = function_name_to_callable[name]
-            doc = f.__doc__
-            if doc is None:
-                print_highlight("    {}".format(name))
-            else:
-                doc = doc.strip()
-                print("    {}: {}".format(color_hi(name), doc))
-        print()
 
 
-def show_help_for_command(command_selected, show_help_full, show_help_suggest):
-    # type: (str, bool, bool) -> None
-
-    print("Usage: {} {} [OPTIONS] [ARGS]...".format(
-        main_function.__name__,
-        command_selected,
-    ))
-    function_selected = function_name_to_callable[command_selected]
-    doc = function_selected.__doc__
-    if doc is not None:
-        doc = doc.strip()
-        print()
-        print_highlight("  {}".format(doc))
-    print()
-    print("Options:")
-    print()
-    for config in function_name_to_configs[command_selected]:
-        show_help_for_config(config)
-    if show_help_suggest:
-        for config in function_name_to_suggest_configs[command_selected]:
-            show_help_for_config(config)
-    if show_help_full:
-        for config in _configs:
-            show_help_for_config(config)
-
-
-def show_help_for_config(config):
-    if config == Config:
-        return
-    doc = config.__doc__
-    if doc is not None:
-        doc = doc.strip()
-        print_title("  {}".format(doc))
-    else:
-        print_title("  Undocumented parameter set")
-    for name, param in config.get_params().items():
-        if param.default is NO_DEFAULT:
-            default = color_warn("MANDATORY")
-        else:
-            default = color_ok(param.t2s(param.default))
-        print("    {} [{}]: {} [{}]".format(
-            color_hi(name),
-            param.get_type_name(),
-            param.help_string,
-            default,
-        ))
-        more_help = param.more_help()
-        if more_help is not None:
-            print("      {}".format(more_help))
-    print()
-
-
-def parse_args(command_selected, flags, _free_args):
-    # type: (str, Dict[str, str], List[str]) -> bool
-    """
-    Parse the args and fill the global data
-    Currently we disregard the free parameters
-    :param command_selected:
-    :param flags:
-    :param _free_args:
-    :return:
-    """
-    configs = function_name_to_configs[command_selected]
-    suggested_configs = function_name_to_suggest_configs[command_selected]
-
-    # create the attribute_to_config map
-    attribute_to_config = dict()  # type: Dict[str, Config]
-    for config in itertools.chain(configs, suggested_configs):
-        for attribute in config.get_attributes():
-            if attribute in attribute_to_config:
-                raise ValueError("attribute [{}] double".format(attribute))
-            attribute_to_config[attribute] = config
-
-    # set the flags into the "default" field
-    unknown_flags = []
-    for flag_raw, value in flags.items():
-        edit = value.startswith('=')
-        if flag_raw not in attribute_to_config:
-            unknown_flags.append(flag_raw)
-        config = attribute_to_config[flag_raw]
-        param = config.get_param_by_name(flag_raw)
-        if edit:
-            v = param.s2t_generate_from_default(value[1:])
-        else:
-            v = param.s2t(value)
-        setattr(config, flag_raw, v)
-
-    # check for missing parameters and show help if there are any missing
-    missing_parameters = []
-    for config in configs:
-        for attribute in config.get_attributes():
-            value = getattr(config, attribute)
-            if value is NO_DEFAULT:
-                missing_parameters.append(attribute)
-    if unknown_flags or missing_parameters:
-        if missing_parameters:
-            print()
-            print_warn("missing parameters [{}]".format(",".join(missing_parameters)))
-        if unknown_flags:
-            print()
-            print_warn("unknown flags [{}]".format(",".join(unknown_flags)))
-        print("problems found, not running")
-        print()
-        show_help_for_command(command_selected, show_help_full=False, show_help_suggest=False)
-        return False
-
-    # move all default values to place
-    for config in itertools.chain(configs, _configs):
-        for attribute in config.get_attributes():
-            param = getattr(config, attribute)  # type: Param
-            if isinstance(param, Param):
-                if param.default is not NO_DEFAULT:
-                    setattr(config, attribute, param.default)
-    return True
-
-
-def config_arg_parse_and_launch():
-    # we don't need the first argument which is the script path
-    args = sys.argv[1:]  # type: List[str]
-    # name of arg and it's value
-    flags = dict()  # type: Dict[str, str]
-    special_flags = set()
-    errors = []  # type: List[str]
-    free_args = []
-    while args:
-        current = args.pop(0)
-        if current.startswith("--"):
-            real = current[2:]
-            number_of_equals = real.count("=")
-            if number_of_equals == 1:
-                flag_name, flag_value = real.split("=")
-                flags[flag_name] = flag_value
-            elif number_of_equals == 0:
-                if args:
-                    more = args.pop(0)
-                    flags[real] = more
-                elif real in SPECIAL_COMMANDS:
-                    special_flags.add(real)
-                else:
-                    errors.append("argument [{}] needs a follow-up argument".format(real))
-            else:
-                errors.append("can not parse argument [{}]".format(real))
-        else:
-            free_args.append(current)
-    show_help = False
-    show_help_full = False
-    show_help_suggest = False
-
-    if len(errors) > 0:
-        show_help = True
-
-    if "help" in special_flags:
-        show_help = True
-    if "help-suggest" in special_flags:
-        show_help = True
-        show_help_suggest = True
-    if "help-all" in special_flags:
-        show_help = True
-        show_help_full = True
-
-    command_selected = None
-    if len(free_args) >= 1:
-        command = free_args.pop(0)
-        if command in function_name_to_callable:
-            command_selected = command
-        else:
-            errors.append("Unknown command [{}]".format(command))
-
-    if len(function_name_to_callable) == 1:
-        for name in function_name_to_callable.keys():
-            command_selected = name
-
-    if len(free_args) > 0:
-        errors.append("free args are not allowed")
-
-    if show_help or errors or command_selected is None:
-        show_errors(errors)
-        if command_selected:
-            show_help_for_command(command_selected, show_help_full, show_help_suggest)
-        else:
-            show_general_help()
-    else:
-        f = function_name_to_callable[command_selected]
-        if parse_args(command_selected, flags, free_args):
-            f()

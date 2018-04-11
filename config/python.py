@@ -12,6 +12,7 @@ run_requires = [
     'enum34',  # for Enum
     'termcolor',  # for printing in colors
     'six',  # for portability between python 2 and 3
+    'yattag',  # for generating html text
 ]
 
 test_requires = [
