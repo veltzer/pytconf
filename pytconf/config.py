@@ -26,6 +26,15 @@ DEFAULT_GROUP_NAME = "default"
 SPECIAL_COMMANDS = {"help", "help-suggest", "help-all"}
 
 
+class HtmlGen(object):
+    def __init__(self):
+        document, tag, text, line = Doc().ttl()
+        self.document = document
+        self.tag = tag
+        self.text = text
+        self.line = line
+
+
 class PytconfConf(object):
     def __init__(self):
         self._configs = set()
@@ -60,7 +69,7 @@ class PytconfConf(object):
                 print_warn(error)
             print()
 
-    def show_general_help(self):
+    def show_help(self):
         # type: () -> None
         print("Usage: {} [OPTIONS] COMMAND [ARGS]...".format(self.main_function.__name__))
         doc = self.main_function.__doc__
@@ -89,14 +98,14 @@ class PytconfConf(object):
                     print("    {}: {}".format(color_hi(name), doc))
             print()
 
-    def show_help_for_command(self, command_selected, show_help_full, show_help_suggest):
+    def show_help_for_function(self, function_name, show_help_full, show_help_suggest):
         # type: (str, bool, bool) -> None
 
         print("Usage: {} {} [OPTIONS] [ARGS]...".format(
             self.main_function.__name__,
-            command_selected,
+            function_name,
         ))
-        function_selected = self.function_name_to_callable[command_selected]
+        function_selected = self.function_name_to_callable[function_name]
         doc = function_selected.__doc__
         if doc is not None:
             doc = doc.strip()
@@ -105,10 +114,10 @@ class PytconfConf(object):
         print()
         print("Options:")
         print()
-        for config in self.function_name_to_configs[command_selected]:
+        for config in self.function_name_to_configs[function_name]:
             self.show_help_for_config(config)
         if show_help_suggest:
-            for config in self.function_name_to_suggest_configs[command_selected]:
+            for config in self.function_name_to_suggest_configs[function_name]:
                 self.show_help_for_config(config)
         if show_help_full:
             for config in self._configs:
@@ -191,7 +200,7 @@ class PytconfConf(object):
                 print_warn("unknown flags [{}]".format(",".join(unknown_flags)))
             print("problems found, not running")
             print()
-            self.show_help_for_command(command_selected, show_help_full=False, show_help_suggest=False)
+            self.show_help_for_function(command_selected, show_help_full=False, show_help_suggest=False)
             return False
 
         # move all default values to place
@@ -265,9 +274,9 @@ class PytconfConf(object):
         if show_help or errors or command_selected is None:
             self.print_errors(errors)
             if command_selected:
-                self.show_help_for_command(command_selected, show_help_full, show_help_suggest)
+                self.show_help_for_function(command_selected, show_help_full, show_help_suggest)
             else:
-                self.show_general_help()
+                self.show_help()
         else:
             f = self.function_name_to_callable[command_selected]
             if self.parse_args(command_selected, flags, free_args):
@@ -275,32 +284,62 @@ class PytconfConf(object):
 
     def get_html(self):
         # type: () -> None
-        document, tag, text = Doc().tagtext()
-        with tag('html'):
-            with tag('body'):
-                doc = self.main_function.__doc__
-                if doc is not None:
-                    doc = doc.strip()
-                    with tag('h1'):
-                        text(doc)
-                    with tag('h1'):
-                        text("Commands:")
-                        for function_group in self.function_group_list:
-                            description = self.function_group_descriptions[function_group]
-                            with tag('h2'):
-                                text(function_group)
-                                text(description)
-                                for name in sorted(self.function_group_names[function_group]):
-                                    f = self.function_name_to_callable[name]
-                                    doc = f.__doc__
-                                    if doc is None:
-                                        with tag('h3'):
-                                            text(name)
-                                    else:
-                                        doc = doc.strip()
-                                        text(name)
-                                        text(doc)
-        return document.getvalue()
+        html_gen = HtmlGen()
+        doc = self.main_function.__doc__
+        assert doc is not None
+        doc = doc.strip()
+        html_gen.line('h1', doc)
+        html_gen.line('h2', "API specifications")
+        with html_gen.tag('ul'):
+            for function_group_name in self.function_group_list:
+                function_group_description = self.function_group_descriptions[function_group_name]
+                html_gen.line('li', function_group_name, title='function group name: ')
+                html_gen.line('li', function_group_description, title='function group description: ')
+                with html_gen.tag('li'):
+                    for function_name in sorted(self.function_group_names[function_group_name]):
+                        self.get_html_for_function(function_name, html_gen)
+        return html_gen.document.getvalue()
+
+    def get_html_for_function(self, function_name, html_gen):
+        with html_gen.tag('ul'):
+            f = self.function_name_to_callable[function_name]
+            if f.__doc__ is None:
+                function_doc = "not description for this function"
+            else:
+                function_doc = f.__doc__.strip()
+            html_gen.line('li', function_name, title='function name: ')
+            html_gen.line('li', function_doc, title='function description: ')
+            with html_gen.tag('li'):
+                with html_gen.tag('ul'):
+                    for config in self.function_name_to_configs[function_name]:
+                        with html_gen.tag('li'):
+                            self.get_html_for_config(config, html_gen)
+
+    @classmethod
+    def get_html_for_config(cls, config, html_gen):
+        if config == Config:
+            return
+        if config.__doc__ is not None:
+            doc = config.__doc__.strip()
+        else:
+            doc = "undocumented config"
+        html_gen.line('h3', doc, title='config: ')
+        with html_gen.tag('table'):
+                for name, param in config.get_params().items():
+                    with html_gen.tag('tr'):
+                        if param.default is NO_DEFAULT:
+                            default = "MANDATORY"
+                        else:
+                            default = param.t2s(param.default)
+                        if param.more_help() is None:
+                            more_help = "No more help is documented"
+                        else:
+                            more_help = param.more_help()
+                        html_gen.line('td', name)
+                        html_gen.line('td', param.help_string)
+                        html_gen.line('td', param.get_type_name())
+                        html_gen.line('td', default)
+                        html_gen.line('td', more_help)
 
 
 _pytconf = PytconfConf()

@@ -93,6 +93,12 @@
 </dd></dl>
 
 <dl class="class">
+<dt id="pytconf.config.HtmlGen">
+<em class="property">class </em><code class="descclassname">pytconf.config.</code><code class="descname">HtmlGen</code><a class="reference internal" href="_modules/pytconf/config.html#HtmlGen"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.config.HtmlGen" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+</dd></dl>
+
+<dl class="class">
 <dt id="pytconf.config.MetaConfig">
 <em class="property">class </em><code class="descclassname">pytconf.config.</code><code class="descname">MetaConfig</code><span class="sig-paren">(</span><em>name</em>, <em>bases</em>, <em>cls_dict</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytconf/config.html#MetaConfig"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.config.MetaConfig" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">type</span></code></p>
@@ -395,6 +401,16 @@
 <code class="descname">get_html</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytconf/config.html#PytconfConf.get_html"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.config.PytconfConf.get_html" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
+<dl class="classmethod">
+<dt id="pytconf.config.PytconfConf.get_html_for_config">
+<em class="property">classmethod </em><code class="descname">get_html_for_config</code><span class="sig-paren">(</span><em>config</em>, <em>html_gen</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytconf/config.html#PytconfConf.get_html_for_config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.config.PytconfConf.get_html_for_config" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pytconf.config.PytconfConf.get_html_for_function">
+<code class="descname">get_html_for_function</code><span class="sig-paren">(</span><em>function_name</em>, <em>html_gen</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytconf/config.html#PytconfConf.get_html_for_function"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.config.PytconfConf.get_html_for_function" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 <dl class="method">
 <dt id="pytconf.config.PytconfConf.parse_args">
 <code class="descname">parse_args</code><span class="sig-paren">(</span><em>command_selected</em>, <em>flags</em>, <em>_free_args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytconf/config.html#PytconfConf.parse_args"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.config.PytconfConf.parse_args" title="Permalink to this definition">¶</a></dt>
@@ -426,18 +442,18 @@ Currently we disregard the free parameters
 <dd></dd></dl>
 
 <dl class="method">
-<dt id="pytconf.config.PytconfConf.show_general_help">
-<code class="descname">show_general_help</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytconf/config.html#PytconfConf.show_general_help"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.config.PytconfConf.show_general_help" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="pytconf.config.PytconfConf.show_help_for_command">
-<code class="descname">show_help_for_command</code><span class="sig-paren">(</span><em>command_selected</em>, <em>show_help_full</em>, <em>show_help_suggest</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytconf/config.html#PytconfConf.show_help_for_command"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.config.PytconfConf.show_help_for_command" title="Permalink to this definition">¶</a></dt>
+<dt id="pytconf.config.PytconfConf.show_help">
+<code class="descname">show_help</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytconf/config.html#PytconfConf.show_help"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.config.PytconfConf.show_help" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="classmethod">
 <dt id="pytconf.config.PytconfConf.show_help_for_config">
 <em class="property">classmethod </em><code class="descname">show_help_for_config</code><span class="sig-paren">(</span><em>config</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytconf/config.html#PytconfConf.show_help_for_config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.config.PytconfConf.show_help_for_config" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pytconf.config.PytconfConf.show_help_for_function">
+<code class="descname">show_help_for_function</code><span class="sig-paren">(</span><em>function_name</em>, <em>show_help_full</em>, <em>show_help_suggest</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytconf/config.html#PytconfConf.show_help_for_function"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.config.PytconfConf.show_help_for_function" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
