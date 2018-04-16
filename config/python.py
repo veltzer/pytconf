@@ -13,6 +13,7 @@ run_requires = [
     'termcolor',  # for printing in colors
     'six',  # for portability between python 2 and 3
     'yattag',  # for generating html text
+    # 'html',  # for generating html text
 ]
 
 test_requires = [
