@@ -1,4 +1,4 @@
 .PHONY: all
 
 all:
-	@pylint3 -E pytconf
+	@python -m pylint -E pytconf

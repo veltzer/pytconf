@@ -9,5 +9,6 @@ pyclassifiers
 pypitools
 pydmt
 Sphinx
+pylint
 # test requirements
 pylogconf

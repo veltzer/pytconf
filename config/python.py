@@ -25,6 +25,7 @@ dev_requires = [
     'pypitools',  # for upload etc
     'pydmt',  # for building
     'Sphinx',  # for the sphinx builder
+    'pylint',  # to check for lint errors
 ]
 
 install_requires = list(setup_requires)
