@@ -1,4 +1,5 @@
 import sys
+import unittest
 
 from pytconf.config import register_main, config_arg_parse_and_launch, Config, \
     register_endpoint, ParamCreator
@@ -29,10 +30,14 @@ def main():
     """
         This is a test
     """
-    if sys.version_info[0] != 2:
-        raise ValueError("only test this with python2")
+    sys.argv += ["--num=30"]
+    print(sys.argv)
     config_arg_parse_and_launch()
 
 
-if __name__ == '__main__':
-    main()
+class TestBasic(unittest.TestCase):
+    def testType(self):
+        self.assertEquals(type(ConfigTotal.num), int)
+
+    def testValue(self):
+        self.assertEquals(ConfigTotal.num, 10)

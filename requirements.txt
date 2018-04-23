@@ -10,5 +10,6 @@ pypitools
 pydmt
 Sphinx
 pylint
+pytest
 # test requirements
 pylogconf
