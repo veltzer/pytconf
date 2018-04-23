@@ -212,7 +212,7 @@ class PytconfConf(object):
                         setattr(config, attribute, param.default)
         return True
 
-    def config_arg_parse_and_launch(self):
+    def config_arg_parse_and_launch(self, print_messages=True, launch=True):
         # we don't need the first argument which is the script path
         args = sys.argv[1:]  # type: List[str]
         # name of arg and it's value
@@ -271,15 +271,18 @@ class PytconfConf(object):
         if len(free_args) > 0:
             errors.append("free args are not allowed")
 
-        if show_help or errors or command_selected is None:
-            self.print_errors(errors)
-            if command_selected:
-                self.show_help_for_function(command_selected, show_help_full, show_help_suggest)
-            else:
-                self.show_help()
-        else:
-            f = self.function_name_to_callable[command_selected]
-            if self.parse_args(command_selected, flags, free_args):
+        if print_messages:
+            if show_help or errors or command_selected is None:
+                self.print_errors(errors)
+                if command_selected:
+                    self.show_help_for_function(command_selected, show_help_full, show_help_suggest)
+                else:
+                    self.show_help()
+                return
+
+        f = self.function_name_to_callable[command_selected]
+        if self.parse_args(command_selected, flags, free_args):
+            if launch:
                 f()
 
     def get_html(self):
@@ -349,12 +352,15 @@ def get_pytconf():
     return _pytconf
 
 
-def config_arg_parse_and_launch():
+def config_arg_parse_and_launch(print_messages=True, launch=True):
     """
     backwards compatibility function
     :return:
     """
-    get_pytconf().config_arg_parse_and_launch()
+    get_pytconf().config_arg_parse_and_launch(
+        print_messages=print_messages,
+        launch=launch,
+    )
 
 
 class MetaConfig(type):
