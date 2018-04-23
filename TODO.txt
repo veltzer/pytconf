@@ -1,6 +1,7 @@
-- do correct collection of arguments (--foo=bar and --foo bar)
-- gather all the create_* function together into a static class.
-	This will enable users to auto complete all the creators.
+- add a "reset" method to the 'Config' object and a general method
+	of pytconf which is 'reset_all'.
+	This will enable to reset all objects to their default behaviour.
+	This will be good for web servers and for setting up repeatable tests.
 - once myenv supports more than one virtual env have this project
 	have:
 		- virtual env for 2.7 running.

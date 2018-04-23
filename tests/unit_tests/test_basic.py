@@ -30,7 +30,7 @@ def main():
     """
         This is a test
     """
-    sys.argv += ["--num=30"]
+
     print(sys.argv)
     config_arg_parse_and_launch()
 
@@ -41,3 +41,10 @@ class TestBasic(unittest.TestCase):
 
     def testValue(self):
         self.assertEquals(ConfigTotal.num, 10)
+
+    def testParsing(self):
+        sys.argv += ["--num=30"]
+        save = ConfigTotal.num
+        config_arg_parse_and_launch(launch=False, print_messages=False)
+        self.assertEquals(ConfigTotal.num, 30)
+        ConfigTotal.num = save
