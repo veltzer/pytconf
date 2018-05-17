@@ -1,3 +1,14 @@
+- corrently we lie to type checkers. How?
+	The method 'create_str' of the class ParamCreator does not really
+	return a string but rather a ParamFunctions object.
+	We decorate the types of that method to say that it returns a string
+	but really it does not.
+	Why is this bad? because some type checkers can see through our lies.
+	Can we stop lying?
+	YES! We can override the __eq__ method of classes!
+	This way the method will actually return what it's supposed to return
+	but will also register the paramters just like our current Config.
+	This will be much cleaner.
 - add a "reset" method to the 'Config' object and a general method
 	of pytconf which is 'reset_all'.
 	This will enable to reset all objects to their default behaviour.
