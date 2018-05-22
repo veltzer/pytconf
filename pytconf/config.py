@@ -857,7 +857,7 @@ def register_function_group(function_group_name, function_group_description):
 
 
 def register_main():
-    # type: () -> Callable
+    # type: () -> Callable[Any, Any]
     def identity(f):
         get_pytconf().register_main(f)
         return f
@@ -865,7 +865,7 @@ def register_main():
 
 
 def register_endpoint(configs=(), suggest_configs=(), group=DEFAULT_GROUP_NAME):
-    # type: (List[Config], List[Config]) -> Callable
+    # type: (List[Config], List[Config]) -> Callable[Any, Any]
     def identity(f):
         pt = get_pytconf()
         function_name = f.__name__
