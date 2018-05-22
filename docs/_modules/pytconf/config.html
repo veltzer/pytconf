@@ -244,7 +244,7 @@
                         <span class="nb">setattr</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">attribute</span><span class="p">,</span> <span class="n">param</span><span class="o">.</span><span class="n">default</span><span class="p">)</span>
         <span class="k">return</span> <span class="kc">True</span></div>
 
-<div class="viewcode-block" id="PytconfConf.config_arg_parse_and_launch"><a class="viewcode-back" href="../../pytconf.html#pytconf.config.PytconfConf.config_arg_parse_and_launch">[docs]</a>    <span class="k">def</span> <span class="nf">config_arg_parse_and_launch</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="PytconfConf.config_arg_parse_and_launch"><a class="viewcode-back" href="../../pytconf.html#pytconf.config.PytconfConf.config_arg_parse_and_launch">[docs]</a>    <span class="k">def</span> <span class="nf">config_arg_parse_and_launch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">print_messages</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">launch</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="c1"># we don&#39;t need the first argument which is the script path</span>
         <span class="n">args</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>  <span class="c1"># type: List[str]</span>
         <span class="c1"># name of arg and it&#39;s value</span>
@@ -303,15 +303,18 @@
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">free_args</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
             <span class="n">errors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;free args are not allowed&quot;</span><span class="p">)</span>
 
-        <span class="k">if</span> <span class="n">show_help</span> <span class="ow">or</span> <span class="n">errors</span> <span class="ow">or</span> <span class="n">command_selected</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">print_errors</span><span class="p">(</span><span class="n">errors</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">command_selected</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">show_help_for_function</span><span class="p">(</span><span class="n">command_selected</span><span class="p">,</span> <span class="n">show_help_full</span><span class="p">,</span> <span class="n">show_help_suggest</span><span class="p">)</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">show_help</span><span class="p">()</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">f</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">function_name_to_callable</span><span class="p">[</span><span class="n">command_selected</span><span class="p">]</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">parse_args</span><span class="p">(</span><span class="n">command_selected</span><span class="p">,</span> <span class="n">flags</span><span class="p">,</span> <span class="n">free_args</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">print_messages</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">show_help</span> <span class="ow">or</span> <span class="n">errors</span> <span class="ow">or</span> <span class="n">command_selected</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">print_errors</span><span class="p">(</span><span class="n">errors</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">command_selected</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">show_help_for_function</span><span class="p">(</span><span class="n">command_selected</span><span class="p">,</span> <span class="n">show_help_full</span><span class="p">,</span> <span class="n">show_help_suggest</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">show_help</span><span class="p">()</span>
+                <span class="k">return</span>
+
+        <span class="n">f</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">function_name_to_callable</span><span class="p">[</span><span class="n">command_selected</span><span class="p">]</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">parse_args</span><span class="p">(</span><span class="n">command_selected</span><span class="p">,</span> <span class="n">flags</span><span class="p">,</span> <span class="n">free_args</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">launch</span><span class="p">:</span>
                 <span class="n">f</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="PytconfConf.get_html"><a class="viewcode-back" href="../../pytconf.html#pytconf.config.PytconfConf.get_html">[docs]</a>    <span class="k">def</span> <span class="nf">get_html</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -381,12 +384,15 @@
     <span class="k">return</span> <span class="n">_pytconf</span></div>
 
 
-<div class="viewcode-block" id="config_arg_parse_and_launch"><a class="viewcode-back" href="../../pytconf.html#pytconf.config.config_arg_parse_and_launch">[docs]</a><span class="k">def</span> <span class="nf">config_arg_parse_and_launch</span><span class="p">():</span>
+<div class="viewcode-block" id="config_arg_parse_and_launch"><a class="viewcode-back" href="../../pytconf.html#pytconf.config.config_arg_parse_and_launch">[docs]</a><span class="k">def</span> <span class="nf">config_arg_parse_and_launch</span><span class="p">(</span><span class="n">print_messages</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">launch</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    backwards compatibility function</span>
 <span class="sd">    :return:</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">get_pytconf</span><span class="p">()</span><span class="o">.</span><span class="n">config_arg_parse_and_launch</span><span class="p">()</span></div>
+    <span class="n">get_pytconf</span><span class="p">()</span><span class="o">.</span><span class="n">config_arg_parse_and_launch</span><span class="p">(</span>
+        <span class="n">print_messages</span><span class="o">=</span><span class="n">print_messages</span><span class="p">,</span>
+        <span class="n">launch</span><span class="o">=</span><span class="n">launch</span><span class="p">,</span>
+    <span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="MetaConfig"><a class="viewcode-back" href="../../pytconf.html#pytconf.config.MetaConfig">[docs]</a><span class="k">class</span> <span class="nc">MetaConfig</span><span class="p">(</span><span class="nb">type</span><span class="p">):</span>
@@ -883,7 +889,7 @@
 
 
 <div class="viewcode-block" id="register_main"><a class="viewcode-back" href="../../pytconf.html#pytconf.config.register_main">[docs]</a><span class="k">def</span> <span class="nf">register_main</span><span class="p">():</span>
-    <span class="c1"># type: () -&gt; Callable</span>
+    <span class="c1"># type: () -&gt; Callable[Any, Any]</span>
     <span class="k">def</span> <span class="nf">identity</span><span class="p">(</span><span class="n">f</span><span class="p">):</span>
         <span class="n">get_pytconf</span><span class="p">()</span><span class="o">.</span><span class="n">register_main</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">f</span>
@@ -891,7 +897,7 @@
 
 
 <div class="viewcode-block" id="register_endpoint"><a class="viewcode-back" href="../../pytconf.html#pytconf.config.register_endpoint">[docs]</a><span class="k">def</span> <span class="nf">register_endpoint</span><span class="p">(</span><span class="n">configs</span><span class="o">=</span><span class="p">(),</span> <span class="n">suggest_configs</span><span class="o">=</span><span class="p">(),</span> <span class="n">group</span><span class="o">=</span><span class="n">DEFAULT_GROUP_NAME</span><span class="p">):</span>
-    <span class="c1"># type: (List[Config], List[Config]) -&gt; Callable</span>
+    <span class="c1"># type: (List[Config], List[Config]) -&gt; Callable[Any, Any]</span>
     <span class="k">def</span> <span class="nf">identity</span><span class="p">(</span><span class="n">f</span><span class="p">):</span>
         <span class="n">pt</span> <span class="o">=</span> <span class="n">get_pytconf</span><span class="p">()</span>
         <span class="n">function_name</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="vm">__name__</span>
@@ -942,7 +948,7 @@
       &copy;2017, Mark Veltzer.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.2</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.3</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
       
     </div>
