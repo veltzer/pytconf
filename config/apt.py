@@ -3,7 +3,7 @@ import os
 
 import config.general
 from config.helpers import help_check_output
-from config.personal import personal_slug
+from user.personal import personal_slug
 
 apt_protocol = 'https'
 apt_codename = help_check_output(['lsb_release', '--codename', '--short']).rstrip()
