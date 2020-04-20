@@ -296,7 +296,7 @@
 
 <dl class="py class">
 <dt id="pytconf.config.ParamEnum">
-<em class="property">class </em><code class="sig-prename descclassname">pytconf.config.</code><code class="sig-name descname">ParamEnum</code><span class="sig-paren">(</span><em class="sig-param">help_string='No help for this configuration option'</em>, <em class="sig-param">default=&lt;pytconf.config.Unique object&gt;</em>, <em class="sig-param">enum_type=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytconf/config.html#ParamEnum"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.config.ParamEnum" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pytconf.config.</code><code class="sig-name descname">ParamEnum</code><span class="sig-paren">(</span><em class="sig-param">help_string='No help for this configuration option'</em>, <em class="sig-param">default=&lt;pytconf.config.Unique object&gt;</em>, <em class="sig-param">enum_type: Type[enum.Enum] = None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytconf/config.html#ParamEnum"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.config.ParamEnum" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#pytconf.config.Param" title="pytconf.config.Param"><code class="xref py py-class docutils literal notranslate"><span class="pre">pytconf.config.Param</span></code></a></p>
 <dl class="py method">
 <dt id="pytconf.config.ParamEnum.get_type_name">
@@ -353,7 +353,7 @@
 
 <dl class="py class">
 <dt id="pytconf.config.ParamFilename">
-<em class="property">class </em><code class="sig-prename descclassname">pytconf.config.</code><code class="sig-name descname">ParamFilename</code><span class="sig-paren">(</span><em class="sig-param">help_string='No help for this configuration option'</em>, <em class="sig-param">default=&lt;pytconf.config.Unique object&gt;</em>, <em class="sig-param">type_name=None</em>, <em class="sig-param">suffixes=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytconf/config.html#ParamFilename"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.config.ParamFilename" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pytconf.config.</code><code class="sig-name descname">ParamFilename</code><span class="sig-paren">(</span><em class="sig-param">help_string='No help for this configuration option'</em>, <em class="sig-param">default=&lt;pytconf.config.Unique object&gt;</em>, <em class="sig-param">type_name=None</em>, <em class="sig-param">suffixes: List[str] = None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytconf/config.html#ParamFilename"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.config.ParamFilename" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#pytconf.config.Param" title="pytconf.config.Param"><code class="xref py py-class docutils literal notranslate"><span class="pre">pytconf.config.Param</span></code></a></p>
 <dl class="py method">
 <dt id="pytconf.config.ParamFilename.more_help">
