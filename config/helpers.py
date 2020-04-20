@@ -6,8 +6,7 @@ import subprocess
 import sys
 
 
-def array_indented(level, array, quote_char='\'', comma_after=False):
-    # type: (int, List[str], str, bool) -> str
+def array_indented(level: int, array: List[str], quote_char: str = '\'', comma_after: bool = False) -> str:
     """
     return an array indented according to indent level
     :param level:
@@ -18,15 +17,14 @@ def array_indented(level, array, quote_char='\'', comma_after=False):
     """
     out = "[\n"
     for x in array:
-        out += (((level+1) * 4) * " ") + '{}{}{}'.format(quote_char, x, quote_char) + ",\n"
+        out += (((level + 1) * 4) * " ") + '{}{}{}'.format(quote_char, x, quote_char) + ",\n"
     out += ((level * 4) * " ") + "]"
     if comma_after:
         out += ","
     return out
 
 
-def find_packages(path):
-    # type: (str) -> List[str]
+def find_packages(path: str) -> List[str]:
     """
     A better version of find_packages than what setuptools offers
     :param path:

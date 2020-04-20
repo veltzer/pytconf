@@ -1,8 +1,7 @@
 from typing import List, Union
 
 
-def convert_string_to_int_or_none(s):
-    # type: (str) -> Union[int, None]
+def convert_string_to_int_or_none(s: str) -> Union[int, None]:
     if s == "None":
         return None
     else:
@@ -16,60 +15,50 @@ def convert_int_or_none_to_string(v):
         return str(v)
 
 
-def convert_string_to_int(s):
-    # type: (str) -> int
+def convert_string_to_int(s: str) -> int:
     return int(s)
 
 
-def convert_string_to_int_default(i, s):
-    # type: (int, str) -> int
+def convert_string_to_int_default(i: int, s: str) -> int:
     if s.startswith("+"):
-        return i+int(s[1:])
+        return i + int(s[1:])
     if s.startswith("-"):
-        return i-int(s[1:])
+        return i - int(s[1:])
     if s.startswith("*"):
-        return i*int(s[1:])
+        return i * int(s[1:])
     if s.startswith("/"):
-        return i//int(s[1:])
+        return i // int(s[1:])
 
 
-def convert_int_to_string(i):
-    # type: (int) -> str
+def convert_int_to_string(i: int) -> str:
     return str(i)
 
 
-def convert_string_to_bool(s):
-    # type: (str) -> bool
+def convert_string_to_bool(s: str) -> bool:
     if s in {"TRUE", "true", "True", "yes", "Yes", "1", "y", "Y", "t", "T"}:
         return True
     return False
 
 
-def convert_bool_to_string(b):
-    # type: (bool) -> str
+def convert_bool_to_string(b: bool) -> str:
     return str(b)
 
 
-def convert_string_to_list_int(s):
-    # type: (str) -> List[int]
+def convert_string_to_list_int(s: str) -> List[int]:
     return [int(x) for x in s.split(",")]
 
 
-def convert_list_int_to_string(li):
-    # type: (List[int]) -> str
+def convert_list_int_to_string(li: List[int]) -> str:
     return str(li)
 
 
-def convert_string_to_list_str(s):
-    # type: (str) -> List[str]
+def convert_string_to_list_str(s: str) -> List[str]:
     return [x for x in s.split(",")]
 
 
-def convert_list_str_to_string(li):
-    # type: (List[str]) -> str
+def convert_list_str_to_string(li: List[str]) -> str:
     return str(li)
 
 
-def convert_string_to_string(e):
-    # type: (str) -> str
+def convert_string_to_string(e: str) -> str:
     return e

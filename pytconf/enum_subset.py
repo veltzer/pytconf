@@ -1,22 +1,23 @@
 from collections import OrderedDict
 from enum import Enum
 
-from typing import Type, List
+from typing import Type, List, TypeVar
 
 from pytconf.extended_enum import str_to_enum_value, ExtendedEnum
 
 
+EnumSubsetType = TypeVar('EnumSubsetType', bound='EnumSubset')
+
+
 class EnumSubset(object):
     @classmethod
-    def from_enum_all(cls, e):
-        # type: (Type[ExtendedEnum]) -> EnumSubset
+    def from_enum_all(cls, e: Type[ExtendedEnum]) -> EnumSubsetType:
         return EnumSubset(
             enum_type=e,
             list_of_values=e.get_list_of_all_values(),
         )
 
-    def __init__(self, enum_type, list_of_values):
-        # type: (Type[Enum], List[Type[Enum]]) -> None
+    def __init__(self, enum_type: Type[Enum], list_of_values: List[Type[Enum]]) -> None:
         self.enum_type = enum_type
         # TODO: this should actually be an ordered set
         self.selected = OrderedDict()
@@ -44,8 +45,7 @@ class EnumSubset(object):
         return item in {x.value for x in self.selected}
 
     @classmethod
-    def from_string(cls, e, s):
-        # type: (Type[Enum], str) -> EnumSubset
+    def from_string(cls, e: Type[Enum], s: str) -> EnumSubsetType:
         r = EnumSubset(enum_type=e, list_of_values=[])
         for name in s.split(','):
             v = str_to_enum_value(s=name, e=e)
@@ -62,6 +62,5 @@ class EnumSubset(object):
         return ",".join(self.list_of_strings())
 
 
-def enum_subset_to_str(e):
-    # type: (EnumSubset) -> str
+def enum_subset_to_str(e: EnumSubset) -> str:
     return e.to_string()
