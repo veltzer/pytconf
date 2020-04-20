@@ -2,12 +2,12 @@
 import pytconf
 
 class Params:
-	param_name = pytconf.param(...)  # type: int
+	param_name: int = pytconf.param(...)
 
 	# or
 
 	@pytconf.param(...)
-	param_name  # type: int
+	param_name: int = 7
 
 
 ================= main.py ===================
