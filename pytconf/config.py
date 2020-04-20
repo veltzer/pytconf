@@ -37,10 +37,10 @@ class PytconfConf(object):
         self._config_names = set()
         self.main_function = None
         self.function_name_to_configs: Dict[str, List[Config]] = dict()
-        self.function_name_to_suggest_configs = dict()  # type: Dict[str, List[Config]]
-        self.function_name_to_callable = dict()  # type: Dict[str, Callable]
-        self.function_group_names = defaultdict(set)  # type: Dict[str, Set[str]]
-        self.function_group_descriptions = dict()  # type: Dict[str, str]
+        self.function_name_to_suggest_configs: Dict[str, List[Config]] = dict()
+        self.function_name_to_callable: Dict[str, Callable] = dict()
+        self.function_group_names: Dict[str, Set[str]] = defaultdict(set)
+        self.function_group_descriptions: Dict[str, str] = dict()
         self.function_group_list = []
 
     def register_main(self, f):
@@ -197,7 +197,7 @@ class PytconfConf(object):
         # move all default values to place
         for config in itertools.chain(configs, self._configs):
             for attribute in config.get_attributes():
-                param = getattr(config, attribute)  # type: Param
+                param: Param = getattr(config, attribute)
                 if isinstance(param, Param):
                     if param.default is not NO_DEFAULT:
                         setattr(config, attribute, param.default)
@@ -487,7 +487,7 @@ class ParamFilename(Param):
         help_string=NO_HELP,
         default=NO_DEFAULT,
         type_name=None,
-        suffixes=None,  # type: List[str]
+        suffixes: List[str] = None,
     ):
         super(ParamFilename, self).__init__(
             help_string=help_string,
@@ -516,7 +516,7 @@ class ParamEnum(Param):
         self,
         help_string=NO_HELP,
         default=NO_DEFAULT,
-        enum_type=None,  # type: Type[Enum]
+        enum_type: Type[Enum] = None,
     ):
         super(ParamEnum, self).__init__(
             help_string=help_string,
@@ -597,8 +597,9 @@ class ParamCreator(object):
     """
 
     @staticmethod
-    def create_int(help_string=NO_HELP, default=NO_DEFAULT):
-        # type: (str, Union[int, NO_DEFAULT_TYPE]) -> int
+    def create_int(
+            help_string: str = NO_HELP,
+            default: Union[int, NO_DEFAULT_TYPE] = NO_DEFAULT) -> int:
         """
         Create an int parameter
         :param help_string:
@@ -656,8 +657,9 @@ class ParamCreator(object):
         )
 
     @staticmethod
-    def create_int_or_none(help_string=NO_HELP, default=NO_DEFAULT):
-        # type: (str, Union[int, None, NO_DEFAULT_TYPE]) -> Union[int, None]
+    def create_int_or_none(
+            help_string: str = NO_HELP,
+            default: Union[int, None, NO_DEFAULT_TYPE] = NO_DEFAULT) -> Union[int, None]:
         """
         Create an int parameter
         :param help_string:
@@ -674,8 +676,9 @@ class ParamCreator(object):
         )
 
     @staticmethod
-    def create_str(help_string=NO_HELP, default=NO_DEFAULT):
-        # type: (str, Union[str, NO_DEFAULT_TYPE]) -> str
+    def create_str(
+            help_string: str = NO_HELP,
+            default: Union[str, NO_DEFAULT_TYPE] = NO_DEFAULT) -> str:
         """
         Create a string parameter
         :param help_string:
@@ -692,8 +695,9 @@ class ParamCreator(object):
         )
 
     @staticmethod
-    def create_bool(help_string=NO_HELP, default=NO_DEFAULT):
-        # type: (str, Union[bool, NO_DEFAULT_TYPE]) -> bool
+    def create_bool(
+            help_string: str = NO_HELP,
+            default: Union[bool, NO_DEFAULT_TYPE] = NO_DEFAULT) -> bool:
         """
         Create a bool parameter
         :param help_string:
@@ -710,8 +714,10 @@ class ParamCreator(object):
         )
 
     @staticmethod
-    def create_new_file(help_string=NO_HELP, default=NO_DEFAULT, suffixes=None):
-        # type: (str, Union[str, NO_DEFAULT_TYPE], Union[List[str], None]) -> str
+    def create_new_file(
+            help_string: str = NO_HELP,
+            default: Union[str, NO_DEFAULT_TYPE] = NO_DEFAULT,
+            suffixes: Union[List[str], None] = None) -> str:
         """
         Create a new file parameter
         :param help_string:
@@ -728,8 +734,10 @@ class ParamCreator(object):
         )
 
     @staticmethod
-    def create_existing_file(help_string=NO_HELP, default=NO_DEFAULT, suffixes=None):
-        # type: (str, Union[str, NO_DEFAULT_TYPE], Union[List[str], None]) -> str
+    def create_existing_file(
+            help_string: str = NO_HELP,
+            default: Union[str, NO_DEFAULT_TYPE] = NO_DEFAULT,
+            suffixes: Union[List[str], None] = None) -> str:
         """
         Create a new file parameter
         :param help_string:
@@ -746,8 +754,10 @@ class ParamCreator(object):
         )
 
     @staticmethod
-    def create_existing_folder(help_string=NO_HELP, default=NO_DEFAULT, suffixes=None):
-        # type: (str, Union[str, NO_DEFAULT_TYPE], Union[List[str], None]) -> str
+    def create_existing_folder(
+            help_string: str = NO_HELP,
+            default: Union[str, NO_DEFAULT_TYPE] = NO_DEFAULT,
+            suffixes: Union[List[str], None] = None) -> str:
         """
         Create a new folder parameter
         :param help_string:
@@ -764,8 +774,10 @@ class ParamCreator(object):
         )
 
     @staticmethod
-    def create_choice(choice_list, help_string=NO_HELP, default=NO_DEFAULT):
-        # type: (List[str], str, Union[Any, NO_DEFAULT_TYPE]) -> str
+    def create_choice(
+            choice_list: List[str],
+            help_string: str = NO_HELP,
+            default: Union[Any, NO_DEFAULT_TYPE] = NO_DEFAULT) -> str:
         """
         Create a choice config
         :param choice_list:
@@ -781,8 +793,10 @@ class ParamCreator(object):
         )
 
     @staticmethod
-    def create_enum(enum_type, help_string=NO_HELP, default=NO_DEFAULT):
-        # type: (Type[Enum], str, Union[Any, NO_DEFAULT_TYPE]) -> Type[Enum]
+    def create_enum(
+            enum_type: Type[Enum],
+            help_string: str = NO_HELP,
+            default: Union[Any, NO_DEFAULT_TYPE] = NO_DEFAULT) -> Type[Enum]:
         """
         Create an enum config
         :param enum_type:
