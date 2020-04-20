@@ -37,14 +37,14 @@ def main():
 
 class TestBasic(unittest.TestCase):
     def testType(self):
-        self.assertEquals(type(ConfigTotal.num), int)
+        self.assertEqual(type(ConfigTotal.num), int)
 
     def testValue(self):
-        self.assertEquals(ConfigTotal.num, 10)
+        self.assertEqual(ConfigTotal.num, 10)
 
     def testParsing(self):
         sys.argv += ["--num=30"]
         save = ConfigTotal.num
         config_arg_parse_and_launch(launch=False, print_messages=False)
-        self.assertEquals(ConfigTotal.num, 30)
+        self.assertEqual(ConfigTotal.num, 30)
         ConfigTotal.num = save

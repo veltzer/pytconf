@@ -1,5 +1,3 @@
-from __future__ import print_function
-
 import abc
 import itertools
 import sys
@@ -18,8 +16,6 @@ from pytconf.convert import convert_string_to_int, convert_int_to_string, \
     convert_string_to_int_default
 from pytconf.enum_subset import EnumSubset
 from pytconf.extended_enum import str_to_enum_value, enum_type_to_list_str
-
-from six import with_metaclass
 
 PARAMS_ATTRIBUTE = "_params"
 DEFAULT_GROUP_NAME = "default"
@@ -285,8 +281,7 @@ class PytconfConf(object):
             if launch:
                 f()
 
-    def get_html(self):
-        # type: () -> None
+    def get_html(self) -> str:
         html_gen = HtmlGen()
         doc = self.main_function.__doc__
         assert doc is not None
@@ -328,21 +323,21 @@ class PytconfConf(object):
             doc = "undocumented config"
         html_gen.line('h3', doc, title='config: ')
         with html_gen.tag('table'):
-                for name, param in config.get_params().items():
-                    with html_gen.tag('tr'):
-                        if param.default is NO_DEFAULT:
-                            default = "MANDATORY"
-                        else:
-                            default = param.t2s(param.default)
-                        if param.more_help() is None:
-                            more_help = "No more help is documented"
-                        else:
-                            more_help = param.more_help()
-                        html_gen.line('td', name)
-                        html_gen.line('td', param.help_string)
-                        html_gen.line('td', param.get_type_name())
-                        html_gen.line('td', default)
-                        html_gen.line('td', more_help)
+            for name, param in config.get_params().items():
+                with html_gen.tag('tr'):
+                    if param.default is NO_DEFAULT:
+                        default = "MANDATORY"
+                    else:
+                        default = param.t2s(param.default)
+                    if param.more_help() is None:
+                        more_help = "No more help is documented"
+                    else:
+                        more_help = param.more_help()
+                    html_gen.line('td', name)
+                    html_gen.line('td', param.help_string)
+                    html_gen.line('td', param.get_type_name())
+                    html_gen.line('td', default)
+                    html_gen.line('td', more_help)
 
 
 _pytconf = PytconfConf()
@@ -389,7 +384,7 @@ class MetaConfig(type):
         super(MetaConfig, cls).__init__(name, bases, cls_dict)
 
 
-class Config(with_metaclass(MetaConfig, object)):
+class Config(metaclass=MetaConfig):
     """
         base class for all configs
     """
@@ -412,8 +407,12 @@ class Config(with_metaclass(MetaConfig, object)):
         return cls.get_params()[name]
 
 
-NO_DEFAULT = {}
-NO_DEFAULT_TYPE = Dict
+class Unique:
+    pass
+
+
+NO_DEFAULT = Unique()
+NO_DEFAULT_TYPE = type(NO_DEFAULT)
 NO_HELP = "No help for this configuration option"
 
 
@@ -875,9 +874,4 @@ def register_endpoint(configs=(), suggest_configs=(), group=DEFAULT_GROUP_NAME):
         pt.function_group_names[group].add(function_name)
         return f
     return identity
-
-
-
-
-
 

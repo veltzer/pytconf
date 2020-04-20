@@ -1,8 +1,6 @@
 # THIS IS AN AUTO-GENERATED FILE. DO NOT EDIT!
 # production requirements
-enum34
 termcolor
-six
 yattag
 # dev requirements
 pyclassifiers

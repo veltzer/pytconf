@@ -7,7 +7,7 @@ http://setuptools.readthedocs.io/en/latest/setuptools.html
 setuptools.setup(
     # the first three fields are a must according to the documentation
     name='pytconf',
-    version='0.0.27',
+    version='0.0.28',
     packages=[
         'pytconf',
     ],
@@ -29,12 +29,10 @@ setuptools.setup(
     download_url='https://github.com/veltzer/pytconf',
     license='MIT',
     platforms=[
-        'python2',
+        'python3',
     ],
     install_requires=[
-        'enum34',
         'termcolor',
-        'six',
         'yattag',
     ],
     classifiers=[
@@ -48,5 +46,5 @@ setuptools.setup(
     ],
     entry_points={'console_scripts': [
     ]},
-    python_requires='>=2.7',
+    python_requires='>=3.4',
 )
