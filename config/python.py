@@ -9,11 +9,8 @@ setup_requires = [
 ]
 
 run_requires = [
-    'enum34',  # for Enum
     'termcolor',  # for printing in colors
-    'six',  # for portability between python 2 and 3
     'yattag',  # for generating html text
-    # 'html',  # for generating html text
 ]
 
 test_requires = [
@@ -32,4 +29,4 @@ dev_requires = [
 install_requires = list(setup_requires)
 install_requires.extend(run_requires)
 
-python_requires = ">=2.7"
+python_requires = ">=3.4"

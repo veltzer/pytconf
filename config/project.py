@@ -9,6 +9,7 @@ project_website_source = 'https://github.com/{project_github_username}/{project_
 project_website_git = 'git://github.com/{project_github_username}/{project_name}.git'.format(**locals())
 project_website_download_ppa = 'https://launchpanet/~mark-veltzer/+archive/ubuntu/ppa'
 project_website_download_src = project_website_source
+# noinspection SpellCheckingInspection
 project_paypal_donate_button_id = 'ASPRXR59H2NTQ'
 project_google_analytics_tracking_id = 'UA-56436979-1'
 project_short_description = 'pytconf handles configuration, config files and command line parsing'
@@ -26,7 +27,7 @@ project_license = 'MIT'
 project_year_started = '2017'
 project_description = project_short_description
 project_platforms = [
-    'python2',
+    'python3',
 ]
 project_classifiers = [
     pyclassifiers.values.DevelopmentStatus__4_Beta,

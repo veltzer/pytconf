@@ -6,18 +6,18 @@ import subprocess
 import sys
 
 
-def array_indented(level, l, quote_char='\'', comma_after=False):
+def array_indented(level, array, quote_char='\'', comma_after=False):
     # type: (int, List[str], str, bool) -> str
     """
     return an array indented according to indent level
     :param level:
-    :param l:
+    :param array:
     :param quote_char:
     :param comma_after:
     :return:
     """
     out = "[\n"
-    for x in l:
+    for x in array:
         out += (((level+1) * 4) * " ") + '{}{}{}'.format(quote_char, x, quote_char) + ",\n"
     out += ((level * 4) * " ") + "]"
     if comma_after:
