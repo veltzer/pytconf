@@ -18,7 +18,7 @@ from pytconf.enum_subset import EnumSubset
 from pytconf.extended_enum import str_to_enum_value, enum_type_to_list_str
 
 PARAMS_ATTRIBUTE = "_params"
-DEFAULT_GROUP_NAME = "default"
+DEFAULT_GROUP_NAME: str = "default"
 SPECIAL_COMMANDS = {"help", "help-suggest", "help-all"}
 
 
@@ -362,6 +362,7 @@ class MetaConfig(type):
     """
     base class for all configs
     """
+
     def __new__(mcs, name, bases, cls_dict):
         if name != "Config":
             params_dict = dict()
@@ -423,10 +424,10 @@ class Param(object):
     """
 
     def __init__(
-            self,
-            help_string=NO_HELP,
-            default=NO_DEFAULT,
-            type_name=None,
+        self,
+        help_string=NO_HELP,
+        default=NO_DEFAULT,
+        type_name=None,
     ):
         super(Param, self).__init__()
         self.help_string = help_string
@@ -462,13 +463,13 @@ class ParamFunctions(Param):
     """
 
     def __init__(
-            self,
-            help_string=NO_HELP,
-            default=NO_DEFAULT,
-            type_name=None,
-            function_s2t=None,  # type: Callable
-            function_s2t_generate_from_default=None,  # type: Callable
-            function_t2s=None,  # type: Callable
+        self,
+        help_string=NO_HELP,
+        default=NO_DEFAULT,
+        type_name=None,
+        function_s2t=None,  # type: Callable
+        function_s2t_generate_from_default=None,  # type: Callable
+        function_t2s=None,  # type: Callable
     ):
         super(ParamFunctions, self).__init__(
             help_string=help_string,
@@ -494,11 +495,11 @@ class ParamFunctions(Param):
 
 class ParamFilename(Param):
     def __init__(
-            self,
-            help_string=NO_HELP,
-            default=NO_DEFAULT,
-            type_name=None,
-            suffixes=None,  # type: List[str]
+        self,
+        help_string=NO_HELP,
+        default=NO_DEFAULT,
+        type_name=None,
+        suffixes=None,  # type: List[str]
     ):
         super(ParamFilename, self).__init__(
             help_string=help_string,
@@ -524,10 +525,10 @@ class ParamFilename(Param):
 
 class ParamEnum(Param):
     def __init__(
-            self,
-            help_string=NO_HELP,
-            default=NO_DEFAULT,
-            enum_type=None,  # type: Type[Enum]
+        self,
+        help_string=NO_HELP,
+        default=NO_DEFAULT,
+        enum_type=None,  # type: Type[Enum]
     ):
         super(ParamEnum, self).__init__(
             help_string=help_string,
@@ -553,10 +554,10 @@ class ParamEnum(Param):
 
 class ParamEnumSubset(Param):
     def __init__(
-            self,
-            help_string=NO_HELP,
-            default=NO_DEFAULT,
-            enum_type=None,  # type: Type[Enum]
+        self,
+        help_string=NO_HELP,
+        default=NO_DEFAULT,
+        enum_type=None,  # type: Type[Enum]
     ):
         super(ParamEnumSubset, self).__init__(
             help_string=help_string,
@@ -586,10 +587,10 @@ class ParamEnumSubset(Param):
 
 class ParamChoice(Param):
     def __init__(
-            self,
-            help_string=NO_HELP,
-            default=NO_DEFAULT,
-            choice_list=None,  # type: List[str]
+        self,
+        help_string=NO_HELP,
+        default=NO_DEFAULT,
+        choice_list=None,  # type: List[str]
     ):
         super(ParamChoice, self).__init__(
             help_string=help_string,
@@ -848,23 +849,24 @@ class ParamCreator(object):
         )
 
 
-def register_function_group(function_group_name, function_group_description):
-    # type: (str, str) -> None
+def register_function_group(function_group_name: str, function_group_description: str) -> None:
     pt = get_pytconf()
     pt.function_group_descriptions[function_group_name] = function_group_description
     pt.function_group_list.append(function_group_name)
 
 
-def register_main():
-    # type: () -> Callable[[Any], Any]
+def register_main() -> Callable[[Any], Any]:
     def identity(f):
         get_pytconf().register_main(f)
         return f
+
     return identity
 
 
-def register_endpoint(configs=(), suggest_configs=(), group=DEFAULT_GROUP_NAME):
-    # type: (List[Config], List[Config]) -> Callable[[Any], Any]
+def register_endpoint(
+        configs: List[Config] = (),
+        suggest_configs: List[Config] = (),
+        group: str = DEFAULT_GROUP_NAME) -> Callable[[Any], Any]:
     def identity(f):
         pt = get_pytconf()
         function_name = f.__name__
@@ -873,5 +875,5 @@ def register_endpoint(configs=(), suggest_configs=(), group=DEFAULT_GROUP_NAME):
         pt.function_name_to_suggest_configs[function_name] = suggest_configs
         pt.function_group_names[group].add(function_name)
         return f
-    return identity
 
+    return identity
