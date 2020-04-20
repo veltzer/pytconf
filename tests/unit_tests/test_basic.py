@@ -17,8 +17,7 @@ class ConfigTotal(Config):
         ConfigTotal,
     ],
 )
-def command():
-    # type: () -> None
+def command() -> None:
     """
     This is help for command
     """

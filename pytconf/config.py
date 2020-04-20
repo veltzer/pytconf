@@ -4,7 +4,7 @@ import sys
 from collections import defaultdict
 from enum import Enum
 
-from typing import Union, List, Any, Callable, Type, Dict, Set
+from typing import Union, List, Any, Callable, Type, Dict, Set, TypeVar
 
 from yattag import Doc
 
@@ -36,7 +36,7 @@ class PytconfConf(object):
         self._configs = set()
         self._config_names = set()
         self.main_function = None
-        self.function_name_to_configs = dict()  # type: Dict[str, List[Config]]
+        self.function_name_to_configs: Dict[str, List[Config]] = dict()
         self.function_name_to_suggest_configs = dict()  # type: Dict[str, List[Config]]
         self.function_name_to_callable = dict()  # type: Dict[str, Callable]
         self.function_group_names = defaultdict(set)  # type: Dict[str, Set[str]]
@@ -57,16 +57,14 @@ class PytconfConf(object):
         self._config_names.add(name)
 
     @classmethod
-    def print_errors(cls, errors):
-        # type: (List[str]) -> None
+    def print_errors(cls, errors: List[str]) -> None:
         if errors:
             print()
             for error in errors:
                 print_warn(error)
             print()
 
-    def show_help(self):
-        # type: () -> None
+    def show_help(self) -> None:
         print("Usage: {} [OPTIONS] COMMAND [ARGS]...".format(self.main_function.__name__))
         doc = self.main_function.__doc__
         if doc is not None:
@@ -94,9 +92,7 @@ class PytconfConf(object):
                     print("    {}: {}".format(color_hi(name), doc))
             print()
 
-    def show_help_for_function(self, function_name, show_help_full, show_help_suggest):
-        # type: (str, bool, bool) -> None
-
+    def show_help_for_function(self, function_name: str, show_help_full: bool, show_help_suggest: bool) -> None:
         print("Usage: {} {} [OPTIONS] [ARGS]...".format(
             self.main_function.__name__,
             function_name,
@@ -145,8 +141,7 @@ class PytconfConf(object):
                 print("      {}".format(more_help))
         print()
 
-    def parse_args(self, command_selected, flags, _free_args):
-        # type: (str, Dict[str, str], List[str]) -> bool
+    def parse_args(self, command_selected: str, flags: Dict[str, str], _free_args: List[str]) -> bool:
         """
         Parse the args and fill the global data
         Currently we disregard the free parameters
@@ -159,7 +154,7 @@ class PytconfConf(object):
         suggested_configs = self.function_name_to_suggest_configs[command_selected]
 
         # create the attribute_to_config map
-        attribute_to_config = dict()  # type: Dict[str, Config]
+        attribute_to_config: Dict[str, Config] = dict()
         for config in itertools.chain(configs, suggested_configs):
             for attribute in config.get_attributes():
                 if attribute in attribute_to_config:
@@ -208,13 +203,13 @@ class PytconfConf(object):
                         setattr(config, attribute, param.default)
         return True
 
-    def config_arg_parse_and_launch(self, print_messages=True, launch=True):
+    def config_arg_parse_and_launch(self, print_messages=True, launch=True) -> None:
         # we don't need the first argument which is the script path
-        args = sys.argv[1:]  # type: List[str]
+        args: List[str] = sys.argv[1:]
         # name of arg and it's value
-        flags = dict()  # type: Dict[str, str]
+        flags: Dict[str, str] = dict()
         special_flags = set()
-        errors = []  # type: List[str]
+        errors: List[str] = []
         free_args = []
         while args:
             current = args.pop(0)
@@ -385,26 +380,26 @@ class MetaConfig(type):
         super(MetaConfig, cls).__init__(name, bases, cls_dict)
 
 
+ParamType = TypeVar('ParamType', bound='Param')
+
+
 class Config(metaclass=MetaConfig):
     """
         base class for all configs
     """
 
     @classmethod
-    def get_attributes(cls):
-        # type: (Any) -> List[str]
+    def get_attributes(cls: Any) -> List[str]:
         return getattr(cls, PARAMS_ATTRIBUTE).keys()
         # return [attr for attr in dir(cls) if not callable(getattr(cls, attr))
         #        and not attr.startswith("__")]
 
     @classmethod
-    def get_params(cls):
-        # type: (Any) -> Dict[str, Param]
+    def get_params(cls: Any) -> Dict[str, ParamType]:
         return getattr(cls, PARAMS_ATTRIBUTE)
 
     @classmethod
-    def get_param_by_name(cls, name):
-        # type: (Any, str) -> Param
+    def get_param_by_name(cls: Any, name: str) -> ParamType:
         return cls.get_params()[name]
 
 
@@ -438,22 +433,18 @@ class Param(object):
         return self.type_name
 
     @abc.abstractmethod
-    def s2t(self, s):
-        # type: (str) -> object
+    def s2t(self, s: str) -> object:
         pass
 
-    def s2t_generate_from_default(self, s):
-        # type: (str) -> object
+    def s2t_generate_from_default(self, s: str) -> object:
         raise ValueError("we do not support generation from default")
 
     @abc.abstractmethod
-    def t2s(self, t):
-        # type: (object) -> str
+    def t2s(self, t: object) -> str:
         pass
 
     # noinspection PyMethodMayBeStatic
-    def more_help(self):
-        # type: () -> Union[str, None]
+    def more_help(self) -> Union[str, None]:
         return None
 
 
@@ -467,9 +458,9 @@ class ParamFunctions(Param):
         help_string=NO_HELP,
         default=NO_DEFAULT,
         type_name=None,
-        function_s2t=None,  # type: Callable
-        function_s2t_generate_from_default=None,  # type: Callable
-        function_t2s=None,  # type: Callable
+        function_s2t: Callable = None,
+        function_s2t_generate_from_default: Callable = None,
+        function_t2s: Callable = None,
     ):
         super(ParamFunctions, self).__init__(
             help_string=help_string,
@@ -480,16 +471,13 @@ class ParamFunctions(Param):
         self.function_t2s = function_t2s
         self.function_s2t_generate_from_default = function_s2t_generate_from_default
 
-    def s2t(self, s):
-        # type: (str) -> Any
+    def s2t(self, s: str) -> Any:
         return self.function_s2t(s)
 
-    def s2t_generate_from_default(self, s):
-        # type: (str) -> Any
+    def s2t_generate_from_default(self, s: str) -> Any:
         return self.function_s2t_generate_from_default(self.default, s)
 
-    def t2s(self, t):
-        # type: (Any) -> str
+    def t2s(self, t: Any) -> str:
         return self.function_t2s(t)
 
 
@@ -540,12 +528,10 @@ class ParamEnum(Param):
     def get_type_name(self):
         return "Enum[{}]".format(self.enum_type.__name__)
 
-    def s2t(self, s):
-        # type: (str) -> Any
+    def s2t(self, s: str) -> Any:
         return str_to_enum_value(s, self.enum_type)
 
-    def t2s(self, t):
-        # type: (Any) -> str
+    def t2s(self, t: Any) -> str:
         return t.name
 
     def more_help(self):
@@ -557,7 +543,7 @@ class ParamEnumSubset(Param):
         self,
         help_string=NO_HELP,
         default=NO_DEFAULT,
-        enum_type=None,  # type: Type[Enum]
+        enum_type: Type[Enum] = None,
     ):
         super(ParamEnumSubset, self).__init__(
             help_string=help_string,
@@ -569,16 +555,13 @@ class ParamEnumSubset(Param):
     def get_type_name(self):
         return "EnumSubset[{}]".format(self.enum_type.__name__)
 
-    def s2t(self, s):
-        # type: (str) -> EnumSubset
+    def s2t(self, s: str) -> EnumSubset:
         return EnumSubset.from_string(e=self.enum_type, s=s)
 
-    def t2s(self, t):
-        # type: (EnumSubset) -> str
+    def t2s(self, t: EnumSubset) -> str:
         return t.to_string()
 
-    def s2t_generate_from_default(self, s):
-        # type: (str) -> EnumSubset
+    def s2t_generate_from_default(self, s: str) -> EnumSubset:
         pass
 
     def more_help(self):
@@ -587,11 +570,10 @@ class ParamEnumSubset(Param):
 
 class ParamChoice(Param):
     def __init__(
-        self,
-        help_string=NO_HELP,
-        default=NO_DEFAULT,
-        choice_list=None,  # type: List[str]
-    ):
+            self,
+            help_string=NO_HELP,
+            default=NO_DEFAULT,
+            choice_list: List[str] = None):
         super(ParamChoice, self).__init__(
             help_string=help_string,
             default=default,
@@ -599,12 +581,10 @@ class ParamChoice(Param):
         )
         self.choice_list = choice_list
 
-    def s2t(self, s):
-        # type: (str) -> Any
+    def s2t(self, s: str) -> Any:
         return s
 
-    def t2s(self, t):
-        # type: (Any) -> str
+    def t2s(self, t: Any) -> str:
         return t
 
     def more_help(self):
@@ -636,8 +616,10 @@ class ParamCreator(object):
         )
 
     @staticmethod
-    def create_list_int(help_string=NO_HELP, default=NO_DEFAULT):
-        # type: (str, Union[List[int], NO_DEFAULT_TYPE]) -> List[int]
+    def create_list_int(
+            help_string: str = NO_HELP,
+            default: Union[List[int], NO_DEFAULT_TYPE] = NO_DEFAULT
+            ) -> List[int]:
         """
         Create a List[int] parameter
         :param help_string:
@@ -654,8 +636,10 @@ class ParamCreator(object):
         )
 
     @staticmethod
-    def create_list_str(help_string=NO_HELP, default=NO_DEFAULT):
-        # type: (str, Union[List[str], NO_DEFAULT_TYPE]) -> List[str]
+    def create_list_str(
+            help_string: str = NO_HELP,
+            default: Union[List[str], NO_DEFAULT_TYPE] = NO_DEFAULT
+            ) -> List[str]:
         """
         Create a List[str] parameter
         :param help_string:
@@ -814,8 +798,10 @@ class ParamCreator(object):
         )
 
     @staticmethod
-    def create_enum_subset(enum_type, help_string=NO_HELP, default=NO_DEFAULT):
-        # type: (Type[Enum], str, EnumSubset) -> EnumSubset
+    def create_enum_subset(
+            enum_type: Type[Enum],
+            help_string: str = NO_HELP,
+            default: EnumSubset = NO_DEFAULT) -> EnumSubset:
         """
         Create an enum config
         :param enum_type:
@@ -831,8 +817,7 @@ class ParamCreator(object):
         )
 
     @staticmethod
-    def create_existing_bucket(help_string=NO_HELP, default=NO_DEFAULT):
-        # type: (str, Union[str, NO_DEFAULT_TYPE]) -> str
+    def create_existing_bucket(help_string: str = NO_HELP, default: Union[str, NO_DEFAULT_TYPE] = NO_DEFAULT) -> str:
         """
         Create a bucket name on gcp
         :param help_string:
