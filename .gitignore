@@ -75,6 +75,4 @@ celerybeat-schedule
 # Sphinx documentation
 /docs/.doctrees/
 
-/.idea/workspace.xml
-
 /.pytest_cache/
