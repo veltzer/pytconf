@@ -24,6 +24,7 @@ dev_requires = [
     'Sphinx',  # for the sphinx builder
     'pylint',  # to check for lint errors
     'pytest',  # for testing
+    'pyflakes',  # for testing
 ]
 
 install_requires = list(setup_requires)

@@ -9,5 +9,6 @@ pydmt
 Sphinx
 pylint
 pytest
+pyflakes
 # test requirements
 pylogconf
