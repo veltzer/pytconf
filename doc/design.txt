@@ -19,6 +19,8 @@ def user():
 	print(Params.param_name)
 
 
+look at the test.py file for a demo of how this can work.
+
 Question:
 - what if you have params in several places in your software?
 	Cant the params register them selves to some global registry?
