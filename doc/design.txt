@@ -1,21 +1,16 @@
 ================== params.py ==================
-import pytconf
+from pytconf import Config
 
-class Params:
-	param_name: int = pytconf.param(...)
-
-	# or
-
-	@pytconf.param(...)
-	param_name: int = 7
+class Params(Config):
+	param_name: int = Config.param_int(...)
 
 
 ================= main.py ===================
-import Params
+from pytconf import load_config
 
 def main():
 	# throws exceptions if values are missing
-	params_registry.load()
+	load_config()
 
 =================== anywhere_else.py ===========
 import Params

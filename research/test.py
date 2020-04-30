@@ -18,25 +18,28 @@ class Meta(type):
         glist=[]
         return ret
 
-class A(object, metaclass=Meta):
+class Config(object, metaclass=Meta):
     @classmethod
-    def ParamCreatorInt(cls: ClassVar, default: int, extra:int) -> int:
+    def create_int(cls: ClassVar, default: int, extra:int) -> int:
         global glist
         glist.append(extra)
         return default
 
 
-class B(A):
-    foo: int=A.ParamCreatorInt(5, 34)
-    bar: int=A.ParamCreatorInt(6, 35)
+class B(Config):
+    foo: int=Config.create_int(5, 34)
+    bar: int=Config.create_int(6, 35)
 
-class C(A):
-    zoo: int=A.ParamCreatorInt(7, 36)
-    koo: int=A.ParamCreatorInt(8, 37)
+class C(Config):
+    zoo: int=Config.create_int(7, 36)
+    koo: int=Config.create_int(8, 37)
 
 
 assert(B.foo==5)
 assert(B.bar==6)
 assert(C.zoo==7)
 assert(C.koo==8)
-print(d)
+assert(d[(B,"foo")]==34)
+assert(d[(B,"bar")]==35)
+assert(d[(C,"zoo")]==36)
+assert(d[(C,"koo")]==37)
