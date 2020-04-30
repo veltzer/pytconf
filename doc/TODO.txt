@@ -1,3 +1,4 @@
+- add support for 
 - currently we lie to type checkers. How?
 	The method 'create_str' of the class ParamCreator does not really
 	return a string but rather a ParamFunctions object.
