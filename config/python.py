@@ -22,9 +22,11 @@ dev_requires = [
     'pypitools',  # for upload etc
     'pydmt',  # for building
     'Sphinx',  # for the sphinx builder
-    'pylint',  # to check for lint errors
     'pytest',  # for testing
-    'pyflakes',  # for testing
+    'pytest-cov',  # for test coverage
+    'pylint',  # to linting
+    'pyflakes',  # for linting
+    'flake8',  # for linting
 ]
 
 install_requires = list(setup_requires)
