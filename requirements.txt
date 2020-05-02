@@ -7,8 +7,10 @@ pyclassifiers
 pypitools
 pydmt
 Sphinx
-pylint
 pytest
+pytest-cov
+pylint
 pyflakes
+flake8
 # test requirements
 pylogconf

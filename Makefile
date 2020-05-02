@@ -1,6 +1,7 @@
 .PHONY: all
 
 all:
-	pylint -E pytconf
-	pyflakes pytconf
-	pytest
+	pytest --cov=pytconf --cov-report=xml --cov-report=html
+	pylint pytconf tests
+	pyflakes pytconf tests
+	flake8 pytconf tests
