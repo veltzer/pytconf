@@ -419,11 +419,11 @@ class Param(object):
     """
 
     def __init__(
-        self,
-        help_string=NO_HELP,
-        default=NO_DEFAULT,
-        type_name=None,
-    ):
+            self,
+            help_string=NO_HELP,
+            default=NO_DEFAULT,
+            type_name=None,
+        ):
         super(Param, self).__init__()
         self.help_string = help_string
         self.default = default
