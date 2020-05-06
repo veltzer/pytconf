@@ -1,8 +1,8 @@
 import sys
 import unittest
 
-from pytconf.config import register_main, config_arg_parse_and_launch, Config, \
-    register_endpoint, ParamCreator
+from pytconf.config import register_main, config_arg_parse_and_launch,\
+    Config, register_endpoint, ParamCreator
 
 
 class ConfigTotal(Config):
@@ -35,13 +35,13 @@ def main():
 
 
 class TestBasic(unittest.TestCase):
-    def testType(self):
+    def test_type(self):
         self.assertEqual(type(ConfigTotal.num), int)
 
-    def testValue(self):
+    def test_value(self):
         self.assertEqual(ConfigTotal.num, 10)
 
-    def testParsing(self):
+    def test_parsing(self):
         sys.argv += ["--num=30"]
         save = ConfigTotal.num
         config_arg_parse_and_launch(launch=False, print_messages=False)

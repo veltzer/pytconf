@@ -38,7 +38,6 @@
 
 <span class="kn">from</span> <span class="nn">pytconf.extended_enum</span> <span class="kn">import</span> <span class="n">str_to_enum_value</span><span class="p">,</span> <span class="n">ExtendedEnum</span>
 
-
 <span class="n">EnumSubsetType</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s1">&#39;EnumSubsetType&#39;</span><span class="p">,</span> <span class="n">bound</span><span class="o">=</span><span class="s1">&#39;EnumSubset&#39;</span><span class="p">)</span>
 
 
@@ -50,7 +49,10 @@
             <span class="n">list_of_values</span><span class="o">=</span><span class="n">e</span><span class="o">.</span><span class="n">get_list_of_all_values</span><span class="p">(),</span>
         <span class="p">)</span></div>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">enum_type</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">Enum</span><span class="p">],</span> <span class="n">list_of_values</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Type</span><span class="p">[</span><span class="n">Enum</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">enum_type</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">Enum</span><span class="p">],</span>
+            <span class="n">list_of_values</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Type</span><span class="p">[</span><span class="n">Enum</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">enum_type</span> <span class="o">=</span> <span class="n">enum_type</span>
         <span class="c1"># TODO: this should actually be an ordered set</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">selected</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">()</span>
@@ -58,7 +60,8 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
 
 <div class="viewcode-block" id="EnumSubset.add"><a class="viewcode-back" href="../../pytconf.html#pytconf.enum_subset.EnumSubset.add">[docs]</a>    <span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">enum_value</span><span class="p">):</span>
-        <span class="k">assert</span> <span class="n">enum_value</span> <span class="ow">in</span> <span class="n">enum_value</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="n">__members__</span><span class="o">.</span><span class="n">values</span><span class="p">(),</span> <span class="s2">&quot;bad value </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">enum_value</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">enum_value</span> <span class="ow">in</span> <span class="n">enum_value</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="n">__members__</span><span class="o">.</span><span class="n">values</span><span class="p">(),</span>\
+            <span class="s2">&quot;bad value </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">enum_value</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">selected</span><span class="p">[</span><span class="n">enum_value</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span></div>
 
 <div class="viewcode-block" id="EnumSubset.delete"><a class="viewcode-back" href="../../pytconf.html#pytconf.enum_subset.EnumSubset.delete">[docs]</a>    <span class="k">def</span> <span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">enum_value</span><span class="p">):</span>
@@ -131,7 +134,7 @@
       &copy;2017, Mark Veltzer.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.2</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.3</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
     </div>

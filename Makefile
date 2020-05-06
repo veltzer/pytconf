@@ -8,3 +8,16 @@ all:
 .PHONY: test
 test:
 	pytest --cov=pytconf --cov-report=xml --cov-report=html
+
+.PHONY: flake8
+flake8:
+	flake8 pytconf tests
+
+
+.PHONY: pyflakes
+pyflakes:
+	pyflakes pytconf tests
+
+.PHONY: pylint
+pylint:
+	pylint pytconf tests
