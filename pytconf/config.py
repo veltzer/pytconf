@@ -419,11 +419,11 @@ class Param(object):
     """
 
     def __init__(
-            self,
-            help_string=NO_HELP,
-            default=NO_DEFAULT,
-            type_name=None,
-        ):
+        self,
+        help_string=NO_HELP,
+        default=NO_DEFAULT,
+        type_name=None,
+    ):
         super(Param, self).__init__()
         self.help_string = help_string
         self.default = default
@@ -570,10 +570,11 @@ class ParamEnumSubset(Param):
 
 class ParamChoice(Param):
     def __init__(
-            self,
-            help_string=NO_HELP,
-            default=NO_DEFAULT,
-            choice_list: List[str] = None):
+        self,
+        help_string=NO_HELP,
+        default=NO_DEFAULT,
+        choice_list: List[str] = None
+    ):
         super(ParamChoice, self).__init__(
             help_string=help_string,
             default=default,
@@ -598,8 +599,9 @@ class ParamCreator(object):
 
     @staticmethod
     def create_int(
-            help_string: str = NO_HELP,
-            default: Union[int, NO_DEFAULT_TYPE] = NO_DEFAULT) -> int:
+        help_string: str = NO_HELP,
+        default: Union[int, NO_DEFAULT_TYPE] = NO_DEFAULT
+    ) -> int:
         """
         Create an int parameter
         :param help_string:
@@ -618,9 +620,9 @@ class ParamCreator(object):
 
     @staticmethod
     def create_list_int(
-            help_string: str = NO_HELP,
-            default: Union[List[int], NO_DEFAULT_TYPE] = NO_DEFAULT
-            ) -> List[int]:
+        help_string: str = NO_HELP,
+        default: Union[List[int], NO_DEFAULT_TYPE] = NO_DEFAULT
+    ) -> List[int]:
         """
         Create a List[int] parameter
         :param help_string:
@@ -638,9 +640,9 @@ class ParamCreator(object):
 
     @staticmethod
     def create_list_str(
-            help_string: str = NO_HELP,
-            default: Union[List[str], NO_DEFAULT_TYPE] = NO_DEFAULT
-            ) -> List[str]:
+        help_string: str = NO_HELP,
+        default: Union[List[str], NO_DEFAULT_TYPE] = NO_DEFAULT
+    ) -> List[str]:
         """
         Create a List[str] parameter
         :param help_string:
@@ -658,8 +660,9 @@ class ParamCreator(object):
 
     @staticmethod
     def create_int_or_none(
-            help_string: str = NO_HELP,
-            default: Union[int, None, NO_DEFAULT_TYPE] = NO_DEFAULT) -> Union[int, None]:
+        help_string: str = NO_HELP,
+        default: Union[int, None, NO_DEFAULT_TYPE] = NO_DEFAULT
+    ) -> Union[int, None]:
         """
         Create an int parameter
         :param help_string:
@@ -677,8 +680,9 @@ class ParamCreator(object):
 
     @staticmethod
     def create_str(
-            help_string: str = NO_HELP,
-            default: Union[str, NO_DEFAULT_TYPE] = NO_DEFAULT) -> str:
+        help_string: str = NO_HELP,
+        default: Union[str, NO_DEFAULT_TYPE] = NO_DEFAULT
+    ) -> str:
         """
         Create a string parameter
         :param help_string:
@@ -696,8 +700,9 @@ class ParamCreator(object):
 
     @staticmethod
     def create_bool(
-            help_string: str = NO_HELP,
-            default: Union[bool, NO_DEFAULT_TYPE] = NO_DEFAULT) -> bool:
+        help_string: str = NO_HELP,
+        default: Union[bool, NO_DEFAULT_TYPE] = NO_DEFAULT
+    ) -> bool:
         """
         Create a bool parameter
         :param help_string:
@@ -715,9 +720,10 @@ class ParamCreator(object):
 
     @staticmethod
     def create_new_file(
-            help_string: str = NO_HELP,
-            default: Union[str, NO_DEFAULT_TYPE] = NO_DEFAULT,
-            suffixes: Union[List[str], None] = None) -> str:
+        help_string: str = NO_HELP,
+        default: Union[str, NO_DEFAULT_TYPE] = NO_DEFAULT,
+        suffixes: Union[List[str], None] = None
+    ) -> str:
         """
         Create a new file parameter
         :param help_string:
@@ -735,9 +741,10 @@ class ParamCreator(object):
 
     @staticmethod
     def create_existing_file(
-            help_string: str = NO_HELP,
-            default: Union[str, NO_DEFAULT_TYPE] = NO_DEFAULT,
-            suffixes: Union[List[str], None] = None) -> str:
+        help_string: str = NO_HELP,
+        default: Union[str, NO_DEFAULT_TYPE] = NO_DEFAULT,
+        suffixes: Union[List[str], None] = None
+    ) -> str:
         """
         Create a new file parameter
         :param help_string:
@@ -755,9 +762,10 @@ class ParamCreator(object):
 
     @staticmethod
     def create_existing_folder(
-            help_string: str = NO_HELP,
-            default: Union[str, NO_DEFAULT_TYPE] = NO_DEFAULT,
-            suffixes: Union[List[str], None] = None) -> str:
+        help_string: str = NO_HELP,
+        default: Union[str, NO_DEFAULT_TYPE] = NO_DEFAULT,
+        suffixes: Union[List[str], None] = None,
+    ) -> str:
         """
         Create a new folder parameter
         :param help_string:
@@ -775,9 +783,10 @@ class ParamCreator(object):
 
     @staticmethod
     def create_choice(
-            choice_list: List[str],
-            help_string: str = NO_HELP,
-            default: Union[Any, NO_DEFAULT_TYPE] = NO_DEFAULT) -> str:
+        choice_list: List[str],
+        help_string: str = NO_HELP,
+        default: Union[Any, NO_DEFAULT_TYPE] = NO_DEFAULT,
+    ) -> str:
         """
         Create a choice config
         :param choice_list:
@@ -794,9 +803,10 @@ class ParamCreator(object):
 
     @staticmethod
     def create_enum(
-            enum_type: Type[Enum],
-            help_string: str = NO_HELP,
-            default: Union[Any, NO_DEFAULT_TYPE] = NO_DEFAULT) -> Type[Enum]:
+        enum_type: Type[Enum],
+        help_string: str = NO_HELP,
+        default: Union[Any, NO_DEFAULT_TYPE] = NO_DEFAULT,
+    ) -> Type[Enum]:
         """
         Create an enum config
         :param enum_type:
@@ -813,9 +823,10 @@ class ParamCreator(object):
 
     @staticmethod
     def create_enum_subset(
-            enum_type: Type[Enum],
-            help_string: str = NO_HELP,
-            default: EnumSubset = NO_DEFAULT) -> EnumSubset:
+        enum_type: Type[Enum],
+        help_string: str = NO_HELP,
+        default: EnumSubset = NO_DEFAULT,
+    ) -> EnumSubset:
         """
         Create an enum config
         :param enum_type:
@@ -863,9 +874,10 @@ def register_main() -> Callable[[Any], Any]:
 
 
 def register_endpoint(
-        configs: List[Config] = (),
-        suggest_configs: List[Config] = (),
-        group: str = DEFAULT_GROUP_NAME) -> Callable[[Any], Any]:
+    configs: List[Config] = (),
+    suggest_configs: List[Config] = (),
+    group: str = DEFAULT_GROUP_NAME
+) -> Callable[[Any], Any]:
     def identity(f):
         pt = get_pytconf()
         function_name = f.__name__
