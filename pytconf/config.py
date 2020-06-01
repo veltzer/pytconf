@@ -325,7 +325,8 @@ class PytconfConf(object):
 
         if errors.have_errors():
             self.print_errors(errors)
-            return
+            if not show_help:
+                return
 
         if show_help:
             if command_selected:
