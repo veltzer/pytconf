@@ -124,7 +124,7 @@ class PytconfConf(object):
             print_error(error)
 
     def show_help(self) -> None:
-        print("Usage: {} [OPTIONS] COMMAND [ARGS]...".format(self.main_function.__name__))
+        print("Usage: {} [OPTIONS] COMMAND [ARGS]...".format(self.app_name))
         doc = self.main_function.__doc__
         if doc is not None:
             print()
