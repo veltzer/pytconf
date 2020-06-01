@@ -255,7 +255,6 @@ class PytconfConf(object):
         launch=True
     ) -> None:
         # we don't need the first argument which is the script path
-        print(args)
         if args:
             self.app_name = args[0]
             args = args[1:]
@@ -312,7 +311,7 @@ class PytconfConf(object):
 
         # if there are no free args and just one function then this is it
         if len(self.function_name_to_callable) == 1:
-            command_selected = self.function_name_to_callable.keys()[0]
+            command_selected = list(self.function_name_to_callable.keys())[0]
 
         # check if we are not allowed free args
         if command_selected is not None:
