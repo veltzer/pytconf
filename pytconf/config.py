@@ -1,6 +1,7 @@
 import abc
 import itertools
 import logging
+import os
 import sys
 from collections import defaultdict
 from enum import Enum
@@ -260,7 +261,7 @@ class PytconfConf(object):
 
         # we don't need the first argument which is the script path
         if args:
-            self.app_name = args[0]
+            self.app_name = os.path.basename(args[0])
             args = args[1:]
         else:
             self.app_name = "UNKNOWN APP NAME"
