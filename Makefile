@@ -9,6 +9,10 @@ all:
 pytest:
 	pytest --cov=pytconf --cov-report=xml --cov-report=html
 
+.PHONY: unittest
+unittest:
+	python -m unittest
+
 .PHONY: flake8
 flake8:
 	flake8 pytconf tests
