@@ -2,7 +2,7 @@ import logging
 import unittest
 
 from pytconf.config import config_arg_parse_and_launch, \
-    Config, register_endpoint, ParamCreator, register_function
+    Config, ParamCreator, register_function
 
 
 class ConfigTotal(Config):
