@@ -254,6 +254,10 @@ class PytconfConf(object):
         args: Union[List[str], None] = None,
         launch=True
     ) -> None:
+        # if we are given no args then take the from sys.argv
+        if args is None:
+            args = sys.argv
+
         # we don't need the first argument which is the script path
         if args:
             self.app_name = args[0]
@@ -405,13 +409,10 @@ def get_pytconf():
     return _pytconf
 
 
-def config_arg_parse_and_launch(launch=True, args=None):
+def config_arg_parse_and_launch(launch=True, args=None) -> None:
     """
-    backwards compatibility function
-    :return:
+    This is the real API
     """
-    if args is None:
-        args = sys.argv
     get_pytconf().config_arg_parse_and_launch(
         launch=launch,
         args=args,
