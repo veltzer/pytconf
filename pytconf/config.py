@@ -314,10 +314,9 @@ class PytconfConf(object):
         else:
             self.process_flags(command_selected, flags, errors)
 
-        if errors.have_errors():
+        if errors.have_errors() and not show_help:
             self.print_errors(errors)
-            if not show_help:
-                return
+            return
 
         if show_help:
             if command_selected:
