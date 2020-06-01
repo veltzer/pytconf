@@ -9,6 +9,10 @@ def print_warn(text):
     cprint(text=text, color='red', attrs=['bold'])
 
 
+def print_error(text):
+    cprint(text=text, color='red', attrs=['bold'])
+
+
 def print_title(text):
     cprint(text=text, color='green', attrs=[])
 

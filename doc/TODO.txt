@@ -6,6 +6,7 @@
 	- Enable to overwrite the name of the function by passing a parameters to @register.
 - should we have a parameter called "force_free_args_num" for applications where you *must*
 	enter at least 1 or more arguments?
+	what about max free args?
 - currently we lie to type checkers. How?
 	The method 'create_str' of the class ParamCreator does not really
 	return a string but rather a ParamFunctions object.
