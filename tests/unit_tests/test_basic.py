@@ -1,7 +1,7 @@
 import unittest
 
 from pytconf.config import config_arg_parse_and_launch, \
-    Config, ParamCreator, register_function
+    Config, ParamCreator, register_function, get_free_args
 
 
 class ConfigTotal(Config):
@@ -36,3 +36,7 @@ class TestBasic(unittest.TestCase):
         register_function(raise_value_error)
         with self.assertRaises(ValueError):
             config_arg_parse_and_launch(args=["foo", "raise_value_error"])
+
+    def test_free_args(self):
+        config_arg_parse_and_launch(launch=False, args=["foo", "bar", "--num=30", "zoo"])
+        self.assertListEqual(get_free_args(), ["zoo"])
