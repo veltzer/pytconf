@@ -92,9 +92,12 @@ class PytconfConf(object):
         self.function_name_to_suggest_configs: Dict[str, List[Type[Config]]] = dict()
         self.function_name_to_callable: Dict[str, Callable] = dict()
         self.function_group_names: Dict[str, Set[str]] = defaultdict(set)
+        self.allow_free_args: Dict[str, bool] = dict()
         self.function_group_descriptions: Dict[str, str] = dict()
         self.function_group_list = []
         self.attribute_to_config: Dict[str, Type[Config]] = dict()
+        self.free_args: List[str] = []
+        self.app_name: Union[str, None] = None
 
     def register_main(self, f):
         self.main_function = f
@@ -152,7 +155,7 @@ class PytconfConf(object):
 
     def show_help_for_function(self, function_name: str, show_help_full: bool, show_help_suggest: bool) -> None:
         print("Usage: {} {} [OPTIONS] [ARGS]...".format(
-            self.main_function.__name__,
+            self.app_name,
             function_name,
         ))
         function_selected = self.function_name_to_callable[function_name]
@@ -199,13 +202,12 @@ class PytconfConf(object):
                 print("      {}".format(more_help))
         print()
 
-    def parse_args(self, command_selected: str, flags: Dict[str, str], _free_args: List[str]) -> bool:
+    def parse_args(self, command_selected: str, flags: Dict[str, str]) -> bool:
         """
         Parse the args and fill the global data
         Currently we disregard the free parameters
         :param command_selected:
         :param flags:
-        :param _free_args:
         :return: whether or not parsing was successful
         """
 
@@ -257,12 +259,16 @@ class PytconfConf(object):
 
     def config_arg_parse_and_launch(self, args: List[str], print_messages=True, launch=True) -> None:
         # we don't need the first argument which is the script path
-        args = args[1:]
+        if args:
+            self.app_name = args[0]
+            args = args[1:]
+        else:
+            self.app_name = "UNKNOWN APP NAME"
         # name of arg and it's value
         flags: Dict[str, str] = dict()
         special_flags = set()
         errors: List[str] = []
-        free_args = []
+        self.free_args = []
         while args:
             current = args.pop(0)
             if current.startswith("--"):
@@ -282,7 +288,7 @@ class PytconfConf(object):
                 else:
                     errors.append("can not parse argument [{}]".format(real))
             else:
-                free_args.append(current)
+                self.free_args.append(current)
         show_help = False
         show_help_full = False
         show_help_suggest = False
@@ -299,20 +305,26 @@ class PytconfConf(object):
             show_help = True
             show_help_full = True
 
+        # find the selected command
         command_selected = None
-        if len(free_args) >= 1:
-            command = free_args.pop(0)
+
+        # if there are free args the command is the first of these
+        if len(self.free_args) >= 1:
+            command = self.free_args.pop(0)
             if command in self.function_name_to_callable:
                 command_selected = command
             else:
                 errors.append("Unknown command [{}]".format(command))
 
+        # if there are no free args and just one function then this is it
         if len(self.function_name_to_callable) == 1:
             for name in self.function_name_to_callable.keys():
                 command_selected = name
 
-        if len(free_args) > 0:
-            errors.append("free args are not allowed")
+        # check if we are not allowed free args
+        if command_selected is not None:
+            if not self.allow_free_args[command_selected] and len(self.free_args) > 0:
+                errors.append("free args are not allowed")
 
         if print_messages:
             if show_help or errors or command_selected is None:
@@ -324,7 +336,7 @@ class PytconfConf(object):
                 return
 
         f = self.function_name_to_callable[command_selected]
-        if self.parse_args(command_selected, flags, free_args):
+        if self.parse_args(command_selected, flags):
             if launch:
                 f()
 
@@ -881,13 +893,20 @@ def register_main() -> Callable[[Any], Any]:
 def register_endpoint(
     configs: List[Type[Config]] = (),
     suggest_configs: List[Type[Config]] = (),
-    group: str = DEFAULT_GROUP_NAME
+    group: str = DEFAULT_GROUP_NAME,
+    allow_free_args: bool = False,
 ) -> Callable[[Any], Any]:
     logger = logging.getLogger("pytconf")
     logger.debug("registering endpoint")
 
     def identity(f):
-        register_function(f, configs=configs, suggest_configs=suggest_configs, group=group)
+        register_function(
+            f,
+            configs=configs,
+            suggest_configs=suggest_configs,
+            group=group,
+            allow_free_args=allow_free_args,
+        )
         return f
 
     return identity
@@ -897,7 +916,8 @@ def register_function(
     f: Callable,
     configs: List[Type[Config]] = (),
     suggest_configs: List[Type[Config]] = (),
-    group: str = DEFAULT_GROUP_NAME
+    group: str = DEFAULT_GROUP_NAME,
+    allow_free_args: bool = False,
 ) -> None:
     function_name = f.__name__
     pt = get_pytconf()
@@ -905,3 +925,8 @@ def register_function(
     pt.function_name_to_configs[function_name] = configs
     pt.function_name_to_suggest_configs[function_name] = suggest_configs
     pt.function_group_names[group].add(function_name)
+    pt.allow_free_args[function_name] = allow_free_args
+
+
+def get_free_args() -> List[str]:
+    return get_pytconf().free_args
