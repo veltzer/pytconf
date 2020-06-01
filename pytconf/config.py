@@ -37,8 +37,8 @@ class PytconfConf(object):
         self._configs = set()
         self._config_names = set()
         self.main_function = None
-        self.function_name_to_configs: Dict[str, List[Config]] = dict()
-        self.function_name_to_suggest_configs: Dict[str, List[Config]] = dict()
+        self.function_name_to_configs: Dict[str, List[Type[Config]]] = dict()
+        self.function_name_to_suggest_configs: Dict[str, List[Type[Config]]] = dict()
         self.function_name_to_callable: Dict[str, Callable] = dict()
         self.function_group_names: Dict[str, Set[str]] = defaultdict(set)
         self.function_group_descriptions: Dict[str, str] = dict()
@@ -155,7 +155,7 @@ class PytconfConf(object):
         suggested_configs = self.function_name_to_suggest_configs[command_selected]
 
         # create the attribute_to_config map
-        attribute_to_config: Dict[str, Config] = dict()
+        attribute_to_config: Dict[str, Type[Config]] = dict()
         for config in itertools.chain(configs, suggested_configs):
             for attribute in config.get_attributes():
                 if attribute in attribute_to_config:
