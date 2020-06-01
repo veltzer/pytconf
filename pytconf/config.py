@@ -1,5 +1,6 @@
 import abc
 import itertools
+import logging
 import sys
 from collections import defaultdict
 from enum import Enum
@@ -203,9 +204,9 @@ class PytconfConf(object):
                         setattr(config, attribute, param.default)
         return True
 
-    def config_arg_parse_and_launch(self, print_messages=True, launch=True) -> None:
+    def config_arg_parse_and_launch(self, args: List[str], print_messages=True, launch=True) -> None:
         # we don't need the first argument which is the script path
-        args: List[str] = sys.argv[1:]
+        args = args[1:]
         # name of arg and it's value
         flags: Dict[str, str] = dict()
         special_flags = set()
@@ -342,14 +343,17 @@ def get_pytconf():
     return _pytconf
 
 
-def config_arg_parse_and_launch(print_messages=True, launch=True):
+def config_arg_parse_and_launch(print_messages=True, launch=True, args=None):
     """
     backwards compatibility function
     :return:
     """
+    if args is None:
+        args = sys.argv
     get_pytconf().config_arg_parse_and_launch(
         print_messages=print_messages,
         launch=launch,
+        args=args,
     )
 
 
@@ -874,17 +878,29 @@ def register_main() -> Callable[[Any], Any]:
 
 
 def register_endpoint(
-    configs: List[Config] = (),
-    suggest_configs: List[Config] = (),
+    configs: List[Type[Config]] = (),
+    suggest_configs: List[Type[Config]] = (),
     group: str = DEFAULT_GROUP_NAME
 ) -> Callable[[Any], Any]:
+    logger = logging.getLogger("pytconf")
+    logger.debug("registering endpoint")
+
     def identity(f):
-        pt = get_pytconf()
-        function_name = f.__name__
-        pt.function_name_to_callable[function_name] = f
-        pt.function_name_to_configs[function_name] = configs
-        pt.function_name_to_suggest_configs[function_name] = suggest_configs
-        pt.function_group_names[group].add(function_name)
+        register_function(f, configs=configs, suggest_configs=suggest_configs, group=group)
         return f
 
     return identity
+
+
+def register_function(
+    f: Callable,
+    configs: List[Type[Config]] = (),
+    suggest_configs: List[Type[Config]] = (),
+    group: str = DEFAULT_GROUP_NAME
+) -> None:
+    function_name = f.__name__
+    pt = get_pytconf()
+    pt.function_name_to_callable[function_name] = f
+    pt.function_name_to_configs[function_name] = configs
+    pt.function_name_to_suggest_configs[function_name] = suggest_configs
+    pt.function_group_names[group].add(function_name)
