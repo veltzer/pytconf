@@ -10,11 +10,11 @@ from typing import Union, List, Any, Callable, Type, Dict, Set, TypeVar
 from yattag import Doc
 
 from pytconf.color_utils import print_highlight, color_hi, print_title, color_ok, color_warn, print_warn
-from pytconf.convert import convert_string_to_int, convert_int_to_string, \
-    convert_string_to_list_int, \
-    convert_list_int_to_string, convert_string_to_list_str, convert_list_str_to_string, convert_string_to_string, \
-    convert_string_to_bool, convert_bool_to_string, convert_string_to_int_or_none, convert_int_or_none_to_string, \
-    convert_string_to_int_default
+from pytconf.convert import convert_str_to_int, convert_int_to_str, convert_str_to_int_default, \
+    convert_str_to_list_int, convert_list_int_to_str, convert_list_str_to_str, \
+    convert_str_to_list_str, convert_str_to_int_or_none, \
+    convert_int_or_none_to_str, convert_str_to_bool, convert_bool_to_str, convert_str_to_str, \
+    convert_str_to_str_or_none, convert_str_or_none_to_str
 from pytconf.enum_subset import EnumSubset
 from pytconf.extended_enum import str_to_enum_value, enum_type_to_list_str
 
@@ -630,9 +630,9 @@ class ParamCreator(object):
             help_string=help_string,
             default=default,
             type_name="int",
-            function_s2t=convert_string_to_int,
-            function_t2s=convert_int_to_string,
-            function_s2t_generate_from_default=convert_string_to_int_default,
+            function_s2t=convert_str_to_int,
+            function_t2s=convert_int_to_str,
+            function_s2t_generate_from_default=convert_str_to_int_default,
         )
 
     @staticmethod
@@ -651,8 +651,8 @@ class ParamCreator(object):
             help_string=help_string,
             default=default,
             type_name="List[int]",
-            function_s2t=convert_string_to_list_int,
-            function_t2s=convert_list_int_to_string,
+            function_s2t=convert_str_to_list_int,
+            function_t2s=convert_list_int_to_str,
         )
 
     @staticmethod
@@ -671,8 +671,8 @@ class ParamCreator(object):
             help_string=help_string,
             default=default,
             type_name="List[str]",
-            function_s2t=convert_string_to_list_str,
-            function_t2s=convert_list_str_to_string,
+            function_s2t=convert_str_to_list_str,
+            function_t2s=convert_list_str_to_str,
         )
 
     @staticmethod
@@ -691,8 +691,8 @@ class ParamCreator(object):
             help_string=help_string,
             default=default,
             type_name="Union[int, None]",
-            function_s2t=convert_string_to_int_or_none,
-            function_t2s=convert_int_or_none_to_string,
+            function_s2t=convert_str_to_int_or_none,
+            function_t2s=convert_int_or_none_to_str,
         )
 
     @staticmethod
@@ -711,8 +711,28 @@ class ParamCreator(object):
             help_string=help_string,
             default=default,
             type_name="str",
-            function_s2t=convert_string_to_string,
-            function_t2s=convert_string_to_string,
+            function_s2t=convert_str_to_str_or_none,
+            function_t2s=convert_str_or_none_to_str,
+        )
+
+    @staticmethod
+    def create_str_or_none(
+        help_string: str = NO_HELP,
+        default: Union[str, None, NO_DEFAULT_TYPE] = NO_DEFAULT
+    ) -> Union[str, None]:
+        """
+        Create a string parameter
+        :param help_string:
+        :param default:
+        :return:
+        """
+        # noinspection PyTypeChecker
+        return ParamFunctions(
+            help_string=help_string,
+            default=default,
+            type_name="str",
+            function_s2t=convert_str_to_str,
+            function_t2s=convert_str_to_str,
         )
 
     @staticmethod
@@ -731,8 +751,8 @@ class ParamCreator(object):
             help_string=help_string,
             default=default,
             type_name="bool",
-            function_s2t=convert_string_to_bool,
-            function_t2s=convert_bool_to_string,
+            function_s2t=convert_str_to_bool,
+            function_t2s=convert_bool_to_str,
         )
 
     @staticmethod
@@ -871,8 +891,8 @@ class ParamCreator(object):
             help_string=help_string,
             default=default,
             type_name="bucket_name",
-            function_s2t=convert_string_to_string,
-            function_t2s=convert_string_to_string,
+            function_s2t=convert_str_to_str,
+            function_t2s=convert_str_to_str,
         )
 
 
