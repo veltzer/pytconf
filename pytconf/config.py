@@ -255,6 +255,7 @@ class PytconfConf(object):
         launch=True
     ) -> None:
         # we don't need the first argument which is the script path
+        print(args)
         if args:
             self.app_name = args[0]
             args = args[1:]
@@ -289,9 +290,6 @@ class PytconfConf(object):
         show_help_full = False
         show_help_suggest = False
 
-        if errors.have_errors():
-            show_help = True
-
         if "help" in special_flags:
             show_help = True
         if "help-suggest" in special_flags:
@@ -314,15 +312,13 @@ class PytconfConf(object):
 
         # if there are no free args and just one function then this is it
         if len(self.function_name_to_callable) == 1:
-            for name in self.function_name_to_callable.keys():
-                command_selected = name
+            command_selected = self.function_name_to_callable.keys()[0]
 
         # check if we are not allowed free args
         if command_selected is not None:
             if not self.allow_free_args[command_selected] and len(self.free_args) > 0:
                 errors.add_error("free args are not allowed")
 
-        # if we have no command then add an error to that effect
         if command_selected is None:
             errors.add_error("no command is selected")
         else:
