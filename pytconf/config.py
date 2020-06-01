@@ -201,7 +201,7 @@ class PytconfConf(object):
                 print("      {}".format(more_help))
         print()
 
-    def parse_args(
+    def process_flags(
         self,
         command_selected: str,
         flags: Dict[str, str],
@@ -265,31 +265,16 @@ class PytconfConf(object):
             args = args[1:]
         else:
             self.app_name = "UNKNOWN APP NAME"
+
         # name of arg and it's value
         flags: Dict[str, str] = dict()
         special_flags = set()
         errors = ErrorsCollector()
         self.free_args = []
-        while args:
-            current = args.pop(0)
-            if current.startswith("--"):
-                real = current[2:]
-                number_of_equals = real.count("=")
-                if number_of_equals == 1:
-                    flag_name, flag_value = real.split("=")
-                    flags[flag_name] = flag_value
-                elif number_of_equals == 0:
-                    if args:
-                        more = args.pop(0)
-                        flags[real] = more
-                    elif real in SPECIAL_COMMANDS:
-                        special_flags.add(real)
-                    else:
-                        errors.add_error("argument [{}] needs a follow-up argument".format(real))
-                else:
-                    errors.add_error("can not parse argument [{}]".format(real))
-            else:
-                self.free_args.append(current)
+
+        self.parse_args(args, errors, flags, special_flags)
+
+        # handle help flags
         show_help = False
         show_help_full = False
         show_help_suggest = False
@@ -312,7 +297,7 @@ class PytconfConf(object):
             if command in self.function_name_to_callable:
                 command_selected = command
             else:
-                errors.add_error("Unknown command [{}]".format(command))
+                errors.add_error("unknown command [{}]".format(command))
 
         # if there are no free args and just one function then this is it
         if len(self.function_name_to_callable) == 1:
@@ -324,9 +309,10 @@ class PytconfConf(object):
                 errors.add_error("free args are not allowed")
 
         if command_selected is None:
-            errors.add_error("no command is selected")
+            if not show_help:
+                errors.add_error("no command is selected")
         else:
-            self.parse_args(command_selected, flags, errors)
+            self.process_flags(command_selected, flags, errors)
 
         if errors.have_errors():
             self.print_errors(errors)
@@ -343,6 +329,28 @@ class PytconfConf(object):
         if launch:
             function_to_run = self.function_name_to_callable[command_selected]
             function_to_run()
+
+    def parse_args(self, args, errors, flags, special_flags):
+        while args:
+            current = args.pop(0)
+            if current.startswith("--"):
+                real = current[2:]
+                number_of_equals = real.count("=")
+                if number_of_equals == 1:
+                    flag_name, flag_value = real.split("=")
+                    flags[flag_name] = flag_value
+                elif number_of_equals == 0:
+                    if args:
+                        more = args.pop(0)
+                        flags[real] = more
+                    elif real in SPECIAL_COMMANDS:
+                        special_flags.add(real)
+                    else:
+                        errors.add_error("argument [{}] needs a follow-up argument".format(real))
+                else:
+                    errors.add_error("can not parse argument [{}]".format(real))
+            else:
+                self.free_args.append(current)
 
     def get_html(self) -> str:
         html_gen = HtmlGen()
