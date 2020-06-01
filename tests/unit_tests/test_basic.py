@@ -1,4 +1,3 @@
-import logging
 import unittest
 
 from pytconf.config import config_arg_parse_and_launch, \
@@ -12,30 +11,28 @@ class ConfigTotal(Config):
     num = ParamCreator.create_int(default=10, help_string="help for num")
 
 
-def command() -> None:
-    """
-    This is help for command
-    """
-    print("num is {}".format(ConfigTotal.num))
+def raise_value_error() -> None:
+    raise ValueError()
 
 
 class TestBasic(unittest.TestCase):
-    def setUp(self) -> None:
-        logger = logging.getLogger("pytconf")
-        logger.setLevel(logging.DEBUG)
+    # def setUp(self) -> None:
+    #    logger = logging.getLogger("pytconf")
+    #    logger.setLevel(logging.DEBUG)
 
-    def test_type(self):
+    def test_config_type(self):
         self.assertEqual(type(ConfigTotal.num), int)
 
-    def test_value(self):
+    def test_config_value(self):
         self.assertEqual(ConfigTotal.num, 10)
 
     def test_parsing(self):
-        register_function(
-            command,
-            configs=[ConfigTotal],
-        )
         save = ConfigTotal.num
-        config_arg_parse_and_launch(launch=False, print_messages=False, args=["foo", "--num=30"])
+        config_arg_parse_and_launch(launch=False, args=["foo", "--num=30"])
         self.assertEqual(ConfigTotal.num, 30)
         ConfigTotal.num = save
+
+    def test_command_running(self):
+        register_function(raise_value_error)
+        with self.assertRaises(ValueError):
+            config_arg_parse_and_launch(args=["foo", "raise_value_error"])
