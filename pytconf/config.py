@@ -9,13 +9,14 @@ from typing import Union, List, Any, Callable, Type, Dict, Set, TypeVar
 
 from yattag import Doc
 
-from pytconf.color_utils import print_highlight, color_hi, print_title, color_ok, color_warn, print_warn
+from pytconf.color_utils import print_highlight, color_hi, print_title, color_ok, color_warn, print_error
 from pytconf.convert import convert_str_to_int, convert_int_to_str, convert_str_to_int_default, \
     convert_str_to_list_int, convert_list_int_to_str, convert_list_str_to_str, \
     convert_str_to_list_str, convert_str_to_int_or_none, \
     convert_int_or_none_to_str, convert_str_to_bool, convert_bool_to_str, convert_str_to_str, \
     convert_str_to_str_or_none, convert_str_or_none_to_str
 from pytconf.enum_subset import EnumSubset
+from pytconf.errors_collector import ErrorsCollector
 from pytconf.extended_enum import str_to_enum_value, enum_type_to_list_str
 
 PARAMS_ATTRIBUTE = "_params"
@@ -118,12 +119,9 @@ class PytconfConf(object):
             self.attribute_to_config[attribute] = config
 
     @classmethod
-    def print_errors(cls, errors: List[str]) -> None:
-        if errors:
-            print()
-            for error in errors:
-                print_warn(error)
-            print()
+    def print_errors(cls, errors: ErrorsCollector) -> None:
+        for error in errors.errors:
+            print_error(error)
 
     def show_help(self) -> None:
         print("Usage: {} [OPTIONS] COMMAND [ARGS]...".format(self.main_function.__name__))
@@ -202,13 +200,17 @@ class PytconfConf(object):
                 print("      {}".format(more_help))
         print()
 
-    def parse_args(self, command_selected: str, flags: Dict[str, str]) -> bool:
+    def parse_args(
+        self,
+        command_selected: str,
+        flags: Dict[str, str],
+        errors: ErrorsCollector,
+    ) -> None:
         """
         Parse the args and fill the global data
-        Currently we disregard the free parameters
         :param command_selected:
         :param flags:
-        :return: whether or not parsing was successful
+        :param errors:
         """
 
         # set the flags into the "default" field and collect unknown flags
@@ -225,8 +227,10 @@ class PytconfConf(object):
             else:
                 v = param.s2t(value)
             setattr(config, flag_raw, v)
+        if unknown_flags:
+            errors.add_error("unknown flags [{}]".format(",".join(unknown_flags)))
 
-        # check for missing parameters and show help if there are any missing
+        # check for missing parameters
         missing_parameters = []
         configs = self.function_name_to_configs[command_selected]
         for config in configs:
@@ -234,19 +238,8 @@ class PytconfConf(object):
                 value = getattr(config, attribute)
                 if value is NO_DEFAULT:
                     missing_parameters.append(attribute)
-
-        # print and stop if we have problems
-        if unknown_flags or missing_parameters:
-            if missing_parameters:
-                print()
-                print_warn("missing parameters [{}]".format(",".join(missing_parameters)))
-            if unknown_flags:
-                print()
-                print_warn("unknown flags [{}]".format(",".join(unknown_flags)))
-            print("problems found, not running")
-            print()
-            self.show_help_for_function(command_selected, show_help_full=False, show_help_suggest=False)
-            return False
+        if missing_parameters:
+            errors.add_error("missing parameters [{}]".format(",".join(missing_parameters)))
 
         # move all default values to place (this will not be needed in the new scheme)
         for config in itertools.chain(configs, self._configs):
@@ -255,12 +248,10 @@ class PytconfConf(object):
                 if isinstance(param, Param):
                     if param.default is not NO_DEFAULT:
                         setattr(config, attribute, param.default)
-        return True
 
     def config_arg_parse_and_launch(
         self,
         args: Union[List[str], None] = None,
-        print_messages=True,
         launch=True
     ) -> None:
         # we don't need the first argument which is the script path
@@ -272,7 +263,7 @@ class PytconfConf(object):
         # name of arg and it's value
         flags: Dict[str, str] = dict()
         special_flags = set()
-        errors: List[str] = []
+        errors = ErrorsCollector()
         self.free_args = []
         while args:
             current = args.pop(0)
@@ -289,16 +280,16 @@ class PytconfConf(object):
                     elif real in SPECIAL_COMMANDS:
                         special_flags.add(real)
                     else:
-                        errors.append("argument [{}] needs a follow-up argument".format(real))
+                        errors.add_error("argument [{}] needs a follow-up argument".format(real))
                 else:
-                    errors.append("can not parse argument [{}]".format(real))
+                    errors.add_error("can not parse argument [{}]".format(real))
             else:
                 self.free_args.append(current)
         show_help = False
         show_help_full = False
         show_help_suggest = False
 
-        if len(errors) > 0:
+        if errors.have_errors():
             show_help = True
 
         if "help" in special_flags:
@@ -313,13 +304,13 @@ class PytconfConf(object):
         # find the selected command
         command_selected = None
 
-        # if there are free args the command is the first of these
+        # if there are free args then the command is the first of these
         if len(self.free_args) >= 1:
             command = self.free_args.pop(0)
             if command in self.function_name_to_callable:
                 command_selected = command
             else:
-                errors.append("Unknown command [{}]".format(command))
+                errors.add_error("Unknown command [{}]".format(command))
 
         # if there are no free args and just one function then this is it
         if len(self.function_name_to_callable) == 1:
@@ -329,21 +320,28 @@ class PytconfConf(object):
         # check if we are not allowed free args
         if command_selected is not None:
             if not self.allow_free_args[command_selected] and len(self.free_args) > 0:
-                errors.append("free args are not allowed")
+                errors.add_error("free args are not allowed")
 
-        if print_messages:
-            if show_help or errors or command_selected is None:
-                self.print_errors(errors)
-                if command_selected:
-                    self.show_help_for_function(command_selected, show_help_full, show_help_suggest)
-                else:
-                    self.show_help()
-                return
+        # if we have no command then add an error to that effect
+        if command_selected is None:
+            errors.add_error("no command is selected")
+        else:
+            self.parse_args(command_selected, flags, errors)
 
-        f = self.function_name_to_callable[command_selected]
-        if self.parse_args(command_selected, flags):
-            if launch:
-                f()
+        if errors.have_errors():
+            self.print_errors(errors)
+            return
+
+        if show_help:
+            if command_selected:
+                self.show_help_for_function(command_selected, show_help_full, show_help_suggest)
+            else:
+                self.show_help()
+            return
+
+        if launch:
+            function_to_run = self.function_name_to_callable[command_selected]
+            function_to_run()
 
     def get_html(self) -> str:
         html_gen = HtmlGen()
@@ -411,7 +409,7 @@ def get_pytconf():
     return _pytconf
 
 
-def config_arg_parse_and_launch(print_messages=True, launch=True, args=None):
+def config_arg_parse_and_launch(launch=True, args=None):
     """
     backwards compatibility function
     :return:
@@ -419,7 +417,6 @@ def config_arg_parse_and_launch(print_messages=True, launch=True, args=None):
     if args is None:
         args = sys.argv
     get_pytconf().config_arg_parse_and_launch(
-        print_messages=print_messages,
         launch=launch,
         args=args,
     )
