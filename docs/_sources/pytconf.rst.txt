@@ -36,6 +36,14 @@ pytconf.enum\_subset module
    :undoc-members:
    :show-inheritance:
 
+pytconf.errors\_collector module
+--------------------------------
+
+.. automodule:: pytconf.errors_collector
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 pytconf.extended\_enum module
 -----------------------------
 

@@ -54,6 +54,11 @@
 <dd></dd></dl>
 
 <dl class="py function">
+<dt id="pytconf.color_utils.print_error">
+<code class="sig-prename descclassname">pytconf.color_utils.</code><code class="sig-name descname">print_error</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">text</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytconf/color_utils.html#print_error"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.color_utils.print_error" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
 <dt id="pytconf.color_utils.print_highlight">
 <code class="sig-prename descclassname">pytconf.color_utils.</code><code class="sig-name descname">print_highlight</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">text</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytconf/color_utils.html#print_highlight"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.color_utils.print_highlight" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -292,6 +297,15 @@
 :return:</p>
 </dd></dl>
 
+<dl class="py method">
+<dt id="pytconf.config.ParamCreator.create_str_or_none">
+<em class="property">static </em><code class="sig-name descname">create_str_or_none</code><span class="sig-paren">(</span><em class="sig-param">help_string: str = 'No help for this configuration option'</em>, <em class="sig-param">default: Union[str</em>, <em class="sig-param">None</em>, <em class="sig-param">pytconf.config.Unique] = &lt;pytconf.config.Unique object&gt;</em><span class="sig-paren">)</span> &#x2192; Optional<span class="p">[</span>str<span class="p">]</span><a class="reference internal" href="_modules/pytconf/config.html#ParamCreator.create_str_or_none"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.config.ParamCreator.create_str_or_none" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a string parameter
+:param help_string:
+:param default:
+:return:</p>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
@@ -400,7 +414,7 @@
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <dl class="py method">
 <dt id="pytconf.config.PytconfConf.config_arg_parse_and_launch">
-<code class="sig-name descname">config_arg_parse_and_launch</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">print_messages</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">launch</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="_modules/pytconf/config.html#PytconfConf.config_arg_parse_and_launch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.config.PytconfConf.config_arg_parse_and_launch" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">config_arg_parse_and_launch</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">args</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>List<span class="p">[</span>str<span class="p">]</span><span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">launch</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="_modules/pytconf/config.html#PytconfConf.config_arg_parse_and_launch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.config.PytconfConf.config_arg_parse_and_launch" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -420,25 +434,23 @@
 
 <dl class="py method">
 <dt id="pytconf.config.PytconfConf.parse_args">
-<code class="sig-name descname">parse_args</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">command_selected</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">flags</span><span class="p">:</span> <span class="n">Dict<span class="p">[</span>str<span class="p">, </span>str<span class="p">]</span></span></em>, <em class="sig-param"><span class="n">_free_args</span><span class="p">:</span> <span class="n">List<span class="p">[</span>str<span class="p">]</span></span></em><span class="sig-paren">)</span> &#x2192; bool<a class="reference internal" href="_modules/pytconf/config.html#PytconfConf.parse_args"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.config.PytconfConf.parse_args" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">parse_args</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">command_selected</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">flags</span><span class="p">:</span> <span class="n">Dict<span class="p">[</span>str<span class="p">, </span>str<span class="p">]</span></span></em>, <em class="sig-param"><span class="n">errors</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#pytconf.errors_collector.ErrorsCollector" title="pytconf.errors_collector.ErrorsCollector">pytconf.errors_collector.ErrorsCollector</a></span></em><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="_modules/pytconf/config.html#PytconfConf.parse_args"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.config.PytconfConf.parse_args" title="Permalink to this definition">¶</a></dt>
 <dd><p>Parse the args and fill the global data
-Currently we disregard the free parameters
 :param command_selected:
 :param flags:
-:param _free_args:
-:return:</p>
+:param errors:</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="pytconf.config.PytconfConf.print_errors">
-<em class="property">classmethod </em><code class="sig-name descname">print_errors</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">errors</span><span class="p">:</span> <span class="n">List<span class="p">[</span>str<span class="p">]</span></span></em><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="_modules/pytconf/config.html#PytconfConf.print_errors"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.config.PytconfConf.print_errors" title="Permalink to this definition">¶</a></dt>
+<em class="property">classmethod </em><code class="sig-name descname">print_errors</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">errors</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#pytconf.errors_collector.ErrorsCollector" title="pytconf.errors_collector.ErrorsCollector">pytconf.errors_collector.ErrorsCollector</a></span></em><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="_modules/pytconf/config.html#PytconfConf.print_errors"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.config.PytconfConf.print_errors" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt id="pytconf.config.PytconfConf.register_config">
-<code class="sig-name descname">register_config</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">cls</span></em>, <em class="sig-param"><span class="n">name</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytconf/config.html#PytconfConf.register_config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.config.PytconfConf.register_config" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">register_config</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">config</span><span class="p">:</span> <span class="n">Type<span class="p">[</span><a class="reference internal" href="#pytconf.config.Config" title="pytconf.config.Config">pytconf.config.Config</a><span class="p">]</span></span></em>, <em class="sig-param"><span class="n">name</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytconf/config.html#PytconfConf.register_config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.config.PytconfConf.register_config" title="Permalink to this definition">¶</a></dt>
 <dd><p>register a configuration class
-:param cls:
+:param config:
 :param name:
 :return:</p>
 </dd></dl>
@@ -473,10 +485,14 @@ Currently we disregard the free parameters
 
 <dl class="py function">
 <dt id="pytconf.config.config_arg_parse_and_launch">
-<code class="sig-prename descclassname">pytconf.config.</code><code class="sig-name descname">config_arg_parse_and_launch</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">print_messages</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">launch</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytconf/config.html#config_arg_parse_and_launch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.config.config_arg_parse_and_launch" title="Permalink to this definition">¶</a></dt>
-<dd><p>backwards compatibility function
-:return:</p>
+<code class="sig-prename descclassname">pytconf.config.</code><code class="sig-name descname">config_arg_parse_and_launch</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">launch</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">args</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="_modules/pytconf/config.html#config_arg_parse_and_launch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.config.config_arg_parse_and_launch" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is the real API</p>
 </dd></dl>
+
+<dl class="py function">
+<dt id="pytconf.config.get_free_args">
+<code class="sig-prename descclassname">pytconf.config.</code><code class="sig-name descname">get_free_args</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; List<span class="p">[</span>str<span class="p">]</span><a class="reference internal" href="_modules/pytconf/config.html#get_free_args"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.config.get_free_args" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 <dl class="py function">
 <dt id="pytconf.config.get_pytconf">
@@ -485,7 +501,12 @@ Currently we disregard the free parameters
 
 <dl class="py function">
 <dt id="pytconf.config.register_endpoint">
-<code class="sig-prename descclassname">pytconf.config.</code><code class="sig-name descname">register_endpoint</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">configs</span><span class="p">:</span> <span class="n">List<span class="p">[</span><a class="reference internal" href="#pytconf.config.Config" title="pytconf.config.Config">pytconf.config.Config</a><span class="p">]</span></span> <span class="o">=</span> <span class="default_value">()</span></em>, <em class="sig-param"><span class="n">suggest_configs</span><span class="p">:</span> <span class="n">List<span class="p">[</span><a class="reference internal" href="#pytconf.config.Config" title="pytconf.config.Config">pytconf.config.Config</a><span class="p">]</span></span> <span class="o">=</span> <span class="default_value">()</span></em>, <em class="sig-param"><span class="n">group</span><span class="p">:</span> <span class="n">str</span> <span class="o">=</span> <span class="default_value">'default'</span></em><span class="sig-paren">)</span> &#x2192; Callable<span class="p">[</span><span class="p">[</span>Any<span class="p">]</span><span class="p">, </span>Any<span class="p">]</span><a class="reference internal" href="_modules/pytconf/config.html#register_endpoint"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.config.register_endpoint" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">pytconf.config.</code><code class="sig-name descname">register_endpoint</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">configs</span><span class="p">:</span> <span class="n">List<span class="p">[</span>Type<span class="p">[</span><a class="reference internal" href="#pytconf.config.Config" title="pytconf.config.Config">pytconf.config.Config</a><span class="p">]</span><span class="p">]</span></span> <span class="o">=</span> <span class="default_value">()</span></em>, <em class="sig-param"><span class="n">suggest_configs</span><span class="p">:</span> <span class="n">List<span class="p">[</span>Type<span class="p">[</span><a class="reference internal" href="#pytconf.config.Config" title="pytconf.config.Config">pytconf.config.Config</a><span class="p">]</span><span class="p">]</span></span> <span class="o">=</span> <span class="default_value">()</span></em>, <em class="sig-param"><span class="n">group</span><span class="p">:</span> <span class="n">str</span> <span class="o">=</span> <span class="default_value">'default'</span></em>, <em class="sig-param"><span class="n">allow_free_args</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">False</span></em><span class="sig-paren">)</span> &#x2192; Callable<span class="p">[</span><span class="p">[</span>Any<span class="p">]</span><span class="p">, </span>Any<span class="p">]</span><a class="reference internal" href="_modules/pytconf/config.html#register_endpoint"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.config.register_endpoint" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="pytconf.config.register_function">
+<code class="sig-prename descclassname">pytconf.config.</code><code class="sig-name descname">register_function</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">f</span><span class="p">:</span> <span class="n">Callable</span></em>, <em class="sig-param"><span class="n">configs</span><span class="p">:</span> <span class="n">List<span class="p">[</span>Type<span class="p">[</span><a class="reference internal" href="#pytconf.config.Config" title="pytconf.config.Config">pytconf.config.Config</a><span class="p">]</span><span class="p">]</span></span> <span class="o">=</span> <span class="default_value">()</span></em>, <em class="sig-param"><span class="n">suggest_configs</span><span class="p">:</span> <span class="n">List<span class="p">[</span>Type<span class="p">[</span><a class="reference internal" href="#pytconf.config.Config" title="pytconf.config.Config">pytconf.config.Config</a><span class="p">]</span><span class="p">]</span></span> <span class="o">=</span> <span class="default_value">()</span></em>, <em class="sig-param"><span class="n">group</span><span class="p">:</span> <span class="n">str</span> <span class="o">=</span> <span class="default_value">'default'</span></em>, <em class="sig-param"><span class="n">allow_free_args</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">False</span></em><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="_modules/pytconf/config.html#register_function"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.config.register_function" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
@@ -502,63 +523,73 @@ Currently we disregard the free parameters
 <div class="section" id="module-pytconf.convert">
 <span id="pytconf-convert-module"></span><h2>pytconf.convert module<a class="headerlink" href="#module-pytconf.convert" title="Permalink to this headline">¶</a></h2>
 <dl class="py function">
-<dt id="pytconf.convert.convert_bool_to_string">
-<code class="sig-prename descclassname">pytconf.convert.</code><code class="sig-name descname">convert_bool_to_string</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">b</span><span class="p">:</span> <span class="n">bool</span></em><span class="sig-paren">)</span> &#x2192; str<a class="reference internal" href="_modules/pytconf/convert.html#convert_bool_to_string"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.convert.convert_bool_to_string" title="Permalink to this definition">¶</a></dt>
+<dt id="pytconf.convert.convert_bool_to_str">
+<code class="sig-prename descclassname">pytconf.convert.</code><code class="sig-name descname">convert_bool_to_str</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">b</span><span class="p">:</span> <span class="n">bool</span></em><span class="sig-paren">)</span> &#x2192; str<a class="reference internal" href="_modules/pytconf/convert.html#convert_bool_to_str"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.convert.convert_bool_to_str" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
-<dt id="pytconf.convert.convert_int_or_none_to_string">
-<code class="sig-prename descclassname">pytconf.convert.</code><code class="sig-name descname">convert_int_or_none_to_string</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">v</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytconf/convert.html#convert_int_or_none_to_string"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.convert.convert_int_or_none_to_string" title="Permalink to this definition">¶</a></dt>
+<dt id="pytconf.convert.convert_int_or_none_to_str">
+<code class="sig-prename descclassname">pytconf.convert.</code><code class="sig-name descname">convert_int_or_none_to_str</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">v</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>int<span class="p">]</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytconf/convert.html#convert_int_or_none_to_str"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.convert.convert_int_or_none_to_str" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
-<dt id="pytconf.convert.convert_int_to_string">
-<code class="sig-prename descclassname">pytconf.convert.</code><code class="sig-name descname">convert_int_to_string</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">i</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; str<a class="reference internal" href="_modules/pytconf/convert.html#convert_int_to_string"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.convert.convert_int_to_string" title="Permalink to this definition">¶</a></dt>
+<dt id="pytconf.convert.convert_int_to_str">
+<code class="sig-prename descclassname">pytconf.convert.</code><code class="sig-name descname">convert_int_to_str</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">i</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; str<a class="reference internal" href="_modules/pytconf/convert.html#convert_int_to_str"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.convert.convert_int_to_str" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
-<dt id="pytconf.convert.convert_list_int_to_string">
-<code class="sig-prename descclassname">pytconf.convert.</code><code class="sig-name descname">convert_list_int_to_string</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">li</span><span class="p">:</span> <span class="n">List<span class="p">[</span>int<span class="p">]</span></span></em><span class="sig-paren">)</span> &#x2192; str<a class="reference internal" href="_modules/pytconf/convert.html#convert_list_int_to_string"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.convert.convert_list_int_to_string" title="Permalink to this definition">¶</a></dt>
+<dt id="pytconf.convert.convert_list_int_to_str">
+<code class="sig-prename descclassname">pytconf.convert.</code><code class="sig-name descname">convert_list_int_to_str</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">li</span><span class="p">:</span> <span class="n">List<span class="p">[</span>int<span class="p">]</span></span></em><span class="sig-paren">)</span> &#x2192; str<a class="reference internal" href="_modules/pytconf/convert.html#convert_list_int_to_str"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.convert.convert_list_int_to_str" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
-<dt id="pytconf.convert.convert_list_str_to_string">
-<code class="sig-prename descclassname">pytconf.convert.</code><code class="sig-name descname">convert_list_str_to_string</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">li</span><span class="p">:</span> <span class="n">List<span class="p">[</span>str<span class="p">]</span></span></em><span class="sig-paren">)</span> &#x2192; str<a class="reference internal" href="_modules/pytconf/convert.html#convert_list_str_to_string"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.convert.convert_list_str_to_string" title="Permalink to this definition">¶</a></dt>
+<dt id="pytconf.convert.convert_list_str_to_str">
+<code class="sig-prename descclassname">pytconf.convert.</code><code class="sig-name descname">convert_list_str_to_str</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">li</span><span class="p">:</span> <span class="n">List<span class="p">[</span>str<span class="p">]</span></span></em><span class="sig-paren">)</span> &#x2192; str<a class="reference internal" href="_modules/pytconf/convert.html#convert_list_str_to_str"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.convert.convert_list_str_to_str" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
-<dt id="pytconf.convert.convert_string_to_bool">
-<code class="sig-prename descclassname">pytconf.convert.</code><code class="sig-name descname">convert_string_to_bool</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">s</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span> &#x2192; bool<a class="reference internal" href="_modules/pytconf/convert.html#convert_string_to_bool"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.convert.convert_string_to_bool" title="Permalink to this definition">¶</a></dt>
+<dt id="pytconf.convert.convert_str_or_none_to_str">
+<code class="sig-prename descclassname">pytconf.convert.</code><code class="sig-name descname">convert_str_or_none_to_str</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">v</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>str<span class="p">]</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytconf/convert.html#convert_str_or_none_to_str"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.convert.convert_str_or_none_to_str" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
-<dt id="pytconf.convert.convert_string_to_int">
-<code class="sig-prename descclassname">pytconf.convert.</code><code class="sig-name descname">convert_string_to_int</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">s</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span> &#x2192; int<a class="reference internal" href="_modules/pytconf/convert.html#convert_string_to_int"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.convert.convert_string_to_int" title="Permalink to this definition">¶</a></dt>
+<dt id="pytconf.convert.convert_str_to_bool">
+<code class="sig-prename descclassname">pytconf.convert.</code><code class="sig-name descname">convert_str_to_bool</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">s</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span> &#x2192; bool<a class="reference internal" href="_modules/pytconf/convert.html#convert_str_to_bool"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.convert.convert_str_to_bool" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
-<dt id="pytconf.convert.convert_string_to_int_default">
-<code class="sig-prename descclassname">pytconf.convert.</code><code class="sig-name descname">convert_string_to_int_default</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">i</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">s</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span> &#x2192; int<a class="reference internal" href="_modules/pytconf/convert.html#convert_string_to_int_default"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.convert.convert_string_to_int_default" title="Permalink to this definition">¶</a></dt>
+<dt id="pytconf.convert.convert_str_to_int">
+<code class="sig-prename descclassname">pytconf.convert.</code><code class="sig-name descname">convert_str_to_int</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">s</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span> &#x2192; int<a class="reference internal" href="_modules/pytconf/convert.html#convert_str_to_int"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.convert.convert_str_to_int" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
-<dt id="pytconf.convert.convert_string_to_int_or_none">
-<code class="sig-prename descclassname">pytconf.convert.</code><code class="sig-name descname">convert_string_to_int_or_none</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">s</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span> &#x2192; Optional<span class="p">[</span>int<span class="p">]</span><a class="reference internal" href="_modules/pytconf/convert.html#convert_string_to_int_or_none"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.convert.convert_string_to_int_or_none" title="Permalink to this definition">¶</a></dt>
+<dt id="pytconf.convert.convert_str_to_int_default">
+<code class="sig-prename descclassname">pytconf.convert.</code><code class="sig-name descname">convert_str_to_int_default</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">i</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">s</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span> &#x2192; int<a class="reference internal" href="_modules/pytconf/convert.html#convert_str_to_int_default"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.convert.convert_str_to_int_default" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
-<dt id="pytconf.convert.convert_string_to_list_int">
-<code class="sig-prename descclassname">pytconf.convert.</code><code class="sig-name descname">convert_string_to_list_int</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">s</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span> &#x2192; List<span class="p">[</span>int<span class="p">]</span><a class="reference internal" href="_modules/pytconf/convert.html#convert_string_to_list_int"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.convert.convert_string_to_list_int" title="Permalink to this definition">¶</a></dt>
+<dt id="pytconf.convert.convert_str_to_int_or_none">
+<code class="sig-prename descclassname">pytconf.convert.</code><code class="sig-name descname">convert_str_to_int_or_none</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">s</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span> &#x2192; Optional<span class="p">[</span>int<span class="p">]</span><a class="reference internal" href="_modules/pytconf/convert.html#convert_str_to_int_or_none"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.convert.convert_str_to_int_or_none" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
-<dt id="pytconf.convert.convert_string_to_list_str">
-<code class="sig-prename descclassname">pytconf.convert.</code><code class="sig-name descname">convert_string_to_list_str</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">s</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span> &#x2192; List<span class="p">[</span>str<span class="p">]</span><a class="reference internal" href="_modules/pytconf/convert.html#convert_string_to_list_str"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.convert.convert_string_to_list_str" title="Permalink to this definition">¶</a></dt>
+<dt id="pytconf.convert.convert_str_to_list_int">
+<code class="sig-prename descclassname">pytconf.convert.</code><code class="sig-name descname">convert_str_to_list_int</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">s</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span> &#x2192; List<span class="p">[</span>int<span class="p">]</span><a class="reference internal" href="_modules/pytconf/convert.html#convert_str_to_list_int"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.convert.convert_str_to_list_int" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
-<dt id="pytconf.convert.convert_string_to_string">
-<code class="sig-prename descclassname">pytconf.convert.</code><code class="sig-name descname">convert_string_to_string</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">e</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span> &#x2192; str<a class="reference internal" href="_modules/pytconf/convert.html#convert_string_to_string"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.convert.convert_string_to_string" title="Permalink to this definition">¶</a></dt>
+<dt id="pytconf.convert.convert_str_to_list_str">
+<code class="sig-prename descclassname">pytconf.convert.</code><code class="sig-name descname">convert_str_to_list_str</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">s</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span> &#x2192; List<span class="p">[</span>str<span class="p">]</span><a class="reference internal" href="_modules/pytconf/convert.html#convert_str_to_list_str"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.convert.convert_str_to_list_str" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="pytconf.convert.convert_str_to_str">
+<code class="sig-prename descclassname">pytconf.convert.</code><code class="sig-name descname">convert_str_to_str</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">e</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span> &#x2192; str<a class="reference internal" href="_modules/pytconf/convert.html#convert_str_to_str"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.convert.convert_str_to_str" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="pytconf.convert.convert_str_to_str_or_none">
+<code class="sig-prename descclassname">pytconf.convert.</code><code class="sig-name descname">convert_str_to_str_or_none</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">s</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span> &#x2192; Optional<span class="p">[</span>str<span class="p">]</span><a class="reference internal" href="_modules/pytconf/convert.html#convert_str_to_str_or_none"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.convert.convert_str_to_str_or_none" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </div>
@@ -619,6 +650,25 @@ Currently we disregard the free parameters
 <dt id="pytconf.enum_subset.enum_subset_to_str">
 <code class="sig-prename descclassname">pytconf.enum_subset.</code><code class="sig-name descname">enum_subset_to_str</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">e</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#pytconf.enum_subset.EnumSubset" title="pytconf.enum_subset.EnumSubset">pytconf.enum_subset.EnumSubset</a></span></em><span class="sig-paren">)</span> &#x2192; str<a class="reference internal" href="_modules/pytconf/enum_subset.html#enum_subset_to_str"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.enum_subset.enum_subset_to_str" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
+
+</div>
+<div class="section" id="module-pytconf.errors_collector">
+<span id="pytconf-errors-collector-module"></span><h2>pytconf.errors_collector module<a class="headerlink" href="#module-pytconf.errors_collector" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="pytconf.errors_collector.ErrorsCollector">
+<em class="property">class </em><code class="sig-prename descclassname">pytconf.errors_collector.</code><code class="sig-name descname">ErrorsCollector</code><a class="reference internal" href="_modules/pytconf/errors_collector.html#ErrorsCollector"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.errors_collector.ErrorsCollector" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt id="pytconf.errors_collector.ErrorsCollector.add_error">
+<code class="sig-name descname">add_error</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">msg</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="_modules/pytconf/errors_collector.html#ErrorsCollector.add_error"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.errors_collector.ErrorsCollector.add_error" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="pytconf.errors_collector.ErrorsCollector.have_errors">
+<code class="sig-name descname">have_errors</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; bool<a class="reference internal" href="_modules/pytconf/errors_collector.html#ErrorsCollector.have_errors"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.errors_collector.ErrorsCollector.have_errors" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
 
 </div>
 <div class="section" id="module-pytconf.extended_enum">
