@@ -257,7 +257,12 @@ class PytconfConf(object):
                         setattr(config, attribute, param.default)
         return True
 
-    def config_arg_parse_and_launch(self, args: List[str], print_messages=True, launch=True) -> None:
+    def config_arg_parse_and_launch(
+        self,
+        args: Union[List[str], None] = None,
+        print_messages=True,
+        launch=True
+    ) -> None:
         # we don't need the first argument which is the script path
         if args:
             self.app_name = args[0]

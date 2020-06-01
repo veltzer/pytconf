@@ -4,7 +4,7 @@
 	- Enable not to pass anything to the @register functions
 	in which case they will require (all or no?) configs.
 	- Enable to overwrite the name of the function by passing a parameters to @register.
-- should we have a paramter called "force_free_args_num" for applications where you *must*
+- should we have a parameter called "force_free_args_num" for applications where you *must*
 	enter at least 1 or more arguments?
 - currently we lie to type checkers. How?
 	The method 'create_str' of the class ParamCreator does not really
