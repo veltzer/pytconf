@@ -23,6 +23,57 @@ DEFAULT_GROUP_NAME: str = "default"
 SPECIAL_COMMANDS = {"help", "help-suggest", "help-all"}
 
 
+class MetaConfig(type):
+    """
+    base class for all configs
+    """
+
+    def __new__(mcs, name, bases, cls_dict):
+        if name != "Config":
+            params_dict = dict()
+            cls_dict[PARAMS_ATTRIBUTE] = params_dict
+            for k, d in cls_dict.items():
+                if isinstance(d, Param):
+                    # assert d.default is not NO_DEFAULT
+                    params_dict[k] = d
+                    cls_dict[k] = d.default
+        return type.__new__(mcs, name, bases, cls_dict)
+
+    def __init__(cls, name, bases, cls_dict):
+        # print(name, bases, cls_dict)
+        # if len(cls.mro()) > 2:
+        #     register_config(cls, name)
+        #     # print("was subclassed by " + name)
+        if name != "Config":
+            # noinspection PyTypeChecker
+            get_pytconf().register_config(cls, name)
+        # print(name, cls_dict)
+        super(MetaConfig, cls).__init__(name, bases, cls_dict)
+
+
+ParamType = TypeVar('ParamType', bound='Param')
+
+
+class Config(metaclass=MetaConfig):
+    """
+        base class for all configs
+    """
+
+    @classmethod
+    def get_attributes(cls: Any) -> List[str]:
+        return getattr(cls, PARAMS_ATTRIBUTE).keys()
+        # return [attr for attr in dir(cls) if not callable(getattr(cls, attr))
+        #        and not attr.startswith("__")]
+
+    @classmethod
+    def get_params(cls: Any) -> Dict[str, ParamType]:
+        return getattr(cls, PARAMS_ATTRIBUTE)
+
+    @classmethod
+    def get_param_by_name(cls: Any, name: str) -> ParamType:
+        return cls.get_params()[name]
+
+
 class HtmlGen(object):
     def __init__(self):
         document, tag, text, line = Doc().ttl()
@@ -43,19 +94,25 @@ class PytconfConf(object):
         self.function_group_names: Dict[str, Set[str]] = defaultdict(set)
         self.function_group_descriptions: Dict[str, str] = dict()
         self.function_group_list = []
+        self.attribute_to_config: Dict[str, Type[Config]] = dict()
 
     def register_main(self, f):
         self.main_function = f
 
-    def register_config(self, cls, name):
+    def register_config(self, config: Type[Config], name):
         """
         register a configuration class
-        :param cls:
+        :param config:
         :param name:
         :return:
         """
-        self._configs.add(cls)
+        self._configs.add(config)
         self._config_names.add(name)
+        # update the attributes_to_config map
+        for attribute in config.get_attributes():
+            if attribute in self.attribute_to_config:
+                raise ValueError("pytconf: attribute [{}] appears more than once".format(attribute))
+            self.attribute_to_config[attribute] = config
 
     @classmethod
     def print_errors(cls, errors: List[str]) -> None:
@@ -149,27 +206,18 @@ class PytconfConf(object):
         :param command_selected:
         :param flags:
         :param _free_args:
-        :return:
+        :return: whether or not parsing was successful
         """
-        configs = self.function_name_to_configs[command_selected]
-        suggested_configs = self.function_name_to_suggest_configs[command_selected]
 
-        # create the attribute_to_config map
-        attribute_to_config: Dict[str, Type[Config]] = dict()
-        for config in itertools.chain(configs, suggested_configs):
-            for attribute in config.get_attributes():
-                if attribute in attribute_to_config:
-                    raise ValueError("attribute [{}] double".format(attribute))
-                attribute_to_config[attribute] = config
-
-        # set the flags into the "default" field
+        # set the flags into the "default" field and collect unknown flags
         unknown_flags = []
         for flag_raw, value in flags.items():
-            edit = value.startswith('=')
-            if flag_raw not in attribute_to_config:
+            if flag_raw not in self.attribute_to_config:
                 unknown_flags.append(flag_raw)
-            config = attribute_to_config[flag_raw]
+                continue
+            config = self.attribute_to_config[flag_raw]
             param = config.get_param_by_name(flag_raw)
+            edit = value.startswith('=')
             if edit:
                 v = param.s2t_generate_from_default(value[1:])
             else:
@@ -178,11 +226,14 @@ class PytconfConf(object):
 
         # check for missing parameters and show help if there are any missing
         missing_parameters = []
+        configs = self.function_name_to_configs[command_selected]
         for config in configs:
             for attribute in config.get_attributes():
                 value = getattr(config, attribute)
                 if value is NO_DEFAULT:
                     missing_parameters.append(attribute)
+
+        # print and stop if we have problems
         if unknown_flags or missing_parameters:
             if missing_parameters:
                 print()
@@ -195,7 +246,7 @@ class PytconfConf(object):
             self.show_help_for_function(command_selected, show_help_full=False, show_help_suggest=False)
             return False
 
-        # move all default values to place
+        # move all default values to place (this will not be needed in the new scheme)
         for config in itertools.chain(configs, self._configs):
             for attribute in config.get_attributes():
                 param: Param = getattr(config, attribute)
@@ -355,56 +406,6 @@ def config_arg_parse_and_launch(print_messages=True, launch=True, args=None):
         launch=launch,
         args=args,
     )
-
-
-class MetaConfig(type):
-    """
-    base class for all configs
-    """
-
-    def __new__(mcs, name, bases, cls_dict):
-        if name != "Config":
-            params_dict = dict()
-            cls_dict[PARAMS_ATTRIBUTE] = params_dict
-            for k, d in cls_dict.items():
-                if isinstance(d, Param):
-                    # assert d.default is not NO_DEFAULT
-                    params_dict[k] = d
-                    cls_dict[k] = d.default
-        return type.__new__(mcs, name, bases, cls_dict)
-
-    def __init__(cls, name, bases, cls_dict):
-        # print(name, bases, cls_dict)
-        # if len(cls.mro()) > 2:
-        #     register_config(cls, name)
-        #     # print("was subclassed by " + name)
-        if name != "Config":
-            get_pytconf().register_config(cls, name)
-        # print(name, cls_dict)
-        super(MetaConfig, cls).__init__(name, bases, cls_dict)
-
-
-ParamType = TypeVar('ParamType', bound='Param')
-
-
-class Config(metaclass=MetaConfig):
-    """
-        base class for all configs
-    """
-
-    @classmethod
-    def get_attributes(cls: Any) -> List[str]:
-        return getattr(cls, PARAMS_ATTRIBUTE).keys()
-        # return [attr for attr in dir(cls) if not callable(getattr(cls, attr))
-        #        and not attr.startswith("__")]
-
-    @classmethod
-    def get_params(cls: Any) -> Dict[str, ParamType]:
-        return getattr(cls, PARAMS_ATTRIBUTE)
-
-    @classmethod
-    def get_param_by_name(cls: Any, name: str) -> ParamType:
-        return cls.get_params()[name]
 
 
 class Unique:
