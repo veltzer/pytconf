@@ -1,3 +1,6 @@
+- do better work with colorizing on the terminall.
+	only emit color if we are printing to a terminal,
+	otherwise just write text.
 - make it easier to use pytconf.
 	- Enable not to define groups of commands.
 	- Enable not to mark the main function.
