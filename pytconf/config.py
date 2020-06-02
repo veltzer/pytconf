@@ -136,7 +136,7 @@ class PytconfConf(object):
         print("Options:")
         print("  --help         Show mandatory help")
         print("  --help-suggest Show mandatory+suggestions help")
-        print("  --help-all    Show all help")
+        print("  --help-all     Show all help")
         print()
         print("Commands:")
         for function_group in self.function_group_list:
