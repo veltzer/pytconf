@@ -25,3 +25,7 @@ pyflakes:
 .PHONY: pylint
 pylint:
 	pylint pytconf tests
+
+.PHONY: black
+black:
+	black pytconf tests config

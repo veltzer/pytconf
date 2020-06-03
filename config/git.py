@@ -10,7 +10,10 @@ import subprocess
 
 from config.helpers import help_check_output
 
-git_last_tag = help_check_output(['git', 'describe', '--abbrev=0', '--tags'],
-                                 stderr=subprocess.DEVNULL).rstrip()
-git_describe = help_check_output(['git', 'describe'], stderr=subprocess.DEVNULL).rstrip()
-git_version = '.'.join(git_describe.split('-'))
+git_last_tag = help_check_output(
+    ["git", "describe", "--abbrev=0", "--tags"], stderr=subprocess.DEVNULL
+).rstrip()
+git_describe = help_check_output(
+    ["git", "describe"], stderr=subprocess.DEVNULL
+).rstrip()
+git_version = ".".join(git_describe.split("-"))

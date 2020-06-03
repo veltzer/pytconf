@@ -1,4 +1,4 @@
-- do better work with colorizing on the terminall.
+- do better work with colorizing on the terminal.
 	only emit color if we are printing to a terminal,
 	otherwise just write text.
 - make it easier to use pytconf.

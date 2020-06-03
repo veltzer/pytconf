@@ -10,12 +10,30 @@ from typing import Union, List, Any, Callable, Type, Dict, Set, TypeVar
 
 from yattag import Doc
 
-from pytconf.color_utils import print_highlight, color_hi, print_title, color_ok, color_warn, print_error
-from pytconf.convert import convert_str_to_int, convert_int_to_str, convert_str_to_int_default, \
-    convert_str_to_list_int, convert_list_int_to_str, convert_list_str_to_str, \
-    convert_str_to_list_str, convert_str_to_int_or_none, \
-    convert_int_or_none_to_str, convert_str_to_bool, convert_bool_to_str, convert_str_to_str, \
-    convert_str_to_str_or_none, convert_str_or_none_to_str
+from pytconf.color_utils import (
+    print_highlight,
+    color_hi,
+    print_title,
+    color_ok,
+    color_warn,
+    print_error,
+)
+from pytconf.convert import (
+    convert_str_to_int,
+    convert_int_to_str,
+    convert_str_to_int_default,
+    convert_str_to_list_int,
+    convert_list_int_to_str,
+    convert_list_str_to_str,
+    convert_str_to_list_str,
+    convert_str_to_int_or_none,
+    convert_int_or_none_to_str,
+    convert_str_to_bool,
+    convert_bool_to_str,
+    convert_str_to_str,
+    convert_str_to_str_or_none,
+    convert_str_or_none_to_str,
+)
 from pytconf.enum_subset import EnumSubset
 from pytconf.errors_collector import ErrorsCollector
 from pytconf.extended_enum import str_to_enum_value, enum_type_to_list_str
@@ -53,7 +71,7 @@ class MetaConfig(type):
         super(MetaConfig, cls).__init__(name, bases, cls_dict)
 
 
-ParamType = TypeVar('ParamType', bound='Param')
+ParamType = TypeVar("ParamType", bound="Param")
 
 
 class Config(metaclass=MetaConfig):
@@ -116,7 +134,9 @@ class PytconfConf(object):
         # update the attributes_to_config map
         for attribute in config.get_attributes():
             if attribute in self.attribute_to_config:
-                raise ValueError("pytconf: attribute [{}] appears more than once".format(attribute))
+                raise ValueError(
+                    "pytconf: attribute [{}] appears more than once".format(attribute)
+                )
             self.attribute_to_config[attribute] = config
 
     @classmethod
@@ -152,11 +172,10 @@ class PytconfConf(object):
                     print("    {}: {}".format(color_hi(name), doc))
             print()
 
-    def show_help_for_function(self, function_name: str, show_help_full: bool, show_help_suggest: bool) -> None:
-        print("Usage: {} {} [OPTIONS] [ARGS]...".format(
-            self.app_name,
-            function_name,
-        ))
+    def show_help_for_function(
+        self, function_name: str, show_help_full: bool, show_help_suggest: bool
+    ) -> None:
+        print("Usage: {} {} [OPTIONS] [ARGS]...".format(self.app_name, function_name,))
         function_selected = self.function_name_to_callable[function_name]
         doc = function_selected.__doc__
         if doc is not None:
@@ -190,22 +209,18 @@ class PytconfConf(object):
                 default = color_warn("MANDATORY")
             else:
                 default = color_ok(param.t2s(param.default))
-            print("    {} [{}]: {} [{}]".format(
-                color_hi(name),
-                param.get_type_name(),
-                param.help_string,
-                default,
-            ))
+            print(
+                "    {} [{}]: {} [{}]".format(
+                    color_hi(name), param.get_type_name(), param.help_string, default,
+                )
+            )
             more_help = param.more_help()
             if more_help is not None:
                 print("      {}".format(more_help))
         print()
 
     def process_flags(
-        self,
-        command_selected: str,
-        flags: Dict[str, str],
-        errors: ErrorsCollector,
+        self, command_selected: str, flags: Dict[str, str], errors: ErrorsCollector,
     ) -> None:
         """
         Parse the args and fill the global data
@@ -222,7 +237,7 @@ class PytconfConf(object):
                 continue
             config = self.attribute_to_config[flag_raw]
             param = config.get_param_by_name(flag_raw)
-            edit = value.startswith('=')
+            edit = value.startswith("=")
             if edit:
                 v = param.s2t_generate_from_default(value[1:])
             else:
@@ -240,7 +255,9 @@ class PytconfConf(object):
                 if value is NO_DEFAULT:
                     missing_parameters.append(attribute)
         if missing_parameters:
-            errors.add_error("missing parameters [{}]".format(",".join(missing_parameters)))
+            errors.add_error(
+                "missing parameters [{}]".format(",".join(missing_parameters))
+            )
 
         # move all default values to place (this will not be needed in the new scheme)
         for config in itertools.chain(configs, self._configs):
@@ -251,9 +268,7 @@ class PytconfConf(object):
                         setattr(config, attribute, param.default)
 
     def config_arg_parse_and_launch(
-        self,
-        args: Union[List[str], None] = None,
-        launch=True
+        self, args: Union[List[str], None] = None, launch=True
     ) -> None:
         # if we are given no args then take the from sys.argv
         if args is None:
@@ -320,7 +335,9 @@ class PytconfConf(object):
 
         if show_help:
             if command_selected:
-                self.show_help_for_function(command_selected, show_help_full, show_help_suggest)
+                self.show_help_for_function(
+                    command_selected, show_help_full, show_help_suggest
+                )
             else:
                 self.show_help()
             return
@@ -345,7 +362,9 @@ class PytconfConf(object):
                     elif real in SPECIAL_COMMANDS:
                         special_flags.add(real)
                     else:
-                        errors.add_error("argument [{}] needs a follow-up argument".format(real))
+                        errors.add_error(
+                            "argument [{}] needs a follow-up argument".format(real)
+                        )
                 else:
                     errors.add_error("can not parse argument [{}]".format(real))
             else:
@@ -356,31 +375,39 @@ class PytconfConf(object):
         doc = self.main_function.__doc__
         assert doc is not None
         doc = doc.strip()
-        html_gen.line('h1', doc)
-        html_gen.line('h2', "API specifications")
-        with html_gen.tag('ul'):
+        html_gen.line("h1", doc)
+        html_gen.line("h2", "API specifications")
+        with html_gen.tag("ul"):
             for function_group_name in self.function_group_list:
-                function_group_description = self.function_group_descriptions[function_group_name]
-                html_gen.line('li', function_group_name, title='function group name: ')
-                html_gen.line('li', function_group_description, title='function group description: ')
-                with html_gen.tag('li'):
-                    for function_name in sorted(self.function_group_names[function_group_name]):
+                function_group_description = self.function_group_descriptions[
+                    function_group_name
+                ]
+                html_gen.line("li", function_group_name, title="function group name: ")
+                html_gen.line(
+                    "li",
+                    function_group_description,
+                    title="function group description: ",
+                )
+                with html_gen.tag("li"):
+                    for function_name in sorted(
+                        self.function_group_names[function_group_name]
+                    ):
                         self.get_html_for_function(function_name, html_gen)
         return html_gen.document.getvalue()
 
     def get_html_for_function(self, function_name, html_gen):
-        with html_gen.tag('ul'):
+        with html_gen.tag("ul"):
             f = self.function_name_to_callable[function_name]
             if f.__doc__ is None:
                 function_doc = "not description for this function"
             else:
                 function_doc = f.__doc__.strip()
-            html_gen.line('li', function_name, title='function name: ')
-            html_gen.line('li', function_doc, title='function description: ')
-            with html_gen.tag('li'):
-                with html_gen.tag('ul'):
+            html_gen.line("li", function_name, title="function name: ")
+            html_gen.line("li", function_doc, title="function description: ")
+            with html_gen.tag("li"):
+                with html_gen.tag("ul"):
                     for config in self.function_name_to_configs[function_name]:
-                        with html_gen.tag('li'):
+                        with html_gen.tag("li"):
                             self.get_html_for_config(config, html_gen)
 
     @classmethod
@@ -391,10 +418,10 @@ class PytconfConf(object):
             doc = config.__doc__.strip()
         else:
             doc = "undocumented config"
-        html_gen.line('h3', doc, title='config: ')
-        with html_gen.tag('table'):
+        html_gen.line("h3", doc, title="config: ")
+        with html_gen.tag("table"):
             for name, param in config.get_params().items():
-                with html_gen.tag('tr'):
+                with html_gen.tag("tr"):
                     if param.default is NO_DEFAULT:
                         default = "MANDATORY"
                     else:
@@ -403,11 +430,11 @@ class PytconfConf(object):
                         more_help = "No more help is documented"
                     else:
                         more_help = param.more_help()
-                    html_gen.line('td', name)
-                    html_gen.line('td', param.help_string)
-                    html_gen.line('td', param.get_type_name())
-                    html_gen.line('td', default)
-                    html_gen.line('td', more_help)
+                    html_gen.line("td", name)
+                    html_gen.line("td", param.help_string)
+                    html_gen.line("td", param.get_type_name())
+                    html_gen.line("td", default)
+                    html_gen.line("td", more_help)
 
 
 _pytconf = PytconfConf()
@@ -422,8 +449,7 @@ def config_arg_parse_and_launch(launch=True, args=None) -> None:
     This is the real API
     """
     get_pytconf().config_arg_parse_and_launch(
-        launch=launch,
-        args=args,
+        launch=launch, args=args,
     )
 
 
@@ -443,10 +469,7 @@ class Param(object):
     """
 
     def __init__(
-        self,
-        help_string=NO_HELP,
-        default=NO_DEFAULT,
-        type_name=None,
+        self, help_string=NO_HELP, default=NO_DEFAULT, type_name=None,
     ):
         super(Param, self).__init__()
         self.help_string = help_string
@@ -487,9 +510,7 @@ class ParamFunctions(Param):
         function_t2s: Callable = None,
     ):
         super(ParamFunctions, self).__init__(
-            help_string=help_string,
-            default=default,
-            type_name=type_name,
+            help_string=help_string, default=default, type_name=type_name,
         )
         self.function_s2t = function_s2t
         self.function_t2s = function_t2s
@@ -514,15 +535,15 @@ class ParamFilename(Param):
         suffixes: List[str] = None,
     ):
         super(ParamFilename, self).__init__(
-            help_string=help_string,
-            default=default,
-            type_name=type_name,
+            help_string=help_string, default=default, type_name=type_name,
         )
         self.suffixes = suffixes
 
     def s2t(self, s):
         if self.suffixes is not None:
-            assert any(s.endswith(x) for x in self.suffixes), "filename suffix is not accepted"
+            assert any(
+                s.endswith(x) for x in self.suffixes
+            ), "filename suffix is not accepted"
         return s
 
     def t2s(self, t):
@@ -537,15 +558,10 @@ class ParamFilename(Param):
 
 class ParamEnum(Param):
     def __init__(
-        self,
-        help_string=NO_HELP,
-        default=NO_DEFAULT,
-        enum_type: Type[Enum] = None,
+        self, help_string=NO_HELP, default=NO_DEFAULT, enum_type: Type[Enum] = None,
     ):
         super(ParamEnum, self).__init__(
-            help_string=help_string,
-            default=default,
-            type_name="enum",
+            help_string=help_string, default=default, type_name="enum",
         )
         self.enum_type = enum_type
 
@@ -564,15 +580,10 @@ class ParamEnum(Param):
 
 class ParamEnumSubset(Param):
     def __init__(
-        self,
-        help_string=NO_HELP,
-        default=NO_DEFAULT,
-        enum_type: Type[Enum] = None,
+        self, help_string=NO_HELP, default=NO_DEFAULT, enum_type: Type[Enum] = None,
     ):
         super(ParamEnumSubset, self).__init__(
-            help_string=help_string,
-            default=default,
-            type_name="enum",
+            help_string=help_string, default=default, type_name="enum",
         )
         self.enum_type = enum_type
 
@@ -594,15 +605,10 @@ class ParamEnumSubset(Param):
 
 class ParamChoice(Param):
     def __init__(
-        self,
-        help_string=NO_HELP,
-        default=NO_DEFAULT,
-        choice_list: List[str] = None
+        self, help_string=NO_HELP, default=NO_DEFAULT, choice_list: List[str] = None
     ):
         super(ParamChoice, self).__init__(
-            help_string=help_string,
-            default=default,
-            type_name="Choice",
+            help_string=help_string, default=default, type_name="Choice",
         )
         self.choice_list = choice_list
 
@@ -623,8 +629,7 @@ class ParamCreator(object):
 
     @staticmethod
     def create_int(
-        help_string: str = NO_HELP,
-        default: Union[int, NO_DEFAULT_TYPE] = NO_DEFAULT
+        help_string: str = NO_HELP, default: Union[int, NO_DEFAULT_TYPE] = NO_DEFAULT
     ) -> int:
         """
         Create an int parameter
@@ -645,7 +650,7 @@ class ParamCreator(object):
     @staticmethod
     def create_list_int(
         help_string: str = NO_HELP,
-        default: Union[List[int], NO_DEFAULT_TYPE] = NO_DEFAULT
+        default: Union[List[int], NO_DEFAULT_TYPE] = NO_DEFAULT,
     ) -> List[int]:
         """
         Create a List[int] parameter
@@ -665,7 +670,7 @@ class ParamCreator(object):
     @staticmethod
     def create_list_str(
         help_string: str = NO_HELP,
-        default: Union[List[str], NO_DEFAULT_TYPE] = NO_DEFAULT
+        default: Union[List[str], NO_DEFAULT_TYPE] = NO_DEFAULT,
     ) -> List[str]:
         """
         Create a List[str] parameter
@@ -685,7 +690,7 @@ class ParamCreator(object):
     @staticmethod
     def create_int_or_none(
         help_string: str = NO_HELP,
-        default: Union[int, None, NO_DEFAULT_TYPE] = NO_DEFAULT
+        default: Union[int, None, NO_DEFAULT_TYPE] = NO_DEFAULT,
     ) -> Union[int, None]:
         """
         Create an int parameter
@@ -704,8 +709,7 @@ class ParamCreator(object):
 
     @staticmethod
     def create_str(
-        help_string: str = NO_HELP,
-        default: Union[str, NO_DEFAULT_TYPE] = NO_DEFAULT
+        help_string: str = NO_HELP, default: Union[str, NO_DEFAULT_TYPE] = NO_DEFAULT
     ) -> str:
         """
         Create a string parameter
@@ -725,7 +729,7 @@ class ParamCreator(object):
     @staticmethod
     def create_str_or_none(
         help_string: str = NO_HELP,
-        default: Union[str, None, NO_DEFAULT_TYPE] = NO_DEFAULT
+        default: Union[str, None, NO_DEFAULT_TYPE] = NO_DEFAULT,
     ) -> Union[str, None]:
         """
         Create a string parameter
@@ -744,8 +748,7 @@ class ParamCreator(object):
 
     @staticmethod
     def create_bool(
-        help_string: str = NO_HELP,
-        default: Union[bool, NO_DEFAULT_TYPE] = NO_DEFAULT
+        help_string: str = NO_HELP, default: Union[bool, NO_DEFAULT_TYPE] = NO_DEFAULT
     ) -> bool:
         """
         Create a bool parameter
@@ -766,7 +769,7 @@ class ParamCreator(object):
     def create_new_file(
         help_string: str = NO_HELP,
         default: Union[str, NO_DEFAULT_TYPE] = NO_DEFAULT,
-        suffixes: Union[List[str], None] = None
+        suffixes: Union[List[str], None] = None,
     ) -> str:
         """
         Create a new file parameter
@@ -787,7 +790,7 @@ class ParamCreator(object):
     def create_existing_file(
         help_string: str = NO_HELP,
         default: Union[str, NO_DEFAULT_TYPE] = NO_DEFAULT,
-        suffixes: Union[List[str], None] = None
+        suffixes: Union[List[str], None] = None,
     ) -> str:
         """
         Create a new file parameter
@@ -840,9 +843,7 @@ class ParamCreator(object):
         """
         # noinspection PyTypeChecker
         return ParamChoice(
-            help_string=help_string,
-            default=default,
-            choice_list=choice_list,
+            help_string=help_string, default=default, choice_list=choice_list,
         )
 
     @staticmethod
@@ -859,11 +860,7 @@ class ParamCreator(object):
         :return:
         """
         # noinspection PyTypeChecker
-        return ParamEnum(
-            help_string=help_string,
-            default=default,
-            enum_type=enum_type,
-        )
+        return ParamEnum(help_string=help_string, default=default, enum_type=enum_type,)
 
     @staticmethod
     def create_enum_subset(
@@ -880,13 +877,13 @@ class ParamCreator(object):
         """
         # noinspection PyTypeChecker
         return ParamEnumSubset(
-            help_string=help_string,
-            default=default,
-            enum_type=enum_type,
+            help_string=help_string, default=default, enum_type=enum_type,
         )
 
     @staticmethod
-    def create_existing_bucket(help_string: str = NO_HELP, default: Union[str, NO_DEFAULT_TYPE] = NO_DEFAULT) -> str:
+    def create_existing_bucket(
+        help_string: str = NO_HELP, default: Union[str, NO_DEFAULT_TYPE] = NO_DEFAULT
+    ) -> str:
         """
         Create a bucket name on gcp
         :param help_string:
@@ -903,7 +900,9 @@ class ParamCreator(object):
         )
 
 
-def register_function_group(function_group_name: str, function_group_description: str) -> None:
+def register_function_group(
+    function_group_name: str, function_group_description: str
+) -> None:
     pt = get_pytconf()
     pt.function_group_descriptions[function_group_name] = function_group_description
     pt.function_group_list.append(function_group_name)
