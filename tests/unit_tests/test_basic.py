@@ -1,13 +1,19 @@
 import unittest
 
-from pytconf.config import config_arg_parse_and_launch, \
-    Config, ParamCreator, register_function, get_free_args
+from pytconf.config import (
+    config_arg_parse_and_launch,
+    Config,
+    ParamCreator,
+    register_function,
+    get_free_args,
+)
 
 
 class ConfigTotal(Config):
     """
     Parameters to select the total number of items to fetch
     """
+
     num = ParamCreator.create_int(default=10, help_string="help for num")
 
 
@@ -38,5 +44,7 @@ class TestBasic(unittest.TestCase):
             config_arg_parse_and_launch(args=["foo", "raise_value_error"])
 
     def test_free_args(self):
-        config_arg_parse_and_launch(launch=False, args=["foo", "bar", "--num=30", "zoo"])
+        config_arg_parse_and_launch(
+            launch=False, args=["foo", "bar", "--num=30", "zoo"]
+        )
         self.assertListEqual(get_free_args(), ["zoo"])

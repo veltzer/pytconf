@@ -12,5 +12,6 @@ pytest-cov
 pylint
 pyflakes
 flake8
+black
 # test requirements
 pylogconf

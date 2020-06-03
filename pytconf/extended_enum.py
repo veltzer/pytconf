@@ -3,7 +3,6 @@ from typing import Type, List
 
 
 class ExtendedEnum(Enum):
-
     @classmethod
     def get_list_of_all_values(cls):
         return [x for x in cls.__members__.values()]
