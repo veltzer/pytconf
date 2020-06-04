@@ -113,6 +113,8 @@ class PytconfConf(object):
         self.function_name_to_callable: Dict[str, Callable] = dict()
         self.function_group_names: Dict[str, Set[str]] = defaultdict(set)
         self.allow_free_args: Dict[str, bool] = dict()
+        self.min_free_args: Dict[str, Union[int, None]] = dict()
+        self.max_free_args: Dict[str, Union[int, None]] = dict()
         self.function_group_descriptions: Dict[str, str] = dict()
         self.function_group_list = []
         self.attribute_to_config: Dict[str, Type[Config]] = dict()
@@ -318,10 +320,20 @@ class PytconfConf(object):
         if len(self.function_name_to_callable) == 1:
             command_selected = list(self.function_name_to_callable.keys())[0]
 
-        # check if we are not allowed free args
+        # if we have command we can check free args errors
         if command_selected is not None:
-            if not self.allow_free_args[command_selected] and len(self.free_args) > 0:
-                errors.add_error("free args are not allowed")
+            if self.allow_free_args[command_selected]:
+                min_args = self.min_free_args[command_selected]
+                if min_args is not None:
+                    if len(self.free_args) < min_args:
+                        errors.add_error("too few free args - {} required".format(min_args))
+                max_args = self.max_free_args[command_selected]
+                if max_args is not None:
+                    if len(self.free_args) >= max_args:
+                        errors.add_error("too many free args - {} required".format(max_args))
+            else:
+                if len(self.free_args) > 0:
+                    errors.add_error("free args are not allowed")
 
         if command_selected is None:
             if not show_help:
@@ -921,6 +933,8 @@ def register_endpoint(
     suggest_configs: List[Type[Config]] = (),
     group: str = DEFAULT_GROUP_NAME,
     allow_free_args: bool = False,
+    min_free_args: Union[int, None] = None,
+    max_free_args: Union[int, None] = None,
 ) -> Callable[[Any], Any]:
     logger = logging.getLogger("pytconf")
     logger.debug("registering endpoint")
@@ -932,6 +946,8 @@ def register_endpoint(
             suggest_configs=suggest_configs,
             group=group,
             allow_free_args=allow_free_args,
+            min_free_args=min_free_args,
+            max_free_args=max_free_args,
         )
         return f
 
@@ -944,6 +960,8 @@ def register_function(
     suggest_configs: List[Type[Config]] = (),
     group: str = DEFAULT_GROUP_NAME,
     allow_free_args: bool = False,
+    min_free_args: Union[int, None] = None,
+    max_free_args: Union[int, None] = None,
 ) -> None:
     function_name = f.__name__
     pt = get_pytconf()
@@ -952,6 +970,8 @@ def register_function(
     pt.function_name_to_suggest_configs[function_name] = suggest_configs
     pt.function_group_names[group].add(function_name)
     pt.allow_free_args[function_name] = allow_free_args
+    pt.min_free_args[function_name] = min_free_args
+    pt.max_free_args[function_name] = max_free_args
 
 
 def get_free_args() -> List[str]:
