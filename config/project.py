@@ -4,6 +4,7 @@ import pyclassifiers.values
 
 project_github_username = "veltzer"
 project_name = "pytconf"
+github_repo_name = project_name
 project_website = "https://{project_github_username}.github.io/{project_name}".format(
     **locals()
 )
