@@ -9,3 +9,5 @@
 
 pytconf handles configuration, config files and command line parsing
 
+project website: https://veltzer.github.io/pytconf
+
