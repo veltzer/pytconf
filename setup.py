@@ -1,13 +1,9 @@
 import setuptools
 
-"""
-The documentation can be found at:
-http://setuptools.readthedocs.io/en/latest/setuptools.html
-"""
 setuptools.setup(
     # the first three fields are a must according to the documentation
     name='pytconf',
-    version='0.0.38',
+    version='0.0.39',
     packages=[
         'pytconf',
     ],
@@ -35,6 +31,8 @@ setuptools.setup(
         'termcolor',
         'yattag',
     ],
+    extras_require={
+    },
     classifiers=[
         'Development Status :: 4 - Beta',
         'Environment :: Console',
@@ -46,5 +44,5 @@ setuptools.setup(
     ],
     entry_points={'console_scripts': [
     ]},
-    python_requires='>=3.4',
+    python_requires='>=3.5',
 )
