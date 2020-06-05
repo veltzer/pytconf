@@ -2,18 +2,19 @@ import setuptools
 
 setuptools.setup(
     # the first three fields are a must according to the documentation
-    name='pytconf',
-    version='0.0.39',
+    name="pytconf",
+    version="0.0.39",
     packages=[
         'pytconf',
     ],
     # from here all is optional
-    description='pytconf handles configuration, config files and command line parsing',
-    long_description='pytconf handles configuration, config files and command line parsing',
-    author='Mark Veltzer',
-    author_email='mark.veltzer@gmail.com',
-    maintainer='Mark Veltzer',
-    maintainer_email='mark.veltzer@gmail.com',
+    description="pytconf handles configuration, config files and command line parsing",
+    long_description="pytconf handles configuration, config files and command line parsing",
+    long_description_content_type="text/x-rst",
+    author="Mark Veltzer",
+    author_email="mark.veltzer@gmail.com",
+    maintainer="Mark Veltzer",
+    maintainer_email="mark.veltzer@gmail.com",
     keywords=[
         'click',
         'argparse',
@@ -21,9 +22,9 @@ setuptools.setup(
         'command-line-parser',
         'configuration',
     ],
-    url='https://veltzer.github.io/pytconf',
-    download_url='https://github.com/veltzer/pytconf',
-    license='MIT',
+    url="https://veltzer.github.io/pytconf",
+    download_url="https://github.com/veltzer/pytconf",
+    license="MIT",
     platforms=[
         'python3',
     ],
@@ -42,7 +43,7 @@ setuptools.setup(
     ],
     data_files=[
     ],
-    entry_points={'console_scripts': [
+    entry_points={"console_scripts": [
     ]},
-    python_requires='>=3.5',
+    python_requires=">=3.5",
 )
