@@ -30,7 +30,7 @@ setuptools.setup(
     ],
     url="https://veltzer.github.io/pytconf",
     download_url="https://github.com/veltzer/pytconf",
-    # license="MIT",
+    license="MIT",
     platforms=[
         'python3',
     ],
