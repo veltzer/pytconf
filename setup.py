@@ -1,5 +1,11 @@
 import setuptools
 
+
+def get_readme():
+    with open('README.rst') as f:
+        return f.read()
+
+
 setuptools.setup(
     # the first three fields are a must according to the documentation
     name="pytconf",
@@ -9,7 +15,7 @@ setuptools.setup(
     ],
     # from here all is optional
     description="pytconf handles configuration, config files and command line parsing",
-    long_description="pytconf handles configuration, config files and command line parsing",
+    long_description=get_readme(),
     long_description_content_type="text/x-rst",
     author="Mark Veltzer",
     author_email="mark.veltzer@gmail.com",
