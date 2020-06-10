@@ -1,3 +1,13 @@
+- allow, int the register_* function to have an arugment which will override the name
+	of the function.
+	Why do we need that?
+	Imagine that you want an operation called "list" but list is a reserved name in
+	python and you shouldn't really define a function called "list". So you call the
+	function "list_contacts" (for instance) and tell pytconf that it should present
+	the user with action "list". This action will now be hooled to the "list_contacts"
+	operation.
+
+
 - during parsing of command line already check that the argument exists.
 	For instance:
 	$ app -h
