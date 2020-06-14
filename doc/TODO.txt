@@ -7,6 +7,21 @@
 	the user with action "list". This action will now be hooled to the "list_contacts"
 	operation.
 
+- think again about why we have multiple Config entires. If we had just one config, or just
+	one module
+	then naturally we would have no name space collision since python or the editor
+	will take care not to allow name collisions.
+
+- think again about the problem of parameters without default values. If different commands
+	have different such parameters (and they do), the each command must specify which
+	such paramters it needs. The problem with this is that these parameters must not just
+	be used using the natural syntax: Config.prop since this will allow to use it when it
+	is not set.
+
+	Is it better to inject these paramters to the top level and trickle them down?
+	Maybe that is the case.
+
+	Think about it.
 
 - during parsing of command line already check that the argument exists.
 	For instance:
