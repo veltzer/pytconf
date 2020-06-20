@@ -1,5 +1,4 @@
 
-
 # *pytconf* project by Mark Veltzer
 
 ![PyPI - Status](https://img.shields.io/pypi/status/pytconf)
@@ -17,7 +16,7 @@
 ![Downloads](https://pepy.tech/badge/pytconf/month)
 ![Downloads](https://pepy.tech/badge/pytconf/week)
 
+
 pytconf handles configuration, config files and command line parsing
 
-project website: https://veltzer.github.io/pytconf
-
+project website: <https://veltzer.github.io/pytconf>
