@@ -76,3 +76,4 @@ celerybeat-schedule
 /docs/.doctrees/
 
 /.pytest_cache/
+/node_modules/
