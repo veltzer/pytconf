@@ -1,12 +1,12 @@
 import unittest
 
-from pytconf.config import (
+from pytconf import (
     config_arg_parse_and_launch,
     Config,
     register_function,
     get_free_args,
+    ParamCreator,
 )
-from pytconf.param import ParamCreator
 
 
 class ConfigTotal(Config):
