@@ -114,6 +114,17 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">line</span> <span class="o">=</span> <span class="n">line</span></div>
 
 
+<div class="viewcode-block" id="get_first_line"><a class="viewcode-back" href="../../pytconf.html#pytconf.config.get_first_line">[docs]</a><span class="k">def</span> <span class="nf">get_first_line</span><span class="p">(</span><span class="n">doc</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">]:</span>
+    <span class="k">if</span> <span class="n">doc</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    <span class="n">lines</span> <span class="o">=</span> <span class="n">doc</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">isspace</span><span class="p">():</span>
+            <span class="k">continue</span>
+        <span class="k">return</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+    <span class="k">return</span> <span class="kc">None</span></div>
+
+
 <div class="viewcode-block" id="PytconfConf"><a class="viewcode-back" href="../../pytconf.html#pytconf.config.PytconfConf">[docs]</a><span class="k">class</span> <span class="nc">PytconfConf</span><span class="p">:</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_configs</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
@@ -159,10 +170,9 @@
 
 <div class="viewcode-block" id="PytconfConf.show_help"><a class="viewcode-back" href="../../pytconf.html#pytconf.config.PytconfConf.show_help">[docs]</a>    <span class="k">def</span> <span class="nf">show_help</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Usage: </span><span class="si">{}</span><span class="s2"> [OPTIONS] COMMAND [ARGS]...&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">app_name</span><span class="p">))</span>
-        <span class="n">doc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">main_function</span><span class="o">.</span><span class="vm">__doc__</span>
+        <span class="n">doc</span> <span class="o">=</span> <span class="n">get_first_line</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">main_function</span><span class="o">.</span><span class="vm">__doc__</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">doc</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">()</span>
-            <span class="n">doc</span> <span class="o">=</span> <span class="n">doc</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
             <span class="n">doc</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="s2">&quot;  </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">strip</span><span class="p">()),</span> <span class="n">doc</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)))</span>
             <span class="n">print_highlight</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">doc</span><span class="p">))</span>
         <span class="nb">print</span><span class="p">()</span>
@@ -177,11 +187,10 @@
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;  </span><span class="si">{}</span><span class="s2">: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">function_group</span><span class="p">,</span> <span class="n">description</span><span class="p">))</span>
             <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">function_group_names</span><span class="p">[</span><span class="n">function_group</span><span class="p">]):</span>
                 <span class="n">f</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">function_name_to_callable</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
-                <span class="n">doc</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="vm">__doc__</span>
+                <span class="n">doc</span> <span class="o">=</span> <span class="n">get_first_line</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="vm">__doc__</span><span class="p">)</span>
                 <span class="k">if</span> <span class="n">doc</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                     <span class="n">print_highlight</span><span class="p">(</span><span class="s2">&quot;    </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">))</span>
                 <span class="k">else</span><span class="p">:</span>
-                    <span class="n">doc</span> <span class="o">=</span> <span class="n">doc</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
                     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;    </span><span class="si">{}</span><span class="s2">: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">color_hi</span><span class="p">(</span><span class="n">name</span><span class="p">),</span> <span class="n">doc</span><span class="p">))</span>
             <span class="nb">print</span><span class="p">()</span></div>
 
@@ -190,9 +199,8 @@
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Usage: </span><span class="si">{}</span><span class="s2"> </span><span class="si">{}</span><span class="s2"> [OPTIONS] [ARGS]...&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">app_name</span><span class="p">,</span> <span class="n">function_name</span><span class="p">,))</span>
         <span class="n">function_selected</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">function_name_to_callable</span><span class="p">[</span><span class="n">function_name</span><span class="p">]</span>
-        <span class="n">doc</span> <span class="o">=</span> <span class="n">function_selected</span><span class="o">.</span><span class="vm">__doc__</span>
+        <span class="n">doc</span> <span class="o">=</span> <span class="n">get_first_line</span><span class="p">(</span><span class="n">function_selected</span><span class="o">.</span><span class="vm">__doc__</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">doc</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">doc</span> <span class="o">=</span> <span class="n">doc</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
             <span class="nb">print</span><span class="p">()</span>
             <span class="n">print_highlight</span><span class="p">(</span><span class="s2">&quot;  </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">doc</span><span class="p">))</span>
         <span class="nb">print</span><span class="p">()</span>
@@ -211,9 +219,8 @@
     <span class="k">def</span> <span class="nf">show_help_for_config</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">config</span> <span class="o">==</span> <span class="n">Config</span><span class="p">:</span>
             <span class="k">return</span>
-        <span class="n">doc</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="vm">__doc__</span>
+        <span class="n">doc</span> <span class="o">=</span> <span class="n">get_first_line</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="vm">__doc__</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">doc</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">doc</span> <span class="o">=</span> <span class="n">doc</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
             <span class="n">print_title</span><span class="p">(</span><span class="s2">&quot;  </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">doc</span><span class="p">))</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">print_title</span><span class="p">(</span><span class="s2">&quot;  Undocumented parameter set&quot;</span><span class="p">)</span>
@@ -395,9 +402,8 @@
 
 <div class="viewcode-block" id="PytconfConf.get_html"><a class="viewcode-back" href="../../pytconf.html#pytconf.config.PytconfConf.get_html">[docs]</a>    <span class="k">def</span> <span class="nf">get_html</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="n">html_gen</span> <span class="o">=</span> <span class="n">HtmlGen</span><span class="p">()</span>
-        <span class="n">doc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">main_function</span><span class="o">.</span><span class="vm">__doc__</span>
+        <span class="n">doc</span> <span class="o">=</span> <span class="n">get_first_line</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">main_function</span><span class="o">.</span><span class="vm">__doc__</span><span class="p">)</span>
         <span class="k">assert</span> <span class="n">doc</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
-        <span class="n">doc</span> <span class="o">=</span> <span class="n">doc</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
         <span class="n">html_gen</span><span class="o">.</span><span class="n">line</span><span class="p">(</span><span class="s2">&quot;h1&quot;</span><span class="p">,</span> <span class="n">doc</span><span class="p">)</span>
         <span class="n">html_gen</span><span class="o">.</span><span class="n">line</span><span class="p">(</span><span class="s2">&quot;h2&quot;</span><span class="p">,</span> <span class="s2">&quot;API specifications&quot;</span><span class="p">)</span>
         <span class="k">with</span> <span class="n">html_gen</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="s2">&quot;ul&quot;</span><span class="p">):</span>
@@ -421,10 +427,9 @@
 <div class="viewcode-block" id="PytconfConf.get_html_for_function"><a class="viewcode-back" href="../../pytconf.html#pytconf.config.PytconfConf.get_html_for_function">[docs]</a>    <span class="k">def</span> <span class="nf">get_html_for_function</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">function_name</span><span class="p">,</span> <span class="n">html_gen</span><span class="p">):</span>
         <span class="k">with</span> <span class="n">html_gen</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="s2">&quot;ul&quot;</span><span class="p">):</span>
             <span class="n">f</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">function_name_to_callable</span><span class="p">[</span><span class="n">function_name</span><span class="p">]</span>
-            <span class="k">if</span> <span class="n">f</span><span class="o">.</span><span class="vm">__doc__</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">function_doc</span> <span class="o">=</span> <span class="n">get_first_line</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="vm">__doc__</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">function_doc</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="n">function_doc</span> <span class="o">=</span> <span class="s2">&quot;not description for this function&quot;</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="n">function_doc</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="vm">__doc__</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
             <span class="n">html_gen</span><span class="o">.</span><span class="n">line</span><span class="p">(</span><span class="s2">&quot;li&quot;</span><span class="p">,</span> <span class="n">function_name</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;function name: &quot;</span><span class="p">)</span>
             <span class="n">html_gen</span><span class="o">.</span><span class="n">line</span><span class="p">(</span><span class="s2">&quot;li&quot;</span><span class="p">,</span> <span class="n">function_doc</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;function description: &quot;</span><span class="p">)</span>
             <span class="k">with</span> <span class="n">html_gen</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="s2">&quot;li&quot;</span><span class="p">):</span>
@@ -437,9 +442,8 @@
     <span class="k">def</span> <span class="nf">get_html_for_config</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">config</span><span class="p">,</span> <span class="n">html_gen</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">config</span> <span class="o">==</span> <span class="n">Config</span><span class="p">:</span>
             <span class="k">return</span>
-        <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="vm">__doc__</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">doc</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="vm">__doc__</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
-        <span class="k">else</span><span class="p">:</span>
+        <span class="n">doc</span> <span class="o">=</span> <span class="n">get_first_line</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="vm">__doc__</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">doc</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">doc</span> <span class="o">=</span> <span class="s2">&quot;undocumented config&quot;</span>
         <span class="n">html_gen</span><span class="o">.</span><span class="n">line</span><span class="p">(</span><span class="s2">&quot;h3&quot;</span><span class="p">,</span> <span class="n">doc</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;config: &quot;</span><span class="p">)</span>
         <span class="k">with</span> <span class="n">html_gen</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="s2">&quot;table&quot;</span><span class="p">):</span>
@@ -492,7 +496,6 @@
     <span class="k">def</span> <span class="nf">identity</span><span class="p">(</span><span class="n">f</span><span class="p">):</span>
         <span class="n">get_pytconf</span><span class="p">()</span><span class="o">.</span><span class="n">register_main</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">f</span>
-
     <span class="k">return</span> <span class="n">identity</span></div>
 
 
