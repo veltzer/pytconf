@@ -80,6 +80,17 @@ class HtmlGen:
         self.line = line
 
 
+def get_first_line(doc: Union[str, None]) -> Union[str, None]:
+    if doc is None:
+        return None
+    lines = doc.split("\n")
+    for line in lines:
+        if line.isspace():
+            continue
+        return line.strip()
+    return None
+
+
 class PytconfConf:
     def __init__(self):
         self._configs = set()
@@ -125,10 +136,9 @@ class PytconfConf:
 
     def show_help(self) -> None:
         print("Usage: {} [OPTIONS] COMMAND [ARGS]...".format(self.app_name))
-        doc = self.main_function.__doc__
+        doc = get_first_line(self.main_function.__doc__)
         if doc is not None:
             print()
-            doc = doc.strip()
             doc = "\n".join(map(lambda x: "  {}".format(x.strip()), doc.split("\n")))
             print_highlight("{}".format(doc))
         print()
@@ -143,11 +153,10 @@ class PytconfConf:
             print("  {}: {}".format(function_group, description))
             for name in sorted(self.function_group_names[function_group]):
                 f = self.function_name_to_callable[name]
-                doc = f.__doc__
+                doc = get_first_line(f.__doc__)
                 if doc is None:
                     print_highlight("    {}".format(name))
                 else:
-                    doc = doc.strip()
                     print("    {}: {}".format(color_hi(name), doc))
             print()
 
@@ -156,9 +165,8 @@ class PytconfConf:
     ) -> None:
         print("Usage: {} {} [OPTIONS] [ARGS]...".format(self.app_name, function_name,))
         function_selected = self.function_name_to_callable[function_name]
-        doc = function_selected.__doc__
+        doc = get_first_line(function_selected.__doc__)
         if doc is not None:
-            doc = doc.strip()
             print()
             print_highlight("  {}".format(doc))
         print()
@@ -177,9 +185,8 @@ class PytconfConf:
     def show_help_for_config(cls, config):
         if config == Config:
             return
-        doc = config.__doc__
+        doc = get_first_line(config.__doc__)
         if doc is not None:
-            doc = doc.strip()
             print_title("  {}".format(doc))
         else:
             print_title("  Undocumented parameter set")
@@ -361,9 +368,8 @@ class PytconfConf:
 
     def get_html(self) -> str:
         html_gen = HtmlGen()
-        doc = self.main_function.__doc__
+        doc = get_first_line(self.main_function.__doc__)
         assert doc is not None
-        doc = doc.strip()
         html_gen.line("h1", doc)
         html_gen.line("h2", "API specifications")
         with html_gen.tag("ul"):
@@ -387,10 +393,9 @@ class PytconfConf:
     def get_html_for_function(self, function_name, html_gen):
         with html_gen.tag("ul"):
             f = self.function_name_to_callable[function_name]
-            if f.__doc__ is None:
+            function_doc = get_first_line(f.__doc__)
+            if function_doc is None:
                 function_doc = "not description for this function"
-            else:
-                function_doc = f.__doc__.strip()
             html_gen.line("li", function_name, title="function name: ")
             html_gen.line("li", function_doc, title="function description: ")
             with html_gen.tag("li"):
@@ -403,9 +408,8 @@ class PytconfConf:
     def get_html_for_config(cls, config, html_gen):
         if config == Config:
             return
-        if config.__doc__ is not None:
-            doc = config.__doc__.strip()
-        else:
+        doc = get_first_line(config.__doc__)
+        if doc is None:
             doc = "undocumented config"
         html_gen.line("h3", doc, title="config: ")
         with html_gen.tag("table"):
@@ -458,7 +462,6 @@ def register_main() -> Callable[[Any], Any]:
     def identity(f):
         get_pytconf().register_main(f)
         return f
-
     return identity
 
 
