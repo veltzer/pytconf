@@ -85,7 +85,7 @@ def get_first_line(doc: Union[str, None]) -> Union[str, None]:
         return None
     lines = doc.split("\n")
     for line in lines:
-        if line.isspace():
+        if line == "" or line.isspace():
             continue
         return line.strip()
     return None
