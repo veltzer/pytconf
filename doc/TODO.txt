@@ -1,24 +1,24 @@
-- allow, int the register_* function to have an arugment which will override the name
+- allow, int the register_* function to have an argument which will override the name
 	of the function.
 	Why do we need that?
 	Imagine that you want an operation called "list" but list is a reserved name in
 	python and you shouldn't really define a function called "list". So you call the
 	function "list_contacts" (for instance) and tell pytconf that it should present
-	the user with action "list". This action will now be hooled to the "list_contacts"
+	the user with action "list". This action will now be hooked to the "list_contacts"
 	operation.
 
-- think again about why we have multiple Config entires. If we had just one config, or just
+- think again about why we have multiple Config entries. If we had just one config, or just
 	one module
 	then naturally we would have no name space collision since python or the editor
 	will take care not to allow name collisions.
 
 - think again about the problem of parameters without default values. If different commands
 	have different such parameters (and they do), the each command must specify which
-	such paramters it needs. The problem with this is that these parameters must not just
+	such parameters it needs. The problem with this is that these parameters must not just
 	be used using the natural syntax: Config.prop since this will allow to use it when it
 	is not set.
 
-	Is it better to inject these paramters to the top level and trickle them down?
+	Is it better to inject these parameters to the top level and trickle them down?
 	Maybe that is the case.
 
 	Think about it.
@@ -31,14 +31,14 @@
 	but rather
 	h is not a known argument
 
-- allow arguments to dictate how many arguments they consume from the command line followin them
+- allow arguments to dictate how many arguments they consume from the command line following them
 	This will allow booleans to not consume any
 	And other arguments to consume more (like Name and Family name).
 	When parsing the line you check if the argument exists, and if it exists then
 	you look up how many arguments it consumes.
 	How will bool consume only a single argument?
 	bool will overload a hook where if the flag is called "foo" then it will
-	register itself also as "nofoo" and when traslating to value you also get the flag
+	register itself also as "nofoo" and when translating to value you also get the flag
 	that triggered you.
 	actually each version of registration (foo, nofoo) could have a different number
 	of arguments consumed.

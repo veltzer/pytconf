@@ -3,10 +3,10 @@ import unittest
 from pytconf.config import (
     config_arg_parse_and_launch,
     Config,
-    ParamCreator,
     register_function,
     get_free_args,
 )
+from pytconf.param import ParamCreator
 
 
 class ConfigTotal(Config):
