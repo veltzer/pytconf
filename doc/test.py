@@ -20,7 +20,7 @@ class Meta(type):
         return ret
 
 
-class Config(object, metaclass=Meta):
+class Config(metaclass=Meta):
     @classmethod
     def create_int(cls: ClassVar, default: int, extra: int) -> int:
         global global_list
