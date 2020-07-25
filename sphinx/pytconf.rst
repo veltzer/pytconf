@@ -52,6 +52,14 @@ pytconf.extended\_enum module
    :undoc-members:
    :show-inheritance:
 
+pytconf.param module
+--------------------
+
+.. automodule:: pytconf.param
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 pytconf.version module
 ----------------------
 

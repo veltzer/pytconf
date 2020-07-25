@@ -4,6 +4,7 @@
 <html>
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>pytconf.enum_subset &#8212; pytconf 0.0.1 documentation</title>
     <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -34,17 +35,12 @@
 <span></span><span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">OrderedDict</span>
 <span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span>
 
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Type</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">TypeVar</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Type</span><span class="p">,</span> <span class="n">List</span>
 
 <span class="kn">from</span> <span class="nn">pytconf.extended_enum</span> <span class="kn">import</span> <span class="n">str_to_enum_value</span><span class="p">,</span> <span class="n">ExtendedEnum</span>
 
-<span class="n">EnumSubsetType</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s2">&quot;EnumSubsetType&quot;</span><span class="p">,</span> <span class="n">bound</span><span class="o">=</span><span class="s2">&quot;EnumSubset&quot;</span><span class="p">)</span>
-
 
 <div class="viewcode-block" id="EnumSubset"><a class="viewcode-back" href="../../pytconf.html#pytconf.enum_subset.EnumSubset">[docs]</a><span class="k">class</span> <span class="nc">EnumSubset</span><span class="p">:</span>
-<div class="viewcode-block" id="EnumSubset.from_enum_all"><a class="viewcode-back" href="../../pytconf.html#pytconf.enum_subset.EnumSubset.from_enum_all">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">from_enum_all</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">ExtendedEnum</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">EnumSubsetType</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">EnumSubset</span><span class="p">(</span><span class="n">enum_type</span><span class="o">=</span><span class="n">e</span><span class="p">,</span> <span class="n">list_of_values</span><span class="o">=</span><span class="n">e</span><span class="o">.</span><span class="n">get_list_of_all_values</span><span class="p">(),)</span></div>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">enum_type</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">Enum</span><span class="p">],</span> <span class="n">list_of_values</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Type</span><span class="p">[</span><span class="n">Enum</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">enum_type</span> <span class="o">=</span> <span class="n">enum_type</span>
@@ -75,14 +71,6 @@
 <div class="viewcode-block" id="EnumSubset.has_value"><a class="viewcode-back" href="../../pytconf.html#pytconf.enum_subset.EnumSubset.has_value">[docs]</a>    <span class="k">def</span> <span class="nf">has_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">item</span> <span class="ow">in</span> <span class="p">{</span><span class="n">x</span><span class="o">.</span><span class="n">value</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">selected</span><span class="p">}</span></div>
 
-<div class="viewcode-block" id="EnumSubset.from_string"><a class="viewcode-back" href="../../pytconf.html#pytconf.enum_subset.EnumSubset.from_string">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">from_string</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">Enum</span><span class="p">],</span> <span class="n">s</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">EnumSubsetType</span><span class="p">:</span>
-        <span class="n">r</span> <span class="o">=</span> <span class="n">EnumSubset</span><span class="p">(</span><span class="n">enum_type</span><span class="o">=</span><span class="n">e</span><span class="p">,</span> <span class="n">list_of_values</span><span class="o">=</span><span class="p">[])</span>
-        <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">s</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">):</span>
-            <span class="n">v</span> <span class="o">=</span> <span class="n">str_to_enum_value</span><span class="p">(</span><span class="n">s</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">e</span><span class="o">=</span><span class="n">e</span><span class="p">)</span>
-            <span class="n">r</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">r</span></div>
-
 <div class="viewcode-block" id="EnumSubset.list_of_strings"><a class="viewcode-back" href="../../pytconf.html#pytconf.enum_subset.EnumSubset.list_of_strings">[docs]</a>    <span class="k">def</span> <span class="nf">list_of_strings</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">my_list</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">selected</span><span class="p">:</span>
@@ -90,7 +78,27 @@
         <span class="k">return</span> <span class="n">my_list</span></div>
 
 <div class="viewcode-block" id="EnumSubset.to_string"><a class="viewcode-back" href="../../pytconf.html#pytconf.enum_subset.EnumSubset.to_string">[docs]</a>    <span class="k">def</span> <span class="nf">to_string</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="s2">&quot;,&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">list_of_strings</span><span class="p">())</span></div></div>
+        <span class="k">return</span> <span class="s2">&quot;,&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">list_of_strings</span><span class="p">())</span></div>
+
+<div class="viewcode-block" id="EnumSubset.from_enum_all"><a class="viewcode-back" href="../../pytconf.html#pytconf.enum_subset.EnumSubset.from_enum_all">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_enum_all</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">e</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">g_from_enum_all</span><span class="p">(</span><span class="n">e</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="EnumSubset.from_string"><a class="viewcode-back" href="../../pytconf.html#pytconf.enum_subset.EnumSubset.from_string">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_string</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">e</span><span class="p">,</span> <span class="n">s</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">g_from_string</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="g_from_enum_all"><a class="viewcode-back" href="../../pytconf.html#pytconf.enum_subset.g_from_enum_all">[docs]</a><span class="k">def</span> <span class="nf">g_from_enum_all</span><span class="p">(</span><span class="n">e</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">ExtendedEnum</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">EnumSubset</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">EnumSubset</span><span class="p">(</span><span class="n">enum_type</span><span class="o">=</span><span class="n">e</span><span class="p">,</span> <span class="n">list_of_values</span><span class="o">=</span><span class="n">e</span><span class="o">.</span><span class="n">get_list_of_all_values</span><span class="p">(),)</span></div>
+
+
+<div class="viewcode-block" id="g_from_string"><a class="viewcode-back" href="../../pytconf.html#pytconf.enum_subset.g_from_string">[docs]</a><span class="k">def</span> <span class="nf">g_from_string</span><span class="p">(</span><span class="n">e</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">Enum</span><span class="p">],</span> <span class="n">s</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">EnumSubset</span><span class="p">:</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">EnumSubset</span><span class="p">(</span><span class="n">enum_type</span><span class="o">=</span><span class="n">e</span><span class="p">,</span> <span class="n">list_of_values</span><span class="o">=</span><span class="p">[])</span>
+    <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">s</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">):</span>
+        <span class="n">v</span> <span class="o">=</span> <span class="n">str_to_enum_value</span><span class="p">(</span><span class="n">s</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">e</span><span class="o">=</span><span class="n">e</span><span class="p">)</span>
+        <span class="n">r</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">r</span></div>
 
 
 <div class="viewcode-block" id="enum_subset_to_str"><a class="viewcode-back" href="../../pytconf.html#pytconf.enum_subset.enum_subset_to_str">[docs]</a><span class="k">def</span> <span class="nf">enum_subset_to_str</span><span class="p">(</span><span class="n">e</span><span class="p">:</span> <span class="n">EnumSubset</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
@@ -129,7 +137,7 @@
       &copy;2017, Mark Veltzer.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.3</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.1.0</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
     </div>
