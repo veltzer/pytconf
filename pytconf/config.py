@@ -1,4 +1,5 @@
 import itertools
+import json
 import logging
 import os
 import sys
@@ -253,6 +254,16 @@ class PytconfConf:
                     if param.default is not NO_DEFAULT:
                         setattr(config, attribute, param.default)
 
+    def read_flags_from_config(self) -> Dict[str, str]:
+        file_name = os.path.expanduser("~/.config/{}.json".format(self.app_name))
+        if os.path.isfile(file_name):
+            with open(file_name, "rt") as json_file:
+                flags = json.load(json_file)
+                assert type(flags) is Dict
+            return flags
+        else:
+            return dict()
+
     def config_arg_parse_and_launch(
         self, args: Union[List[str], None] = None, launch=True
     ) -> None:
@@ -267,8 +278,8 @@ class PytconfConf:
         else:
             self.app_name = "UNKNOWN APP NAME"
 
-        # name of arg and it's value
-        flags: Dict[str, str] = dict()
+        # get initial set of flags
+        flags = self.read_flags_from_config()
         special_flags = set()
         errors = ErrorsCollector()
         self.free_args = []
