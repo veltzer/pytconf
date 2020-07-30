@@ -1,6 +1,5 @@
 import itertools
 import json
-import logging
 import os
 import sys
 from collections import defaultdict
@@ -18,6 +17,7 @@ from pytconf.color_utils import (
 )
 from pytconf.errors_collector import ErrorsCollector
 from pytconf.param import Param, NO_DEFAULT
+from pytconf.utils import get_logger
 
 PARAMS_ATTRIBUTE = "_params"
 DEFAULT_GROUP_NAME: str = "default"
@@ -254,35 +254,45 @@ class PytconfConf:
                     if param.default is not NO_DEFAULT:
                         setattr(config, attribute, param.default)
 
-    def read_flags_from_config(self) -> Dict[str, str]:
-        file_name = os.path.expanduser("~/.config/{}.json".format(self.app_name))
+    @staticmethod
+    def read_flags_from_config(file_name: str, flags: Dict[str, str]) -> None:
         if os.path.isfile(file_name):
             with open(file_name, "rt") as json_file:
-                flags = json.load(json_file)
-                assert type(flags) is Dict
-            return flags
-        else:
-            return dict()
+                new_flags: Dict[str, str] = json.load(json_file)
+                assert type(flags) is dict
+            for k, v in new_flags.items():
+                flags[k] = v
 
     def config_arg_parse_and_launch(
-        self, args: Union[List[str], None] = None, launch=True
+        self, args: Union[List[str], None] = None, launch=True, app_name=None,
     ) -> None:
         # if we are given no args then take the from sys.argv
         if args is None:
             args = sys.argv
 
+        # set app name
+        if app_name is None:
+            if args:
+                self.app_name = os.path.basename(args[0])
+            else:
+                self.app_name = "UNKNOWN APP NAME"
+        else:
+            self.app_name = app_name
+
         # we don't need the first argument which is the script path
         if args:
-            self.app_name = os.path.basename(args[0])
             args = args[1:]
-        else:
-            self.app_name = "UNKNOWN APP NAME"
 
-        # get initial set of flags
-        flags = self.read_flags_from_config()
+        flags: Dict[str, str] = dict()
         special_flags = set()
         errors = ErrorsCollector()
         self.free_args = []
+
+        # read config files
+        system_file_name = "/etc/{}.json".format(self.app_name)
+        self.read_flags_from_config(file_name=system_file_name, flags=flags)
+        user_file_name = os.path.expanduser("~/.config/{}.json".format(self.app_name))
+        self.read_flags_from_config(file_name=user_file_name, flags=flags)
 
         self.parse_args(args, errors, flags, special_flags)
 
@@ -343,7 +353,7 @@ class PytconfConf:
         if show_help:
             if command_selected:
                 self.show_help_for_function(
-                    command_selected, show_help_full, show_help_suggest
+                    command_selected, show_help_full, show_help_suggest,
                 )
             else:
                 self.show_help()
@@ -448,12 +458,12 @@ def get_pytconf():
     return _pytconf
 
 
-def config_arg_parse_and_launch(launch=True, args=None) -> None:
+def config_arg_parse_and_launch(launch=True, args=None, app_name=None) -> None:
     """
     This is the real API
     """
     get_pytconf().config_arg_parse_and_launch(
-        launch=launch, args=args,
+        launch=launch, args=args, app_name=app_name,
     )
 
 
@@ -484,7 +494,7 @@ def register_endpoint(
     min_free_args: Union[int, None] = None,
     max_free_args: Union[int, None] = None,
 ) -> Callable[[Any], Any]:
-    logger = logging.getLogger("pytconf")
+    logger = get_logger()
     logger.debug("registering endpoint")
 
     def identity(f):
