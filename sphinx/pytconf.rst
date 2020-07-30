@@ -28,6 +28,14 @@ pytconf.convert module
    :undoc-members:
    :show-inheritance:
 
+pytconf.data module
+-------------------
+
+.. automodule:: pytconf.data
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 pytconf.enum\_subset module
 ---------------------------
 
@@ -56,6 +64,14 @@ pytconf.param module
 --------------------
 
 .. automodule:: pytconf.param
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+pytconf.utils module
+--------------------
+
+.. automodule:: pytconf.utils
    :members:
    :undoc-members:
    :show-inheritance:
