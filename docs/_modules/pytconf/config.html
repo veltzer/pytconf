@@ -34,7 +34,6 @@
   <h1>Source code for pytconf.config</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">itertools</span>
 <span class="kn">import</span> <span class="nn">json</span>
-<span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
@@ -52,6 +51,7 @@
 <span class="p">)</span>
 <span class="kn">from</span> <span class="nn">pytconf.errors_collector</span> <span class="kn">import</span> <span class="n">ErrorsCollector</span>
 <span class="kn">from</span> <span class="nn">pytconf.param</span> <span class="kn">import</span> <span class="n">Param</span><span class="p">,</span> <span class="n">NO_DEFAULT</span>
+<span class="kn">from</span> <span class="nn">pytconf.utils</span> <span class="kn">import</span> <span class="n">get_logger</span>
 
 <span class="n">PARAMS_ATTRIBUTE</span> <span class="o">=</span> <span class="s2">&quot;_params&quot;</span>
 <span class="n">DEFAULT_GROUP_NAME</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;default&quot;</span>
@@ -288,35 +288,45 @@
                     <span class="k">if</span> <span class="n">param</span><span class="o">.</span><span class="n">default</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">NO_DEFAULT</span><span class="p">:</span>
                         <span class="nb">setattr</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">attribute</span><span class="p">,</span> <span class="n">param</span><span class="o">.</span><span class="n">default</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="PytconfConf.read_flags_from_config"><a class="viewcode-back" href="../../pytconf.html#pytconf.config.PytconfConf.read_flags_from_config">[docs]</a>    <span class="k">def</span> <span class="nf">read_flags_from_config</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
-        <span class="n">file_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="s2">&quot;~/.config/</span><span class="si">{}</span><span class="s2">.json&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">app_name</span><span class="p">))</span>
+<div class="viewcode-block" id="PytconfConf.read_flags_from_config"><a class="viewcode-back" href="../../pytconf.html#pytconf.config.PytconfConf.read_flags_from_config">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">read_flags_from_config</span><span class="p">(</span><span class="n">file_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">flags</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">file_name</span><span class="p">):</span>
             <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="s2">&quot;rt&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">json_file</span><span class="p">:</span>
-                <span class="n">flags</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">json_file</span><span class="p">)</span>
-                <span class="k">assert</span> <span class="nb">type</span><span class="p">(</span><span class="n">flags</span><span class="p">)</span> <span class="ow">is</span> <span class="n">Dict</span>
-            <span class="k">return</span> <span class="n">flags</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="nb">dict</span><span class="p">()</span></div>
+                <span class="n">new_flags</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">json_file</span><span class="p">)</span>
+                <span class="k">assert</span> <span class="nb">type</span><span class="p">(</span><span class="n">flags</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">dict</span>
+            <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">new_flags</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="n">flags</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span></div>
 
 <div class="viewcode-block" id="PytconfConf.config_arg_parse_and_launch"><a class="viewcode-back" href="../../pytconf.html#pytconf.config.PytconfConf.config_arg_parse_and_launch">[docs]</a>    <span class="k">def</span> <span class="nf">config_arg_parse_and_launch</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">args</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">launch</span><span class="o">=</span><span class="kc">True</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">args</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">launch</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">app_name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="c1"># if we are given no args then take the from sys.argv</span>
         <span class="k">if</span> <span class="n">args</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">args</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span>
 
+        <span class="c1"># set app name</span>
+        <span class="k">if</span> <span class="n">app_name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">args</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">app_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">app_name</span> <span class="o">=</span> <span class="s2">&quot;UNKNOWN APP NAME&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">app_name</span> <span class="o">=</span> <span class="n">app_name</span>
+
         <span class="c1"># we don&#39;t need the first argument which is the script path</span>
         <span class="k">if</span> <span class="n">args</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">app_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
             <span class="n">args</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">app_name</span> <span class="o">=</span> <span class="s2">&quot;UNKNOWN APP NAME&quot;</span>
 
-        <span class="c1"># get initial set of flags</span>
-        <span class="n">flags</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">read_flags_from_config</span><span class="p">()</span>
+        <span class="n">flags</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
         <span class="n">special_flags</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
         <span class="n">errors</span> <span class="o">=</span> <span class="n">ErrorsCollector</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">free_args</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="c1"># read config files</span>
+        <span class="n">system_file_name</span> <span class="o">=</span> <span class="s2">&quot;/etc/</span><span class="si">{}</span><span class="s2">.json&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">app_name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">read_flags_from_config</span><span class="p">(</span><span class="n">file_name</span><span class="o">=</span><span class="n">system_file_name</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="n">flags</span><span class="p">)</span>
+        <span class="n">user_file_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="s2">&quot;~/.config/</span><span class="si">{}</span><span class="s2">.json&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">app_name</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">read_flags_from_config</span><span class="p">(</span><span class="n">file_name</span><span class="o">=</span><span class="n">user_file_name</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="n">flags</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">parse_args</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">errors</span><span class="p">,</span> <span class="n">flags</span><span class="p">,</span> <span class="n">special_flags</span><span class="p">)</span>
 
@@ -377,7 +387,7 @@
         <span class="k">if</span> <span class="n">show_help</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">command_selected</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">show_help_for_function</span><span class="p">(</span>
-                    <span class="n">command_selected</span><span class="p">,</span> <span class="n">show_help_full</span><span class="p">,</span> <span class="n">show_help_suggest</span>
+                    <span class="n">command_selected</span><span class="p">,</span> <span class="n">show_help_full</span><span class="p">,</span> <span class="n">show_help_suggest</span><span class="p">,</span>
                 <span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">show_help</span><span class="p">()</span>
@@ -482,12 +492,12 @@
     <span class="k">return</span> <span class="n">_pytconf</span></div>
 
 
-<div class="viewcode-block" id="config_arg_parse_and_launch"><a class="viewcode-back" href="../../pytconf.html#pytconf.config.config_arg_parse_and_launch">[docs]</a><span class="k">def</span> <span class="nf">config_arg_parse_and_launch</span><span class="p">(</span><span class="n">launch</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="viewcode-block" id="config_arg_parse_and_launch"><a class="viewcode-back" href="../../pytconf.html#pytconf.config.config_arg_parse_and_launch">[docs]</a><span class="k">def</span> <span class="nf">config_arg_parse_and_launch</span><span class="p">(</span><span class="n">launch</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">app_name</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This is the real API</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">get_pytconf</span><span class="p">()</span><span class="o">.</span><span class="n">config_arg_parse_and_launch</span><span class="p">(</span>
-        <span class="n">launch</span><span class="o">=</span><span class="n">launch</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="n">args</span><span class="p">,</span>
+        <span class="n">launch</span><span class="o">=</span><span class="n">launch</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="n">args</span><span class="p">,</span> <span class="n">app_name</span><span class="o">=</span><span class="n">app_name</span><span class="p">,</span>
     <span class="p">)</span></div>
 
 
@@ -518,7 +528,7 @@
     <span class="n">min_free_args</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">max_free_args</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">Any</span><span class="p">],</span> <span class="n">Any</span><span class="p">]:</span>
-    <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s2">&quot;pytconf&quot;</span><span class="p">)</span>
+    <span class="n">logger</span> <span class="o">=</span> <span class="n">get_logger</span><span class="p">()</span>
     <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;registering endpoint&quot;</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">identity</span><span class="p">(</span><span class="n">f</span><span class="p">):</span>
