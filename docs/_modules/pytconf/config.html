@@ -495,7 +495,7 @@
                 <span class="k">if</span> <span class="n">param</span><span class="o">.</span><span class="n">default</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">NO_DEFAULT</span><span class="p">:</span>
                     <span class="n">values</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">default</span>
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s2">&quot;wt&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-            <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span></div>
+            <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="PytconfConf.write_config_file_json_user"><a class="viewcode-back" href="../../pytconf.html#pytconf.config.PytconfConf.write_config_file_json_user">[docs]</a>    <span class="k">def</span> <span class="nf">write_config_file_json_user</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">write_config_file_json</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_user_config</span><span class="p">())</span></div>
@@ -586,11 +586,27 @@
 
 
 <div class="viewcode-block" id="write_config_file_json_user"><a class="viewcode-back" href="../../pytconf.html#pytconf.config.write_config_file_json_user">[docs]</a><span class="k">def</span> <span class="nf">write_config_file_json_user</span><span class="p">():</span>
-    <span class="n">get_pytconf</span><span class="p">()</span><span class="o">.</span><span class="n">write_config_file_json_user</span><span class="p">()</span></div>
+    <span class="n">filename</span> <span class="o">=</span> <span class="n">get_pytconf</span><span class="p">()</span><span class="o">.</span><span class="n">get_user_config</span><span class="p">()</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+        <span class="n">get_pytconf</span><span class="p">()</span><span class="o">.</span><span class="n">write_config_file_json_user</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="rm_config_file_json_user"><a class="viewcode-back" href="../../pytconf.html#pytconf.config.rm_config_file_json_user">[docs]</a><span class="k">def</span> <span class="nf">rm_config_file_json_user</span><span class="p">():</span>
+    <span class="n">filename</span> <span class="o">=</span> <span class="n">get_pytconf</span><span class="p">()</span><span class="o">.</span><span class="n">get_user_config</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">unlink</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="write_config_file_json_system"><a class="viewcode-back" href="../../pytconf.html#pytconf.config.write_config_file_json_system">[docs]</a><span class="k">def</span> <span class="nf">write_config_file_json_system</span><span class="p">():</span>
-    <span class="n">get_pytconf</span><span class="p">()</span><span class="o">.</span><span class="n">write_config_file_json_system</span><span class="p">()</span></div>
+    <span class="n">filename</span> <span class="o">=</span> <span class="n">get_pytconf</span><span class="p">()</span><span class="o">.</span><span class="n">get_system_config</span><span class="p">()</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+        <span class="n">get_pytconf</span><span class="p">()</span><span class="o">.</span><span class="n">write_config_file_json_system</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="rm_config_file_json_system"><a class="viewcode-back" href="../../pytconf.html#pytconf.config.rm_config_file_json_system">[docs]</a><span class="k">def</span> <span class="nf">rm_config_file_json_system</span><span class="p">():</span>
+    <span class="n">filename</span> <span class="o">=</span> <span class="n">get_pytconf</span><span class="p">()</span><span class="o">.</span><span class="n">get_system_config</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">unlink</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span></div>
 </pre></div>
 
           </div>
