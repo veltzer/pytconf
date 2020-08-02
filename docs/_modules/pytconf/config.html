@@ -297,6 +297,12 @@
             <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">new_flags</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
                 <span class="n">flags</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span></div>
 
+<div class="viewcode-block" id="PytconfConf.get_system_config"><a class="viewcode-back" href="../../pytconf.html#pytconf.config.PytconfConf.get_system_config">[docs]</a>    <span class="k">def</span> <span class="nf">get_system_config</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;/etc/</span><span class="si">{}</span><span class="s2">.json&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">app_name</span><span class="p">)</span></div>
+    
+<div class="viewcode-block" id="PytconfConf.get_user_config"><a class="viewcode-back" href="../../pytconf.html#pytconf.config.PytconfConf.get_user_config">[docs]</a>    <span class="k">def</span> <span class="nf">get_user_config</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="s2">&quot;~/.config/</span><span class="si">{}</span><span class="s2">.json&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">app_name</span><span class="p">))</span></div>
+
 <div class="viewcode-block" id="PytconfConf.config_arg_parse_and_launch"><a class="viewcode-back" href="../../pytconf.html#pytconf.config.PytconfConf.config_arg_parse_and_launch">[docs]</a>    <span class="k">def</span> <span class="nf">config_arg_parse_and_launch</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">args</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">launch</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">app_name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
@@ -323,10 +329,8 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">free_args</span> <span class="o">=</span> <span class="p">[]</span>
 
         <span class="c1"># read config files</span>
-        <span class="n">system_file_name</span> <span class="o">=</span> <span class="s2">&quot;/etc/</span><span class="si">{}</span><span class="s2">.json&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">app_name</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">read_flags_from_config</span><span class="p">(</span><span class="n">file_name</span><span class="o">=</span><span class="n">system_file_name</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="n">flags</span><span class="p">)</span>
-        <span class="n">user_file_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="s2">&quot;~/.config/</span><span class="si">{}</span><span class="s2">.json&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">app_name</span><span class="p">))</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">read_flags_from_config</span><span class="p">(</span><span class="n">file_name</span><span class="o">=</span><span class="n">user_file_name</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="n">flags</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">read_flags_from_config</span><span class="p">(</span><span class="n">file_name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">get_system_config</span><span class="p">(),</span> <span class="n">flags</span><span class="o">=</span><span class="n">flags</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">read_flags_from_config</span><span class="p">(</span><span class="n">file_name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">get_user_config</span><span class="p">(),</span> <span class="n">flags</span><span class="o">=</span><span class="n">flags</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">parse_args</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">errors</span><span class="p">,</span> <span class="n">flags</span><span class="p">,</span> <span class="n">special_flags</span><span class="p">)</span>
 
@@ -482,7 +486,22 @@
                     <span class="n">html_gen</span><span class="o">.</span><span class="n">line</span><span class="p">(</span><span class="s2">&quot;td&quot;</span><span class="p">,</span> <span class="n">param</span><span class="o">.</span><span class="n">help_string</span><span class="p">)</span>
                     <span class="n">html_gen</span><span class="o">.</span><span class="n">line</span><span class="p">(</span><span class="s2">&quot;td&quot;</span><span class="p">,</span> <span class="n">param</span><span class="o">.</span><span class="n">get_type_name</span><span class="p">())</span>
                     <span class="n">html_gen</span><span class="o">.</span><span class="n">line</span><span class="p">(</span><span class="s2">&quot;td&quot;</span><span class="p">,</span> <span class="n">default</span><span class="p">)</span>
-                    <span class="n">html_gen</span><span class="o">.</span><span class="n">line</span><span class="p">(</span><span class="s2">&quot;td&quot;</span><span class="p">,</span> <span class="n">more_help</span><span class="p">)</span></div></div>
+                    <span class="n">html_gen</span><span class="o">.</span><span class="n">line</span><span class="p">(</span><span class="s2">&quot;td&quot;</span><span class="p">,</span> <span class="n">more_help</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="PytconfConf.write_config_file_json"><a class="viewcode-back" href="../../pytconf.html#pytconf.config.PytconfConf.write_config_file_json">[docs]</a>    <span class="k">def</span> <span class="nf">write_config_file_json</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+        <span class="n">values</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">config</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_configs</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">param</span> <span class="ow">in</span> <span class="n">config</span><span class="o">.</span><span class="n">get_params</span><span class="p">()</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="k">if</span> <span class="n">param</span><span class="o">.</span><span class="n">default</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">NO_DEFAULT</span><span class="p">:</span>
+                    <span class="n">values</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">default</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s2">&quot;wt&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="PytconfConf.write_config_file_json_user"><a class="viewcode-back" href="../../pytconf.html#pytconf.config.PytconfConf.write_config_file_json_user">[docs]</a>    <span class="k">def</span> <span class="nf">write_config_file_json_user</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">write_config_file_json</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_user_config</span><span class="p">())</span></div>
+
+<div class="viewcode-block" id="PytconfConf.write_config_file_json_system"><a class="viewcode-back" href="../../pytconf.html#pytconf.config.PytconfConf.write_config_file_json_system">[docs]</a>    <span class="k">def</span> <span class="nf">write_config_file_json_system</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">write_config_file_json</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_system_config</span><span class="p">())</span></div></div>
 
 
 <span class="n">_pytconf</span> <span class="o">=</span> <span class="n">PytconfConf</span><span class="p">()</span>
@@ -564,6 +583,14 @@
     <span class="n">pt</span><span class="o">.</span><span class="n">allow_free_args</span><span class="p">[</span><span class="n">function_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">allow_free_args</span>
     <span class="n">pt</span><span class="o">.</span><span class="n">min_free_args</span><span class="p">[</span><span class="n">function_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">min_free_args</span>
     <span class="n">pt</span><span class="o">.</span><span class="n">max_free_args</span><span class="p">[</span><span class="n">function_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">max_free_args</span></div>
+
+
+<div class="viewcode-block" id="write_config_file_json_user"><a class="viewcode-back" href="../../pytconf.html#pytconf.config.write_config_file_json_user">[docs]</a><span class="k">def</span> <span class="nf">write_config_file_json_user</span><span class="p">():</span>
+    <span class="n">get_pytconf</span><span class="p">()</span><span class="o">.</span><span class="n">write_config_file_json_user</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="write_config_file_json_system"><a class="viewcode-back" href="../../pytconf.html#pytconf.config.write_config_file_json_system">[docs]</a><span class="k">def</span> <span class="nf">write_config_file_json_system</span><span class="p">():</span>
+    <span class="n">get_pytconf</span><span class="p">()</span><span class="o">.</span><span class="n">write_config_file_json_system</span><span class="p">()</span></div>
 </pre></div>
 
           </div>
