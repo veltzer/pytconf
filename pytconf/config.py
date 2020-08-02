@@ -552,7 +552,9 @@ def register_function(
 
 
 def write_config_file_json_user():
-    get_pytconf().write_config_file_json_user()
+    filename = get_pytconf().get_user_config()
+    if not os.path.isfile(filename):
+        get_pytconf().write_config_file_json_user()
 
 
 def rm_config_file_json_user():
@@ -562,7 +564,9 @@ def rm_config_file_json_user():
 
 
 def write_config_file_json_system():
-    get_pytconf().write_config_file_json_system()
+    filename = get_pytconf().get_system_config()
+    if not os.path.isfile(filename):
+        get_pytconf().write_config_file_json_system()
 
 
 def rm_config_file_json_system():
