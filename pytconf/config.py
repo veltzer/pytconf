@@ -461,7 +461,7 @@ class PytconfConf:
                 if param.default is not NO_DEFAULT:
                     values[name] = param.default
         with open(filename, "wt") as f:
-            json.dump(values, f)
+            json.dump(values, f, indent=4)
 
     def write_config_file_json_user(self):
         self.write_config_file_json(self.get_user_config())
