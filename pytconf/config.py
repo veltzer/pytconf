@@ -459,7 +459,7 @@ class PytconfConf:
         for config in self._configs:
             for name, param in config.get_params().items():
                 if param.default is not NO_DEFAULT:
-                    values[name] = param.default
+                    values[name] = param.t2s(param.default)
         with open(filename, "wt") as f:
             json.dump(values, f, indent=4)
 
