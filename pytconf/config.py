@@ -263,6 +263,12 @@ class PytconfConf:
             for k, v in new_flags.items():
                 flags[k] = v
 
+    def get_system_config(self):
+        return "/etc/{}.json".format(self.app_name)
+    
+    def get_user_config(self):
+        return os.path.expanduser("~/.config/{}.json".format(self.app_name))
+
     def config_arg_parse_and_launch(
         self, args: Union[List[str], None] = None, launch=True, app_name=None,
     ) -> None:
@@ -289,10 +295,8 @@ class PytconfConf:
         self.free_args = []
 
         # read config files
-        system_file_name = "/etc/{}.json".format(self.app_name)
-        self.read_flags_from_config(file_name=system_file_name, flags=flags)
-        user_file_name = os.path.expanduser("~/.config/{}.json".format(self.app_name))
-        self.read_flags_from_config(file_name=user_file_name, flags=flags)
+        self.read_flags_from_config(file_name=self.get_system_config(), flags=flags)
+        self.read_flags_from_config(file_name=self.get_user_config(), flags=flags)
 
         self.parse_args(args, errors, flags, special_flags)
 
@@ -450,6 +454,21 @@ class PytconfConf:
                     html_gen.line("td", default)
                     html_gen.line("td", more_help)
 
+    def write_config_file_json(self, filename):
+        values: Dict[str, str] = dict()
+        for config in self._configs:
+            for name, param in config.get_params().items():
+                if param.default is not NO_DEFAULT:
+                    values[name] = param.default
+        with open(filename, "wt") as f:
+            json.dump(values, f)
+
+    def write_config_file_json_user(self):
+        self.write_config_file_json(self.get_user_config())
+
+    def write_config_file_json_system(self):
+        self.write_config_file_json(self.get_system_config())
+
 
 _pytconf = PytconfConf()
 
@@ -530,3 +549,11 @@ def register_function(
     pt.allow_free_args[function_name] = allow_free_args
     pt.min_free_args[function_name] = min_free_args
     pt.max_free_args[function_name] = max_free_args
+
+
+def write_config_file_json_user():
+    get_pytconf().write_config_file_json_user()
+
+
+def write_config_file_json_system():
+    get_pytconf().write_config_file_json_system()
