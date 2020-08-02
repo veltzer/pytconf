@@ -555,5 +555,17 @@ def write_config_file_json_user():
     get_pytconf().write_config_file_json_user()
 
 
+def rm_config_file_json_user():
+    filename = get_pytconf().get_user_config()
+    if os.path.isfile(filename):
+        os.unlink(filename)
+
+
 def write_config_file_json_system():
     get_pytconf().write_config_file_json_system()
+
+
+def rm_config_file_json_system():
+    filename = get_pytconf().get_system_config()
+    if os.path.isfile(filename):
+        os.unlink(filename)

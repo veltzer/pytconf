@@ -9,4 +9,6 @@ from pytconf.config import (
     get_free_args,
     write_config_file_json_user,
     write_config_file_json_system,
+    rm_config_file_json_user,
+    rm_config_file_json_system,
 )
