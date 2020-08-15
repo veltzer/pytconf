@@ -16,7 +16,7 @@
 ![Downloads](https://pepy.tech/badge/pytconf/month)
 ![Downloads](https://pepy.tech/badge/pytconf/week)
 
-![Join the chat at https://gitter.im/veltzer/mark.veltzer](https://badges.gitter.im/Join%20Chat.svg)
+[![gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/veltzer/mark.veltzer)
 
 
 
