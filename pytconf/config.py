@@ -368,9 +368,10 @@ class PytconfConf:
             function_to_run()
 
     def parse_args(self, args, errors, flags, special_flags):
+        free_args_started = False
         while args:
             current = args.pop(0)
-            if current.startswith("--"):
+            if current.startswith("--") and not free_args_started:
                 real = current[2:]
                 number_of_equals = real.count("=")
                 if number_of_equals == 1:
@@ -390,6 +391,7 @@ class PytconfConf:
                     errors.add_error("can not parse argument [{}]".format(real))
             else:
                 self.free_args.append(current)
+                free_args_started = True
 
     def get_html(self) -> str:
         html_gen = HtmlGen()

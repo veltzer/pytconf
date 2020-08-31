@@ -402,9 +402,10 @@
             <span class="n">function_to_run</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="PytconfConf.parse_args"><a class="viewcode-back" href="../../pytconf.html#pytconf.config.PytconfConf.parse_args">[docs]</a>    <span class="k">def</span> <span class="nf">parse_args</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">errors</span><span class="p">,</span> <span class="n">flags</span><span class="p">,</span> <span class="n">special_flags</span><span class="p">):</span>
+        <span class="n">free_args_started</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="k">while</span> <span class="n">args</span><span class="p">:</span>
             <span class="n">current</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">current</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;--&quot;</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">current</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;--&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">free_args_started</span><span class="p">:</span>
                 <span class="n">real</span> <span class="o">=</span> <span class="n">current</span><span class="p">[</span><span class="mi">2</span><span class="p">:]</span>
                 <span class="n">number_of_equals</span> <span class="o">=</span> <span class="n">real</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="s2">&quot;=&quot;</span><span class="p">)</span>
                 <span class="k">if</span> <span class="n">number_of_equals</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
@@ -423,7 +424,8 @@
                 <span class="k">else</span><span class="p">:</span>
                     <span class="n">errors</span><span class="o">.</span><span class="n">add_error</span><span class="p">(</span><span class="s2">&quot;can not parse argument [</span><span class="si">{}</span><span class="s2">]&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">real</span><span class="p">))</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">free_args</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">current</span><span class="p">)</span></div>
+                <span class="bp">self</span><span class="o">.</span><span class="n">free_args</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">current</span><span class="p">)</span>
+                <span class="n">free_args_started</span> <span class="o">=</span> <span class="kc">True</span></div>
 
 <div class="viewcode-block" id="PytconfConf.get_html"><a class="viewcode-back" href="../../pytconf.html#pytconf.config.PytconfConf.get_html">[docs]</a>    <span class="k">def</span> <span class="nf">get_html</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="n">html_gen</span> <span class="o">=</span> <span class="n">HtmlGen</span><span class="p">()</span>
