@@ -298,6 +298,18 @@ class PytconfConf:
         self.read_flags_from_config(file_name=self.get_system_config(), flags=flags)
         self.read_flags_from_config(file_name=self.get_user_config(), flags=flags)
 
+        # get the command (it's the first argument if it doesnt start with --
+        # if there are free args then the command is the first of these
+        # find the selected command
+        command_selected = None
+        if not args[0].startswith("--"):
+            command = args.pop(0)
+            if command in self.function_name_to_callable:
+                command_selected = command
+            else:
+                errors.add_error("unknown command [{}]".format(command))
+
+        # now parse the args
         self.parse_args(args, errors, flags, special_flags)
 
         # handle help flags
@@ -314,16 +326,6 @@ class PytconfConf:
             show_help = True
             show_help_full = True
 
-        # find the selected command
-        command_selected = None
-
-        # if there are free args then the command is the first of these
-        if len(self.free_args) >= 1:
-            command = self.free_args.pop(0)
-            if command in self.function_name_to_callable:
-                command_selected = command
-            else:
-                errors.add_error("unknown command [{}]".format(command))
 
         # if there are no free args and just one function then this is it
         if len(self.function_name_to_callable) == 1:
@@ -342,7 +344,7 @@ class PytconfConf:
                         errors.add_error("too many free args - {} required".format(max_args))
             else:
                 if len(self.free_args) > 0:
-                    errors.add_error("free args are not allowed")
+                    errors.add_error(f"free args are not allowed [{self.free_args}]")
 
         if command_selected is None:
             if not show_help:
