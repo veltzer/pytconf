@@ -131,7 +131,7 @@ class PytconfConf:
         for attribute in config.get_attributes():
             if attribute in self.attribute_to_config:
                 raise ValueError(
-                    "pytconf: attribute [{}] appears more than once".format(attribute)
+                    f"pytconf: attribute [{attribute}] appears more than once"
                 )
             self.attribute_to_config[attribute] = config
 
@@ -146,11 +146,11 @@ class PytconfConf:
         doc = get_first_line(self.main_function.__doc__)
         if doc is not None:
             return doc
-        # doc = "\n".join(map(lambda x: "  {}".format(x.strip()), doc.split("\n")))
+        # doc = "\n".join(map(lambda x: f"  {x.strip()}", doc.split("\n")))
         return None
 
     def show_help(self) -> None:
-        print("Usage: {} [OPTIONS] COMMAND [ARGS]...".format(self.app_name))
+        print(f"Usage: {self.app_name} [OPTIONS] COMMAND [ARGS]...")
         main_doc = self.get_main_description()
         if main_doc is not None:
             print_highlight(f"\n  {main_doc}")
@@ -163,13 +163,13 @@ class PytconfConf:
         for function_group in self.function_group_list:
             if not single_group:
                 description = self.function_group_descriptions[function_group]
-                print("  {}: {}".format(function_group, description))
+                print(f"  {function_group}: {description}")
             for name in sorted(self.function_group_names[function_group]):
                 function_doc = self.get_function_description(name)
                 if function_doc is None:
-                    print_highlight(f"    {name}")
+                    print_highlight(f"  {name}")
                 else:
-                    print(f"    {color_hi(name)}: {function_doc}")
+                    print(f"  {color_hi(name)}: {function_doc}")
             print()
 
     def get_function_description(self, name: str):
@@ -205,7 +205,7 @@ class PytconfConf:
             return
         doc = get_first_line(config.__doc__)
         if doc is not None:
-            print_title("  {}".format(doc))
+            print_title(f"  {doc}")
         else:
             print_title("  Undocumented parameter set")
         for name, param in config.get_params().items():
@@ -213,11 +213,7 @@ class PytconfConf:
                 default = color_warn("MANDATORY")
             else:
                 default = color_ok(param.t2s(param.default))
-            print(
-                "    {} [{}]: {} [{}]".format(
-                    color_hi(name), param.get_type_name(), param.help_string, default,
-                )
-            )
+            print(f"    {color_hi(name)} [{param.get_type_name()}]: {param.help_string} [{default}]")
             more_help = param.more_help()
             if more_help is not None:
                 print(f"      {more_help}")
@@ -248,7 +244,7 @@ class PytconfConf:
                 v = param.s2t(value)
             setattr(config, flag_raw, v)
         if unknown_flags:
-            errors.add_error("unknown flags [{}]".format(",".join(unknown_flags)))
+            errors.add_error(f"unknown flags [{','.join(unknown_flags)}]")
 
         # check for missing parameters
         missing_parameters = []
@@ -260,7 +256,7 @@ class PytconfConf:
                     missing_parameters.append(attribute)
         if missing_parameters:
             errors.add_error(
-                "missing parameters [{}]".format(",".join(missing_parameters))
+                f"missing parameters [{','.join(missing_parameters)}]"
             )
 
         # move all default values to place (this will not be needed in the new scheme)
@@ -281,10 +277,10 @@ class PytconfConf:
                 flags[k] = v
 
     def get_system_config(self):
-        return "/etc/{}.json".format(self.app_name)
+        return f"/etc/{self.app_name}.json"
     
     def get_user_config(self):
-        return os.path.expanduser("~/.config/{}.json".format(self.app_name))
+        return os.path.expanduser(f"~/.config/{self.app_name}.json")
 
     def config_arg_parse_and_launch(
         self, args: Union[List[str], None] = None, launch=True, app_name=None,
@@ -324,7 +320,7 @@ class PytconfConf:
             if command in self.function_name_to_callable:
                 command_selected = command
             else:
-                errors.add_error("unknown command [{}]".format(command))
+                errors.add_error(f"unknown command [{command}]")
 
         # now parse the args
         self.parse_args(args, errors, flags, special_flags)
@@ -353,11 +349,11 @@ class PytconfConf:
                 min_args = self.min_free_args[command_selected]
                 if min_args is not None:
                     if len(self.free_args) < min_args:
-                        errors.add_error("too few free args - {} required".format(min_args))
+                        errors.add_error(f"too few free args - {min_args} required")
                 max_args = self.max_free_args[command_selected]
                 if max_args is not None:
                     if len(self.free_args) >= max_args:
-                        errors.add_error("too many free args - {} required".format(max_args))
+                        errors.add_error(f"too many free args - {max_args} required")
             else:
                 if len(self.free_args) > 0:
                     errors.add_error(f"free args are not allowed [{self.free_args}]")
@@ -403,10 +399,10 @@ class PytconfConf:
                         special_flags.add(real)
                     else:
                         errors.add_error(
-                            "argument [{}] needs a follow-up argument".format(real)
+                            f"argument [{real}] needs a follow-up argument"
                         )
                 else:
-                    errors.add_error("can not parse argument [{}]".format(real))
+                    errors.add_error(f"can not parse argument [{real}]")
             else:
                 self.free_args.append(current)
                 free_args_started = True
