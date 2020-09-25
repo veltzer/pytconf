@@ -20,7 +20,6 @@ from pytconf.param import Param, NO_DEFAULT
 from pytconf.utils import get_logger
 
 PARAMS_ATTRIBUTE = "_params"
-DEFAULT_GROUP_NAME: str = "default"
 SPECIAL_COMMANDS = {"help", "help-suggest", "help-all"}
 
 
@@ -149,9 +148,11 @@ class PytconfConf:
         print("  --help-all     Show all help")
         print()
         print("Commands:")
+        single_group = len(self.function_group_list) == 1
         for function_group in self.function_group_list:
-            description = self.function_group_descriptions[function_group]
-            print("  {}: {}".format(function_group, description))
+            if not single_group:
+                description = self.function_group_descriptions[function_group]
+                print("  {}: {}".format(function_group, description))
             for name in sorted(self.function_group_names[function_group]):
                 f = self.function_name_to_callable[name]
                 doc = get_first_line(f.__doc__)
@@ -326,7 +327,6 @@ class PytconfConf:
             show_help = True
             show_help_full = True
 
-
         # if there are no free args and just one function then this is it
         if len(self.function_name_to_callable) == 1:
             command_selected = list(self.function_name_to_callable.keys())[0]
@@ -401,17 +401,19 @@ class PytconfConf:
         assert doc is not None
         html_gen.line("h1", doc)
         html_gen.line("h2", "API specifications")
+        single_group = len(self.function_group_list) == 1
         with html_gen.tag("ul"):
             for function_group_name in self.function_group_list:
-                function_group_description = self.function_group_descriptions[
-                    function_group_name
-                ]
-                html_gen.line("li", function_group_name, title="function group name: ")
-                html_gen.line(
-                    "li",
-                    function_group_description,
-                    title="function group description: ",
-                )
+                if not single_group:
+                    function_group_description = self.function_group_descriptions[
+                        function_group_name
+                    ]
+                    html_gen.line("li", function_group_name, title="function group name: ")
+                    html_gen.line(
+                        "li",
+                        function_group_description,
+                        title="function group description: ",
+                    )
                 with html_gen.tag("li"):
                     for function_name in sorted(
                         self.function_group_names[function_group_name]
@@ -512,7 +514,7 @@ def register_main() -> Callable[[Any], Any]:
 def register_endpoint(
     configs: List[Type[Config]] = (),
     suggest_configs: List[Type[Config]] = (),
-    group: str = DEFAULT_GROUP_NAME,
+    group: Union[str, None] = None,
     allow_free_args: bool = False,
     min_free_args: Union[int, None] = None,
     max_free_args: Union[int, None] = None,
@@ -539,7 +541,7 @@ def register_function(
     f: Callable,
     configs: List[Type[Config]] = (),
     suggest_configs: List[Type[Config]] = (),
-    group: str = DEFAULT_GROUP_NAME,
+    group: Union[str, None] = None,
     allow_free_args: bool = False,
     min_free_args: Union[int, None] = None,
     max_free_args: Union[int, None] = None,

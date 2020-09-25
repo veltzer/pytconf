@@ -1,5 +1,6 @@
 - add the option to write a config file with all of the current values.
 	this option could be used by programs who want to install a config file with all the defaults.
+
 - allow, int the register_* function to have an argument which will override the name
 	of the function.
 	Why do we need that?
