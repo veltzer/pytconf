@@ -104,6 +104,7 @@ class PytconfConf:
         self.allow_free_args: Dict[str, bool] = dict()
         self.min_free_args: Dict[str, Union[int, None]] = dict()
         self.max_free_args: Dict[str, Union[int, None]] = dict()
+        self.description: Dict[str, Union[str, None]] = dict()
         self.function_group_descriptions: Dict[str, str] = dict()
         self.function_group_list: List[Union[str, None]] = [None]
         self.attribute_to_config: Dict[str, Type[Config]] = dict()
@@ -152,41 +153,43 @@ class PytconfConf:
         print("Usage: {} [OPTIONS] COMMAND [ARGS]...".format(self.app_name))
         main_doc = self.get_main_description()
         if main_doc is not None:
-            print()
             print_highlight(f"\n  {main_doc}")
-        print()
-        print("Options:")
+        print("\nOptions:")
         print("  --help         Show mandatory help")
         print("  --help-suggest Show mandatory+suggestions help")
         print("  --help-all     Show all help")
-        print()
-        print("Commands:")
+        print("\nCommands:")
         single_group = len(self.function_group_list) == 1
         for function_group in self.function_group_list:
             if not single_group:
                 description = self.function_group_descriptions[function_group]
                 print("  {}: {}".format(function_group, description))
             for name in sorted(self.function_group_names[function_group]):
-                f = self.function_name_to_callable[name]
-                doc = get_first_line(f.__doc__)
-                if doc is None:
-                    print_highlight("    {}".format(name))
+                function_doc = self.get_function_description(name)
+                if function_doc is None:
+                    print_highlight(f"    {name}")
                 else:
-                    print("    {}: {}".format(color_hi(name), doc))
+                    print(f"    {color_hi(name)}: {function_doc}")
             print()
+
+    def get_function_description(self, name: str):
+        description = self.description[name]
+        if description is not None:
+            return description
+        f = self.function_name_to_callable[name]
+        doc = get_first_line(f.__doc__)
+        if doc is not None:
+            return doc
+        return None
 
     def show_help_for_function(
         self, function_name: str, show_help_full: bool, show_help_suggest: bool
     ) -> None:
-        print("Usage: {} {} [OPTIONS] [ARGS]...".format(self.app_name, function_name,))
-        function_selected = self.function_name_to_callable[function_name]
-        doc = get_first_line(function_selected.__doc__)
-        if doc is not None:
-            print()
-            print_highlight("  {}".format(doc))
-        print()
-        print("Options:")
-        print()
+        print(f"Usage: {self.app_name} {function_name} [OPTIONS] [ARGS]...")
+        function_doc = self.get_function_description(function_name)
+        if function_doc is not None:
+            print_highlight(f"\n  {function_doc}")
+        print("\nOptions:\n")
         for config in self.function_name_to_configs[function_name]:
             self.show_help_for_config(config)
         if show_help_suggest:
@@ -217,7 +220,7 @@ class PytconfConf:
             )
             more_help = param.more_help()
             if more_help is not None:
-                print("      {}".format(more_help))
+                print(f"      {more_help}")
         print()
 
     def process_flags(
@@ -534,6 +537,7 @@ def register_endpoint(
     allow_free_args: bool = False,
     min_free_args: Union[int, None] = None,
     max_free_args: Union[int, None] = None,
+    description: Union[str, None] = None,
 ) -> Callable[[Any], Any]:
     logger = get_logger()
     logger.debug("registering endpoint")
@@ -547,6 +551,7 @@ def register_endpoint(
             allow_free_args=allow_free_args,
             min_free_args=min_free_args,
             max_free_args=max_free_args,
+            description=description,
         )
         return f
 
@@ -561,6 +566,7 @@ def register_function(
     allow_free_args: bool = False,
     min_free_args: Union[int, None] = None,
     max_free_args: Union[int, None] = None,
+    description: Union[str, None] = None,
 ) -> None:
     function_name = f.__name__
     pt = get_pytconf()
@@ -571,6 +577,7 @@ def register_function(
     pt.allow_free_args[function_name] = allow_free_args
     pt.min_free_args[function_name] = min_free_args
     pt.max_free_args[function_name] = max_free_args
+    pt.description[function_name] = description
 
 
 def write_config_file_json_user():
