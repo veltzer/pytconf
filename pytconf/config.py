@@ -99,12 +99,12 @@ class PytconfConf:
         self.function_name_to_configs: Dict[str, List[Type[Config]]] = dict()
         self.function_name_to_suggest_configs: Dict[str, List[Type[Config]]] = dict()
         self.function_name_to_callable: Dict[str, Callable] = dict()
-        self.function_group_names: Dict[str, Set[str]] = defaultdict(set)
+        self.function_group_names: Dict[Union[str, None], Set[str]] = defaultdict(set)
         self.allow_free_args: Dict[str, bool] = dict()
         self.min_free_args: Dict[str, Union[int, None]] = dict()
         self.max_free_args: Dict[str, Union[int, None]] = dict()
         self.function_group_descriptions: Dict[str, str] = dict()
-        self.function_group_list = []
+        self.function_group_list: List[Union[str, None]] = [None]
         self.attribute_to_config: Dict[str, Type[Config]] = dict()
         self.free_args: List[str] = []
         self.app_name: Union[str, None] = None
