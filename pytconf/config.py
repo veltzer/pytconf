@@ -96,6 +96,7 @@ class PytconfConf:
         self._configs = set()
         self._config_names = set()
         self.main_function = None
+        self.main_description = None
         self.function_name_to_configs: Dict[str, List[Type[Config]]] = dict()
         self.function_name_to_suggest_configs: Dict[str, List[Type[Config]]] = dict()
         self.function_name_to_callable: Dict[str, Callable] = dict()
@@ -109,8 +110,12 @@ class PytconfConf:
         self.free_args: List[str] = []
         self.app_name: Union[str, None] = None
 
-    def register_main(self, f):
-        self.main_function = f
+    def register_main(self,
+                      main_function: Callable,
+                      main_description: Union[str, None] = None,
+                      ):
+        self.main_function = main_function
+        self.main_description = main_description
 
     def register_config(self, config: Type[Config], name):
         """
@@ -134,13 +139,21 @@ class PytconfConf:
         for error in errors.errors:
             print_error(error)
 
-    def show_help(self) -> None:
-        print("Usage: {} [OPTIONS] COMMAND [ARGS]...".format(self.app_name))
+    def get_main_description(self):
+        if self.main_description is not None:
+            return self.main_description
         doc = get_first_line(self.main_function.__doc__)
         if doc is not None:
+            return doc
+        # doc = "\n".join(map(lambda x: "  {}".format(x.strip()), doc.split("\n")))
+        return None
+
+    def show_help(self) -> None:
+        print("Usage: {} [OPTIONS] COMMAND [ARGS]...".format(self.app_name))
+        main_doc = self.get_main_description()
+        if main_doc is not None:
             print()
-            doc = "\n".join(map(lambda x: "  {}".format(x.strip()), doc.split("\n")))
-            print_highlight("{}".format(doc))
+            print_highlight(f"\n  {main_doc}")
         print()
         print("Options:")
         print("  --help         Show mandatory help")
@@ -397,9 +410,9 @@ class PytconfConf:
 
     def get_html(self) -> str:
         html_gen = HtmlGen()
-        doc = get_first_line(self.main_function.__doc__)
-        assert doc is not None
-        html_gen.line("h1", doc)
+        main_doc = self.get_main_description()
+        if main_doc is not None:
+            html_gen.line("h1", main_doc)
         html_gen.line("h2", "API specifications")
         single_group = len(self.function_group_list) == 1
         with html_gen.tag("ul"):
@@ -504,10 +517,13 @@ def register_function_group(
     pt.function_group_list.append(function_group_name)
 
 
-def register_main() -> Callable[[Any], Any]:
-    def identity(f):
-        get_pytconf().register_main(f)
-        return f
+def register_main(main_description: Union[str, None] = None) -> Callable[[Any], Any]:
+    def identity(main_function):
+        get_pytconf().register_main(
+            main_function=main_function,
+            main_description=main_description,
+        )
+        return main_function
     return identity
 
 
