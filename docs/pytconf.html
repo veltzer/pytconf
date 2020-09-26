@@ -81,7 +81,7 @@
 <dt id="pytconf.config.Config">
 <em class="property">class </em><code class="sig-prename descclassname">pytconf.config.</code><code class="sig-name descname">Config</code><a class="reference internal" href="_modules/pytconf/config.html#Config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.config.Config" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>base class for all configs</p>
+<p>Base class for all configs</p>
 <dl class="py method">
 <dt id="pytconf.config.Config.get_attributes">
 <em class="property">classmethod </em><code class="sig-name descname">get_attributes</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; List<span class="p">[</span>str<span class="p">]</span><a class="reference internal" href="_modules/pytconf/config.html#Config.get_attributes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.config.Config.get_attributes" title="Permalink to this definition">¶</a></dt>
@@ -109,7 +109,7 @@
 <dt id="pytconf.config.MetaConfig">
 <em class="property">class </em><code class="sig-prename descclassname">pytconf.config.</code><code class="sig-name descname">MetaConfig</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">bases</span></em>, <em class="sig-param"><span class="n">cls_dict</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytconf/config.html#MetaConfig"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.config.MetaConfig" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">type</span></code></p>
-<p>base class for all configs</p>
+<p>Meta class for all configs</p>
 </dd></dl>
 
 <dl class="py class">
@@ -118,12 +118,7 @@
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <dl class="py method">
 <dt id="pytconf.config.PytconfConf.config_arg_parse_and_launch">
-<code class="sig-name descname">config_arg_parse_and_launch</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">args</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>List<span class="p">[</span>str<span class="p">]</span><span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">launch</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">app_name</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="_modules/pytconf/config.html#PytconfConf.config_arg_parse_and_launch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.config.PytconfConf.config_arg_parse_and_launch" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt id="pytconf.config.PytconfConf.get_function_description">
-<code class="sig-name descname">get_function_description</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytconf/config.html#PytconfConf.get_function_description"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.config.PytconfConf.get_function_description" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">config_arg_parse_and_launch</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">args</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>List<span class="p">[</span>str<span class="p">]</span><span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">launch</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="_modules/pytconf/config.html#PytconfConf.config_arg_parse_and_launch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.config.PytconfConf.config_arg_parse_and_launch" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -142,11 +137,6 @@
 <dd></dd></dl>
 
 <dl class="py method">
-<dt id="pytconf.config.PytconfConf.get_main_description">
-<code class="sig-name descname">get_main_description</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytconf/config.html#PytconfConf.get_main_description"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.config.PytconfConf.get_main_description" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
 <dt id="pytconf.config.PytconfConf.get_system_config">
 <code class="sig-name descname">get_system_config</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytconf/config.html#PytconfConf.get_system_config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.config.PytconfConf.get_system_config" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -158,7 +148,7 @@
 
 <dl class="py method">
 <dt id="pytconf.config.PytconfConf.parse_args">
-<code class="sig-name descname">parse_args</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">args</span></em>, <em class="sig-param"><span class="n">errors</span></em>, <em class="sig-param"><span class="n">flags</span></em>, <em class="sig-param"><span class="n">special_flags</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytconf/config.html#PytconfConf.parse_args"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.config.PytconfConf.parse_args" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">parse_args</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">args</span></em>, <em class="sig-param"><span class="n">errors</span></em>, <em class="sig-param"><span class="n">flags</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytconf/config.html#PytconfConf.parse_args"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.config.PytconfConf.parse_args" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -191,7 +181,7 @@
 
 <dl class="py method">
 <dt id="pytconf.config.PytconfConf.register_main">
-<code class="sig-name descname">register_main</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">main_function</span><span class="p">:</span> <span class="n">Callable</span></em>, <em class="sig-param"><span class="n">main_description</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>str<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytconf/config.html#PytconfConf.register_main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.config.PytconfConf.register_main" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">register_main</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">main_function</span><span class="p">:</span> <span class="n">Callable</span></em>, <em class="sig-param"><span class="n">main_description</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytconf/config.html#PytconfConf.register_main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.config.PytconfConf.register_main" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -211,31 +201,26 @@
 
 <dl class="py method">
 <dt id="pytconf.config.PytconfConf.write_config_file_json">
-<code class="sig-name descname">write_config_file_json</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">filename</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytconf/config.html#PytconfConf.write_config_file_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.config.PytconfConf.write_config_file_json" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">write_config_file_json</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">filename</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="_modules/pytconf/config.html#PytconfConf.write_config_file_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.config.PytconfConf.write_config_file_json" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt id="pytconf.config.PytconfConf.write_config_file_json_system">
-<code class="sig-name descname">write_config_file_json_system</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytconf/config.html#PytconfConf.write_config_file_json_system"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.config.PytconfConf.write_config_file_json_system" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">write_config_file_json_system</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="_modules/pytconf/config.html#PytconfConf.write_config_file_json_system"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.config.PytconfConf.write_config_file_json_system" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt id="pytconf.config.PytconfConf.write_config_file_json_user">
-<code class="sig-name descname">write_config_file_json_user</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytconf/config.html#PytconfConf.write_config_file_json_user"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.config.PytconfConf.write_config_file_json_user" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">write_config_file_json_user</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="_modules/pytconf/config.html#PytconfConf.write_config_file_json_user"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.config.PytconfConf.write_config_file_json_user" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="py function">
 <dt id="pytconf.config.config_arg_parse_and_launch">
-<code class="sig-prename descclassname">pytconf.config.</code><code class="sig-name descname">config_arg_parse_and_launch</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">launch</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">args</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">app_name</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="_modules/pytconf/config.html#config_arg_parse_and_launch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.config.config_arg_parse_and_launch" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">pytconf.config.</code><code class="sig-name descname">config_arg_parse_and_launch</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">launch</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">args</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="_modules/pytconf/config.html#config_arg_parse_and_launch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.config.config_arg_parse_and_launch" title="Permalink to this definition">¶</a></dt>
 <dd><p>This is the real API</p>
 </dd></dl>
-
-<dl class="py function">
-<dt id="pytconf.config.get_first_line">
-<code class="sig-prename descclassname">pytconf.config.</code><code class="sig-name descname">get_first_line</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">doc</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>str<span class="p">]</span></span></em><span class="sig-paren">)</span> &#x2192; Optional<span class="p">[</span>str<span class="p">]</span><a class="reference internal" href="_modules/pytconf/config.html#get_first_line"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.config.get_first_line" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
 
 <dl class="py function">
 <dt id="pytconf.config.get_free_args">
@@ -254,7 +239,7 @@
 
 <dl class="py function">
 <dt id="pytconf.config.register_function">
-<code class="sig-prename descclassname">pytconf.config.</code><code class="sig-name descname">register_function</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">f</span><span class="p">:</span> <span class="n">Callable</span></em>, <em class="sig-param"><span class="n">configs</span><span class="p">:</span> <span class="n">List<span class="p">[</span>Type<span class="p">[</span><a class="reference internal" href="#pytconf.config.Config" title="pytconf.config.Config">pytconf.config.Config</a><span class="p">]</span><span class="p">]</span></span> <span class="o">=</span> <span class="default_value">()</span></em>, <em class="sig-param"><span class="n">suggest_configs</span><span class="p">:</span> <span class="n">List<span class="p">[</span>Type<span class="p">[</span><a class="reference internal" href="#pytconf.config.Config" title="pytconf.config.Config">pytconf.config.Config</a><span class="p">]</span><span class="p">]</span></span> <span class="o">=</span> <span class="default_value">()</span></em>, <em class="sig-param"><span class="n">group</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>str<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">allow_free_args</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">False</span></em>, <em class="sig-param"><span class="n">min_free_args</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>int<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">max_free_args</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>int<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">description</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>str<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="_modules/pytconf/config.html#register_function"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.config.register_function" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">pytconf.config.</code><code class="sig-name descname">register_function</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">f</span><span class="p">:</span> <span class="n">Callable</span></em>, <em class="sig-param"><span class="n">configs</span><span class="p">:</span> <span class="n">List<span class="p">[</span>Type<span class="p">[</span><a class="reference internal" href="#pytconf.config.Config" title="pytconf.config.Config">pytconf.config.Config</a><span class="p">]</span><span class="p">]</span></span> <span class="o">=</span> <span class="default_value">()</span></em>, <em class="sig-param"><span class="n">suggest_configs</span><span class="p">:</span> <span class="n">List<span class="p">[</span>Type<span class="p">[</span><a class="reference internal" href="#pytconf.config.Config" title="pytconf.config.Config">pytconf.config.Config</a><span class="p">]</span><span class="p">]</span></span> <span class="o">=</span> <span class="default_value">()</span></em>, <em class="sig-param"><span class="n">group</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>str<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">allow_free_args</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">False</span></em>, <em class="sig-param"><span class="n">min_free_args</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>int<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">max_free_args</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>int<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">description</span><span class="p">:</span> <span class="n">str</span> <span class="o">=</span> <span class="default_value">'No description available'</span></em><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="_modules/pytconf/config.html#register_function"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.config.register_function" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
@@ -269,22 +254,22 @@
 
 <dl class="py function">
 <dt id="pytconf.config.rm_config_file_json_system">
-<code class="sig-prename descclassname">pytconf.config.</code><code class="sig-name descname">rm_config_file_json_system</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytconf/config.html#rm_config_file_json_system"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.config.rm_config_file_json_system" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">pytconf.config.</code><code class="sig-name descname">rm_config_file_json_system</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="_modules/pytconf/config.html#rm_config_file_json_system"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.config.rm_config_file_json_system" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
 <dt id="pytconf.config.rm_config_file_json_user">
-<code class="sig-prename descclassname">pytconf.config.</code><code class="sig-name descname">rm_config_file_json_user</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytconf/config.html#rm_config_file_json_user"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.config.rm_config_file_json_user" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">pytconf.config.</code><code class="sig-name descname">rm_config_file_json_user</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="_modules/pytconf/config.html#rm_config_file_json_user"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.config.rm_config_file_json_user" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
 <dt id="pytconf.config.write_config_file_json_system">
-<code class="sig-prename descclassname">pytconf.config.</code><code class="sig-name descname">write_config_file_json_system</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytconf/config.html#write_config_file_json_system"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.config.write_config_file_json_system" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">pytconf.config.</code><code class="sig-name descname">write_config_file_json_system</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="_modules/pytconf/config.html#write_config_file_json_system"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.config.write_config_file_json_system" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
 <dt id="pytconf.config.write_config_file_json_user">
-<code class="sig-prename descclassname">pytconf.config.</code><code class="sig-name descname">write_config_file_json_user</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytconf/config.html#write_config_file_json_user"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.config.write_config_file_json_user" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">pytconf.config.</code><code class="sig-name descname">write_config_file_json_user</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="_modules/pytconf/config.html#write_config_file_json_user"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.config.write_config_file_json_user" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </div>
@@ -800,6 +785,17 @@
 <dt id="pytconf.param.Unique">
 <em class="property">class </em><code class="sig-prename descclassname">pytconf.param.</code><code class="sig-name descname">Unique</code><a class="reference internal" href="_modules/pytconf/param.html#Unique"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.param.Unique" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-pytconf.pydoc">
+<span id="pytconf-pydoc-module"></span><h2>pytconf.pydoc module<a class="headerlink" href="#module-pytconf.pydoc" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt id="pytconf.pydoc.get_first_line">
+<code class="sig-prename descclassname">pytconf.pydoc.</code><code class="sig-name descname">get_first_line</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">doc</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>str<span class="p">]</span></span></em><span class="sig-paren">)</span> &#x2192; Optional<span class="p">[</span>str<span class="p">]</span><a class="reference internal" href="_modules/pytconf/pydoc.html#get_first_line"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.pydoc.get_first_line" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get first line for a pydoc string
+:param doc: the pydoc string
+:return: the first line which is not whitespace</p>
 </dd></dl>
 
 </div>
