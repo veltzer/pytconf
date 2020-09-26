@@ -105,25 +105,33 @@ class PytconfConf:
         self.description: Dict[str, str] = dict()
 
         self.function_group_names: Dict[str, Set[str]] = defaultdict(set)
-        self.function_group_descriptions: Dict[str, str] = dict()
         self.function_group_list: List[str] = []
+        self.function_group_descriptions: Dict[str, str] = dict()
+        self.function_group_show_meta: Dict[str, bool] = dict()
+        self.function_group_show: Dict[str, bool] = dict()
 
         self.attribute_to_config: Dict[str, Type[Config]] = dict()
         self.free_args: List[str] = []
         self.app_name: str = "No application name"
+        self.version: str = "No version"
 
-    def register_main(self,
-                      main_function: Callable,
-                      main_description: str,
-                      ):
+    def register_main(
+        self,
+        main_function: Callable,
+        main_description: str,
+        app_name: str,
+        version: str,
+    ):
         self.main_function = main_function
         self.main_description = main_description
+        self.app_name = app_name
+        self.version = version
 
     def register_function(
         self,
         function: Callable,
+        description: str,
         name: str,
-        description: str = DEFAULT_FUNCTION_DESCRIPTION,
         configs: List[Type[Config]] = (),
         suggest_configs: List[Type[Config]] = (),
         group: Union[str, None] = None,
@@ -163,16 +171,23 @@ class PytconfConf:
             print_error(error)
 
     def show_help(self) -> None:
-        print(f"Usage: {self.app_name} COMMAND [ARGS]...")
-        print_highlight(f"\n  {self.main_description}\n")
-        single_group = len(self.function_group_list) == 1
+        print(f"Usage: {color_hi(self.app_name)} COMMAND [ARGS]...")
+        space = " " * 2
+        print_highlight(f"\n{space}{self.main_description}\n")
         for function_group in self.function_group_list:
-            if not single_group:
+            show = self.function_group_show[function_group]
+            if not show:
+                continue
+            show_meta = self.function_group_show_meta[function_group]
+            if show_meta:
                 description = self.function_group_descriptions[function_group]
-                print(f"  {function_group}: {description}")
+                print(f"{space}{function_group}: {description}")
+                cmd_space = space + " " * 2
+            else:
+                cmd_space = space
             for name in sorted(self.function_group_names[function_group]):
                 function_doc = self.description[name]
-                print(f"  {color_hi(name)}: {function_doc}")
+                print(f"{cmd_space}{color_hi(name)}: {function_doc}")
             print()
 
     def show_help_for_function(
@@ -274,24 +289,37 @@ class PytconfConf:
     def get_user_config(self):
         return os.path.expanduser(f"~/.config/{self.app_name}.json")
 
-    def register_function_group(self,
-                                function_group_name: str,
-                                function_group_description: str):
-        self.function_group_descriptions[function_group_name] = function_group_description
-        self.function_group_list.append(function_group_name)
+    def register_function_group(
+        self,
+        name: str,
+        description: str,
+        show_meta: bool,
+        show: bool,
+    ):
+        self.function_group_list.append(name)
+        self.function_group_descriptions[name] = description
+        self.function_group_show_meta[name] = show_meta
+        self.function_group_show[name] = show
 
     def register_defaults(self):
         self.register_function_group(
-            function_group_name=DEFAULT_FUNCTION_GROUP_NAME,
-            function_group_description=DEFAULT_FUNCTION_GROUP_DESCRIPTION,
+            name=DEFAULT_FUNCTION_GROUP_NAME,
+            description=DEFAULT_FUNCTION_GROUP_DESCRIPTION,
+            show_meta=DEFAULT_FUNCTION_GROUP_SHOW_META,
+            show=DEFAULT_FUNCTION_GROUP_SHOW,
         )
         self.register_function_group(
-            function_group_name=SPECIAL_FUNCTION_GROUP_NAME,
-            function_group_description=SPECIAL_FUNCTION_GROUP_DESCRIPTION,
+            name=SPECIAL_FUNCTION_GROUP_NAME,
+            description=SPECIAL_FUNCTION_GROUP_DESCRIPTION,
+            show_meta=SPECIAL_FUNCTION_GROUP_SHOW_META,
+            show=SPECIAL_FUNCTION_GROUP_SHOW,
         )
 
     def config_arg_parse_and_launch(
-        self, args: Union[List[str], None] = None, launch=True,
+        self,
+        args: Union[List[str], None] = None,
+        launch=True,
+        do_exit=True,
     ) -> None:
 
         self.register_defaults()
@@ -336,13 +364,19 @@ class PytconfConf:
                 if len(self.free_args) > 0:
                     errors.add_error(f"free args are not allowed [{self.free_args}]")
 
+        do_help = False
         if command_selected is None:
             errors.add_error("no command is selected")
+            do_help = True
         else:
             self.process_flags(command_selected, flags, errors)
 
         if errors.have_errors():
             self.print_errors(errors)
+            if do_help:
+                self.show_help()
+            if do_exit:
+                sys.exit(1)
             return
 
         if launch:
@@ -473,20 +507,34 @@ def get_free_args() -> List[str]:
     return get_pytconf().free_args
 
 
+# TODO: remove default values for next function when ready to force
+# TODO: change function_group_name -> name
+# TODO: change function_group_description -> description
 def register_function_group(
-    function_group_name: str, function_group_description: str
+    function_group_name: str,
+    function_group_description: str,
+    show_meta: bool = True,
+    show: bool = True,
 ) -> None:
     get_pytconf().register_function_group(
-        function_group_name=function_group_name,
-        function_group_description=function_group_description,
+        name=function_group_name,
+        description=function_group_description,
+        show_meta=show_meta,
+        show=show,
     )
 
 
-def register_main(main_description: Union[str, None] = None) -> Callable[[Any], Any]:
+def register_main(
+    main_description: str = "NO DESCRIPTION",  # TODO: remove when ready to force
+    app_name: str = "NO APP",  # TODO: remove when ready to force
+    version: str = "NO VERSION",  # TODO: remove when ready to force
+) -> Callable[[Any], Any]:
     def identity(main_function):
         get_pytconf().register_main(
             main_function=main_function,
             main_description=main_description,
+            app_name=app_name,
+            version=version,
         )
         return main_function
 
@@ -494,8 +542,8 @@ def register_main(main_description: Union[str, None] = None) -> Callable[[Any], 
 
 
 def register_endpoint(
+    description: str = "No description",  # TODO: remove default value
     name: Union[str, None] = None,
-    description: str = DEFAULT_FUNCTION_DESCRIPTION,
     configs: List[Type[Config]] = (),
     suggest_configs: List[Type[Config]] = (),
     group: str = DEFAULT_FUNCTION_GROUP_NAME,
@@ -513,8 +561,8 @@ def register_endpoint(
             function_name = name
         register_function(
             function=function,
-            name=function_name,
             description=description,
+            name=function_name,
             configs=configs,
             suggest_configs=suggest_configs,
             group=group,
@@ -529,8 +577,8 @@ def register_endpoint(
 
 def register_function(
     function: Callable,
+    description: str,
     name: str,
-    description: str = DEFAULT_FUNCTION_DESCRIPTION,
     configs: List[Type[Config]] = (),
     suggest_configs: List[Type[Config]] = (),
     group: Union[str, None] = None,
@@ -540,8 +588,8 @@ def register_function(
 ) -> None:
     get_pytconf().register_function(
         function=function,
-        name=name,
         description=description,
+        name=name,
         configs=configs,
         suggest_configs=suggest_configs,
         group=group,
