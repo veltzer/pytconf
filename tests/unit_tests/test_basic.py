@@ -41,6 +41,7 @@ class TestBasic(unittest.TestCase):
     def test_command_running(self):
         register_function(
             name="foo",
+            description="foobar",
             function=raise_value_error,
         )
         with self.assertRaises(ValueError):

@@ -1,3 +1,5 @@
+- add help, write config file, show config, bash completions and more.
+
 - add the option to write a config file with all of the current values.
 	this option could be used by programs who want to install a config file with all the defaults.
 
