@@ -39,7 +39,10 @@ class TestBasic(unittest.TestCase):
         ConfigTotal.num = save
 
     def test_command_running(self):
-        register_function(raise_value_error)
+        register_function(
+            name="foo",
+            function=raise_value_error,
+        )
         with self.assertRaises(ValueError):
             config_arg_parse_and_launch(args=["foo", "raise_value_error"])
 

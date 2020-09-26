@@ -22,6 +22,18 @@ from pytconf.utils import get_logger
 
 PARAMS_ATTRIBUTE = "_params"
 
+DEFAULT_FUNCTION_GROUP_NAME = "default"
+DEFAULT_FUNCTION_GROUP_DESCRIPTION = "default command group"
+DEFAULT_FUNCTION_GROUP_SHOW_META = False
+DEFAULT_FUNCTION_GROUP_SHOW = True
+
+SPECIAL_FUNCTION_GROUP_NAME = "special"
+SPECIAL_FUNCTION_GROUP_DESCRIPTION = "special command group"
+SPECIAL_FUNCTION_GROUP_SHOW_META = False
+SPECIAL_FUNCTION_GROUP_SHOW = False
+
+DEFAULT_FUNCTION_DESCRIPTION = "No function description available"
+
 
 class MetaConfig(type):
     """
@@ -87,13 +99,15 @@ class PytconfConf:
         self.function_name_to_configs: Dict[str, List[Type[Config]]] = dict()
         self.function_name_to_suggest_configs: Dict[str, List[Type[Config]]] = dict()
         self.function_name_to_callable: Dict[str, Callable] = dict()
-        self.function_group_names: Dict[Union[str, None], Set[str]] = defaultdict(set)
         self.allow_free_args: Dict[str, bool] = dict()
         self.min_free_args: Dict[str, Union[int, None]] = dict()
         self.max_free_args: Dict[str, Union[int, None]] = dict()
-        self.description: Dict[str, Union[str, None]] = dict()
+        self.description: Dict[str, str] = dict()
+
+        self.function_group_names: Dict[str, Set[str]] = defaultdict(set)
         self.function_group_descriptions: Dict[str, str] = dict()
-        self.function_group_list: List[Union[str, None]] = [None]
+        self.function_group_list: List[str] = []
+
         self.attribute_to_config: Dict[str, Type[Config]] = dict()
         self.free_args: List[str] = []
         self.app_name: str = "No application name"
@@ -104,6 +118,27 @@ class PytconfConf:
                       ):
         self.main_function = main_function
         self.main_description = main_description
+
+    def register_function(
+        self,
+        function: Callable,
+        name: str,
+        description: str = DEFAULT_FUNCTION_DESCRIPTION,
+        configs: List[Type[Config]] = (),
+        suggest_configs: List[Type[Config]] = (),
+        group: Union[str, None] = None,
+        allow_free_args: bool = False,
+        min_free_args: Union[int, None] = None,
+        max_free_args: Union[int, None] = None,
+    ):
+        self.description[name] = description
+        self.function_name_to_callable[name] = function
+        self.function_name_to_configs[name] = configs
+        self.function_name_to_suggest_configs[name] = suggest_configs
+        self.function_group_names[group].add(name)
+        self.allow_free_args[name] = allow_free_args
+        self.min_free_args[name] = min_free_args
+        self.max_free_args[name] = max_free_args
 
     def register_config(self, config: Type[Config], name):
         """
@@ -129,10 +164,7 @@ class PytconfConf:
 
     def show_help(self) -> None:
         print(f"Usage: {self.app_name} COMMAND [ARGS]...")
-        main_doc = self.main_description
-        if main_doc is not None:
-            print_highlight(f"\n  {main_doc}")
-        print()
+        print_highlight(f"\n  {self.main_description}\n")
         single_group = len(self.function_group_list) == 1
         for function_group in self.function_group_list:
             if not single_group:
@@ -238,13 +270,31 @@ class PytconfConf:
 
     def get_system_config(self):
         return f"/etc/{self.app_name}.json"
-    
+
     def get_user_config(self):
         return os.path.expanduser(f"~/.config/{self.app_name}.json")
+
+    def register_function_group(self,
+                                function_group_name: str,
+                                function_group_description: str):
+        self.function_group_descriptions[function_group_name] = function_group_description
+        self.function_group_list.append(function_group_name)
+
+    def register_defaults(self):
+        self.register_function_group(
+            function_group_name=DEFAULT_FUNCTION_GROUP_NAME,
+            function_group_description=DEFAULT_FUNCTION_GROUP_DESCRIPTION,
+        )
+        self.register_function_group(
+            function_group_name=SPECIAL_FUNCTION_GROUP_NAME,
+            function_group_description=SPECIAL_FUNCTION_GROUP_DESCRIPTION,
+        )
 
     def config_arg_parse_and_launch(
         self, args: Union[List[str], None] = None, launch=True,
     ) -> None:
+
+        self.register_defaults()
         if args is None:
             args = sys.argv[1:]
 
@@ -426,9 +476,10 @@ def get_free_args() -> List[str]:
 def register_function_group(
     function_group_name: str, function_group_description: str
 ) -> None:
-    pt = get_pytconf()
-    pt.function_group_descriptions[function_group_name] = function_group_description
-    pt.function_group_list.append(function_group_name)
+    get_pytconf().register_function_group(
+        function_group_name=function_group_name,
+        function_group_description=function_group_description,
+    )
 
 
 def register_main(main_description: Union[str, None] = None) -> Callable[[Any], Any]:
@@ -438,57 +489,66 @@ def register_main(main_description: Union[str, None] = None) -> Callable[[Any], 
             main_description=main_description,
         )
         return main_function
+
     return identity
 
 
 def register_endpoint(
+    name: Union[str, None] = None,
+    description: str = DEFAULT_FUNCTION_DESCRIPTION,
     configs: List[Type[Config]] = (),
     suggest_configs: List[Type[Config]] = (),
-    group: Union[str, None] = None,
+    group: str = DEFAULT_FUNCTION_GROUP_NAME,
     allow_free_args: bool = False,
     min_free_args: Union[int, None] = None,
     max_free_args: Union[int, None] = None,
-    description: Union[str, None] = None,
 ) -> Callable[[Any], Any]:
     logger = get_logger()
     logger.debug("registering endpoint")
 
-    def identity(f):
+    def identity(function):
+        if name is None:
+            function_name = function.__name__
+        else:
+            function_name = name
         register_function(
-            f,
+            function=function,
+            name=function_name,
+            description=description,
             configs=configs,
             suggest_configs=suggest_configs,
             group=group,
             allow_free_args=allow_free_args,
             min_free_args=min_free_args,
             max_free_args=max_free_args,
-            description=description,
         )
-        return f
+        return function
 
     return identity
 
 
 def register_function(
-    f: Callable,
+    function: Callable,
+    name: str,
+    description: str = DEFAULT_FUNCTION_DESCRIPTION,
     configs: List[Type[Config]] = (),
     suggest_configs: List[Type[Config]] = (),
     group: Union[str, None] = None,
     allow_free_args: bool = False,
     min_free_args: Union[int, None] = None,
     max_free_args: Union[int, None] = None,
-    description: str = "No description available",
 ) -> None:
-    function_name = f.__name__
-    pt = get_pytconf()
-    pt.function_name_to_callable[function_name] = f
-    pt.function_name_to_configs[function_name] = configs
-    pt.function_name_to_suggest_configs[function_name] = suggest_configs
-    pt.function_group_names[group].add(function_name)
-    pt.allow_free_args[function_name] = allow_free_args
-    pt.min_free_args[function_name] = min_free_args
-    pt.max_free_args[function_name] = max_free_args
-    pt.description[function_name] = description
+    get_pytconf().register_function(
+        function=function,
+        name=name,
+        description=description,
+        configs=configs,
+        suggest_configs=suggest_configs,
+        group=group,
+        allow_free_args=allow_free_args,
+        min_free_args=min_free_args,
+        max_free_args=max_free_args,
+    )
 
 
 def write_config_file_json_user() -> None:

@@ -56,6 +56,18 @@
 
 <span class="n">PARAMS_ATTRIBUTE</span> <span class="o">=</span> <span class="s2">&quot;_params&quot;</span>
 
+<span class="n">DEFAULT_FUNCTION_GROUP_NAME</span> <span class="o">=</span> <span class="s2">&quot;default&quot;</span>
+<span class="n">DEFAULT_FUNCTION_GROUP_DESCRIPTION</span> <span class="o">=</span> <span class="s2">&quot;default command group&quot;</span>
+<span class="n">DEFAULT_FUNCTION_GROUP_SHOW_META</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="n">DEFAULT_FUNCTION_GROUP_SHOW</span> <span class="o">=</span> <span class="kc">True</span>
+
+<span class="n">SPECIAL_FUNCTION_GROUP_NAME</span> <span class="o">=</span> <span class="s2">&quot;special&quot;</span>
+<span class="n">SPECIAL_FUNCTION_GROUP_DESCRIPTION</span> <span class="o">=</span> <span class="s2">&quot;special command group&quot;</span>
+<span class="n">SPECIAL_FUNCTION_GROUP_SHOW_META</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="n">SPECIAL_FUNCTION_GROUP_SHOW</span> <span class="o">=</span> <span class="kc">False</span>
+
+<span class="n">DEFAULT_FUNCTION_DESCRIPTION</span> <span class="o">=</span> <span class="s2">&quot;No function description available&quot;</span>
+
 
 <div class="viewcode-block" id="MetaConfig"><a class="viewcode-back" href="../../pytconf.html#pytconf.config.MetaConfig">[docs]</a><span class="k">class</span> <span class="nc">MetaConfig</span><span class="p">(</span><span class="nb">type</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -121,13 +133,15 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">function_name_to_configs</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">Type</span><span class="p">[</span><span class="n">Config</span><span class="p">]]]</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">function_name_to_suggest_configs</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">Type</span><span class="p">[</span><span class="n">Config</span><span class="p">]]]</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">function_name_to_callable</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Callable</span><span class="p">]</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">function_group_names</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">],</span> <span class="n">Set</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">set</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">allow_free_args</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">min_free_args</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="kc">None</span><span class="p">]]</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">max_free_args</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="kc">None</span><span class="p">]]</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">description</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">]]</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">description</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">function_group_names</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Set</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">set</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">function_group_descriptions</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">function_group_list</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">function_group_list</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">attribute_to_config</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Type</span><span class="p">[</span><span class="n">Config</span><span class="p">]]</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">free_args</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">app_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;No application name&quot;</span>
@@ -138,6 +152,27 @@
                       <span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">main_function</span> <span class="o">=</span> <span class="n">main_function</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">main_description</span> <span class="o">=</span> <span class="n">main_description</span></div>
+
+<div class="viewcode-block" id="PytconfConf.register_function"><a class="viewcode-back" href="../../pytconf.html#pytconf.config.PytconfConf.register_function">[docs]</a>    <span class="k">def</span> <span class="nf">register_function</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">function</span><span class="p">:</span> <span class="n">Callable</span><span class="p">,</span>
+        <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">description</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">DEFAULT_FUNCTION_DESCRIPTION</span><span class="p">,</span>
+        <span class="n">configs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Type</span><span class="p">[</span><span class="n">Config</span><span class="p">]]</span> <span class="o">=</span> <span class="p">(),</span>
+        <span class="n">suggest_configs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Type</span><span class="p">[</span><span class="n">Config</span><span class="p">]]</span> <span class="o">=</span> <span class="p">(),</span>
+        <span class="n">group</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">allow_free_args</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">min_free_args</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">max_free_args</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">description</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">description</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">function_name_to_callable</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">function</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">function_name_to_configs</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">configs</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">function_name_to_suggest_configs</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">suggest_configs</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">function_group_names</span><span class="p">[</span><span class="n">group</span><span class="p">]</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">allow_free_args</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">allow_free_args</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">min_free_args</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">min_free_args</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">max_free_args</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">max_free_args</span></div>
 
 <div class="viewcode-block" id="PytconfConf.register_config"><a class="viewcode-back" href="../../pytconf.html#pytconf.config.PytconfConf.register_config">[docs]</a>    <span class="k">def</span> <span class="nf">register_config</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">Config</span><span class="p">],</span> <span class="n">name</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -163,10 +198,7 @@
 
 <div class="viewcode-block" id="PytconfConf.show_help"><a class="viewcode-back" href="../../pytconf.html#pytconf.config.PytconfConf.show_help">[docs]</a>    <span class="k">def</span> <span class="nf">show_help</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Usage: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">app_name</span><span class="si">}</span><span class="s2"> COMMAND [ARGS]...&quot;</span><span class="p">)</span>
-        <span class="n">main_doc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">main_description</span>
-        <span class="k">if</span> <span class="n">main_doc</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">print_highlight</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">  </span><span class="si">{</span><span class="n">main_doc</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">()</span>
+        <span class="n">print_highlight</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">  </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">main_description</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="n">single_group</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">function_group_list</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span>
         <span class="k">for</span> <span class="n">function_group</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">function_group_list</span><span class="p">:</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">single_group</span><span class="p">:</span>
@@ -272,13 +304,31 @@
 
 <div class="viewcode-block" id="PytconfConf.get_system_config"><a class="viewcode-back" href="../../pytconf.html#pytconf.config.PytconfConf.get_system_config">[docs]</a>    <span class="k">def</span> <span class="nf">get_system_config</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;/etc/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">app_name</span><span class="si">}</span><span class="s2">.json&quot;</span></div>
-    
+
 <div class="viewcode-block" id="PytconfConf.get_user_config"><a class="viewcode-back" href="../../pytconf.html#pytconf.config.PytconfConf.get_user_config">[docs]</a>    <span class="k">def</span> <span class="nf">get_user_config</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;~/.config/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">app_name</span><span class="si">}</span><span class="s2">.json&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="PytconfConf.register_function_group"><a class="viewcode-back" href="../../pytconf.html#pytconf.config.PytconfConf.register_function_group">[docs]</a>    <span class="k">def</span> <span class="nf">register_function_group</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                                <span class="n">function_group_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+                                <span class="n">function_group_description</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">function_group_descriptions</span><span class="p">[</span><span class="n">function_group_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">function_group_description</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">function_group_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">function_group_name</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="PytconfConf.register_defaults"><a class="viewcode-back" href="../../pytconf.html#pytconf.config.PytconfConf.register_defaults">[docs]</a>    <span class="k">def</span> <span class="nf">register_defaults</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">register_function_group</span><span class="p">(</span>
+            <span class="n">function_group_name</span><span class="o">=</span><span class="n">DEFAULT_FUNCTION_GROUP_NAME</span><span class="p">,</span>
+            <span class="n">function_group_description</span><span class="o">=</span><span class="n">DEFAULT_FUNCTION_GROUP_DESCRIPTION</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">register_function_group</span><span class="p">(</span>
+            <span class="n">function_group_name</span><span class="o">=</span><span class="n">SPECIAL_FUNCTION_GROUP_NAME</span><span class="p">,</span>
+            <span class="n">function_group_description</span><span class="o">=</span><span class="n">SPECIAL_FUNCTION_GROUP_DESCRIPTION</span><span class="p">,</span>
+        <span class="p">)</span></div>
 
 <div class="viewcode-block" id="PytconfConf.config_arg_parse_and_launch"><a class="viewcode-back" href="../../pytconf.html#pytconf.config.PytconfConf.config_arg_parse_and_launch">[docs]</a>    <span class="k">def</span> <span class="nf">config_arg_parse_and_launch</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">args</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">launch</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">register_defaults</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">args</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">args</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
 
@@ -460,9 +510,10 @@
 <div class="viewcode-block" id="register_function_group"><a class="viewcode-back" href="../../pytconf.html#pytconf.config.register_function_group">[docs]</a><span class="k">def</span> <span class="nf">register_function_group</span><span class="p">(</span>
     <span class="n">function_group_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">function_group_description</span><span class="p">:</span> <span class="nb">str</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-    <span class="n">pt</span> <span class="o">=</span> <span class="n">get_pytconf</span><span class="p">()</span>
-    <span class="n">pt</span><span class="o">.</span><span class="n">function_group_descriptions</span><span class="p">[</span><span class="n">function_group_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">function_group_description</span>
-    <span class="n">pt</span><span class="o">.</span><span class="n">function_group_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">function_group_name</span><span class="p">)</span></div>
+    <span class="n">get_pytconf</span><span class="p">()</span><span class="o">.</span><span class="n">register_function_group</span><span class="p">(</span>
+        <span class="n">function_group_name</span><span class="o">=</span><span class="n">function_group_name</span><span class="p">,</span>
+        <span class="n">function_group_description</span><span class="o">=</span><span class="n">function_group_description</span><span class="p">,</span>
+    <span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="register_main"><a class="viewcode-back" href="../../pytconf.html#pytconf.config.register_main">[docs]</a><span class="k">def</span> <span class="nf">register_main</span><span class="p">(</span><span class="n">main_description</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">Any</span><span class="p">],</span> <span class="n">Any</span><span class="p">]:</span>
@@ -472,57 +523,66 @@
             <span class="n">main_description</span><span class="o">=</span><span class="n">main_description</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="k">return</span> <span class="n">main_function</span>
+
     <span class="k">return</span> <span class="n">identity</span></div>
 
 
 <div class="viewcode-block" id="register_endpoint"><a class="viewcode-back" href="../../pytconf.html#pytconf.config.register_endpoint">[docs]</a><span class="k">def</span> <span class="nf">register_endpoint</span><span class="p">(</span>
+    <span class="n">name</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">description</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">DEFAULT_FUNCTION_DESCRIPTION</span><span class="p">,</span>
     <span class="n">configs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Type</span><span class="p">[</span><span class="n">Config</span><span class="p">]]</span> <span class="o">=</span> <span class="p">(),</span>
     <span class="n">suggest_configs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Type</span><span class="p">[</span><span class="n">Config</span><span class="p">]]</span> <span class="o">=</span> <span class="p">(),</span>
-    <span class="n">group</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">group</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">DEFAULT_FUNCTION_GROUP_NAME</span><span class="p">,</span>
     <span class="n">allow_free_args</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="n">min_free_args</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">max_free_args</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">description</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">Any</span><span class="p">],</span> <span class="n">Any</span><span class="p">]:</span>
     <span class="n">logger</span> <span class="o">=</span> <span class="n">get_logger</span><span class="p">()</span>
     <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;registering endpoint&quot;</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">identity</span><span class="p">(</span><span class="n">f</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">identity</span><span class="p">(</span><span class="n">function</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">function_name</span> <span class="o">=</span> <span class="n">function</span><span class="o">.</span><span class="vm">__name__</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">function_name</span> <span class="o">=</span> <span class="n">name</span>
         <span class="n">register_function</span><span class="p">(</span>
-            <span class="n">f</span><span class="p">,</span>
+            <span class="n">function</span><span class="o">=</span><span class="n">function</span><span class="p">,</span>
+            <span class="n">name</span><span class="o">=</span><span class="n">function_name</span><span class="p">,</span>
+            <span class="n">description</span><span class="o">=</span><span class="n">description</span><span class="p">,</span>
             <span class="n">configs</span><span class="o">=</span><span class="n">configs</span><span class="p">,</span>
             <span class="n">suggest_configs</span><span class="o">=</span><span class="n">suggest_configs</span><span class="p">,</span>
             <span class="n">group</span><span class="o">=</span><span class="n">group</span><span class="p">,</span>
             <span class="n">allow_free_args</span><span class="o">=</span><span class="n">allow_free_args</span><span class="p">,</span>
             <span class="n">min_free_args</span><span class="o">=</span><span class="n">min_free_args</span><span class="p">,</span>
             <span class="n">max_free_args</span><span class="o">=</span><span class="n">max_free_args</span><span class="p">,</span>
-            <span class="n">description</span><span class="o">=</span><span class="n">description</span><span class="p">,</span>
         <span class="p">)</span>
-        <span class="k">return</span> <span class="n">f</span>
+        <span class="k">return</span> <span class="n">function</span>
 
     <span class="k">return</span> <span class="n">identity</span></div>
 
 
 <div class="viewcode-block" id="register_function"><a class="viewcode-back" href="../../pytconf.html#pytconf.config.register_function">[docs]</a><span class="k">def</span> <span class="nf">register_function</span><span class="p">(</span>
-    <span class="n">f</span><span class="p">:</span> <span class="n">Callable</span><span class="p">,</span>
+    <span class="n">function</span><span class="p">:</span> <span class="n">Callable</span><span class="p">,</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">description</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">DEFAULT_FUNCTION_DESCRIPTION</span><span class="p">,</span>
     <span class="n">configs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Type</span><span class="p">[</span><span class="n">Config</span><span class="p">]]</span> <span class="o">=</span> <span class="p">(),</span>
     <span class="n">suggest_configs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Type</span><span class="p">[</span><span class="n">Config</span><span class="p">]]</span> <span class="o">=</span> <span class="p">(),</span>
     <span class="n">group</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">allow_free_args</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="n">min_free_args</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">max_free_args</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">description</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;No description available&quot;</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-    <span class="n">function_name</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="vm">__name__</span>
-    <span class="n">pt</span> <span class="o">=</span> <span class="n">get_pytconf</span><span class="p">()</span>
-    <span class="n">pt</span><span class="o">.</span><span class="n">function_name_to_callable</span><span class="p">[</span><span class="n">function_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">f</span>
-    <span class="n">pt</span><span class="o">.</span><span class="n">function_name_to_configs</span><span class="p">[</span><span class="n">function_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">configs</span>
-    <span class="n">pt</span><span class="o">.</span><span class="n">function_name_to_suggest_configs</span><span class="p">[</span><span class="n">function_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">suggest_configs</span>
-    <span class="n">pt</span><span class="o">.</span><span class="n">function_group_names</span><span class="p">[</span><span class="n">group</span><span class="p">]</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">function_name</span><span class="p">)</span>
-    <span class="n">pt</span><span class="o">.</span><span class="n">allow_free_args</span><span class="p">[</span><span class="n">function_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">allow_free_args</span>
-    <span class="n">pt</span><span class="o">.</span><span class="n">min_free_args</span><span class="p">[</span><span class="n">function_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">min_free_args</span>
-    <span class="n">pt</span><span class="o">.</span><span class="n">max_free_args</span><span class="p">[</span><span class="n">function_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">max_free_args</span>
-    <span class="n">pt</span><span class="o">.</span><span class="n">description</span><span class="p">[</span><span class="n">function_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">description</span></div>
+    <span class="n">get_pytconf</span><span class="p">()</span><span class="o">.</span><span class="n">register_function</span><span class="p">(</span>
+        <span class="n">function</span><span class="o">=</span><span class="n">function</span><span class="p">,</span>
+        <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=</span><span class="n">description</span><span class="p">,</span>
+        <span class="n">configs</span><span class="o">=</span><span class="n">configs</span><span class="p">,</span>
+        <span class="n">suggest_configs</span><span class="o">=</span><span class="n">suggest_configs</span><span class="p">,</span>
+        <span class="n">group</span><span class="o">=</span><span class="n">group</span><span class="p">,</span>
+        <span class="n">allow_free_args</span><span class="o">=</span><span class="n">allow_free_args</span><span class="p">,</span>
+        <span class="n">min_free_args</span><span class="o">=</span><span class="n">min_free_args</span><span class="p">,</span>
+        <span class="n">max_free_args</span><span class="o">=</span><span class="n">max_free_args</span><span class="p">,</span>
+    <span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="write_config_file_json_user"><a class="viewcode-back" href="../../pytconf.html#pytconf.config.write_config_file_json_user">[docs]</a><span class="k">def</span> <span class="nf">write_config_file_json_user</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
