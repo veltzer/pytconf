@@ -68,6 +68,14 @@ pytconf.param module
    :undoc-members:
    :show-inheritance:
 
+pytconf.pydoc module
+--------------------
+
+.. automodule:: pytconf.pydoc
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 pytconf.utils module
 --------------------
 

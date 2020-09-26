@@ -17,15 +17,15 @@ from pytconf.color_utils import (
 )
 from pytconf.errors_collector import ErrorsCollector
 from pytconf.param import Param, NO_DEFAULT
+from pytconf.pydoc import get_first_line
 from pytconf.utils import get_logger
 
 PARAMS_ATTRIBUTE = "_params"
-SPECIAL_COMMANDS = {"help", "help-suggest", "help-all"}
 
 
 class MetaConfig(type):
     """
-    base class for all configs
+    Meta class for all configs
     """
 
     def __new__(mcs, name, bases, cls_dict):
@@ -53,14 +53,12 @@ class MetaConfig(type):
 
 class Config(metaclass=MetaConfig):
     """
-        base class for all configs
+    Base class for all configs
     """
 
     @classmethod
     def get_attributes(cls: Any) -> List[str]:
         return getattr(cls, PARAMS_ATTRIBUTE).keys()
-        # return [attr for attr in dir(cls) if not callable(getattr(cls, attr))
-        #        and not attr.startswith("__")]
 
     @classmethod
     def get_params(cls: Any) -> Dict[str, Param]:
@@ -80,23 +78,12 @@ class HtmlGen:
         self.line = line
 
 
-def get_first_line(doc: Union[str, None]) -> Union[str, None]:
-    if doc is None:
-        return None
-    lines = doc.split("\n")
-    for line in lines:
-        if line == "" or line.isspace():
-            continue
-        return line.strip()
-    return None
-
-
 class PytconfConf:
     def __init__(self):
         self._configs = set()
         self._config_names = set()
-        self.main_function = None
-        self.main_description = None
+        self.main_function: Union[Callable, None] = None
+        self.main_description: str = "No application description"
         self.function_name_to_configs: Dict[str, List[Type[Config]]] = dict()
         self.function_name_to_suggest_configs: Dict[str, List[Type[Config]]] = dict()
         self.function_name_to_callable: Dict[str, Callable] = dict()
@@ -109,11 +96,11 @@ class PytconfConf:
         self.function_group_list: List[Union[str, None]] = [None]
         self.attribute_to_config: Dict[str, Type[Config]] = dict()
         self.free_args: List[str] = []
-        self.app_name: Union[str, None] = None
+        self.app_name: str = "No application name"
 
     def register_main(self,
                       main_function: Callable,
-                      main_description: Union[str, None] = None,
+                      main_description: str,
                       ):
         self.main_function = main_function
         self.main_description = main_description
@@ -140,55 +127,28 @@ class PytconfConf:
         for error in errors.errors:
             print_error(error)
 
-    def get_main_description(self):
-        if self.main_description is not None:
-            return self.main_description
-        doc = get_first_line(self.main_function.__doc__)
-        if doc is not None:
-            return doc
-        # doc = "\n".join(map(lambda x: f"  {x.strip()}", doc.split("\n")))
-        return None
-
     def show_help(self) -> None:
-        print(f"Usage: {self.app_name} [OPTIONS] COMMAND [ARGS]...")
-        main_doc = self.get_main_description()
+        print(f"Usage: {self.app_name} COMMAND [ARGS]...")
+        main_doc = self.main_description
         if main_doc is not None:
             print_highlight(f"\n  {main_doc}")
-        print("\nOptions:")
-        print("  --help         Show mandatory help")
-        print("  --help-suggest Show mandatory+suggestions help")
-        print("  --help-all     Show all help")
-        print("\nCommands:")
+        print()
         single_group = len(self.function_group_list) == 1
         for function_group in self.function_group_list:
             if not single_group:
                 description = self.function_group_descriptions[function_group]
                 print(f"  {function_group}: {description}")
             for name in sorted(self.function_group_names[function_group]):
-                function_doc = self.get_function_description(name)
-                if function_doc is None:
-                    print_highlight(f"  {name}")
-                else:
-                    print(f"  {color_hi(name)}: {function_doc}")
+                function_doc = self.description[name]
+                print(f"  {color_hi(name)}: {function_doc}")
             print()
-
-    def get_function_description(self, name: str):
-        description = self.description[name]
-        if description is not None:
-            return description
-        f = self.function_name_to_callable[name]
-        doc = get_first_line(f.__doc__)
-        if doc is not None:
-            return doc
-        return None
 
     def show_help_for_function(
         self, function_name: str, show_help_full: bool, show_help_suggest: bool
     ) -> None:
         print(f"Usage: {self.app_name} {function_name} [OPTIONS] [ARGS]...")
-        function_doc = self.get_function_description(function_name)
-        if function_doc is not None:
-            print_highlight(f"\n  {function_doc}")
+        function_doc = self.description[function_name]
+        print_highlight(f"\n  {function_doc}")
         print("\nOptions:\n")
         for config in self.function_name_to_configs[function_name]:
             self.show_help_for_config(config)
@@ -283,27 +243,12 @@ class PytconfConf:
         return os.path.expanduser(f"~/.config/{self.app_name}.json")
 
     def config_arg_parse_and_launch(
-        self, args: Union[List[str], None] = None, launch=True, app_name=None,
+        self, args: Union[List[str], None] = None, launch=True,
     ) -> None:
-        # if we are given no args then take the from sys.argv
         if args is None:
-            args = sys.argv
-
-        # set app name
-        if app_name is None:
-            if args:
-                self.app_name = os.path.basename(args[0])
-            else:
-                self.app_name = "UNKNOWN APP NAME"
-        else:
-            self.app_name = app_name
-
-        # we don't need the first argument which is the script path
-        if args:
-            args = args[1:]
+            args = sys.argv[1:]
 
         flags: Dict[str, str] = dict()
-        special_flags = set()
         errors = ErrorsCollector()
         self.free_args = []
 
@@ -311,11 +256,8 @@ class PytconfConf:
         self.read_flags_from_config(file_name=self.get_system_config(), flags=flags)
         self.read_flags_from_config(file_name=self.get_user_config(), flags=flags)
 
-        # get the command (it's the first argument if it doesnt start with --
-        # if there are free args then the command is the first of these
-        # find the selected command
         command_selected = None
-        if not args[0].startswith("--"):
+        if len(args) > 0:
             command = args.pop(0)
             if command in self.function_name_to_callable:
                 command_selected = command
@@ -323,21 +265,7 @@ class PytconfConf:
                 errors.add_error(f"unknown command [{command}]")
 
         # now parse the args
-        self.parse_args(args, errors, flags, special_flags)
-
-        # handle help flags
-        show_help = False
-        show_help_full = False
-        show_help_suggest = False
-
-        if "help" in special_flags:
-            show_help = True
-        if "help-suggest" in special_flags:
-            show_help = True
-            show_help_suggest = True
-        if "help-all" in special_flags:
-            show_help = True
-            show_help_full = True
+        self.parse_args(args, errors, flags)
 
         # if there are no free args and just one function then this is it
         if len(self.function_name_to_callable) == 1:
@@ -359,29 +287,19 @@ class PytconfConf:
                     errors.add_error(f"free args are not allowed [{self.free_args}]")
 
         if command_selected is None:
-            if not show_help:
-                errors.add_error("no command is selected")
+            errors.add_error("no command is selected")
         else:
             self.process_flags(command_selected, flags, errors)
 
-        if errors.have_errors() and not show_help:
+        if errors.have_errors():
             self.print_errors(errors)
-            return
-
-        if show_help:
-            if command_selected:
-                self.show_help_for_function(
-                    command_selected, show_help_full, show_help_suggest,
-                )
-            else:
-                self.show_help()
             return
 
         if launch:
             function_to_run = self.function_name_to_callable[command_selected]
             function_to_run()
 
-    def parse_args(self, args, errors, flags, special_flags):
+    def parse_args(self, args, errors, flags):
         free_args_started = False
         while args:
             current = args.pop(0)
@@ -395,8 +313,6 @@ class PytconfConf:
                     if args:
                         more = args.pop(0)
                         flags[real] = more
-                    elif real in SPECIAL_COMMANDS:
-                        special_flags.add(real)
                     else:
                         errors.add_error(
                             f"argument [{real}] needs a follow-up argument"
@@ -409,9 +325,8 @@ class PytconfConf:
 
     def get_html(self) -> str:
         html_gen = HtmlGen()
-        main_doc = self.get_main_description()
-        if main_doc is not None:
-            html_gen.line("h1", main_doc)
+        main_doc = self.main_description
+        html_gen.line("h1", main_doc)
         html_gen.line("h2", "API specifications")
         single_group = len(self.function_group_list) == 1
         with html_gen.tag("ul"):
@@ -472,7 +387,7 @@ class PytconfConf:
                     html_gen.line("td", default)
                     html_gen.line("td", more_help)
 
-    def write_config_file_json(self, filename):
+    def write_config_file_json(self, filename: str) -> None:
         values: Dict[str, str] = dict()
         for config in self._configs:
             for name, param in config.get_params().items():
@@ -481,10 +396,10 @@ class PytconfConf:
         with open(filename, "wt") as f:
             json.dump(values, f, indent=4)
 
-    def write_config_file_json_user(self):
+    def write_config_file_json_user(self) -> None:
         self.write_config_file_json(self.get_user_config())
 
-    def write_config_file_json_system(self):
+    def write_config_file_json_system(self) -> None:
         self.write_config_file_json(self.get_system_config())
 
 
@@ -495,12 +410,12 @@ def get_pytconf():
     return _pytconf
 
 
-def config_arg_parse_and_launch(launch=True, args=None, app_name=None) -> None:
+def config_arg_parse_and_launch(launch=True, args=None) -> None:
     """
     This is the real API
     """
     get_pytconf().config_arg_parse_and_launch(
-        launch=launch, args=args, app_name=app_name,
+        launch=launch, args=args,
     )
 
 
@@ -562,7 +477,7 @@ def register_function(
     allow_free_args: bool = False,
     min_free_args: Union[int, None] = None,
     max_free_args: Union[int, None] = None,
-    description: Union[str, None] = None,
+    description: str = "No description available",
 ) -> None:
     function_name = f.__name__
     pt = get_pytconf()
@@ -576,25 +491,25 @@ def register_function(
     pt.description[function_name] = description
 
 
-def write_config_file_json_user():
+def write_config_file_json_user() -> None:
     filename = get_pytconf().get_user_config()
     if not os.path.isfile(filename):
         get_pytconf().write_config_file_json_user()
 
 
-def rm_config_file_json_user():
+def rm_config_file_json_user() -> None:
     filename = get_pytconf().get_user_config()
     if os.path.isfile(filename):
         os.unlink(filename)
 
 
-def write_config_file_json_system():
+def write_config_file_json_system() -> None:
     filename = get_pytconf().get_system_config()
     if not os.path.isfile(filename):
         get_pytconf().write_config_file_json_system()
 
 
-def rm_config_file_json_system():
+def rm_config_file_json_system() -> None:
     filename = get_pytconf().get_system_config()
     if os.path.isfile(filename):
         os.unlink(filename)
