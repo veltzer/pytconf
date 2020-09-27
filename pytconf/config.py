@@ -345,10 +345,6 @@ class PytconfConf:
         # now parse the args
         self.parse_args(args, errors, flags)
 
-        # if there are no free args and just one function then this is it
-        if len(self.function_name_to_callable) == 1:
-            command_selected = list(self.function_name_to_callable.keys())[0]
-
         # if we have command we can check free args errors
         if command_selected is not None:
             if self.allow_free_args[command_selected]:
