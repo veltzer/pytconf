@@ -76,18 +76,18 @@ pytconf.pydoc module
    :undoc-members:
    :show-inheritance:
 
-pytconf.utils module
---------------------
+pytconf.static module
+---------------------
 
-.. automodule:: pytconf.utils
+.. automodule:: pytconf.static
    :members:
    :undoc-members:
    :show-inheritance:
 
-pytconf.version module
-----------------------
+pytconf.utils module
+--------------------
 
-.. automodule:: pytconf.version
+.. automodule:: pytconf.utils
    :members:
    :undoc-members:
    :show-inheritance:
