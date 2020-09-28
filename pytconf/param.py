@@ -111,8 +111,7 @@ class ParamFilename(Param):
     def more_help(self):
         if self.suffixes is None:
             return "no limitation on suffixes"
-        else:
-            return "allowed suffixes are {}".format(self.suffixes)
+        return "allowed suffixes are {}".format(self.suffixes)
 
 
 class ParamEnum(Param):
@@ -457,7 +456,3 @@ class ParamCreator:
             function_s2t=convert_str_to_str,
             function_t2s=convert_str_to_str,
         )
-
-
-
-

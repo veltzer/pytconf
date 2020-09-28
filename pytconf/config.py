@@ -279,7 +279,7 @@ class PytconfConf:
         if os.path.isfile(file_name):
             with open(file_name, "rt") as json_file:
                 new_flags: Dict[str, str] = json.load(json_file)
-                assert type(flags) is dict
+                assert isinstance(flags, dict)
             for k, v in new_flags.items():
                 flags[k] = v
 
