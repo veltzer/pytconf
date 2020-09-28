@@ -16,6 +16,8 @@
 ![Downloads](https://pepy.tech/badge/pytconf/month)
 ![Downloads](https://pepy.tech/badge/pytconf/week)
 
+[![Known Vulnerabilities](https://snyk.io/test/github/veltzer/pytconf/badge.svg?targetFile=requirements.txt)](https://snyk.io/test/github/veltzer/pytconf?targetFile=requirements.txt)
+
 
 
 pytconf handles configuration, config files and command line parsing
