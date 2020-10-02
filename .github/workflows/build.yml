@@ -17,8 +17,4 @@ jobs:
         run: |
           python3 -m pytest tests
       - name: lint
-        run: |
-          PACKAGES=$(dirname */__init__.py)
-          python3 -m pylint ${PACKAGES}
-          python3 -m flake8 ${PACKAGES}
-          python3 -m pyflakes ${PACKAGES}
+        run: make
