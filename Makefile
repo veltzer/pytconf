@@ -9,6 +9,8 @@
 # 	endif
 # endif
 
+
+PYTHON=python3
 ALL_PACKAGES:=$(patsubst %/,%,$(dir $(wildcard */__init__.py)))
 # We do it this way because we cannot rely on the current path (in CICD it could be anything, and we
 # dont want to run pyton as above
@@ -16,11 +18,11 @@ PACKAGE_NAME:=$(filter-out tests config,$(ALL_PACKAGES))
 
 .PHONY: all
 all:
-	@pymakehelper only_print_on_error --print_command True python -m pytest tests
-	@pymakehelper only_print_on_error --print_command True python -m pylint --reports=n --score=n $(ALL_PACKAGES) 
-	@pymakehelper only_print_on_error --print_command True python -m flake8 $(ALL_PACKAGES)
-	@pymakehelper only_print_on_error --print_command True python -m unittest discover -s .
-	@pymakehelper only_print_on_error --print_command True python -m pytest --cov=$(PACKAGE_NAME) --cov-report=xml --cov-report=html
+	@pymakehelper only_print_on_error --print_command True $(PYTHON) -m pytest tests
+	@pymakehelper only_print_on_error --print_command True $(PYTHON) -m pylint --reports=n --score=n $(ALL_PACKAGES) 
+	@pymakehelper only_print_on_error --print_command True $(PYTHON) -m flake8 $(ALL_PACKAGES)
+	@pymakehelper only_print_on_error --print_command True $(PYTHON) -m unittest discover -s .
+	@pymakehelper only_print_on_error --print_command True $(PYTHON) -m pytest --cov=$(PACKAGE_NAME) --cov-report=xml --cov-report=html
 
 .PHONY: pytest
 pytest:
@@ -40,7 +42,7 @@ flake8:
 
 .PHONY: unittest
 unittest:
-	@python -m unittest discover -s .
+	@$(PYTHON) -m unittest discover -s .
 
 .PHONY: cov
 cov:
