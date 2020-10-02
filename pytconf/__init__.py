@@ -1,5 +1,5 @@
-from pytconf.param import ParamCreator
-from pytconf.config import (
+from pytconf.param import ParamCreator # noqa F401
+from pytconf.config import ( # noqa F401
     Config,
     register_main,
     register_function,
