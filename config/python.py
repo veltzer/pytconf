@@ -12,6 +12,7 @@ run_requires = [
 ]
 
 test_requires = [
+    "pymakehelper",
     "pylint",
     "pytest",
     "pytest-cov",
