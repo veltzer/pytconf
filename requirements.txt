@@ -14,4 +14,8 @@ pyflakes
 flake8
 black
 # test requirements
+pylint
+pytest
+pytest-cov
+flake8
 pylogconf

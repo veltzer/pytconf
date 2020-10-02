@@ -30,7 +30,7 @@ class Param:
     def __init__(
         self, help_string=NO_HELP, default=NO_DEFAULT, type_name=None,
     ):
-        super(Param, self).__init__()
+        super().__init__()
         self.help_string = help_string
         self.default = default
         self.type_name = type_name
@@ -68,7 +68,7 @@ class ParamFunctions(Param):
         function_s2t_generate_from_default: Callable = None,
         function_t2s: Callable = None,
     ):
-        super(ParamFunctions, self).__init__(
+        super().__init__(
             help_string=help_string, default=default, type_name=type_name,
         )
         self.function_s2t = function_s2t
@@ -93,7 +93,7 @@ class ParamFilename(Param):
         type_name=None,
         suffixes: List[str] = None,
     ):
-        super(ParamFilename, self).__init__(
+        super().__init__(
             help_string=help_string, default=default, type_name=type_name,
         )
         self.suffixes = suffixes
@@ -118,7 +118,7 @@ class ParamEnum(Param):
     def __init__(
         self, help_string=NO_HELP, default=NO_DEFAULT, enum_type: Type[Enum] = None,
     ):
-        super(ParamEnum, self).__init__(
+        super().__init__(
             help_string=help_string, default=default, type_name="enum",
         )
         self.enum_type = enum_type
@@ -140,7 +140,7 @@ class ParamEnumSubset(Param):
     def __init__(
         self, help_string=NO_HELP, default=NO_DEFAULT, enum_type: Type[Enum] = None,
     ):
-        super(ParamEnumSubset, self).__init__(
+        super().__init__(
             help_string=help_string, default=default, type_name="enum",
         )
         self.enum_type = enum_type
@@ -165,7 +165,7 @@ class ParamChoice(Param):
     def __init__(
         self, help_string=NO_HELP, default=NO_DEFAULT, choice_list: List[str] = None
     ):
-        super(ParamChoice, self).__init__(
+        super().__init__(
             help_string=help_string, default=default, type_name="Choice",
         )
         self.choice_list = choice_list

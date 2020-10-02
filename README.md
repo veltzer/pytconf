@@ -19,6 +19,9 @@
 [![Known Vulnerabilities](https://snyk.io/test/github/veltzer/pytconf/badge.svg?targetFile=requirements.txt)](https://snyk.io/test/github/veltzer/pytconf?targetFile=requirements.txt)
 
 
+Actions
+
+![build](https://github.com/veltzer/pytconf/workflows/build/badge.svg)
 
 pytconf handles configuration, config files and command line parsing
 
