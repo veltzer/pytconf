@@ -490,12 +490,18 @@ def get_pytconf():
     return _pytconf
 
 
-def config_arg_parse_and_launch(launch=True, args=None) -> None:
+def config_arg_parse_and_launch(
+    args=None,
+    launch=True,
+    do_exit=True,
+) -> None:
     """
     This is the real API
     """
     get_pytconf().config_arg_parse_and_launch(
-        launch=launch, args=args,
+        args=args,
+        launch=launch,
+        do_exit=do_exit,
     )
 
 

@@ -524,12 +524,18 @@
     <span class="k">return</span> <span class="n">_pytconf</span></div>
 
 
-<div class="viewcode-block" id="config_arg_parse_and_launch"><a class="viewcode-back" href="../../pytconf.html#pytconf.config.config_arg_parse_and_launch">[docs]</a><span class="k">def</span> <span class="nf">config_arg_parse_and_launch</span><span class="p">(</span><span class="n">launch</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="viewcode-block" id="config_arg_parse_and_launch"><a class="viewcode-back" href="../../pytconf.html#pytconf.config.config_arg_parse_and_launch">[docs]</a><span class="k">def</span> <span class="nf">config_arg_parse_and_launch</span><span class="p">(</span>
+    <span class="n">args</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">launch</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">do_exit</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This is the real API</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">get_pytconf</span><span class="p">()</span><span class="o">.</span><span class="n">config_arg_parse_and_launch</span><span class="p">(</span>
-        <span class="n">launch</span><span class="o">=</span><span class="n">launch</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="n">args</span><span class="p">,</span>
+        <span class="n">args</span><span class="o">=</span><span class="n">args</span><span class="p">,</span>
+        <span class="n">launch</span><span class="o">=</span><span class="n">launch</span><span class="p">,</span>
+        <span class="n">do_exit</span><span class="o">=</span><span class="n">do_exit</span><span class="p">,</span>
     <span class="p">)</span></div>
 
 

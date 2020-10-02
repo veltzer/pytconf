@@ -34,7 +34,16 @@ class TestBasic(unittest.TestCase):
 
     def test_parsing(self):
         save = ConfigTotal.num
-        config_arg_parse_and_launch(launch=False, args=["foo", "--num=30"])
+        register_function(
+            name="foo",
+            description="foobar",
+            function=raise_value_error,
+        )
+        config_arg_parse_and_launch(
+            args=["foo", "--num=30"],
+            launch=False,
+            do_exit=False,
+        )
         self.assertEqual(ConfigTotal.num, 30)
         ConfigTotal.num = save
 
@@ -43,12 +52,21 @@ class TestBasic(unittest.TestCase):
             name="foo",
             description="foobar",
             function=raise_value_error,
+            allow_free_args=True,
         )
         with self.assertRaises(ValueError):
-            config_arg_parse_and_launch(args=["foo", "raise_value_error"])
+            config_arg_parse_and_launch(args=["foo"])
 
     def test_free_args(self):
+        register_function(
+            name="foo",
+            description="foobar",
+            function=raise_value_error,
+            allow_free_args=True,
+        )
         config_arg_parse_and_launch(
-            launch=False, args=["foo", "bar", "--num=30", "zoo"]
+            args=["foo", "--num=30", "zoo"],
+            launch=False,
+            do_exit=False,
         )
         self.assertListEqual(get_free_args(), ["zoo"])
