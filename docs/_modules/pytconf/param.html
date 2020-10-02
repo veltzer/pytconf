@@ -64,7 +64,7 @@
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">help_string</span><span class="o">=</span><span class="n">NO_HELP</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">NO_DEFAULT</span><span class="p">,</span> <span class="n">type_name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">Param</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">help_string</span> <span class="o">=</span> <span class="n">help_string</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">default</span> <span class="o">=</span> <span class="n">default</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">type_name</span> <span class="o">=</span> <span class="n">type_name</span>
@@ -102,7 +102,7 @@
         <span class="n">function_s2t_generate_from_default</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">function_t2s</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">ParamFunctions</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
             <span class="n">help_string</span><span class="o">=</span><span class="n">help_string</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">default</span><span class="p">,</span> <span class="n">type_name</span><span class="o">=</span><span class="n">type_name</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">function_s2t</span> <span class="o">=</span> <span class="n">function_s2t</span>
@@ -127,7 +127,7 @@
         <span class="n">type_name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">suffixes</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">ParamFilename</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
             <span class="n">help_string</span><span class="o">=</span><span class="n">help_string</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">default</span><span class="p">,</span> <span class="n">type_name</span><span class="o">=</span><span class="n">type_name</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">suffixes</span> <span class="o">=</span> <span class="n">suffixes</span>
@@ -152,7 +152,7 @@
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">help_string</span><span class="o">=</span><span class="n">NO_HELP</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">NO_DEFAULT</span><span class="p">,</span> <span class="n">enum_type</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">Enum</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">ParamEnum</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
             <span class="n">help_string</span><span class="o">=</span><span class="n">help_string</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">default</span><span class="p">,</span> <span class="n">type_name</span><span class="o">=</span><span class="s2">&quot;enum&quot;</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">enum_type</span> <span class="o">=</span> <span class="n">enum_type</span>
@@ -174,7 +174,7 @@
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">help_string</span><span class="o">=</span><span class="n">NO_HELP</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">NO_DEFAULT</span><span class="p">,</span> <span class="n">enum_type</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">Enum</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">ParamEnumSubset</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
             <span class="n">help_string</span><span class="o">=</span><span class="n">help_string</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">default</span><span class="p">,</span> <span class="n">type_name</span><span class="o">=</span><span class="s2">&quot;enum&quot;</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">enum_type</span> <span class="o">=</span> <span class="n">enum_type</span>
@@ -199,7 +199,7 @@
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">help_string</span><span class="o">=</span><span class="n">NO_HELP</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">NO_DEFAULT</span><span class="p">,</span> <span class="n">choice_list</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">ParamChoice</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
             <span class="n">help_string</span><span class="o">=</span><span class="n">help_string</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">default</span><span class="p">,</span> <span class="n">type_name</span><span class="o">=</span><span class="s2">&quot;Choice&quot;</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">choice_list</span> <span class="o">=</span> <span class="n">choice_list</span>
