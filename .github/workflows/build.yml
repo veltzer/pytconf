@@ -8,6 +8,8 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v2
+      - name: add_path
+        run: echo "/home/runner/.local/bin" >> $GITHUB_PATH
       - name: deps
         run: |
           python3 -m pip install --upgrade pip

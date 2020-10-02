@@ -1,15 +1,18 @@
-check-have-folder = $(shell if test -d $1; then echo 1; else echo 0; fi)
-
-ifeq ($(call check-have-folder,config),1)
-	PACKAGE_NAME:=$(shell python -c "import config.python; print(config.python.package_name);")
-else
-	PACKAGE_NAME:=$(notdir $(PWD))
-	ifeq ($(call check-have-folder,$(PACKAGE_NAME)),0)
-		$(error cannot deduce package name)
-	endif
-endif
+# check-have-folder = $(shell if test -d $1; then echo 1; else echo 0; fi)
+# 
+# ifeq ($(call check-have-folder,config),1)
+# 	PACKAGE_NAME:=$(shell python3 -c "import config.python; print(config.python.package_name);")
+# else
+# 	PACKAGE_NAME:=$(notdir $(PWD))
+# 	ifeq ($(call check-have-folder,$(PACKAGE_NAME)),0)
+# 		$(error cannot deduce package name)
+# 	endif
+# endif
 
 ALL_PACKAGES:=$(patsubst %/,%,$(dir $(wildcard */__init__.py)))
+# We do it this way because we cannot rely on the current path (in CICD it could be anything, and we
+# dont want to run pyton as above
+PACKAGE_NAME:=$(filter-out tests config,$(ALL_PACKAGES))
 
 .PHONY: all
 all:
