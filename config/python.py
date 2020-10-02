@@ -12,6 +12,10 @@ run_requires = [
 ]
 
 test_requires = [
+    "pylint",
+    "pytest",
+    "pytest-cov",
+    "flake8",
     "pylogconf",  # for nicer logging
 ]
 
