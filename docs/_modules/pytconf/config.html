@@ -396,7 +396,8 @@
 
         <span class="n">do_help</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="k">if</span> <span class="n">command_selected</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">errors</span><span class="o">.</span><span class="n">add_error</span><span class="p">(</span><span class="s2">&quot;no command is selected&quot;</span><span class="p">)</span>
+            <span class="n">errors</span><span class="o">.</span><span class="n">raise_error</span><span class="p">()</span>
+            <span class="c1"># errors.add_error(&quot;no command is selected&quot;)</span>
             <span class="n">do_help</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">process_flags</span><span class="p">(</span><span class="n">command_selected</span><span class="p">,</span> <span class="n">flags</span><span class="p">,</span> <span class="n">errors</span><span class="p">)</span>

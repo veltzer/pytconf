@@ -362,7 +362,8 @@ class PytconfConf:
 
         do_help = False
         if command_selected is None:
-            errors.add_error("no command is selected")
+            errors.raise_error()
+            # errors.add_error("no command is selected")
             do_help = True
         else:
             self.process_flags(command_selected, flags, errors)
