@@ -90,6 +90,10 @@ class HtmlGen:
         self.line = line
 
 
+def is_help(string: str) -> bool:
+    return string.lower()[:4] == "help"
+
+
 class PytconfConf:
     def __init__(self):
         self._configs = set()
@@ -243,7 +247,10 @@ class PytconfConf:
         unknown_flags = []
         for flag_raw, value in flags.items():
             if flag_raw not in self.attribute_to_config:
-                unknown_flags.append(flag_raw)
+                if is_help(flag_raw):
+                    errors.set_do_help()
+                else:
+                    unknown_flags.append(flag_raw)
                 continue
             config = self.attribute_to_config[flag_raw]
             param = config.get_param_by_name(flag_raw)
@@ -343,7 +350,10 @@ class PytconfConf:
             if command in self.function_name_to_callable:
                 function_selected = command
             else:
-                errors.add_error(f"unknown command [{command}]")
+                if is_help(command):
+                    errors.set_do_help()
+                else:
+                    errors.add_error(f"unknown command [{command}]")
 
         # now parse the args
         self.parse_args(args, errors, flags)
@@ -363,16 +373,15 @@ class PytconfConf:
                 if len(self.free_args) > 0:
                     errors.add_error(f"free args are not allowed [{self.free_args}]")
 
-        do_help = False
         if function_selected is None:
             errors.add_error(msg="no command is selected", error_type=True)
-            do_help = True
+            errors.set_do_help()
         else:
             self.process_flags(function_selected, flags, errors)
 
         if errors.have_errors():
             self.print_errors(errors)
-            if do_help:
+            if errors.get_do_help():
                 if function_selected:
                     self.show_help_for_function(function_name=function_selected)
                 else:
