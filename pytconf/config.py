@@ -371,7 +371,10 @@ class PytconfConf:
                         errors.add_error(f"too many free args - {max_args} required")
             else:
                 if len(self.free_args) > 0:
-                    errors.add_error(f"free args are not allowed [{self.free_args}]")
+                    if len(self.free_args) == 1 and is_help(self.free_args[0]):
+                        errors.set_do_help()
+                    else:
+                        errors.add_error(f"free args are not allowed [{self.free_args}]")
 
         if function_selected is None:
             errors.add_error(msg="no command is selected", error_type=True)
