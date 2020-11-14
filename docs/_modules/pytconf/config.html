@@ -201,7 +201,7 @@
 
 <div class="viewcode-block" id="PytconfConf.print_errors"><a class="viewcode-back" href="../../pytconf.html#pytconf.config.PytconfConf.print_errors">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">print_errors</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">errors</span><span class="p">:</span> <span class="n">ErrorsCollector</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">for</span> <span class="n">error</span> <span class="ow">in</span> <span class="n">errors</span><span class="o">.</span><span class="n">errors</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">error</span> <span class="ow">in</span> <span class="n">errors</span><span class="o">.</span><span class="n">yield_errors</span><span class="p">():</span>
             <span class="n">print_error</span><span class="p">(</span><span class="n">error</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="PytconfConf.show_help"><a class="viewcode-back" href="../../pytconf.html#pytconf.config.PytconfConf.show_help">[docs]</a>    <span class="k">def</span> <span class="nf">show_help</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
@@ -225,7 +225,10 @@
             <span class="nb">print</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="PytconfConf.show_help_for_function"><a class="viewcode-back" href="../../pytconf.html#pytconf.config.PytconfConf.show_help_for_function">[docs]</a>    <span class="k">def</span> <span class="nf">show_help_for_function</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">function_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">show_help_full</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">show_help_suggest</span><span class="p">:</span> <span class="nb">bool</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">function_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">show_help_full</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">show_help_suggest</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Usage: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">app_name</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">function_name</span><span class="si">}</span><span class="s2"> [OPTIONS] [ARGS]...&quot;</span><span class="p">)</span>
         <span class="n">function_doc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">description</span><span class="p">[</span><span class="n">function_name</span><span class="p">]</span>
@@ -261,11 +264,11 @@
         <span class="nb">print</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="PytconfConf.process_flags"><a class="viewcode-back" href="../../pytconf.html#pytconf.config.PytconfConf.process_flags">[docs]</a>    <span class="k">def</span> <span class="nf">process_flags</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">command_selected</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">flags</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span> <span class="n">errors</span><span class="p">:</span> <span class="n">ErrorsCollector</span><span class="p">,</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">function_selected</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">flags</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span> <span class="n">errors</span><span class="p">:</span> <span class="n">ErrorsCollector</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Parse the args and fill the global data</span>
-<span class="sd">        :param command_selected:</span>
+<span class="sd">        :param function_selected:</span>
 <span class="sd">        :param flags:</span>
 <span class="sd">        :param errors:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -289,7 +292,7 @@
 
         <span class="c1"># check for missing parameters</span>
         <span class="n">missing_parameters</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="n">configs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">function_name_to_configs</span><span class="p">[</span><span class="n">command_selected</span><span class="p">]</span>
+        <span class="n">configs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">function_name_to_configs</span><span class="p">[</span><span class="n">function_selected</span><span class="p">]</span>
         <span class="k">for</span> <span class="n">config</span> <span class="ow">in</span> <span class="n">configs</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">attribute</span> <span class="ow">in</span> <span class="n">config</span><span class="o">.</span><span class="n">get_attributes</span><span class="p">():</span>
                 <span class="n">value</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">attribute</span><span class="p">)</span>
@@ -368,11 +371,11 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">read_flags_from_config</span><span class="p">(</span><span class="n">file_name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">get_system_config</span><span class="p">(),</span> <span class="n">flags</span><span class="o">=</span><span class="n">flags</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">read_flags_from_config</span><span class="p">(</span><span class="n">file_name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">get_user_config</span><span class="p">(),</span> <span class="n">flags</span><span class="o">=</span><span class="n">flags</span><span class="p">)</span>
 
-        <span class="n">command_selected</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">function_selected</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
             <span class="n">command</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">command</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">function_name_to_callable</span><span class="p">:</span>
-                <span class="n">command_selected</span> <span class="o">=</span> <span class="n">command</span>
+                <span class="n">function_selected</span> <span class="o">=</span> <span class="n">command</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">errors</span><span class="o">.</span><span class="n">add_error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;unknown command [</span><span class="si">{</span><span class="n">command</span><span class="si">}</span><span class="s2">]&quot;</span><span class="p">)</span>
 
@@ -380,13 +383,13 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">parse_args</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">errors</span><span class="p">,</span> <span class="n">flags</span><span class="p">)</span>
 
         <span class="c1"># if we have command we can check free args errors</span>
-        <span class="k">if</span> <span class="n">command_selected</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">allow_free_args</span><span class="p">[</span><span class="n">command_selected</span><span class="p">]:</span>
-                <span class="n">min_args</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_free_args</span><span class="p">[</span><span class="n">command_selected</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">function_selected</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">allow_free_args</span><span class="p">[</span><span class="n">function_selected</span><span class="p">]:</span>
+                <span class="n">min_args</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_free_args</span><span class="p">[</span><span class="n">function_selected</span><span class="p">]</span>
                 <span class="k">if</span> <span class="n">min_args</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">free_args</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">min_args</span><span class="p">:</span>
                         <span class="n">errors</span><span class="o">.</span><span class="n">add_error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;too few free args - </span><span class="si">{</span><span class="n">min_args</span><span class="si">}</span><span class="s2"> required&quot;</span><span class="p">)</span>
-                <span class="n">max_args</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_free_args</span><span class="p">[</span><span class="n">command_selected</span><span class="p">]</span>
+                <span class="n">max_args</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_free_args</span><span class="p">[</span><span class="n">function_selected</span><span class="p">]</span>
                 <span class="k">if</span> <span class="n">max_args</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">free_args</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">max_args</span><span class="p">:</span>
                         <span class="n">errors</span><span class="o">.</span><span class="n">add_error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;too many free args - </span><span class="si">{</span><span class="n">max_args</span><span class="si">}</span><span class="s2"> required&quot;</span><span class="p">)</span>
@@ -395,23 +398,25 @@
                     <span class="n">errors</span><span class="o">.</span><span class="n">add_error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;free args are not allowed [</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">free_args</span><span class="si">}</span><span class="s2">]&quot;</span><span class="p">)</span>
 
         <span class="n">do_help</span> <span class="o">=</span> <span class="kc">False</span>
-        <span class="k">if</span> <span class="n">command_selected</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">errors</span><span class="o">.</span><span class="n">raise_error</span><span class="p">()</span>
-            <span class="c1"># errors.add_error(&quot;no command is selected&quot;)</span>
+        <span class="k">if</span> <span class="n">function_selected</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">errors</span><span class="o">.</span><span class="n">add_error</span><span class="p">(</span><span class="n">msg</span><span class="o">=</span><span class="s2">&quot;no command is selected&quot;</span><span class="p">,</span> <span class="n">error_type</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
             <span class="n">do_help</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">process_flags</span><span class="p">(</span><span class="n">command_selected</span><span class="p">,</span> <span class="n">flags</span><span class="p">,</span> <span class="n">errors</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">process_flags</span><span class="p">(</span><span class="n">function_selected</span><span class="p">,</span> <span class="n">flags</span><span class="p">,</span> <span class="n">errors</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">errors</span><span class="o">.</span><span class="n">have_errors</span><span class="p">():</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">print_errors</span><span class="p">(</span><span class="n">errors</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">do_help</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">show_help</span><span class="p">()</span>
+                <span class="k">if</span> <span class="n">function_selected</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">show_help_for_function</span><span class="p">(</span><span class="n">function_name</span><span class="o">=</span><span class="n">function_selected</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">show_help</span><span class="p">()</span>
             <span class="k">if</span> <span class="n">do_exit</span><span class="p">:</span>
                 <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
             <span class="k">return</span>
 
         <span class="k">if</span> <span class="n">launch</span><span class="p">:</span>
-            <span class="n">function_to_run</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">function_name_to_callable</span><span class="p">[</span><span class="n">command_selected</span><span class="p">]</span>
+            <span class="n">function_to_run</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">function_name_to_callable</span><span class="p">[</span><span class="n">function_selected</span><span class="p">]</span>
             <span class="n">function_to_run</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="PytconfConf.parse_args"><a class="viewcode-back" href="../../pytconf.html#pytconf.config.PytconfConf.parse_args">[docs]</a>    <span class="k">def</span> <span class="nf">parse_args</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">errors</span><span class="p">,</span> <span class="n">flags</span><span class="p">):</span>
