@@ -1,4 +1,4 @@
 """ version which can be consumed from within the module """
-VERSION_STR = "0.0.64"
+VERSION_STR = "0.0.65"
 DESCRIPTION = "pytconf handles configuration, config files and command line parsing"
 APP_NAME = "pytconf"
