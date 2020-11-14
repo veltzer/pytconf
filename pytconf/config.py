@@ -382,7 +382,7 @@ class PytconfConf:
         else:
             self.process_flags(function_selected, flags, errors)
 
-        if errors.have_errors():
+        if errors.have_errors() or errors.get_do_help():
             self.print_errors(errors)
             if errors.get_do_help():
                 if function_selected:
