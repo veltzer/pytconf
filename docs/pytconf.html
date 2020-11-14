@@ -248,6 +248,11 @@
 <dd></dd></dl>
 
 <dl class="py function">
+<dt id="pytconf.config.is_help">
+<code class="sig-prename descclassname">pytconf.config.</code><code class="sig-name descname">is_help</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">string</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span> &#x2192; bool<a class="reference internal" href="_modules/pytconf/config.html#is_help"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.config.is_help" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
 <dt id="pytconf.config.register_endpoint">
 <code class="sig-prename descclassname">pytconf.config.</code><code class="sig-name descname">register_endpoint</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">description</span><span class="p">:</span> <span class="n">str</span> <span class="o">=</span> <span class="default_value">'No description'</span></em>, <em class="sig-param"><span class="n">name</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>str<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">configs</span><span class="p">:</span> <span class="n">List<span class="p">[</span>Type<span class="p">[</span><a class="reference internal" href="#pytconf.config.Config" title="pytconf.config.Config">pytconf.config.Config</a><span class="p">]</span><span class="p">]</span></span> <span class="o">=</span> <span class="default_value">()</span></em>, <em class="sig-param"><span class="n">suggest_configs</span><span class="p">:</span> <span class="n">List<span class="p">[</span>Type<span class="p">[</span><a class="reference internal" href="#pytconf.config.Config" title="pytconf.config.Config">pytconf.config.Config</a><span class="p">]</span><span class="p">]</span></span> <span class="o">=</span> <span class="default_value">()</span></em>, <em class="sig-param"><span class="n">group</span><span class="p">:</span> <span class="n">str</span> <span class="o">=</span> <span class="default_value">'default'</span></em>, <em class="sig-param"><span class="n">allow_free_args</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">False</span></em>, <em class="sig-param"><span class="n">min_free_args</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>int<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">max_free_args</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>int<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span> &#x2192; Callable<span class="p">[</span><span class="p">[</span>Any<span class="p">]</span><span class="p">, </span>Any<span class="p">]</span><a class="reference internal" href="_modules/pytconf/config.html#register_endpoint"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.config.register_endpoint" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -447,8 +452,18 @@ Regular errors are the ones to be printed and carry the error_type = false.</p>
 <dd></dd></dl>
 
 <dl class="py method">
+<dt id="pytconf.errors_collector.ErrorsCollector.get_do_help">
+<code class="sig-name descname">get_do_help</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; bool<a class="reference internal" href="_modules/pytconf/errors_collector.html#ErrorsCollector.get_do_help"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.errors_collector.ErrorsCollector.get_do_help" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
 <dt id="pytconf.errors_collector.ErrorsCollector.have_errors">
 <code class="sig-name descname">have_errors</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; bool<a class="reference internal" href="_modules/pytconf/errors_collector.html#ErrorsCollector.have_errors"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.errors_collector.ErrorsCollector.have_errors" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="pytconf.errors_collector.ErrorsCollector.set_do_help">
+<code class="sig-name descname">set_do_help</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="_modules/pytconf/errors_collector.html#ErrorsCollector.set_do_help"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.errors_collector.ErrorsCollector.set_do_help" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
