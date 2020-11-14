@@ -167,7 +167,7 @@ class PytconfConf:
 
     @classmethod
     def print_errors(cls, errors: ErrorsCollector) -> None:
-        for error in errors.errors:
+        for error in errors.yield_errors():
             print_error(error)
 
     def show_help(self) -> None:
@@ -191,7 +191,10 @@ class PytconfConf:
             print()
 
     def show_help_for_function(
-        self, function_name: str, show_help_full: bool, show_help_suggest: bool
+        self,
+        function_name: str,
+        show_help_full: bool = False,
+        show_help_suggest: bool = False,
     ) -> None:
         print(f"Usage: {self.app_name} {function_name} [OPTIONS] [ARGS]...")
         function_doc = self.description[function_name]
@@ -227,11 +230,11 @@ class PytconfConf:
         print()
 
     def process_flags(
-        self, command_selected: str, flags: Dict[str, str], errors: ErrorsCollector,
+        self, function_selected: str, flags: Dict[str, str], errors: ErrorsCollector,
     ) -> None:
         """
         Parse the args and fill the global data
-        :param command_selected:
+        :param function_selected:
         :param flags:
         :param errors:
         """
@@ -255,7 +258,7 @@ class PytconfConf:
 
         # check for missing parameters
         missing_parameters = []
-        configs = self.function_name_to_configs[command_selected]
+        configs = self.function_name_to_configs[function_selected]
         for config in configs:
             for attribute in config.get_attributes():
                 value = getattr(config, attribute)
@@ -334,11 +337,11 @@ class PytconfConf:
         self.read_flags_from_config(file_name=self.get_system_config(), flags=flags)
         self.read_flags_from_config(file_name=self.get_user_config(), flags=flags)
 
-        command_selected = None
+        function_selected = None
         if len(args) > 0:
             command = args.pop(0)
             if command in self.function_name_to_callable:
-                command_selected = command
+                function_selected = command
             else:
                 errors.add_error(f"unknown command [{command}]")
 
@@ -346,13 +349,13 @@ class PytconfConf:
         self.parse_args(args, errors, flags)
 
         # if we have command we can check free args errors
-        if command_selected is not None:
-            if self.allow_free_args[command_selected]:
-                min_args = self.min_free_args[command_selected]
+        if function_selected is not None:
+            if self.allow_free_args[function_selected]:
+                min_args = self.min_free_args[function_selected]
                 if min_args is not None:
                     if len(self.free_args) < min_args:
                         errors.add_error(f"too few free args - {min_args} required")
-                max_args = self.max_free_args[command_selected]
+                max_args = self.max_free_args[function_selected]
                 if max_args is not None:
                     if len(self.free_args) >= max_args:
                         errors.add_error(f"too many free args - {max_args} required")
@@ -361,23 +364,25 @@ class PytconfConf:
                     errors.add_error(f"free args are not allowed [{self.free_args}]")
 
         do_help = False
-        if command_selected is None:
-            errors.raise_error()
-            # errors.add_error("no command is selected")
+        if function_selected is None:
+            errors.add_error(msg="no command is selected", error_type=True)
             do_help = True
         else:
-            self.process_flags(command_selected, flags, errors)
+            self.process_flags(function_selected, flags, errors)
 
         if errors.have_errors():
             self.print_errors(errors)
             if do_help:
-                self.show_help()
+                if function_selected:
+                    self.show_help_for_function(function_name=function_selected)
+                else:
+                    self.show_help()
             if do_exit:
                 sys.exit(1)
             return
 
         if launch:
-            function_to_run = self.function_name_to_callable[command_selected]
+            function_to_run = self.function_name_to_callable[function_selected]
             function_to_run()
 
     def parse_args(self, args, errors, flags):
