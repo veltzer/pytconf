@@ -249,6 +249,7 @@ class PytconfConf:
             if flag_raw not in self.attribute_to_config:
                 if is_help(flag_raw):
                     errors.set_do_help()
+                    errors.unset_show_errors()
                 else:
                     unknown_flags.append(flag_raw)
                 continue
@@ -352,6 +353,7 @@ class PytconfConf:
             else:
                 if is_help(command):
                     errors.set_do_help()
+                    errors.unset_show_errors()
                 else:
                     errors.add_error(f"unknown command [{command}]")
 
@@ -373,17 +375,20 @@ class PytconfConf:
                 if len(self.free_args) > 0:
                     if len(self.free_args) == 1 and is_help(self.free_args[0]):
                         errors.set_do_help()
+                        errors.unset_show_errors()
                     else:
                         errors.add_error(f"free args are not allowed [{self.free_args}]")
 
         if function_selected is None:
             errors.add_error(msg="no command is selected", error_type=True)
             errors.set_do_help()
+            errors.unset_show_errors()
         else:
             self.process_flags(function_selected, flags, errors)
 
         if errors.have_errors() or errors.get_do_help():
-            self.print_errors(errors)
+            if errors.get_show_errors():
+                self.print_errors(errors)
             if errors.get_do_help():
                 if function_selected:
                     self.show_help_for_function(function_name=function_selected)
