@@ -32,7 +32,7 @@
           <div class="body" role="main">
             
   <h1>Source code for pytconf.errors_collector</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Generator</span>
+<span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Generator</span>
 
 
 <div class="viewcode-block" id="ErrorsCollector"><a class="viewcode-back" href="../../pytconf.html#pytconf.errors_collector.ErrorsCollector">[docs]</a><span class="k">class</span> <span class="nc">ErrorsCollector</span><span class="p">:</span>
@@ -41,12 +41,13 @@
 <span class="sd">    Regular errors are the ones to be printed and carry the error_type = false.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_errors</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">bool</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_errors</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">do_help</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">show_errors</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">force_show_errors</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
 
-<div class="viewcode-block" id="ErrorsCollector.add_error"><a class="viewcode-back" href="../../pytconf.html#pytconf.errors_collector.ErrorsCollector.add_error">[docs]</a>    <span class="k">def</span> <span class="nf">add_error</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">error_type</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_errors</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">msg</span><span class="p">,</span> <span class="n">error_type</span><span class="p">))</span></div>
+<div class="viewcode-block" id="ErrorsCollector.add_error"><a class="viewcode-back" href="../../pytconf.html#pytconf.errors_collector.ErrorsCollector.add_error">[docs]</a>    <span class="k">def</span> <span class="nf">add_error</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_errors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="ErrorsCollector.have_errors"><a class="viewcode-back" href="../../pytconf.html#pytconf.errors_collector.ErrorsCollector.have_errors">[docs]</a>    <span class="k">def</span> <span class="nf">have_errors</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
         <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_errors</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span></div>
@@ -55,7 +56,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">do_help</span> <span class="o">=</span> <span class="kc">True</span></div>
 
 <div class="viewcode-block" id="ErrorsCollector.get_show_errors"><a class="viewcode-back" href="../../pytconf.html#pytconf.errors_collector.ErrorsCollector.get_show_errors">[docs]</a>    <span class="k">def</span> <span class="nf">get_show_errors</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">show_errors</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">show_errors</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">force_show_errors</span></div>
 
 <div class="viewcode-block" id="ErrorsCollector.get_do_help"><a class="viewcode-back" href="../../pytconf.html#pytconf.errors_collector.ErrorsCollector.get_do_help">[docs]</a>    <span class="k">def</span> <span class="nf">get_do_help</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">do_help</span></div>
@@ -63,10 +64,12 @@
 <div class="viewcode-block" id="ErrorsCollector.unset_show_errors"><a class="viewcode-back" href="../../pytconf.html#pytconf.errors_collector.ErrorsCollector.unset_show_errors">[docs]</a>    <span class="k">def</span> <span class="nf">unset_show_errors</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">show_errors</span> <span class="o">=</span> <span class="kc">False</span></div>
 
-<div class="viewcode-block" id="ErrorsCollector.yield_errors"><a class="viewcode-back" href="../../pytconf.html#pytconf.errors_collector.ErrorsCollector.yield_errors">[docs]</a>    <span class="k">def</span> <span class="nf">yield_errors</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">error_type</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Generator</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">]:</span>
+<div class="viewcode-block" id="ErrorsCollector.set_force_show_errors"><a class="viewcode-back" href="../../pytconf.html#pytconf.errors_collector.ErrorsCollector.set_force_show_errors">[docs]</a>    <span class="k">def</span> <span class="nf">set_force_show_errors</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">force_show_errors</span> <span class="o">=</span> <span class="kc">True</span></div>
+
+<div class="viewcode-block" id="ErrorsCollector.yield_errors"><a class="viewcode-back" href="../../pytconf.html#pytconf.errors_collector.ErrorsCollector.yield_errors">[docs]</a>    <span class="k">def</span> <span class="nf">yield_errors</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Generator</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">]:</span>
         <span class="k">for</span> <span class="n">error</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_errors</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">error</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">error_type</span><span class="p">:</span>
-                <span class="k">yield</span> <span class="n">error</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span></div></div>
+            <span class="k">yield</span> <span class="n">error</span></div></div>
 </pre></div>
 
           </div>

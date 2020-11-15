@@ -1,4 +1,4 @@
-from typing import List, Tuple, Generator
+from typing import List, Generator
 
 
 class ErrorsCollector:
@@ -7,12 +7,13 @@ class ErrorsCollector:
     Regular errors are the ones to be printed and carry the error_type = false.
     """
     def __init__(self):
-        self._errors: List[Tuple[str, bool]] = []
+        self._errors: List[str] = []
         self.do_help: bool = False
         self.show_errors: bool = True
+        self.force_show_errors: bool = False
 
-    def add_error(self, msg: str, error_type: bool = False) -> None:
-        self._errors.append((msg, error_type))
+    def add_error(self, msg: str) -> None:
+        self._errors.append(msg)
 
     def have_errors(self) -> bool:
         return len(self._errors) > 0
@@ -21,7 +22,7 @@ class ErrorsCollector:
         self.do_help = True
 
     def get_show_errors(self):
-        return self.show_errors
+        return self.show_errors or self.force_show_errors
 
     def get_do_help(self) -> bool:
         return self.do_help
@@ -29,7 +30,9 @@ class ErrorsCollector:
     def unset_show_errors(self) -> None:
         self.show_errors = False
 
-    def yield_errors(self, error_type: bool = False) -> Generator[str, None, None]:
+    def set_force_show_errors(self) -> None:
+        self.force_show_errors = True
+
+    def yield_errors(self) -> Generator[str, None, None]:
         for error in self._errors:
-            if error[1] == error_type:
-                yield error[0]
+            yield error

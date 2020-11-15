@@ -122,6 +122,11 @@
 <dd></dd></dl>
 
 <dl class="py method">
+<dt id="pytconf.config.PytconfConf.get_function_selected">
+<code class="sig-name descname">get_function_selected</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">args</span><span class="p">:</span> <span class="n">List<span class="p">[</span>str<span class="p">]</span></span></em>, <em class="sig-param"><span class="n">errors</span></em><span class="sig-paren">)</span> &#x2192; Optional<span class="p">[</span>str<span class="p">]</span><a class="reference internal" href="_modules/pytconf/config.html#PytconfConf.get_function_selected"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.config.PytconfConf.get_function_selected" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
 <dt id="pytconf.config.PytconfConf.get_html">
 <code class="sig-name descname">get_html</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; str<a class="reference internal" href="_modules/pytconf/config.html#PytconfConf.get_html"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.config.PytconfConf.get_html" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -448,7 +453,7 @@
 Regular errors are the ones to be printed and carry the error_type = false.</p>
 <dl class="py method">
 <dt id="pytconf.errors_collector.ErrorsCollector.add_error">
-<code class="sig-name descname">add_error</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">msg</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">error_type</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">False</span></em><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="_modules/pytconf/errors_collector.html#ErrorsCollector.add_error"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.errors_collector.ErrorsCollector.add_error" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">add_error</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">msg</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="_modules/pytconf/errors_collector.html#ErrorsCollector.add_error"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.errors_collector.ErrorsCollector.add_error" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -472,13 +477,18 @@ Regular errors are the ones to be printed and carry the error_type = false.</p>
 <dd></dd></dl>
 
 <dl class="py method">
+<dt id="pytconf.errors_collector.ErrorsCollector.set_force_show_errors">
+<code class="sig-name descname">set_force_show_errors</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="_modules/pytconf/errors_collector.html#ErrorsCollector.set_force_show_errors"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.errors_collector.ErrorsCollector.set_force_show_errors" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
 <dt id="pytconf.errors_collector.ErrorsCollector.unset_show_errors">
 <code class="sig-name descname">unset_show_errors</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="_modules/pytconf/errors_collector.html#ErrorsCollector.unset_show_errors"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.errors_collector.ErrorsCollector.unset_show_errors" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt id="pytconf.errors_collector.ErrorsCollector.yield_errors">
-<code class="sig-name descname">yield_errors</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">error_type</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">False</span></em><span class="sig-paren">)</span> &#x2192; Generator[str, None, None]<a class="reference internal" href="_modules/pytconf/errors_collector.html#ErrorsCollector.yield_errors"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.errors_collector.ErrorsCollector.yield_errors" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">yield_errors</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; Generator[str, None, None]<a class="reference internal" href="_modules/pytconf/errors_collector.html#ErrorsCollector.yield_errors"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.errors_collector.ErrorsCollector.yield_errors" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
