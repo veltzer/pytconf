@@ -326,6 +326,21 @@ class PytconfConf:
             show=SPECIAL_FUNCTION_GROUP_SHOW,
         )
 
+    def get_function_selected(self, args: List[str], errors) -> Union[str, None]:
+        function_selected = None
+        if len(args) > 0:
+            command = args.pop(0)
+            if command in self.function_name_to_callable:
+                function_selected = command
+            else:
+                if is_help(command):
+                    errors.set_do_help()
+                    errors.unset_show_errors()
+                else:
+                    errors.add_error(f"unknown command [{command}]")
+                    errors.set_force_show_errors()
+        return function_selected
+
     def config_arg_parse_and_launch(
         self,
         args: Union[List[str], None] = None,
@@ -345,17 +360,7 @@ class PytconfConf:
         self.read_flags_from_config(file_name=self.get_system_config(), flags=flags)
         self.read_flags_from_config(file_name=self.get_user_config(), flags=flags)
 
-        function_selected = None
-        if len(args) > 0:
-            command = args.pop(0)
-            if command in self.function_name_to_callable:
-                function_selected = command
-            else:
-                if is_help(command):
-                    errors.set_do_help()
-                    errors.unset_show_errors()
-                else:
-                    errors.add_error(f"unknown command [{command}]")
+        function_selected = self.get_function_selected(args, errors)
 
         # now parse the args
         self.parse_args(args, errors, flags)
@@ -380,7 +385,7 @@ class PytconfConf:
                         errors.add_error(f"free args are not allowed [{self.free_args}]")
 
         if function_selected is None:
-            errors.add_error(msg="no command is selected", error_type=True)
+            errors.add_error("no command is selected")
             errors.set_do_help()
             errors.unset_show_errors()
         else:
