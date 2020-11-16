@@ -3,15 +3,6 @@
 - add the option to write a config file with all of the current values.
 	this option could be used by programs who want to install a config file with all the defaults.
 
-- allow, int the register_* function to have an argument which will override the name
-	of the function.
-	Why do we need that?
-	Imagine that you want an operation called "list" but list is a reserved name in
-	python and you shouldn't really define a function called "list". So you call the
-	function "list_contacts" (for instance) and tell pytconf that it should present
-	the user with action "list". This action will now be hooked to the "list_contacts"
-	operation.
-
 - think again about why we have multiple Config entries. If we had just one config, or just
 	one module
 	then naturally we would have no name space collision since python or the editor
@@ -63,17 +54,6 @@
 - should we have a parameter called "force_free_args_num" for applications where you *must*
 	enter at least 1 or more arguments?
 	what about max free args?
-- currently we lie to type checkers. How?
-	The method 'create_str' of the class ParamCreator does not really
-	return a string but rather a ParamFunctions object.
-	We decorate the types of that method to say that it returns a string
-	but really it does not.
-	Why is this bad? because some type checkers can see through our lies.
-	Can we stop lying?
-	YES! We can override the __eq__ method of classes!
-	This way the method will actually return what it's supposed to return
-	but will also register the parameters just like our current Config.
-	This will be much cleaner.
 - add a "reset" method to the 'Config' object and a general method
 	of pytconf which is 'reset_all'.
 	This will enable to reset all objects to their default behaviour.
