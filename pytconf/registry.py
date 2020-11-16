@@ -4,6 +4,7 @@ class Registry:
         self.configs = set()
         self.name_to_data = dict()
         self.name_to_config = dict()
+        self.config_names = dict()
 
     def register(self, config, name, data):
         if name in self.names:
@@ -12,12 +13,21 @@ class Registry:
             )
         self.names.add(name)
         self.configs.add(config)
+        if config not in self.config_names:
+            self.config_names[config] = dict()
         self.name_to_data[name] = data
         self.name_to_config[name] = config
+        self.config_names[config][name] = data
 
     def yield_configs(self):
         for config in self.configs:
             yield config
+
+    def yield_names_for_config(self, config):
+        yield from self.config_names[config].keys()
+
+    def yield_name_data_for_config(self, config):
+        yield from self.config_names[config].items()
 
     def get_data_for_name(self, name):
         return self.name_to_data[name]
