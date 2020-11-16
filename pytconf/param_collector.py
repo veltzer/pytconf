@@ -16,4 +16,4 @@ class ParamCollector:
             yield item
 
 
-the_collector = ParamCollector()
+the_collector: ParamCollector = ParamCollector()
