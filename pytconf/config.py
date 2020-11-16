@@ -87,7 +87,6 @@ class PytconfConf:
         self.function_group_show_meta: Dict[str, bool] = dict()
         self.function_group_show: Dict[str, bool] = dict()
 
-        # self.attribute_to_config: Dict[str, Type[Config]] = dict()
         self.free_args: List[str] = []
         self.app_name: str = "No application name"
         self.version: str = "No version"

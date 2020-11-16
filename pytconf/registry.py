@@ -39,4 +39,4 @@ class Registry:
         return name in self.names
 
 
-the_registry = Registry()
+the_registry: Registry = Registry()
