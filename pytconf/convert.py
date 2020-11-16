@@ -7,7 +7,7 @@ def convert_str_to_int_or_none(s: str) -> Union[int, None]:
     return int(s)
 
 
-def convert_int_or_none_to_str(v: Union[int, None]):
+def convert_int_or_none_to_str(v: Union[int, None]) -> str:
     if v is None:
         return "None"
     return str(v)
@@ -50,7 +50,7 @@ def convert_str_to_list_int(s: str) -> List[int]:
 
 
 def convert_list_int_to_str(li: List[int]) -> str:
-    return str(li)
+    return ",".join([str(x) for x in li])
 
 
 def convert_str_to_list_str(s: str) -> List[str]:
@@ -58,7 +58,7 @@ def convert_str_to_list_str(s: str) -> List[str]:
 
 
 def convert_list_str_to_str(li: List[str]) -> str:
-    return str(li)
+    return ",".join(li)
 
 
 def convert_str_to_str(e: str) -> str:
@@ -71,7 +71,7 @@ def convert_str_to_str_or_none(s: str) -> Union[str, None]:
     return s
 
 
-def convert_str_or_none_to_str(v: Union[str, None]):
+def convert_str_or_none_to_str(v: Union[str, None]) -> str:
     if v is None:
         return "None"
     return v
