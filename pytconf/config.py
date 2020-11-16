@@ -53,7 +53,6 @@ class Config(metaclass=MetaConfig):
     """
     Base class for all configs
     """
-    pass
 
 
 class HtmlGen:
