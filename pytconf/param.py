@@ -10,6 +10,7 @@ from pytconf.convert import convert_str_to_str, convert_str_to_int, convert_int_
     convert_str_to_list_int, convert_list_int_to_str, convert_str_to_list_str, convert_list_str_to_str, \
     convert_str_to_int_or_none, convert_int_or_none_to_str, convert_str_to_str_or_none, convert_str_or_none_to_str, \
     convert_str_to_bool, convert_bool_to_str
+from pytconf.param_collector import the_collector
 
 
 class Unique:
@@ -21,10 +22,9 @@ NO_DEFAULT_TYPE = type(NO_DEFAULT)
 NO_HELP = "No help for this configuration option"
 
 
-class Param:
-    __metaclass__ = abc.ABCMeta
+class Param(abc.ABC):
     """
-        Parent class of all parameters of configuration
+    Parent class of all parameters of configuration
     """
 
     def __init__(
@@ -37,6 +37,9 @@ class Param:
 
     def get_type_name(self):
         return self.type_name
+
+    def collect(self):
+        the_collector.add_data(self)
 
     @abc.abstractmethod
     def s2t(self, s: str) -> object:
@@ -74,6 +77,7 @@ class ParamFunctions(Param):
         self.function_s2t = function_s2t
         self.function_t2s = function_t2s
         self.function_s2t_generate_from_default = function_s2t_generate_from_default
+        super().collect()
 
     def s2t(self, s: str) -> Any:
         return self.function_s2t(s)
@@ -97,6 +101,7 @@ class ParamFilename(Param):
             help_string=help_string, default=default, type_name=type_name,
         )
         self.suffixes = suffixes
+        super().collect()
 
     def s2t(self, s):
         if self.suffixes is not None:
@@ -122,6 +127,7 @@ class ParamEnum(Param):
             help_string=help_string, default=default, type_name="enum",
         )
         self.enum_type = enum_type
+        super().collect()
 
     def get_type_name(self):
         return "Enum[{}]".format(self.enum_type.__name__)
@@ -144,6 +150,7 @@ class ParamEnumSubset(Param):
             help_string=help_string, default=default, type_name="enum",
         )
         self.enum_type = enum_type
+        super().collect()
 
     def get_type_name(self):
         return "EnumSubset[{}]".format(self.enum_type.__name__)
@@ -169,6 +176,7 @@ class ParamChoice(Param):
             help_string=help_string, default=default, type_name="Choice",
         )
         self.choice_list = choice_list
+        super().collect()
 
     def s2t(self, s: str) -> Any:
         return s
@@ -195,8 +203,7 @@ class ParamCreator:
         :param default:
         :return:
         """
-        # noinspection PyTypeChecker
-        return ParamFunctions(
+        ParamFunctions(
             help_string=help_string,
             default=default,
             type_name="int",
@@ -204,6 +211,7 @@ class ParamCreator:
             function_t2s=convert_int_to_str,
             function_s2t_generate_from_default=convert_str_to_int_default,
         )
+        return default
 
     @staticmethod
     def create_list_int(
@@ -216,14 +224,14 @@ class ParamCreator:
         :param default:
         :return:
         """
-        # noinspection PyTypeChecker
-        return ParamFunctions(
+        ParamFunctions(
             help_string=help_string,
             default=default,
             type_name="List[int]",
             function_s2t=convert_str_to_list_int,
             function_t2s=convert_list_int_to_str,
         )
+        return default
 
     @staticmethod
     def create_list_str(
@@ -236,14 +244,14 @@ class ParamCreator:
         :param default:
         :return:
         """
-        # noinspection PyTypeChecker
-        return ParamFunctions(
+        ParamFunctions(
             help_string=help_string,
             default=default,
             type_name="List[str]",
             function_s2t=convert_str_to_list_str,
             function_t2s=convert_list_str_to_str,
         )
+        return default
 
     @staticmethod
     def create_int_or_none(
@@ -256,14 +264,14 @@ class ParamCreator:
         :param default:
         :return:
         """
-        # noinspection PyTypeChecker
-        return ParamFunctions(
+        ParamFunctions(
             help_string=help_string,
             default=default,
             type_name="Union[int, None]",
             function_s2t=convert_str_to_int_or_none,
             function_t2s=convert_int_or_none_to_str,
         )
+        return default
 
     @staticmethod
     def create_str(
@@ -275,14 +283,14 @@ class ParamCreator:
         :param default:
         :return:
         """
-        # noinspection PyTypeChecker
-        return ParamFunctions(
+        ParamFunctions(
             help_string=help_string,
             default=default,
             type_name="str",
             function_s2t=convert_str_to_str_or_none,
             function_t2s=convert_str_or_none_to_str,
         )
+        return default
 
     @staticmethod
     def create_str_or_none(
@@ -295,14 +303,14 @@ class ParamCreator:
         :param default:
         :return:
         """
-        # noinspection PyTypeChecker
-        return ParamFunctions(
+        ParamFunctions(
             help_string=help_string,
             default=default,
             type_name="str",
             function_s2t=convert_str_to_str,
             function_t2s=convert_str_to_str,
         )
+        return default
 
     @staticmethod
     def create_bool(
@@ -314,14 +322,14 @@ class ParamCreator:
         :param default:
         :return:
         """
-        # noinspection PyTypeChecker
-        return ParamFunctions(
+        ParamFunctions(
             help_string=help_string,
             default=default,
             type_name="bool",
             function_s2t=convert_str_to_bool,
             function_t2s=convert_bool_to_str,
         )
+        return default
 
     @staticmethod
     def create_new_file(
@@ -336,13 +344,13 @@ class ParamCreator:
         :param suffixes:
         :return:
         """
-        # noinspection PyTypeChecker
-        return ParamFilename(
+        ParamFilename(
             help_string=help_string,
             default=default,
             type_name="new_file",
             suffixes=suffixes,
         )
+        return default
 
     @staticmethod
     def create_existing_file(
@@ -357,13 +365,13 @@ class ParamCreator:
         :param suffixes:
         :return:
         """
-        # noinspection PyTypeChecker
-        return ParamFilename(
+        ParamFilename(
             help_string=help_string,
             default=default,
             type_name="existing_file",
             suffixes=suffixes,
         )
+        return default
 
     @staticmethod
     def create_existing_folder(
@@ -378,19 +386,19 @@ class ParamCreator:
         :param suffixes:
         :return:
         """
-        # noinspection PyTypeChecker
-        return ParamFilename(
+        ParamFilename(
             help_string=help_string,
             default=default,
             type_name="existing_folder",
             suffixes=suffixes,
         )
+        return default
 
     @staticmethod
     def create_choice(
         choice_list: List[str],
         help_string: str = NO_HELP,
-        default: Union[Any, NO_DEFAULT_TYPE] = NO_DEFAULT,
+        default: Union[str, NO_DEFAULT_TYPE] = NO_DEFAULT,
     ) -> str:
         """
         Create a choice config
@@ -399,10 +407,10 @@ class ParamCreator:
         :param default:
         :return:
         """
-        # noinspection PyTypeChecker
-        return ParamChoice(
+        ParamChoice(
             help_string=help_string, default=default, choice_list=choice_list,
         )
+        return default
 
     @staticmethod
     def create_enum(
@@ -417,14 +425,14 @@ class ParamCreator:
         :param default:
         :return:
         """
-        # noinspection PyTypeChecker
-        return ParamEnum(help_string=help_string, default=default, enum_type=enum_type,)
+        ParamEnum(help_string=help_string, default=default, enum_type=enum_type,)
+        return default
 
     @staticmethod
     def create_enum_subset(
         enum_type: Type[Enum],
         help_string: str = NO_HELP,
-        default: EnumSubset = NO_DEFAULT,
+        default: Union[Any, EnumSubset] = NO_DEFAULT,
     ) -> EnumSubset:
         """
         Create an enum config
@@ -433,10 +441,10 @@ class ParamCreator:
         :param default:
         :return:
         """
-        # noinspection PyTypeChecker
-        return ParamEnumSubset(
+        ParamEnumSubset(
             help_string=help_string, default=default, enum_type=enum_type,
         )
+        return default
 
     @staticmethod
     def create_existing_bucket(
@@ -448,11 +456,11 @@ class ParamCreator:
         :param default:
         :return:
         """
-        # noinspection PyTypeChecker
-        return ParamFunctions(
+        ParamFunctions(
             help_string=help_string,
             default=default,
             type_name="bucket_name",
             function_s2t=convert_str_to_str,
             function_t2s=convert_str_to_str,
         )
+        return default

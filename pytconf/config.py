@@ -1,4 +1,3 @@
-import itertools
 import json
 import os
 import sys
@@ -17,7 +16,9 @@ from pytconf.color_utils import (
 )
 from pytconf.errors_collector import ErrorsCollector
 from pytconf.param import Param, NO_DEFAULT
+from pytconf.param_collector import the_collector
 from pytconf.pydoc import get_first_line
+from pytconf.registry import the_registry
 from pytconf.utils import get_logger
 
 PARAMS_ATTRIBUTE = "_params"
@@ -39,28 +40,15 @@ class MetaConfig(type):
     """
     Meta class for all configs
     """
-
-    def __new__(mcs, name, bases, cls_dict):
-        if name != "Config":
-            params_dict = dict()
-            cls_dict[PARAMS_ATTRIBUTE] = params_dict
-            for k, d in cls_dict.items():
-                if isinstance(d, Param):
-                    # assert d.default is not NO_DEFAULT
-                    params_dict[k] = d
-                    cls_dict[k] = d.default
-        return type.__new__(mcs, name, bases, cls_dict)
-
-    def __init__(cls, name, bases, cls_dict):
-        # print(name, bases, cls_dict)
-        # if len(cls.mro()) > 2:
-        #     register_config(cls, name)
-        #     # print("was subclassed by " + name)
-        if name != "Config":
-            # noinspection PyTypeChecker
-            get_pytconf().register_config(cls, name)
-        # print(name, cls_dict)
-        super(MetaConfig, cls).__init__(name, bases, cls_dict)
+    def __new__(mcs, name, bases, namespace):
+        ret = super().__new__(mcs, name, bases, namespace)
+        i = 0
+        for k, v in namespace.items():
+            if not k.startswith("__") and not isinstance(v, classmethod):
+                the_registry.register(ret, k, the_collector.get_item(i))
+                i += 1
+        the_collector.clear()
+        return ret
 
 
 class Config(metaclass=MetaConfig):
@@ -96,8 +84,6 @@ def is_help(string: str) -> bool:
 
 class PytconfConf:
     def __init__(self):
-        self._configs = set()
-        self._config_names = set()
         self.main_function: Union[Callable, None] = None
         self.main_description: str = "No application description"
         self.function_name_to_configs: Dict[str, List[Type[Config]]] = dict()
@@ -114,7 +100,7 @@ class PytconfConf:
         self.function_group_show_meta: Dict[str, bool] = dict()
         self.function_group_show: Dict[str, bool] = dict()
 
-        self.attribute_to_config: Dict[str, Type[Config]] = dict()
+        # self.attribute_to_config: Dict[str, Type[Config]] = dict()
         self.free_args: List[str] = []
         self.app_name: str = "No application name"
         self.version: str = "No version"
@@ -151,23 +137,6 @@ class PytconfConf:
         self.allow_free_args[name] = allow_free_args
         self.min_free_args[name] = min_free_args
         self.max_free_args[name] = max_free_args
-
-    def register_config(self, config: Type[Config], name):
-        """
-        register a configuration class
-        :param config:
-        :param name:
-        :return:
-        """
-        self._configs.add(config)
-        self._config_names.add(name)
-        # update the attributes_to_config map
-        for attribute in config.get_attributes():
-            if attribute in self.attribute_to_config:
-                raise ValueError(
-                    f"pytconf: attribute [{attribute}] appears more than once"
-                )
-            self.attribute_to_config[attribute] = config
 
     @classmethod
     def print_errors(cls, errors: ErrorsCollector) -> None:
@@ -210,7 +179,7 @@ class PytconfConf:
             for config in self.function_name_to_suggest_configs[function_name]:
                 self.show_help_for_config(config)
         if show_help_full:
-            for config in self._configs:
+            for config in the_registry.yield_configs():
                 self.show_help_for_config(config)
 
     @classmethod
@@ -246,15 +215,15 @@ class PytconfConf:
         # set the flags into the "default" field and collect unknown flags
         unknown_flags = []
         for flag_raw, value in flags.items():
-            if flag_raw not in self.attribute_to_config:
+            if not the_registry.has_name(flag_raw):
                 if is_help(flag_raw):
                     errors.set_do_help()
                     errors.unset_show_errors()
                 else:
                     unknown_flags.append(flag_raw)
                 continue
-            config = self.attribute_to_config[flag_raw]
-            param = config.get_param_by_name(flag_raw)
+            config = the_registry.get_config_for_name(flag_raw)
+            param = the_registry.get_data(flag_raw)
             edit = value.startswith("=")
             if edit:
                 v = param.s2t_generate_from_default(value[1:])
@@ -276,14 +245,6 @@ class PytconfConf:
             errors.add_error(
                 f"missing parameters [{','.join(missing_parameters)}]"
             )
-
-        # move all default values to place (this will not be needed in the new scheme)
-        for config in itertools.chain(configs, self._configs):
-            for attribute in config.get_attributes():
-                param: Param = getattr(config, attribute)
-                if isinstance(param, Param):
-                    if param.default is not NO_DEFAULT:
-                        setattr(config, attribute, param.default)
 
     @staticmethod
     def read_flags_from_config(file_name: str, flags: Dict[str, str]) -> None:
@@ -495,9 +456,10 @@ class PytconfConf:
                     html_gen.line("td", default)
                     html_gen.line("td", more_help)
 
-    def write_config_file_json(self, filename: str) -> None:
+    @classmethod
+    def write_config_file_json(cls, filename: str) -> None:
         values: Dict[str, str] = dict()
-        for config in self._configs:
+        for config in the_registry.yield_configs():
             for name, param in config.get_params().items():
                 if param.default is not NO_DEFAULT:
                     values[name] = param.t2s(param.default)
