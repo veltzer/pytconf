@@ -38,6 +38,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">configs</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">name_to_data</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">name_to_config</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">config_names</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
 
 <div class="viewcode-block" id="Registry.register"><a class="viewcode-back" href="../../pytconf.html#pytconf.registry.Registry.register">[docs]</a>    <span class="k">def</span> <span class="nf">register</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">names</span><span class="p">:</span>
@@ -46,12 +47,21 @@
             <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">names</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">configs</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">config</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">config_names</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">config_names</span><span class="p">[</span><span class="n">config</span><span class="p">]</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">name_to_data</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">name_to_config</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">config</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name_to_config</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">config</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">config_names</span><span class="p">[</span><span class="n">config</span><span class="p">][</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span></div>
 
 <div class="viewcode-block" id="Registry.yield_configs"><a class="viewcode-back" href="../../pytconf.html#pytconf.registry.Registry.yield_configs">[docs]</a>    <span class="k">def</span> <span class="nf">yield_configs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">for</span> <span class="n">config</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">configs</span><span class="p">:</span>
             <span class="k">yield</span> <span class="n">config</span></div>
+
+<div class="viewcode-block" id="Registry.yield_names_for_config"><a class="viewcode-back" href="../../pytconf.html#pytconf.registry.Registry.yield_names_for_config">[docs]</a>    <span class="k">def</span> <span class="nf">yield_names_for_config</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
+        <span class="k">yield from</span> <span class="bp">self</span><span class="o">.</span><span class="n">config_names</span><span class="p">[</span><span class="n">config</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="Registry.yield_name_data_for_config"><a class="viewcode-back" href="../../pytconf.html#pytconf.registry.Registry.yield_name_data_for_config">[docs]</a>    <span class="k">def</span> <span class="nf">yield_name_data_for_config</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
+        <span class="k">yield from</span> <span class="bp">self</span><span class="o">.</span><span class="n">config_names</span><span class="p">[</span><span class="n">config</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="Registry.get_data_for_name"><a class="viewcode-back" href="../../pytconf.html#pytconf.registry.Registry.get_data_for_name">[docs]</a>    <span class="k">def</span> <span class="nf">get_data_for_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">name_to_data</span><span class="p">[</span><span class="n">name</span><span class="p">]</span></div>

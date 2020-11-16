@@ -82,21 +82,6 @@
 <em class="property">class </em><code class="sig-prename descclassname">pytconf.config.</code><code class="sig-name descname">Config</code><a class="reference internal" href="_modules/pytconf/config.html#Config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.config.Config" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Base class for all configs</p>
-<dl class="py method">
-<dt id="pytconf.config.Config.get_attributes">
-<em class="property">classmethod </em><code class="sig-name descname">get_attributes</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; List<span class="p">[</span>str<span class="p">]</span><a class="reference internal" href="_modules/pytconf/config.html#Config.get_attributes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.config.Config.get_attributes" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt id="pytconf.config.Config.get_param_by_name">
-<em class="property">classmethod </em><code class="sig-name descname">get_param_by_name</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#pytconf.param.Param" title="pytconf.param.Param">pytconf.param.Param</a><a class="reference internal" href="_modules/pytconf/config.html#Config.get_param_by_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.config.Config.get_param_by_name" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt id="pytconf.config.Config.get_params">
-<em class="property">classmethod </em><code class="sig-name descname">get_params</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; Dict<span class="p">[</span>str<span class="p">, </span><a class="reference internal" href="#pytconf.param.Param" title="pytconf.param.Param">pytconf.param.Param</a><span class="p">]</span><a class="reference internal" href="_modules/pytconf/config.html#Config.get_params"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.config.Config.get_params" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 </dd></dl>
 
 <dl class="py class">
@@ -859,6 +844,11 @@ Regular errors are the ones to be printed and carry the error_type = false.</p>
 <dd></dd></dl>
 
 <dl class="py method">
+<dt id="pytconf.param_collector.ParamCollector.get_item">
+<code class="sig-name descname">get_item</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">i</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytconf/param_collector.html#ParamCollector.get_item"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.param_collector.ParamCollector.get_item" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
 <dt id="pytconf.param_collector.ParamCollector.yield_items">
 <code class="sig-name descname">yield_items</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytconf/param_collector.html#ParamCollector.yield_items"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.param_collector.ParamCollector.yield_items" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -906,6 +896,16 @@ Regular errors are the ones to be printed and carry the error_type = false.</p>
 <dl class="py method">
 <dt id="pytconf.registry.Registry.yield_configs">
 <code class="sig-name descname">yield_configs</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytconf/registry.html#Registry.yield_configs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.registry.Registry.yield_configs" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="pytconf.registry.Registry.yield_name_data_for_config">
+<code class="sig-name descname">yield_name_data_for_config</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">config</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytconf/registry.html#Registry.yield_name_data_for_config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.registry.Registry.yield_name_data_for_config" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="pytconf.registry.Registry.yield_names_for_config">
+<code class="sig-name descname">yield_names_for_config</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">config</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytconf/registry.html#Registry.yield_names_for_config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.registry.Registry.yield_names_for_config" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
