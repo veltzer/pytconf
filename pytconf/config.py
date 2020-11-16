@@ -15,13 +15,11 @@ from pytconf.color_utils import (
     print_error,
 )
 from pytconf.errors_collector import ErrorsCollector
-from pytconf.param import Param, NO_DEFAULT
+from pytconf.param import NO_DEFAULT
 from pytconf.param_collector import the_collector
 from pytconf.pydoc import get_first_line
 from pytconf.registry import the_registry
 from pytconf.utils import get_logger
-
-PARAMS_ATTRIBUTE = "_params"
 
 DEFAULT_FUNCTION_GROUP_NAME = "default"
 DEFAULT_FUNCTION_GROUP_DESCRIPTION = "default command group"
@@ -55,18 +53,7 @@ class Config(metaclass=MetaConfig):
     """
     Base class for all configs
     """
-
-    @classmethod
-    def get_attributes(cls: Any) -> List[str]:
-        return getattr(cls, PARAMS_ATTRIBUTE).keys()
-
-    @classmethod
-    def get_params(cls: Any) -> Dict[str, Param]:
-        return getattr(cls, PARAMS_ATTRIBUTE)
-
-    @classmethod
-    def get_param_by_name(cls: Any, name: str) -> Param:
-        return cls.get_params()[name]
+    pass
 
 
 class HtmlGen:
@@ -191,7 +178,7 @@ class PytconfConf:
             print_title(f"  {doc}")
         else:
             print_title("  Undocumented parameter set")
-        for name, param in config.get_params().items():
+        for name, param in the_registry.yield_name_data_for_config(config):
             if param.default is NO_DEFAULT:
                 default = color_warn("MANDATORY")
             else:
@@ -223,7 +210,7 @@ class PytconfConf:
                     unknown_flags.append(flag_raw)
                 continue
             config = the_registry.get_config_for_name(flag_raw)
-            param = the_registry.get_data(flag_raw)
+            param = the_registry.get_data_for_name(flag_raw)
             edit = value.startswith("=")
             if edit:
                 v = param.s2t_generate_from_default(value[1:])
@@ -237,7 +224,7 @@ class PytconfConf:
         missing_parameters = []
         configs = self.function_name_to_configs[function_selected]
         for config in configs:
-            for attribute in config.get_attributes():
+            for attribute in the_registry.yield_names_for_config(config):
                 value = getattr(config, attribute)
                 if value is NO_DEFAULT:
                     missing_parameters.append(attribute)
@@ -440,7 +427,7 @@ class PytconfConf:
             doc = "undocumented config"
         html_gen.line("h3", doc, title="config: ")
         with html_gen.tag("table"):
-            for name, param in config.get_params().items():
+            for name, param in the_registry.yield_name_data_for_config(config):
                 with html_gen.tag("tr"):
                     if param.default is NO_DEFAULT:
                         default = "MANDATORY"
@@ -460,7 +447,7 @@ class PytconfConf:
     def write_config_file_json(cls, filename: str) -> None:
         values: Dict[str, str] = dict()
         for config in the_registry.yield_configs():
-            for name, param in config.get_params().items():
+            for name, param in the_registry.yield_name_data_for_config(config):
                 if param.default is not NO_DEFAULT:
                     values[name] = param.t2s(param.default)
         with open(filename, "wt") as f:

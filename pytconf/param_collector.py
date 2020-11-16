@@ -8,6 +8,9 @@ class ParamCollector:
     def clear(self):
         self.data = []
 
+    def get_item(self, i):
+        return self.data[i]
+
     def yield_items(self):
         for item in self.data:
             yield item

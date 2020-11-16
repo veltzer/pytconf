@@ -287,8 +287,8 @@ class ParamCreator:
             help_string=help_string,
             default=default,
             type_name="str",
-            function_s2t=convert_str_to_str_or_none,
-            function_t2s=convert_str_or_none_to_str,
+            function_s2t=convert_str_to_str,
+            function_t2s=convert_str_to_str,
         )
         return default
 
@@ -306,9 +306,9 @@ class ParamCreator:
         ParamFunctions(
             help_string=help_string,
             default=default,
-            type_name="str",
-            function_s2t=convert_str_to_str,
-            function_t2s=convert_str_to_str,
+            type_name="str_or_none",
+            function_s2t=convert_str_to_str_or_none,
+            function_t2s=convert_str_or_none_to_str,
         )
         return default
 
