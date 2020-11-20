@@ -1,0 +1,18 @@
+What if I want to put non configs (class members, class methods etc...)
+inside a config? Currently this is not supported (pyscrapers wanted to do
+this and I disabled this since it does not work).
+
+Why doesn't it work?
+Because I save all Params objects outside the class and then connect them
+to the variables according to the order. If there are variables which are
+not params I don't know about them. I assume that there is a match between
+number of params and number of member of the class.
+
+What about the old design?
+This was not a problem in the old design where we actaully assigned the
+params to the variables but this was an ugly design which created issues
+with syntax checkers.
+
+Solution?
+Currently I don't have one.
+Maybe use descriptors (which I don't understnad in depth).
