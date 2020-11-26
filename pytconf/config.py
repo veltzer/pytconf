@@ -177,7 +177,7 @@ class PytconfConf:
         else:
             print_title("  Undocumented parameter set")
         for name, param in the_registry.yield_name_data_for_config(config):
-            if param.default is NO_DEFAULT:
+            if param.reqiored:
                 default = color_warn("MANDATORY")
             else:
                 default = color_ok(param.t2s(param.default))
@@ -427,7 +427,7 @@ class PytconfConf:
         with html_gen.tag("table"):
             for name, param in the_registry.yield_name_data_for_config(config):
                 with html_gen.tag("tr"):
-                    if param.default is NO_DEFAULT:
+                    if param.required:
                         default = "MANDATORY"
                     else:
                         default = param.t2s(param.default)
@@ -446,8 +446,7 @@ class PytconfConf:
         values: Dict[str, str] = dict()
         for config in the_registry.yield_configs():
             for name, param in the_registry.yield_name_data_for_config(config):
-                if param.default is not NO_DEFAULT:
-                    values[name] = param.t2s(param.default)
+                values[name] = param.t2s(param.default)
         with open(filename, "wt") as f:
             json.dump(values, f, indent=4)
 
