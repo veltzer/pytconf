@@ -326,7 +326,7 @@ class PytconfConf:
                         errors.set_do_help()
                         errors.unset_show_errors()
                     else:
-                        errors.add_error(f"free args are not allowed [{self.free_args}]")
+                        errors.add_error(f"free args are not allowed [{','.join(self.free_args)}]")
 
         if function_selected is None:
             errors.add_error("no command is selected")
