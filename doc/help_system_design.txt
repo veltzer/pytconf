@@ -1,0 +1,16 @@
+the help command should be just another command.
+It should also be the default command such that
+if you do not say any command you use the default command.
+
+Here are the different ways to get help:
+	[app] -> run default command (should be help)
+	[app] help -> show help for entire app
+	[app] help [function] -> show help for function [function]
+	[app] help [function] [param] -> show help for param [param] of function [function]
+
+We don't want to support this way:
+	$ [app] [function] --help
+	or
+	$ [app] [function] help
+	because this means that the function cannot have it's own --help flag (in the first case)
+	or cannot handle a free argument with the contect "help" (in the second case).
