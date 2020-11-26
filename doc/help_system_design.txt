@@ -13,4 +13,4 @@ We don't want to support this way:
 	or
 	$ [app] [function] help
 	because this means that the function cannot have it's own --help flag (in the first case)
-	or cannot handle a free argument with the contect "help" (in the second case).
+	or cannot handle a free argument with the context "help" (in the second case).

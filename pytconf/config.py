@@ -15,11 +15,10 @@ from pytconf.color_utils import (
     print_error,
 )
 from pytconf.errors_collector import ErrorsCollector
-from pytconf.param import NO_DEFAULT
 from pytconf.param_collector import the_collector
 from pytconf.pydoc import get_first_line
 from pytconf.registry import the_registry
-from pytconf.utils import get_logger
+from pytconf.utils import get_logger, noun
 
 DEFAULT_FUNCTION_GROUP_NAME = "default"
 DEFAULT_FUNCTION_GROUP_DESCRIPTION = "default command group"
@@ -222,13 +221,12 @@ class PytconfConf:
         missing_parameters = []
         configs = self.function_name_to_configs[function_selected]
         for config in configs:
-            for attribute in the_registry.yield_names_for_config(config):
-                value = getattr(config, attribute)
-                if value is NO_DEFAULT:
-                    missing_parameters.append(attribute)
+            for name, param in the_registry.yield_name_data_for_config(config):
+                if param.required and name not in flags:
+                    missing_parameters.append(name)
         if missing_parameters:
             errors.add_error(
-                f"missing parameters [{','.join(missing_parameters)}]"
+                f"missing {noun('parameter', len(missing_parameters))} [{','.join(missing_parameters)}]"
             )
 
     @staticmethod
