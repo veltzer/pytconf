@@ -61,7 +61,7 @@ class Param(abc.ABC):
         pass
 
     def more_help(self) -> Union[str, None]:
-        fake_use(self)
+        return fake_use(self)
 
 
 class ParamFunctions(Param):

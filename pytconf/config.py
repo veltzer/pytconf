@@ -177,7 +177,7 @@ class PytconfConf:
         else:
             print_title("  Undocumented parameter set")
         for name, param in the_registry.yield_name_data_for_config(config):
-            if param.reqiored:
+            if param.required:
                 default = color_warn("MANDATORY")
             else:
                 default = color_ok(param.t2s(param.default))
