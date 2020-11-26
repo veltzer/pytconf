@@ -9,6 +9,7 @@ setup_requires = []
 run_requires = [
     "termcolor",
     "yattag",
+    "pyfakeuse",
 ]
 
 test_requires = [

@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-from typing import List, Union
+from typing import List
 from registry import the_registry
 from param_collector import the_collector
 
@@ -36,8 +36,10 @@ NO_DEFAULT_TYPE = type(NO_DEFAULT)
 
 
 def create_list_int(
-    default: Union[List[int], NO_DEFAULT_TYPE] = NO_DEFAULT,
+    default=None,
 ) -> List[int]:
+    if default is None:
+        return []
     return default
 
 

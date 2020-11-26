@@ -517,15 +517,9 @@ Regular errors are the ones to be printed and carry the error_type = false.</p>
 </div>
 <div class="section" id="module-pytconf.param">
 <span id="pytconf-param-module"></span><h2>pytconf.param module<a class="headerlink" href="#module-pytconf.param" title="Permalink to this headline">¶</a></h2>
-<dl class="py attribute">
-<dt id="pytconf.param.NO_DEFAULT_TYPE">
-<code class="sig-prename descclassname">pytconf.param.</code><code class="sig-name descname">NO_DEFAULT_TYPE</code><a class="headerlink" href="#pytconf.param.NO_DEFAULT_TYPE" title="Permalink to this definition">¶</a></dt>
-<dd><p>alias of <a class="reference internal" href="#pytconf.param.Unique" title="pytconf.param.Unique"><code class="xref py py-class docutils literal notranslate"><span class="pre">pytconf.param.Unique</span></code></a></p>
-</dd></dl>
-
 <dl class="py class">
 <dt id="pytconf.param.Param">
-<em class="property">class </em><code class="sig-prename descclassname">pytconf.param.</code><code class="sig-name descname">Param</code><span class="sig-paren">(</span><em class="sig-param">help_string='No help for this configuration option'</em>, <em class="sig-param">default=&lt;pytconf.param.Unique object&gt;</em>, <em class="sig-param">type_name=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytconf/param.html#Param"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.param.Param" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pytconf.param.</code><code class="sig-name descname">Param</code><span class="sig-paren">(</span><em class="sig-param">help_string='No help for this configuration option'</em>, <em class="sig-param">required: bool = False</em>, <em class="sig-param">default: Any = &lt;pytconf.param.Unique object&gt;</em>, <em class="sig-param">type_name: str = None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytconf/param.html#Param"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.param.Param" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">abc.ABC</span></code></p>
 <p>Parent class of all parameters of configuration</p>
 <dl class="py method">
@@ -562,7 +556,7 @@ Regular errors are the ones to be printed and carry the error_type = false.</p>
 
 <dl class="py class">
 <dt id="pytconf.param.ParamChoice">
-<em class="property">class </em><code class="sig-prename descclassname">pytconf.param.</code><code class="sig-name descname">ParamChoice</code><span class="sig-paren">(</span><em class="sig-param">help_string='No help for this configuration option'</em>, <em class="sig-param">default=&lt;pytconf.param.Unique object&gt;</em>, <em class="sig-param">choice_list: List[str] = None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytconf/param.html#ParamChoice"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.param.ParamChoice" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pytconf.param.</code><code class="sig-name descname">ParamChoice</code><span class="sig-paren">(</span><em class="sig-param">help_string='No help for this configuration option'</em>, <em class="sig-param">required: bool = False</em>, <em class="sig-param">default: str = &lt;pytconf.param.Unique object&gt;</em>, <em class="sig-param">choice_list: List[str] = None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytconf/param.html#ParamChoice"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.param.ParamChoice" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#pytconf.param.Param" title="pytconf.param.Param"><code class="xref py py-class docutils literal notranslate"><span class="pre">pytconf.param.Param</span></code></a></p>
 <dl class="py method">
 <dt id="pytconf.param.ParamChoice.more_help">
@@ -588,133 +582,147 @@ Regular errors are the ones to be printed and carry the error_type = false.</p>
 <p>Static namespace with all the param creation functions.</p>
 <dl class="py method">
 <dt id="pytconf.param.ParamCreator.create_bool">
-<em class="property">static </em><code class="sig-name descname">create_bool</code><span class="sig-paren">(</span><em class="sig-param">help_string: str = 'No help for this configuration option'</em>, <em class="sig-param">default: Union[bool</em>, <em class="sig-param">pytconf.param.Unique] = &lt;pytconf.param.Unique object&gt;</em><span class="sig-paren">)</span> &#x2192; bool<a class="reference internal" href="_modules/pytconf/param.html#ParamCreator.create_bool"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.param.ParamCreator.create_bool" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="sig-name descname">create_bool</code><span class="sig-paren">(</span><em class="sig-param">help_string: str = 'No help for this configuration option'</em>, <em class="sig-param">default: bool = &lt;pytconf.param.Unique object&gt;</em>, <em class="sig-param">required: bool = False</em><span class="sig-paren">)</span> &#x2192; bool<a class="reference internal" href="_modules/pytconf/param.html#ParamCreator.create_bool"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.param.ParamCreator.create_bool" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a bool parameter
 :param help_string:
 :param default:
+:param required:
 :return:</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="pytconf.param.ParamCreator.create_choice">
-<em class="property">static </em><code class="sig-name descname">create_choice</code><span class="sig-paren">(</span><em class="sig-param">choice_list: List[str], help_string: str = 'No help for this configuration option', default: Union[str, pytconf.param.Unique] = &lt;pytconf.param.Unique object&gt;</em><span class="sig-paren">)</span> &#x2192; str<a class="reference internal" href="_modules/pytconf/param.html#ParamCreator.create_choice"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.param.ParamCreator.create_choice" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="sig-name descname">create_choice</code><span class="sig-paren">(</span><em class="sig-param">choice_list: List[str], help_string: str = 'No help for this configuration option', default: str = &lt;pytconf.param.Unique object&gt;, required: bool = False</em><span class="sig-paren">)</span> &#x2192; str<a class="reference internal" href="_modules/pytconf/param.html#ParamCreator.create_choice"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.param.ParamCreator.create_choice" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a choice config
 :param choice_list:
 :param help_string:
 :param default:
+:param required:
 :return:</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="pytconf.param.ParamCreator.create_enum">
-<em class="property">static </em><code class="sig-name descname">create_enum</code><span class="sig-paren">(</span><em class="sig-param">enum_type: Type[enum.Enum], help_string: str = 'No help for this configuration option', default: Union[Any, pytconf.param.Unique] = &lt;pytconf.param.Unique object&gt;</em><span class="sig-paren">)</span> &#x2192; Type<span class="p">[</span>enum.Enum<span class="p">]</span><a class="reference internal" href="_modules/pytconf/param.html#ParamCreator.create_enum"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.param.ParamCreator.create_enum" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="sig-name descname">create_enum</code><span class="sig-paren">(</span><em class="sig-param">enum_type: Type[enum.Enum], help_string: str = 'No help for this configuration option', default: Type[enum.Enum] = &lt;pytconf.param.Unique object&gt;, required: bool = False</em><span class="sig-paren">)</span> &#x2192; Type<span class="p">[</span>enum.Enum<span class="p">]</span><a class="reference internal" href="_modules/pytconf/param.html#ParamCreator.create_enum"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.param.ParamCreator.create_enum" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create an enum config
 :param enum_type:
 :param help_string:
 :param default:
+:param required:
 :return:</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="pytconf.param.ParamCreator.create_enum_subset">
-<em class="property">static </em><code class="sig-name descname">create_enum_subset</code><span class="sig-paren">(</span><em class="sig-param">enum_type: Type[enum.Enum], help_string: str = 'No help for this configuration option', default: Union[Any, pytconf.enum_subset.EnumSubset] = &lt;pytconf.param.Unique object&gt;</em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#pytconf.enum_subset.EnumSubset" title="pytconf.enum_subset.EnumSubset">pytconf.enum_subset.EnumSubset</a><a class="reference internal" href="_modules/pytconf/param.html#ParamCreator.create_enum_subset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.param.ParamCreator.create_enum_subset" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="sig-name descname">create_enum_subset</code><span class="sig-paren">(</span><em class="sig-param">enum_type: Type[enum.Enum], help_string: str = 'No help for this configuration option', default: pytconf.enum_subset.EnumSubset = &lt;pytconf.param.Unique object&gt;, required: bool = False</em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#pytconf.enum_subset.EnumSubset" title="pytconf.enum_subset.EnumSubset">pytconf.enum_subset.EnumSubset</a><a class="reference internal" href="_modules/pytconf/param.html#ParamCreator.create_enum_subset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.param.ParamCreator.create_enum_subset" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create an enum config
 :param enum_type:
 :param help_string:
 :param default:
+:param required:
 :return:</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="pytconf.param.ParamCreator.create_existing_bucket">
-<em class="property">static </em><code class="sig-name descname">create_existing_bucket</code><span class="sig-paren">(</span><em class="sig-param">help_string: str = 'No help for this configuration option'</em>, <em class="sig-param">default: Union[str</em>, <em class="sig-param">pytconf.param.Unique] = &lt;pytconf.param.Unique object&gt;</em><span class="sig-paren">)</span> &#x2192; str<a class="reference internal" href="_modules/pytconf/param.html#ParamCreator.create_existing_bucket"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.param.ParamCreator.create_existing_bucket" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="sig-name descname">create_existing_bucket</code><span class="sig-paren">(</span><em class="sig-param">help_string: str = 'No help for this configuration option'</em>, <em class="sig-param">default: str = &lt;pytconf.param.Unique object&gt;</em>, <em class="sig-param">required: bool = False</em><span class="sig-paren">)</span> &#x2192; str<a class="reference internal" href="_modules/pytconf/param.html#ParamCreator.create_existing_bucket"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.param.ParamCreator.create_existing_bucket" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a bucket name on gcp
 :param help_string:
 :param default:
+:param required:
 :return:</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="pytconf.param.ParamCreator.create_existing_file">
-<em class="property">static </em><code class="sig-name descname">create_existing_file</code><span class="sig-paren">(</span><em class="sig-param">help_string: str = 'No help for this configuration option'</em>, <em class="sig-param">default: Union[str</em>, <em class="sig-param">pytconf.param.Unique] = &lt;pytconf.param.Unique object&gt;</em>, <em class="sig-param">suffixes: Optional[List[str]] = None</em><span class="sig-paren">)</span> &#x2192; str<a class="reference internal" href="_modules/pytconf/param.html#ParamCreator.create_existing_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.param.ParamCreator.create_existing_file" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="sig-name descname">create_existing_file</code><span class="sig-paren">(</span><em class="sig-param">help_string: str = 'No help for this configuration option'</em>, <em class="sig-param">default: str = &lt;pytconf.param.Unique object&gt;</em>, <em class="sig-param">required: bool = False</em>, <em class="sig-param">suffixes: Optional[List[str]] = None</em><span class="sig-paren">)</span> &#x2192; str<a class="reference internal" href="_modules/pytconf/param.html#ParamCreator.create_existing_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.param.ParamCreator.create_existing_file" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a new file parameter
 :param help_string:
 :param default:
+:param required:
 :param suffixes:
 :return:</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="pytconf.param.ParamCreator.create_existing_folder">
-<em class="property">static </em><code class="sig-name descname">create_existing_folder</code><span class="sig-paren">(</span><em class="sig-param">help_string: str = 'No help for this configuration option'</em>, <em class="sig-param">default: Union[str</em>, <em class="sig-param">pytconf.param.Unique] = &lt;pytconf.param.Unique object&gt;</em>, <em class="sig-param">suffixes: Optional[List[str]] = None</em><span class="sig-paren">)</span> &#x2192; str<a class="reference internal" href="_modules/pytconf/param.html#ParamCreator.create_existing_folder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.param.ParamCreator.create_existing_folder" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="sig-name descname">create_existing_folder</code><span class="sig-paren">(</span><em class="sig-param">help_string: str = 'No help for this configuration option'</em>, <em class="sig-param">default: str = &lt;pytconf.param.Unique object&gt;</em>, <em class="sig-param">required: bool = False</em>, <em class="sig-param">suffixes: Optional[List[str]] = None</em><span class="sig-paren">)</span> &#x2192; str<a class="reference internal" href="_modules/pytconf/param.html#ParamCreator.create_existing_folder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.param.ParamCreator.create_existing_folder" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a new folder parameter
 :param help_string:
 :param default:
+:param required:
 :param suffixes:
 :return:</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="pytconf.param.ParamCreator.create_int">
-<em class="property">static </em><code class="sig-name descname">create_int</code><span class="sig-paren">(</span><em class="sig-param">help_string: str = 'No help for this configuration option'</em>, <em class="sig-param">default: Union[int</em>, <em class="sig-param">pytconf.param.Unique] = &lt;pytconf.param.Unique object&gt;</em><span class="sig-paren">)</span> &#x2192; int<a class="reference internal" href="_modules/pytconf/param.html#ParamCreator.create_int"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.param.ParamCreator.create_int" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="sig-name descname">create_int</code><span class="sig-paren">(</span><em class="sig-param">help_string: str = 'No help for this configuration option'</em>, <em class="sig-param">default: int = &lt;pytconf.param.Unique object&gt;</em>, <em class="sig-param">required: bool = False</em><span class="sig-paren">)</span> &#x2192; int<a class="reference internal" href="_modules/pytconf/param.html#ParamCreator.create_int"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.param.ParamCreator.create_int" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create an int parameter
 :param help_string:
 :param default:
+:param required:
 :return:</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="pytconf.param.ParamCreator.create_int_or_none">
-<em class="property">static </em><code class="sig-name descname">create_int_or_none</code><span class="sig-paren">(</span><em class="sig-param">help_string: str = 'No help for this configuration option'</em>, <em class="sig-param">default: Union[int</em>, <em class="sig-param">None</em>, <em class="sig-param">pytconf.param.Unique] = &lt;pytconf.param.Unique object&gt;</em><span class="sig-paren">)</span> &#x2192; Optional<span class="p">[</span>int<span class="p">]</span><a class="reference internal" href="_modules/pytconf/param.html#ParamCreator.create_int_or_none"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.param.ParamCreator.create_int_or_none" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="sig-name descname">create_int_or_none</code><span class="sig-paren">(</span><em class="sig-param">help_string: str = 'No help for this configuration option'</em>, <em class="sig-param">default: Optional[int] = &lt;pytconf.param.Unique object&gt;</em>, <em class="sig-param">required: bool = False</em><span class="sig-paren">)</span> &#x2192; Optional<span class="p">[</span>int<span class="p">]</span><a class="reference internal" href="_modules/pytconf/param.html#ParamCreator.create_int_or_none"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.param.ParamCreator.create_int_or_none" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create an int parameter
 :param help_string:
 :param default:
+:param required:
 :return:</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="pytconf.param.ParamCreator.create_list_int">
-<em class="property">static </em><code class="sig-name descname">create_list_int</code><span class="sig-paren">(</span><em class="sig-param">help_string: str = 'No help for this configuration option', default: Union[List[int], pytconf.param.Unique] = &lt;pytconf.param.Unique object&gt;</em><span class="sig-paren">)</span> &#x2192; List<span class="p">[</span>int<span class="p">]</span><a class="reference internal" href="_modules/pytconf/param.html#ParamCreator.create_list_int"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.param.ParamCreator.create_list_int" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="sig-name descname">create_list_int</code><span class="sig-paren">(</span><em class="sig-param">help_string: str = 'No help for this configuration option'</em>, <em class="sig-param">default: List[int] = &lt;pytconf.param.Unique object&gt;</em>, <em class="sig-param">required: bool = False</em><span class="sig-paren">)</span> &#x2192; List<span class="p">[</span>int<span class="p">]</span><a class="reference internal" href="_modules/pytconf/param.html#ParamCreator.create_list_int"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.param.ParamCreator.create_list_int" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a List[int] parameter
 :param help_string:
 :param default:
+:param required:
 :return:</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="pytconf.param.ParamCreator.create_list_str">
-<em class="property">static </em><code class="sig-name descname">create_list_str</code><span class="sig-paren">(</span><em class="sig-param">help_string: str = 'No help for this configuration option', default: Union[List[str], pytconf.param.Unique] = &lt;pytconf.param.Unique object&gt;</em><span class="sig-paren">)</span> &#x2192; List<span class="p">[</span>str<span class="p">]</span><a class="reference internal" href="_modules/pytconf/param.html#ParamCreator.create_list_str"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.param.ParamCreator.create_list_str" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="sig-name descname">create_list_str</code><span class="sig-paren">(</span><em class="sig-param">help_string: str = 'No help for this configuration option'</em>, <em class="sig-param">default: List[str] = &lt;pytconf.param.Unique object&gt;</em>, <em class="sig-param">required: bool = False</em><span class="sig-paren">)</span> &#x2192; List<span class="p">[</span>str<span class="p">]</span><a class="reference internal" href="_modules/pytconf/param.html#ParamCreator.create_list_str"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.param.ParamCreator.create_list_str" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a List[str] parameter
 :param help_string:
 :param default:
+:param required:
 :return:</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="pytconf.param.ParamCreator.create_new_file">
-<em class="property">static </em><code class="sig-name descname">create_new_file</code><span class="sig-paren">(</span><em class="sig-param">help_string: str = 'No help for this configuration option'</em>, <em class="sig-param">default: Union[str</em>, <em class="sig-param">pytconf.param.Unique] = &lt;pytconf.param.Unique object&gt;</em>, <em class="sig-param">suffixes: Optional[List[str]] = None</em><span class="sig-paren">)</span> &#x2192; str<a class="reference internal" href="_modules/pytconf/param.html#ParamCreator.create_new_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.param.ParamCreator.create_new_file" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="sig-name descname">create_new_file</code><span class="sig-paren">(</span><em class="sig-param">help_string: str = 'No help for this configuration option'</em>, <em class="sig-param">default: str = &lt;pytconf.param.Unique object&gt;</em>, <em class="sig-param">required: bool = False</em>, <em class="sig-param">suffixes: List[str] = None</em><span class="sig-paren">)</span> &#x2192; str<a class="reference internal" href="_modules/pytconf/param.html#ParamCreator.create_new_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.param.ParamCreator.create_new_file" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a new file parameter
 :param help_string:
 :param default:
+:param required:
 :param suffixes:
 :return:</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="pytconf.param.ParamCreator.create_str">
-<em class="property">static </em><code class="sig-name descname">create_str</code><span class="sig-paren">(</span><em class="sig-param">help_string: str = 'No help for this configuration option'</em>, <em class="sig-param">default: Union[str</em>, <em class="sig-param">pytconf.param.Unique] = &lt;pytconf.param.Unique object&gt;</em><span class="sig-paren">)</span> &#x2192; str<a class="reference internal" href="_modules/pytconf/param.html#ParamCreator.create_str"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.param.ParamCreator.create_str" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="sig-name descname">create_str</code><span class="sig-paren">(</span><em class="sig-param">help_string: str = 'No help for this configuration option'</em>, <em class="sig-param">default: str = &lt;pytconf.param.Unique object&gt;</em>, <em class="sig-param">required: bool = False</em><span class="sig-paren">)</span> &#x2192; str<a class="reference internal" href="_modules/pytconf/param.html#ParamCreator.create_str"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.param.ParamCreator.create_str" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a string parameter
 :param help_string:
 :param default:
+:param required:
 :return:</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="pytconf.param.ParamCreator.create_str_or_none">
-<em class="property">static </em><code class="sig-name descname">create_str_or_none</code><span class="sig-paren">(</span><em class="sig-param">help_string: str = 'No help for this configuration option'</em>, <em class="sig-param">default: Union[str</em>, <em class="sig-param">None</em>, <em class="sig-param">pytconf.param.Unique] = &lt;pytconf.param.Unique object&gt;</em><span class="sig-paren">)</span> &#x2192; Optional<span class="p">[</span>str<span class="p">]</span><a class="reference internal" href="_modules/pytconf/param.html#ParamCreator.create_str_or_none"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.param.ParamCreator.create_str_or_none" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="sig-name descname">create_str_or_none</code><span class="sig-paren">(</span><em class="sig-param">help_string: str = 'No help for this configuration option'</em>, <em class="sig-param">default: Optional[str] = &lt;pytconf.param.Unique object&gt;</em>, <em class="sig-param">required: bool = False</em><span class="sig-paren">)</span> &#x2192; Optional<span class="p">[</span>str<span class="p">]</span><a class="reference internal" href="_modules/pytconf/param.html#ParamCreator.create_str_or_none"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.param.ParamCreator.create_str_or_none" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a string parameter
 :param help_string:
 :param default:
+:param required:
 :return:</p>
 </dd></dl>
 
@@ -722,7 +730,7 @@ Regular errors are the ones to be printed and carry the error_type = false.</p>
 
 <dl class="py class">
 <dt id="pytconf.param.ParamEnum">
-<em class="property">class </em><code class="sig-prename descclassname">pytconf.param.</code><code class="sig-name descname">ParamEnum</code><span class="sig-paren">(</span><em class="sig-param">help_string='No help for this configuration option'</em>, <em class="sig-param">default=&lt;pytconf.param.Unique object&gt;</em>, <em class="sig-param">enum_type: Type[enum.Enum] = None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytconf/param.html#ParamEnum"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.param.ParamEnum" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pytconf.param.</code><code class="sig-name descname">ParamEnum</code><span class="sig-paren">(</span><em class="sig-param">help_string='No help for this configuration option'</em>, <em class="sig-param">default: Any = &lt;pytconf.param.Unique object&gt;</em>, <em class="sig-param">required: bool = False</em>, <em class="sig-param">enum_type: Type[enum.Enum] = None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytconf/param.html#ParamEnum"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.param.ParamEnum" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#pytconf.param.Param" title="pytconf.param.Param"><code class="xref py py-class docutils literal notranslate"><span class="pre">pytconf.param.Param</span></code></a></p>
 <dl class="py method">
 <dt id="pytconf.param.ParamEnum.get_type_name">
@@ -748,7 +756,7 @@ Regular errors are the ones to be printed and carry the error_type = false.</p>
 
 <dl class="py class">
 <dt id="pytconf.param.ParamEnumSubset">
-<em class="property">class </em><code class="sig-prename descclassname">pytconf.param.</code><code class="sig-name descname">ParamEnumSubset</code><span class="sig-paren">(</span><em class="sig-param">help_string='No help for this configuration option'</em>, <em class="sig-param">default=&lt;pytconf.param.Unique object&gt;</em>, <em class="sig-param">enum_type: Type[enum.Enum] = None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytconf/param.html#ParamEnumSubset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.param.ParamEnumSubset" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pytconf.param.</code><code class="sig-name descname">ParamEnumSubset</code><span class="sig-paren">(</span><em class="sig-param">help_string='No help for this configuration option'</em>, <em class="sig-param">default: Any = &lt;pytconf.param.Unique object&gt;</em>, <em class="sig-param">required: bool = False</em>, <em class="sig-param">enum_type: Type[enum.Enum] = None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytconf/param.html#ParamEnumSubset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.param.ParamEnumSubset" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#pytconf.param.Param" title="pytconf.param.Param"><code class="xref py py-class docutils literal notranslate"><span class="pre">pytconf.param.Param</span></code></a></p>
 <dl class="py method">
 <dt id="pytconf.param.ParamEnumSubset.get_type_name">
@@ -779,7 +787,7 @@ Regular errors are the ones to be printed and carry the error_type = false.</p>
 
 <dl class="py class">
 <dt id="pytconf.param.ParamFilename">
-<em class="property">class </em><code class="sig-prename descclassname">pytconf.param.</code><code class="sig-name descname">ParamFilename</code><span class="sig-paren">(</span><em class="sig-param">help_string='No help for this configuration option'</em>, <em class="sig-param">default=&lt;pytconf.param.Unique object&gt;</em>, <em class="sig-param">type_name=None</em>, <em class="sig-param">suffixes: List[str] = None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytconf/param.html#ParamFilename"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.param.ParamFilename" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pytconf.param.</code><code class="sig-name descname">ParamFilename</code><span class="sig-paren">(</span><em class="sig-param">help_string: str = 'No help for this configuration option'</em>, <em class="sig-param">required: bool = False</em>, <em class="sig-param">default: str = &lt;pytconf.param.Unique object&gt;</em>, <em class="sig-param">type_name=None</em>, <em class="sig-param">suffixes: List[str] = None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytconf/param.html#ParamFilename"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.param.ParamFilename" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#pytconf.param.Param" title="pytconf.param.Param"><code class="xref py py-class docutils literal notranslate"><span class="pre">pytconf.param.Param</span></code></a></p>
 <dl class="py method">
 <dt id="pytconf.param.ParamFilename.more_help">
@@ -800,7 +808,7 @@ Regular errors are the ones to be printed and carry the error_type = false.</p>
 
 <dl class="py class">
 <dt id="pytconf.param.ParamFunctions">
-<em class="property">class </em><code class="sig-prename descclassname">pytconf.param.</code><code class="sig-name descname">ParamFunctions</code><span class="sig-paren">(</span><em class="sig-param">help_string='No help for this configuration option'</em>, <em class="sig-param">default=&lt;pytconf.param.Unique object&gt;</em>, <em class="sig-param">type_name=None</em>, <em class="sig-param">function_s2t: Callable = None</em>, <em class="sig-param">function_s2t_generate_from_default: Callable = None</em>, <em class="sig-param">function_t2s: Callable = None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytconf/param.html#ParamFunctions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.param.ParamFunctions" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pytconf.param.</code><code class="sig-name descname">ParamFunctions</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">help_string</span><span class="o">=</span><span class="default_value">'No help for this configuration option'</span></em>, <em class="sig-param"><span class="n">required</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">False</span></em>, <em class="sig-param"><span class="n">default</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">type_name</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">function_s2t</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">function_s2t_generate_from_default</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">function_t2s</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pytconf/param.html#ParamFunctions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pytconf.param.ParamFunctions" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#pytconf.param.Param" title="pytconf.param.Param"><code class="xref py py-class docutils literal notranslate"><span class="pre">pytconf.param.Param</span></code></a></p>
 <p>Parent class of all parameters of configuration</p>
 <dl class="py method">

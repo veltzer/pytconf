@@ -2,6 +2,7 @@
 # production requirements
 termcolor
 yattag
+pyfakeuse
 # dev requirements
 pyclassifiers
 pypitools

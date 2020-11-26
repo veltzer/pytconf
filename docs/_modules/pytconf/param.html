@@ -46,14 +46,15 @@
     <span class="n">convert_str_to_bool</span><span class="p">,</span> <span class="n">convert_bool_to_str</span>
 <span class="kn">from</span> <span class="nn">pytconf.param_collector</span> <span class="kn">import</span> <span class="n">the_collector</span>
 
+<span class="n">NO_HELP</span> <span class="o">=</span> <span class="s2">&quot;No help for this configuration option&quot;</span>
+<span class="n">REQUIRED_DEFAULT</span> <span class="o">=</span> <span class="kc">False</span>
+
 
 <div class="viewcode-block" id="Unique"><a class="viewcode-back" href="../../pytconf.html#pytconf.param.Unique">[docs]</a><span class="k">class</span> <span class="nc">Unique</span><span class="p">:</span>
     <span class="k">pass</span></div>
 
 
 <span class="n">NO_DEFAULT</span> <span class="o">=</span> <span class="n">Unique</span><span class="p">()</span>
-<span class="n">NO_DEFAULT_TYPE</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="n">NO_DEFAULT</span><span class="p">)</span>
-<span class="n">NO_HELP</span> <span class="o">=</span> <span class="s2">&quot;No help for this configuration option&quot;</span>
 
 
 <div class="viewcode-block" id="Param"><a class="viewcode-back" href="../../pytconf.html#pytconf.param.Param">[docs]</a><span class="k">class</span> <span class="nc">Param</span><span class="p">(</span><span class="n">abc</span><span class="o">.</span><span class="n">ABC</span><span class="p">):</span>
@@ -62,10 +63,15 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">help_string</span><span class="o">=</span><span class="n">NO_HELP</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">NO_DEFAULT</span><span class="p">,</span> <span class="n">type_name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">help_string</span><span class="o">=</span><span class="n">NO_HELP</span><span class="p">,</span>
+        <span class="n">required</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">REQUIRED_DEFAULT</span><span class="p">,</span>
+        <span class="n">default</span><span class="p">:</span> <span class="n">Any</span> <span class="o">=</span> <span class="n">NO_DEFAULT</span><span class="p">,</span>
+        <span class="n">type_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">help_string</span> <span class="o">=</span> <span class="n">help_string</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">required</span> <span class="o">=</span> <span class="n">required</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">default</span> <span class="o">=</span> <span class="n">default</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">type_name</span> <span class="o">=</span> <span class="n">type_name</span>
 
@@ -86,8 +92,8 @@
     <span class="k">def</span> <span class="nf">t2s</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t</span><span class="p">:</span> <span class="nb">object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="k">pass</span></div>
 
-    <span class="c1"># noinspection PyMethodMayBeStatic</span>
 <div class="viewcode-block" id="Param.more_help"><a class="viewcode-back" href="../../pytconf.html#pytconf.param.Param.more_help">[docs]</a>    <span class="k">def</span> <span class="nf">more_help</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">]:</span>
+        <span class="n">pyfakeuse</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="k">return</span> <span class="kc">None</span></div></div>
 
 
@@ -99,14 +105,15 @@
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">help_string</span><span class="o">=</span><span class="n">NO_HELP</span><span class="p">,</span>
-        <span class="n">default</span><span class="o">=</span><span class="n">NO_DEFAULT</span><span class="p">,</span>
+        <span class="n">required</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">REQUIRED_DEFAULT</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">type_name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">function_s2t</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">function_s2t_generate_from_default</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">function_t2s</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
-            <span class="n">help_string</span><span class="o">=</span><span class="n">help_string</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">default</span><span class="p">,</span> <span class="n">type_name</span><span class="o">=</span><span class="n">type_name</span><span class="p">,</span>
+            <span class="n">help_string</span><span class="o">=</span><span class="n">help_string</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="n">required</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">default</span><span class="p">,</span> <span class="n">type_name</span><span class="o">=</span><span class="n">type_name</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">function_s2t</span> <span class="o">=</span> <span class="n">function_s2t</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">function_t2s</span> <span class="o">=</span> <span class="n">function_t2s</span>
@@ -126,13 +133,14 @@
 <div class="viewcode-block" id="ParamFilename"><a class="viewcode-back" href="../../pytconf.html#pytconf.param.ParamFilename">[docs]</a><span class="k">class</span> <span class="nc">ParamFilename</span><span class="p">(</span><span class="n">Param</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
-        <span class="n">help_string</span><span class="o">=</span><span class="n">NO_HELP</span><span class="p">,</span>
-        <span class="n">default</span><span class="o">=</span><span class="n">NO_DEFAULT</span><span class="p">,</span>
+        <span class="n">help_string</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">NO_HELP</span><span class="p">,</span>
+        <span class="n">required</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">REQUIRED_DEFAULT</span><span class="p">,</span>
+        <span class="n">default</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">NO_DEFAULT</span><span class="p">,</span>
         <span class="n">type_name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">suffixes</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
-            <span class="n">help_string</span><span class="o">=</span><span class="n">help_string</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">default</span><span class="p">,</span> <span class="n">type_name</span><span class="o">=</span><span class="n">type_name</span><span class="p">,</span>
+            <span class="n">help_string</span><span class="o">=</span><span class="n">help_string</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="n">required</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">default</span><span class="p">,</span> <span class="n">type_name</span><span class="o">=</span><span class="n">type_name</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">suffixes</span> <span class="o">=</span> <span class="n">suffixes</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span>
@@ -155,10 +163,17 @@
 
 <div class="viewcode-block" id="ParamEnum"><a class="viewcode-back" href="../../pytconf.html#pytconf.param.ParamEnum">[docs]</a><span class="k">class</span> <span class="nc">ParamEnum</span><span class="p">(</span><span class="n">Param</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">help_string</span><span class="o">=</span><span class="n">NO_HELP</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">NO_DEFAULT</span><span class="p">,</span> <span class="n">enum_type</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">Enum</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">help_string</span><span class="o">=</span><span class="n">NO_HELP</span><span class="p">,</span>
+        <span class="n">default</span><span class="p">:</span> <span class="n">Any</span> <span class="o">=</span> <span class="n">NO_DEFAULT</span><span class="p">,</span>
+        <span class="n">required</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">REQUIRED_DEFAULT</span><span class="p">,</span>
+        <span class="n">enum_type</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">Enum</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
-            <span class="n">help_string</span><span class="o">=</span><span class="n">help_string</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">default</span><span class="p">,</span> <span class="n">type_name</span><span class="o">=</span><span class="s2">&quot;enum&quot;</span><span class="p">,</span>
+            <span class="n">help_string</span><span class="o">=</span><span class="n">help_string</span><span class="p">,</span>
+            <span class="n">default</span><span class="o">=</span><span class="n">default</span><span class="p">,</span>
+            <span class="n">required</span><span class="o">=</span><span class="n">required</span><span class="p">,</span>
+            <span class="n">type_name</span><span class="o">=</span><span class="s2">&quot;enum&quot;</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">enum_type</span> <span class="o">=</span> <span class="n">enum_type</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span>
@@ -178,10 +193,17 @@
 
 <div class="viewcode-block" id="ParamEnumSubset"><a class="viewcode-back" href="../../pytconf.html#pytconf.param.ParamEnumSubset">[docs]</a><span class="k">class</span> <span class="nc">ParamEnumSubset</span><span class="p">(</span><span class="n">Param</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">help_string</span><span class="o">=</span><span class="n">NO_HELP</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">NO_DEFAULT</span><span class="p">,</span> <span class="n">enum_type</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">Enum</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">help_string</span><span class="o">=</span><span class="n">NO_HELP</span><span class="p">,</span>
+        <span class="n">default</span><span class="p">:</span> <span class="n">Any</span> <span class="o">=</span> <span class="n">NO_DEFAULT</span><span class="p">,</span>
+        <span class="n">required</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">REQUIRED_DEFAULT</span><span class="p">,</span>
+        <span class="n">enum_type</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">Enum</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
-            <span class="n">help_string</span><span class="o">=</span><span class="n">help_string</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">default</span><span class="p">,</span> <span class="n">type_name</span><span class="o">=</span><span class="s2">&quot;enum&quot;</span><span class="p">,</span>
+            <span class="n">help_string</span><span class="o">=</span><span class="n">help_string</span><span class="p">,</span>
+            <span class="n">default</span><span class="o">=</span><span class="n">default</span><span class="p">,</span>
+            <span class="n">required</span><span class="o">=</span><span class="n">required</span><span class="p">,</span>
+            <span class="n">type_name</span><span class="o">=</span><span class="s2">&quot;enum&quot;</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">enum_type</span> <span class="o">=</span> <span class="n">enum_type</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span>
@@ -204,10 +226,17 @@
 
 <div class="viewcode-block" id="ParamChoice"><a class="viewcode-back" href="../../pytconf.html#pytconf.param.ParamChoice">[docs]</a><span class="k">class</span> <span class="nc">ParamChoice</span><span class="p">(</span><span class="n">Param</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">help_string</span><span class="o">=</span><span class="n">NO_HELP</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">NO_DEFAULT</span><span class="p">,</span> <span class="n">choice_list</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">help_string</span><span class="o">=</span><span class="n">NO_HELP</span><span class="p">,</span>
+        <span class="n">required</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">REQUIRED_DEFAULT</span><span class="p">,</span>
+        <span class="n">default</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">NO_DEFAULT</span><span class="p">,</span>
+        <span class="n">choice_list</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
-            <span class="n">help_string</span><span class="o">=</span><span class="n">help_string</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">default</span><span class="p">,</span> <span class="n">type_name</span><span class="o">=</span><span class="s2">&quot;Choice&quot;</span><span class="p">,</span>
+            <span class="n">help_string</span><span class="o">=</span><span class="n">help_string</span><span class="p">,</span>
+            <span class="n">required</span><span class="o">=</span><span class="n">required</span><span class="p">,</span>
+            <span class="n">default</span><span class="o">=</span><span class="n">default</span><span class="p">,</span>
+            <span class="n">type_name</span><span class="o">=</span><span class="s2">&quot;Choice&quot;</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">choice_list</span> <span class="o">=</span> <span class="n">choice_list</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span>
@@ -229,97 +258,122 @@
 
 <div class="viewcode-block" id="ParamCreator.create_int"><a class="viewcode-back" href="../../pytconf.html#pytconf.param.ParamCreator.create_int">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">create_int</span><span class="p">(</span>
-        <span class="n">help_string</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">NO_HELP</span><span class="p">,</span> <span class="n">default</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">NO_DEFAULT_TYPE</span><span class="p">]</span> <span class="o">=</span> <span class="n">NO_DEFAULT</span>
+        <span class="n">help_string</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">NO_HELP</span><span class="p">,</span>
+        <span class="n">default</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">NO_DEFAULT</span><span class="p">,</span>
+        <span class="n">required</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">REQUIRED_DEFAULT</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Create an int parameter</span>
 <span class="sd">        :param help_string:</span>
 <span class="sd">        :param default:</span>
+<span class="sd">        :param required:</span>
 <span class="sd">        :return:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">ParamFunctions</span><span class="p">(</span>
             <span class="n">help_string</span><span class="o">=</span><span class="n">help_string</span><span class="p">,</span>
             <span class="n">default</span><span class="o">=</span><span class="n">default</span><span class="p">,</span>
+            <span class="n">required</span><span class="o">=</span><span class="n">required</span><span class="p">,</span>
             <span class="n">type_name</span><span class="o">=</span><span class="s2">&quot;int&quot;</span><span class="p">,</span>
             <span class="n">function_s2t</span><span class="o">=</span><span class="n">convert_str_to_int</span><span class="p">,</span>
             <span class="n">function_t2s</span><span class="o">=</span><span class="n">convert_int_to_str</span><span class="p">,</span>
             <span class="n">function_s2t_generate_from_default</span><span class="o">=</span><span class="n">convert_str_to_int_default</span><span class="p">,</span>
         <span class="p">)</span>
+        <span class="k">if</span> <span class="n">default</span> <span class="ow">is</span> <span class="n">NO_DEFAULT</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">0</span>
         <span class="k">return</span> <span class="n">default</span></div>
 
 <div class="viewcode-block" id="ParamCreator.create_list_int"><a class="viewcode-back" href="../../pytconf.html#pytconf.param.ParamCreator.create_list_int">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">create_list_int</span><span class="p">(</span>
         <span class="n">help_string</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">NO_HELP</span><span class="p">,</span>
-        <span class="n">default</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">NO_DEFAULT_TYPE</span><span class="p">]</span> <span class="o">=</span> <span class="n">NO_DEFAULT</span><span class="p">,</span>
+        <span class="n">default</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">NO_DEFAULT</span><span class="p">,</span>
+        <span class="n">required</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">REQUIRED_DEFAULT</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Create a List[int] parameter</span>
 <span class="sd">        :param help_string:</span>
 <span class="sd">        :param default:</span>
+<span class="sd">        :param required:</span>
 <span class="sd">        :return:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">ParamFunctions</span><span class="p">(</span>
             <span class="n">help_string</span><span class="o">=</span><span class="n">help_string</span><span class="p">,</span>
             <span class="n">default</span><span class="o">=</span><span class="n">default</span><span class="p">,</span>
+            <span class="n">required</span><span class="o">=</span><span class="n">required</span><span class="p">,</span>
             <span class="n">type_name</span><span class="o">=</span><span class="s2">&quot;List[int]&quot;</span><span class="p">,</span>
             <span class="n">function_s2t</span><span class="o">=</span><span class="n">convert_str_to_list_int</span><span class="p">,</span>
             <span class="n">function_t2s</span><span class="o">=</span><span class="n">convert_list_int_to_str</span><span class="p">,</span>
         <span class="p">)</span>
+        <span class="k">if</span> <span class="n">default</span> <span class="ow">is</span> <span class="n">NO_DEFAULT</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[]</span>
         <span class="k">return</span> <span class="n">default</span></div>
 
 <div class="viewcode-block" id="ParamCreator.create_list_str"><a class="viewcode-back" href="../../pytconf.html#pytconf.param.ParamCreator.create_list_str">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">create_list_str</span><span class="p">(</span>
         <span class="n">help_string</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">NO_HELP</span><span class="p">,</span>
-        <span class="n">default</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">NO_DEFAULT_TYPE</span><span class="p">]</span> <span class="o">=</span> <span class="n">NO_DEFAULT</span><span class="p">,</span>
+        <span class="n">default</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">NO_DEFAULT</span><span class="p">,</span>
+        <span class="n">required</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">REQUIRED_DEFAULT</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Create a List[str] parameter</span>
 <span class="sd">        :param help_string:</span>
 <span class="sd">        :param default:</span>
+<span class="sd">        :param required:</span>
 <span class="sd">        :return:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">ParamFunctions</span><span class="p">(</span>
             <span class="n">help_string</span><span class="o">=</span><span class="n">help_string</span><span class="p">,</span>
             <span class="n">default</span><span class="o">=</span><span class="n">default</span><span class="p">,</span>
+            <span class="n">required</span><span class="o">=</span><span class="n">required</span><span class="p">,</span>
             <span class="n">type_name</span><span class="o">=</span><span class="s2">&quot;List[str]&quot;</span><span class="p">,</span>
             <span class="n">function_s2t</span><span class="o">=</span><span class="n">convert_str_to_list_str</span><span class="p">,</span>
             <span class="n">function_t2s</span><span class="o">=</span><span class="n">convert_list_str_to_str</span><span class="p">,</span>
         <span class="p">)</span>
+        <span class="k">if</span> <span class="n">default</span> <span class="ow">is</span> <span class="n">NO_DEFAULT</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[]</span>
         <span class="k">return</span> <span class="n">default</span></div>
 
 <div class="viewcode-block" id="ParamCreator.create_int_or_none"><a class="viewcode-back" href="../../pytconf.html#pytconf.param.ParamCreator.create_int_or_none">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">create_int_or_none</span><span class="p">(</span>
         <span class="n">help_string</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">NO_HELP</span><span class="p">,</span>
-        <span class="n">default</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">NO_DEFAULT_TYPE</span><span class="p">]</span> <span class="o">=</span> <span class="n">NO_DEFAULT</span><span class="p">,</span>
+        <span class="n">default</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="n">NO_DEFAULT</span><span class="p">,</span>
+        <span class="n">required</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">REQUIRED_DEFAULT</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="kc">None</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Create an int parameter</span>
 <span class="sd">        :param help_string:</span>
 <span class="sd">        :param default:</span>
+<span class="sd">        :param required:</span>
 <span class="sd">        :return:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">ParamFunctions</span><span class="p">(</span>
             <span class="n">help_string</span><span class="o">=</span><span class="n">help_string</span><span class="p">,</span>
             <span class="n">default</span><span class="o">=</span><span class="n">default</span><span class="p">,</span>
+            <span class="n">required</span><span class="o">=</span><span class="n">required</span><span class="p">,</span>
             <span class="n">type_name</span><span class="o">=</span><span class="s2">&quot;Union[int, None]&quot;</span><span class="p">,</span>
             <span class="n">function_s2t</span><span class="o">=</span><span class="n">convert_str_to_int_or_none</span><span class="p">,</span>
             <span class="n">function_t2s</span><span class="o">=</span><span class="n">convert_int_or_none_to_str</span><span class="p">,</span>
         <span class="p">)</span>
+        <span class="k">if</span> <span class="n">default</span> <span class="ow">is</span> <span class="n">NO_DEFAULT</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
         <span class="k">return</span> <span class="n">default</span></div>
 
 <div class="viewcode-block" id="ParamCreator.create_str"><a class="viewcode-back" href="../../pytconf.html#pytconf.param.ParamCreator.create_str">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">create_str</span><span class="p">(</span>
-        <span class="n">help_string</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">NO_HELP</span><span class="p">,</span> <span class="n">default</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">NO_DEFAULT_TYPE</span><span class="p">]</span> <span class="o">=</span> <span class="n">NO_DEFAULT</span>
+        <span class="n">help_string</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">NO_HELP</span><span class="p">,</span>
+        <span class="n">default</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">NO_DEFAULT</span><span class="p">,</span>
+        <span class="n">required</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">REQUIRED_DEFAULT</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Create a string parameter</span>
 <span class="sd">        :param help_string:</span>
 <span class="sd">        :param default:</span>
+<span class="sd">        :param required:</span>
 <span class="sd">        :return:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">ParamFunctions</span><span class="p">(</span>
             <span class="n">help_string</span><span class="o">=</span><span class="n">help_string</span><span class="p">,</span>
             <span class="n">default</span><span class="o">=</span><span class="n">default</span><span class="p">,</span>
+            <span class="n">required</span><span class="o">=</span><span class="n">required</span><span class="p">,</span>
             <span class="n">type_name</span><span class="o">=</span><span class="s2">&quot;str&quot;</span><span class="p">,</span>
             <span class="n">function_s2t</span><span class="o">=</span><span class="n">convert_str_to_str</span><span class="p">,</span>
             <span class="n">function_t2s</span><span class="o">=</span><span class="n">convert_str_to_str</span><span class="p">,</span>
@@ -329,174 +383,229 @@
 <div class="viewcode-block" id="ParamCreator.create_str_or_none"><a class="viewcode-back" href="../../pytconf.html#pytconf.param.ParamCreator.create_str_or_none">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">create_str_or_none</span><span class="p">(</span>
         <span class="n">help_string</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">NO_HELP</span><span class="p">,</span>
-        <span class="n">default</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">NO_DEFAULT_TYPE</span><span class="p">]</span> <span class="o">=</span> <span class="n">NO_DEFAULT</span><span class="p">,</span>
+        <span class="n">default</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="n">NO_DEFAULT</span><span class="p">,</span>
+        <span class="n">required</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">REQUIRED_DEFAULT</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Create a string parameter</span>
 <span class="sd">        :param help_string:</span>
 <span class="sd">        :param default:</span>
+<span class="sd">        :param required:</span>
 <span class="sd">        :return:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">ParamFunctions</span><span class="p">(</span>
             <span class="n">help_string</span><span class="o">=</span><span class="n">help_string</span><span class="p">,</span>
             <span class="n">default</span><span class="o">=</span><span class="n">default</span><span class="p">,</span>
+            <span class="n">required</span><span class="o">=</span><span class="n">required</span><span class="p">,</span>
             <span class="n">type_name</span><span class="o">=</span><span class="s2">&quot;str_or_none&quot;</span><span class="p">,</span>
             <span class="n">function_s2t</span><span class="o">=</span><span class="n">convert_str_to_str_or_none</span><span class="p">,</span>
             <span class="n">function_t2s</span><span class="o">=</span><span class="n">convert_str_or_none_to_str</span><span class="p">,</span>
         <span class="p">)</span>
+        <span class="k">if</span> <span class="n">default</span> <span class="o">==</span> <span class="n">NO_DEFAULT</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
         <span class="k">return</span> <span class="n">default</span></div>
 
 <div class="viewcode-block" id="ParamCreator.create_bool"><a class="viewcode-back" href="../../pytconf.html#pytconf.param.ParamCreator.create_bool">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">create_bool</span><span class="p">(</span>
-        <span class="n">help_string</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">NO_HELP</span><span class="p">,</span> <span class="n">default</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="n">NO_DEFAULT_TYPE</span><span class="p">]</span> <span class="o">=</span> <span class="n">NO_DEFAULT</span>
+        <span class="n">help_string</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">NO_HELP</span><span class="p">,</span>
+        <span class="n">default</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">NO_DEFAULT</span><span class="p">,</span>
+        <span class="n">required</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">REQUIRED_DEFAULT</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Create a bool parameter</span>
 <span class="sd">        :param help_string:</span>
 <span class="sd">        :param default:</span>
+<span class="sd">        :param required:</span>
 <span class="sd">        :return:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">ParamFunctions</span><span class="p">(</span>
             <span class="n">help_string</span><span class="o">=</span><span class="n">help_string</span><span class="p">,</span>
             <span class="n">default</span><span class="o">=</span><span class="n">default</span><span class="p">,</span>
+            <span class="n">required</span><span class="o">=</span><span class="n">required</span><span class="p">,</span>
             <span class="n">type_name</span><span class="o">=</span><span class="s2">&quot;bool&quot;</span><span class="p">,</span>
             <span class="n">function_s2t</span><span class="o">=</span><span class="n">convert_str_to_bool</span><span class="p">,</span>
             <span class="n">function_t2s</span><span class="o">=</span><span class="n">convert_bool_to_str</span><span class="p">,</span>
         <span class="p">)</span>
+        <span class="k">if</span> <span class="n">default</span> <span class="ow">is</span> <span class="n">NO_DEFAULT</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
         <span class="k">return</span> <span class="n">default</span></div>
 
 <div class="viewcode-block" id="ParamCreator.create_new_file"><a class="viewcode-back" href="../../pytconf.html#pytconf.param.ParamCreator.create_new_file">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">create_new_file</span><span class="p">(</span>
         <span class="n">help_string</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">NO_HELP</span><span class="p">,</span>
-        <span class="n">default</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">NO_DEFAULT_TYPE</span><span class="p">]</span> <span class="o">=</span> <span class="n">NO_DEFAULT</span><span class="p">,</span>
-        <span class="n">suffixes</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">default</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">NO_DEFAULT</span><span class="p">,</span>
+        <span class="n">required</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">REQUIRED_DEFAULT</span><span class="p">,</span>
+        <span class="n">suffixes</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Create a new file parameter</span>
 <span class="sd">        :param help_string:</span>
 <span class="sd">        :param default:</span>
+<span class="sd">        :param required:</span>
 <span class="sd">        :param suffixes:</span>
 <span class="sd">        :return:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">ParamFilename</span><span class="p">(</span>
             <span class="n">help_string</span><span class="o">=</span><span class="n">help_string</span><span class="p">,</span>
             <span class="n">default</span><span class="o">=</span><span class="n">default</span><span class="p">,</span>
+            <span class="n">required</span><span class="o">=</span><span class="n">required</span><span class="p">,</span>
             <span class="n">type_name</span><span class="o">=</span><span class="s2">&quot;new_file&quot;</span><span class="p">,</span>
             <span class="n">suffixes</span><span class="o">=</span><span class="n">suffixes</span><span class="p">,</span>
         <span class="p">)</span>
+        <span class="k">if</span> <span class="n">default</span> <span class="ow">is</span> <span class="n">NO_DEFAULT</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;&quot;</span>
         <span class="k">return</span> <span class="n">default</span></div>
 
 <div class="viewcode-block" id="ParamCreator.create_existing_file"><a class="viewcode-back" href="../../pytconf.html#pytconf.param.ParamCreator.create_existing_file">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">create_existing_file</span><span class="p">(</span>
         <span class="n">help_string</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">NO_HELP</span><span class="p">,</span>
-        <span class="n">default</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">NO_DEFAULT_TYPE</span><span class="p">]</span> <span class="o">=</span> <span class="n">NO_DEFAULT</span><span class="p">,</span>
+        <span class="n">default</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">NO_DEFAULT</span><span class="p">,</span>
+        <span class="n">required</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">REQUIRED_DEFAULT</span><span class="p">,</span>
         <span class="n">suffixes</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Create a new file parameter</span>
 <span class="sd">        :param help_string:</span>
 <span class="sd">        :param default:</span>
+<span class="sd">        :param required:</span>
 <span class="sd">        :param suffixes:</span>
 <span class="sd">        :return:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">ParamFilename</span><span class="p">(</span>
             <span class="n">help_string</span><span class="o">=</span><span class="n">help_string</span><span class="p">,</span>
             <span class="n">default</span><span class="o">=</span><span class="n">default</span><span class="p">,</span>
+            <span class="n">required</span><span class="o">=</span><span class="n">required</span><span class="p">,</span>
             <span class="n">type_name</span><span class="o">=</span><span class="s2">&quot;existing_file&quot;</span><span class="p">,</span>
             <span class="n">suffixes</span><span class="o">=</span><span class="n">suffixes</span><span class="p">,</span>
         <span class="p">)</span>
+        <span class="k">if</span> <span class="n">default</span> <span class="ow">is</span> <span class="n">NO_DEFAULT</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;&quot;</span>
         <span class="k">return</span> <span class="n">default</span></div>
 
 <div class="viewcode-block" id="ParamCreator.create_existing_folder"><a class="viewcode-back" href="../../pytconf.html#pytconf.param.ParamCreator.create_existing_folder">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">create_existing_folder</span><span class="p">(</span>
         <span class="n">help_string</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">NO_HELP</span><span class="p">,</span>
-        <span class="n">default</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">NO_DEFAULT_TYPE</span><span class="p">]</span> <span class="o">=</span> <span class="n">NO_DEFAULT</span><span class="p">,</span>
+        <span class="n">default</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">NO_DEFAULT</span><span class="p">,</span>
+        <span class="n">required</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">REQUIRED_DEFAULT</span><span class="p">,</span>
         <span class="n">suffixes</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Create a new folder parameter</span>
 <span class="sd">        :param help_string:</span>
 <span class="sd">        :param default:</span>
+<span class="sd">        :param required:</span>
 <span class="sd">        :param suffixes:</span>
 <span class="sd">        :return:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">ParamFilename</span><span class="p">(</span>
             <span class="n">help_string</span><span class="o">=</span><span class="n">help_string</span><span class="p">,</span>
             <span class="n">default</span><span class="o">=</span><span class="n">default</span><span class="p">,</span>
+            <span class="n">required</span><span class="o">=</span><span class="n">required</span><span class="p">,</span>
             <span class="n">type_name</span><span class="o">=</span><span class="s2">&quot;existing_folder&quot;</span><span class="p">,</span>
             <span class="n">suffixes</span><span class="o">=</span><span class="n">suffixes</span><span class="p">,</span>
         <span class="p">)</span>
+        <span class="k">if</span> <span class="n">default</span> <span class="ow">is</span> <span class="n">NO_DEFAULT</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;&quot;</span>
         <span class="k">return</span> <span class="n">default</span></div>
 
 <div class="viewcode-block" id="ParamCreator.create_choice"><a class="viewcode-back" href="../../pytconf.html#pytconf.param.ParamCreator.create_choice">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">create_choice</span><span class="p">(</span>
         <span class="n">choice_list</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
         <span class="n">help_string</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">NO_HELP</span><span class="p">,</span>
-        <span class="n">default</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">NO_DEFAULT_TYPE</span><span class="p">]</span> <span class="o">=</span> <span class="n">NO_DEFAULT</span><span class="p">,</span>
+        <span class="n">default</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">NO_DEFAULT</span><span class="p">,</span>
+        <span class="n">required</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">REQUIRED_DEFAULT</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Create a choice config</span>
 <span class="sd">        :param choice_list:</span>
 <span class="sd">        :param help_string:</span>
 <span class="sd">        :param default:</span>
+<span class="sd">        :param required:</span>
 <span class="sd">        :return:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">ParamChoice</span><span class="p">(</span>
-            <span class="n">help_string</span><span class="o">=</span><span class="n">help_string</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">default</span><span class="p">,</span> <span class="n">choice_list</span><span class="o">=</span><span class="n">choice_list</span><span class="p">,</span>
+            <span class="n">help_string</span><span class="o">=</span><span class="n">help_string</span><span class="p">,</span>
+            <span class="n">default</span><span class="o">=</span><span class="n">default</span><span class="p">,</span>
+            <span class="n">required</span><span class="o">=</span><span class="n">required</span><span class="p">,</span>
+            <span class="n">choice_list</span><span class="o">=</span><span class="n">choice_list</span><span class="p">,</span>
         <span class="p">)</span>
+        <span class="k">if</span> <span class="n">default</span> <span class="ow">is</span> <span class="n">NO_DEFAULT</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;&quot;</span>
         <span class="k">return</span> <span class="n">default</span></div>
 
 <div class="viewcode-block" id="ParamCreator.create_enum"><a class="viewcode-back" href="../../pytconf.html#pytconf.param.ParamCreator.create_enum">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">create_enum</span><span class="p">(</span>
         <span class="n">enum_type</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">Enum</span><span class="p">],</span>
         <span class="n">help_string</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">NO_HELP</span><span class="p">,</span>
-        <span class="n">default</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="n">NO_DEFAULT_TYPE</span><span class="p">]</span> <span class="o">=</span> <span class="n">NO_DEFAULT</span><span class="p">,</span>
+        <span class="n">default</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">Enum</span><span class="p">]</span> <span class="o">=</span> <span class="n">NO_DEFAULT</span><span class="p">,</span>
+        <span class="n">required</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">REQUIRED_DEFAULT</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Type</span><span class="p">[</span><span class="n">Enum</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Create an enum config</span>
 <span class="sd">        :param enum_type:</span>
 <span class="sd">        :param help_string:</span>
 <span class="sd">        :param default:</span>
+<span class="sd">        :param required:</span>
 <span class="sd">        :return:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">ParamEnum</span><span class="p">(</span><span class="n">help_string</span><span class="o">=</span><span class="n">help_string</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">default</span><span class="p">,</span> <span class="n">enum_type</span><span class="o">=</span><span class="n">enum_type</span><span class="p">,)</span>
+        <span class="n">ParamEnum</span><span class="p">(</span>
+            <span class="n">help_string</span><span class="o">=</span><span class="n">help_string</span><span class="p">,</span>
+            <span class="n">default</span><span class="o">=</span><span class="n">default</span><span class="p">,</span>
+            <span class="n">required</span><span class="o">=</span><span class="n">required</span><span class="p">,</span>
+            <span class="n">enum_type</span><span class="o">=</span><span class="n">enum_type</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="n">default</span> <span class="ow">is</span> <span class="n">NO_DEFAULT</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">enum_type</span>
         <span class="k">return</span> <span class="n">default</span></div>
 
 <div class="viewcode-block" id="ParamCreator.create_enum_subset"><a class="viewcode-back" href="../../pytconf.html#pytconf.param.ParamCreator.create_enum_subset">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">create_enum_subset</span><span class="p">(</span>
         <span class="n">enum_type</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">Enum</span><span class="p">],</span>
         <span class="n">help_string</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">NO_HELP</span><span class="p">,</span>
-        <span class="n">default</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="n">EnumSubset</span><span class="p">]</span> <span class="o">=</span> <span class="n">NO_DEFAULT</span><span class="p">,</span>
+        <span class="n">default</span><span class="p">:</span> <span class="n">EnumSubset</span> <span class="o">=</span> <span class="n">NO_DEFAULT</span><span class="p">,</span>
+        <span class="n">required</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">REQUIRED_DEFAULT</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">EnumSubset</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Create an enum config</span>
 <span class="sd">        :param enum_type:</span>
 <span class="sd">        :param help_string:</span>
 <span class="sd">        :param default:</span>
+<span class="sd">        :param required:</span>
 <span class="sd">        :return:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">ParamEnumSubset</span><span class="p">(</span>
-            <span class="n">help_string</span><span class="o">=</span><span class="n">help_string</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">default</span><span class="p">,</span> <span class="n">enum_type</span><span class="o">=</span><span class="n">enum_type</span><span class="p">,</span>
+            <span class="n">help_string</span><span class="o">=</span><span class="n">help_string</span><span class="p">,</span>
+            <span class="n">default</span><span class="o">=</span><span class="n">default</span><span class="p">,</span>
+            <span class="n">required</span><span class="o">=</span><span class="n">required</span><span class="p">,</span>
+            <span class="n">enum_type</span><span class="o">=</span><span class="n">enum_type</span><span class="p">,</span>
         <span class="p">)</span>
+        <span class="k">if</span> <span class="n">default</span> <span class="ow">is</span> <span class="n">NO_DEFAULT</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">EnumSubset</span><span class="p">(</span><span class="n">enum_type</span><span class="o">=</span><span class="n">enum_type</span><span class="p">,</span> <span class="n">list_of_values</span><span class="o">=</span><span class="p">[])</span>
         <span class="k">return</span> <span class="n">default</span></div>
 
 <div class="viewcode-block" id="ParamCreator.create_existing_bucket"><a class="viewcode-back" href="../../pytconf.html#pytconf.param.ParamCreator.create_existing_bucket">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">create_existing_bucket</span><span class="p">(</span>
-        <span class="n">help_string</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">NO_HELP</span><span class="p">,</span> <span class="n">default</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">NO_DEFAULT_TYPE</span><span class="p">]</span> <span class="o">=</span> <span class="n">NO_DEFAULT</span>
+        <span class="n">help_string</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">NO_HELP</span><span class="p">,</span>
+        <span class="n">default</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">NO_DEFAULT</span><span class="p">,</span>
+        <span class="n">required</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">REQUIRED_DEFAULT</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Create a bucket name on gcp</span>
 <span class="sd">        :param help_string:</span>
 <span class="sd">        :param default:</span>
+<span class="sd">        :param required:</span>
 <span class="sd">        :return:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">ParamFunctions</span><span class="p">(</span>
             <span class="n">help_string</span><span class="o">=</span><span class="n">help_string</span><span class="p">,</span>
             <span class="n">default</span><span class="o">=</span><span class="n">default</span><span class="p">,</span>
+            <span class="n">required</span><span class="o">=</span><span class="n">required</span><span class="p">,</span>
             <span class="n">type_name</span><span class="o">=</span><span class="s2">&quot;bucket_name&quot;</span><span class="p">,</span>
             <span class="n">function_s2t</span><span class="o">=</span><span class="n">convert_str_to_str</span><span class="p">,</span>
             <span class="n">function_t2s</span><span class="o">=</span><span class="n">convert_str_to_str</span><span class="p">,</span>
         <span class="p">)</span>
+        <span class="k">if</span> <span class="n">default</span> <span class="ow">is</span> <span class="n">NO_DEFAULT</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;&quot;</span>
         <span class="k">return</span> <span class="n">default</span></div></div>
 </pre></div>
 

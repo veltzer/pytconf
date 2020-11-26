@@ -37,6 +37,7 @@ setuptools.setup(
     install_requires=[
         'termcolor',
         'yattag',
+        'pyfakeuse',
     ],
     extras_require={
     },
