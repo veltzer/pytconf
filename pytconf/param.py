@@ -15,7 +15,6 @@ from pytconf.convert import convert_str_to_str, convert_str_to_int, convert_int_
 from pytconf.param_collector import the_collector
 
 NO_HELP = "No help for this configuration option"
-REQUIRED_DEFAULT = False
 
 
 class Unique:
@@ -33,13 +32,12 @@ class Param(abc.ABC):
     def __init__(
         self,
         help_string=NO_HELP,
-        required: bool = REQUIRED_DEFAULT,
         default: Any = NO_DEFAULT,
         type_name: str = None,
     ):
         super().__init__()
         self.help_string = help_string
-        self.required = required
+        self.required = default is NO_DEFAULT
         self.default = default
         self.type_name = type_name
 
@@ -72,7 +70,6 @@ class ParamFunctions(Param):
     def __init__(
         self,
         help_string=NO_HELP,
-        required: bool = REQUIRED_DEFAULT,
         default=None,
         type_name=None,
         function_s2t: Callable = None,
@@ -80,7 +77,9 @@ class ParamFunctions(Param):
         function_t2s: Callable = None,
     ):
         super().__init__(
-            help_string=help_string, required=required, default=default, type_name=type_name,
+            help_string=help_string,
+            default=default,
+            type_name=type_name,
         )
         self.function_s2t = function_s2t
         self.function_t2s = function_t2s
@@ -101,13 +100,14 @@ class ParamFilename(Param):
     def __init__(
         self,
         help_string: str = NO_HELP,
-        required: bool = REQUIRED_DEFAULT,
         default: str = NO_DEFAULT,
         type_name=None,
         suffixes: List[str] = None,
     ):
         super().__init__(
-            help_string=help_string, required=required, default=default, type_name=type_name,
+            help_string=help_string,
+            default=default,
+            type_name=type_name,
         )
         self.suffixes = suffixes
         super().collect()
@@ -133,13 +133,11 @@ class ParamEnum(Param):
         self,
         help_string=NO_HELP,
         default: Any = NO_DEFAULT,
-        required: bool = REQUIRED_DEFAULT,
         enum_type: Type[Enum] = None,
     ):
         super().__init__(
             help_string=help_string,
             default=default,
-            required=required,
             type_name="enum",
         )
         self.enum_type = enum_type
@@ -163,13 +161,11 @@ class ParamEnumSubset(Param):
         self,
         help_string=NO_HELP,
         default: Any = NO_DEFAULT,
-        required: bool = REQUIRED_DEFAULT,
         enum_type: Type[Enum] = None,
     ):
         super().__init__(
             help_string=help_string,
             default=default,
-            required=required,
             type_name="enum",
         )
         self.enum_type = enum_type
@@ -195,13 +191,11 @@ class ParamChoice(Param):
     def __init__(
         self,
         help_string=NO_HELP,
-        required: bool = REQUIRED_DEFAULT,
         default: str = NO_DEFAULT,
         choice_list: List[str] = None
     ):
         super().__init__(
             help_string=help_string,
-            required=required,
             default=default,
             type_name="Choice",
         )
@@ -227,19 +221,16 @@ class ParamCreator:
     def create_int(
         help_string: str = NO_HELP,
         default: int = NO_DEFAULT,
-        required: bool = REQUIRED_DEFAULT,
     ) -> int:
         """
         Create an int parameter
         :param help_string:
         :param default:
-        :param required:
         :return:
         """
         ParamFunctions(
             help_string=help_string,
             default=default,
-            required=required,
             type_name="int",
             function_s2t=convert_str_to_int,
             function_t2s=convert_int_to_str,
@@ -253,19 +244,16 @@ class ParamCreator:
     def create_list_int(
         help_string: str = NO_HELP,
         default: List[int] = NO_DEFAULT,
-        required: bool = REQUIRED_DEFAULT,
     ) -> List[int]:
         """
         Create a List[int] parameter
         :param help_string:
         :param default:
-        :param required:
         :return:
         """
         ParamFunctions(
             help_string=help_string,
             default=default,
-            required=required,
             type_name="List[int]",
             function_s2t=convert_str_to_list_int,
             function_t2s=convert_list_int_to_str,
@@ -278,19 +266,16 @@ class ParamCreator:
     def create_list_str(
         help_string: str = NO_HELP,
         default: List[str] = NO_DEFAULT,
-        required: bool = REQUIRED_DEFAULT,
     ) -> List[str]:
         """
         Create a List[str] parameter
         :param help_string:
         :param default:
-        :param required:
         :return:
         """
         ParamFunctions(
             help_string=help_string,
             default=default,
-            required=required,
             type_name="List[str]",
             function_s2t=convert_str_to_list_str,
             function_t2s=convert_list_str_to_str,
@@ -303,19 +288,16 @@ class ParamCreator:
     def create_int_or_none(
         help_string: str = NO_HELP,
         default: Union[int, None] = NO_DEFAULT,
-        required: bool = REQUIRED_DEFAULT,
     ) -> Union[int, None]:
         """
         Create an int parameter
         :param help_string:
         :param default:
-        :param required:
         :return:
         """
         ParamFunctions(
             help_string=help_string,
             default=default,
-            required=required,
             type_name="Union[int, None]",
             function_s2t=convert_str_to_int_or_none,
             function_t2s=convert_int_or_none_to_str,
@@ -328,19 +310,16 @@ class ParamCreator:
     def create_str(
         help_string: str = NO_HELP,
         default: str = NO_DEFAULT,
-        required: bool = REQUIRED_DEFAULT,
     ) -> str:
         """
         Create a string parameter
         :param help_string:
         :param default:
-        :param required:
         :return:
         """
         ParamFunctions(
             help_string=help_string,
             default=default,
-            required=required,
             type_name="str",
             function_s2t=convert_str_to_str,
             function_t2s=convert_str_to_str,
@@ -351,19 +330,16 @@ class ParamCreator:
     def create_str_or_none(
         help_string: str = NO_HELP,
         default: Union[str, None] = NO_DEFAULT,
-        required: bool = REQUIRED_DEFAULT,
     ) -> Union[str, None]:
         """
         Create a string parameter
         :param help_string:
         :param default:
-        :param required:
         :return:
         """
         ParamFunctions(
             help_string=help_string,
             default=default,
-            required=required,
             type_name="str_or_none",
             function_s2t=convert_str_to_str_or_none,
             function_t2s=convert_str_or_none_to_str,
@@ -376,19 +352,16 @@ class ParamCreator:
     def create_bool(
         help_string: str = NO_HELP,
         default: bool = NO_DEFAULT,
-        required: bool = REQUIRED_DEFAULT,
     ) -> bool:
         """
         Create a bool parameter
         :param help_string:
         :param default:
-        :param required:
         :return:
         """
         ParamFunctions(
             help_string=help_string,
             default=default,
-            required=required,
             type_name="bool",
             function_s2t=convert_str_to_bool,
             function_t2s=convert_bool_to_str,
@@ -401,21 +374,18 @@ class ParamCreator:
     def create_new_file(
         help_string: str = NO_HELP,
         default: str = NO_DEFAULT,
-        required: bool = REQUIRED_DEFAULT,
         suffixes: List[str] = None,
     ) -> str:
         """
         Create a new file parameter
         :param help_string:
         :param default:
-        :param required:
         :param suffixes:
         :return:
         """
         ParamFilename(
             help_string=help_string,
             default=default,
-            required=required,
             type_name="new_file",
             suffixes=suffixes,
         )
@@ -427,21 +397,18 @@ class ParamCreator:
     def create_existing_file(
         help_string: str = NO_HELP,
         default: str = NO_DEFAULT,
-        required: bool = REQUIRED_DEFAULT,
         suffixes: Union[List[str], None] = None,
     ) -> str:
         """
         Create a new file parameter
         :param help_string:
         :param default:
-        :param required:
         :param suffixes:
         :return:
         """
         ParamFilename(
             help_string=help_string,
             default=default,
-            required=required,
             type_name="existing_file",
             suffixes=suffixes,
         )
@@ -453,21 +420,18 @@ class ParamCreator:
     def create_existing_folder(
         help_string: str = NO_HELP,
         default: str = NO_DEFAULT,
-        required: bool = REQUIRED_DEFAULT,
         suffixes: Union[List[str], None] = None,
     ) -> str:
         """
         Create a new folder parameter
         :param help_string:
         :param default:
-        :param required:
         :param suffixes:
         :return:
         """
         ParamFilename(
             help_string=help_string,
             default=default,
-            required=required,
             type_name="existing_folder",
             suffixes=suffixes,
         )
@@ -480,20 +444,17 @@ class ParamCreator:
         choice_list: List[str],
         help_string: str = NO_HELP,
         default: str = NO_DEFAULT,
-        required: bool = REQUIRED_DEFAULT,
     ) -> str:
         """
         Create a choice config
         :param choice_list:
         :param help_string:
         :param default:
-        :param required:
         :return:
         """
         ParamChoice(
             help_string=help_string,
             default=default,
-            required=required,
             choice_list=choice_list,
         )
         if default is NO_DEFAULT:
@@ -505,20 +466,17 @@ class ParamCreator:
         enum_type: Type[Enum],
         help_string: str = NO_HELP,
         default: Type[Enum] = NO_DEFAULT,
-        required: bool = REQUIRED_DEFAULT,
     ) -> Type[Enum]:
         """
         Create an enum config
         :param enum_type:
         :param help_string:
         :param default:
-        :param required:
         :return:
         """
         ParamEnum(
             help_string=help_string,
             default=default,
-            required=required,
             enum_type=enum_type,
         )
         if default is NO_DEFAULT:
@@ -530,20 +488,17 @@ class ParamCreator:
         enum_type: Type[Enum],
         help_string: str = NO_HELP,
         default: EnumSubset = NO_DEFAULT,
-        required: bool = REQUIRED_DEFAULT,
     ) -> EnumSubset:
         """
         Create an enum config
         :param enum_type:
         :param help_string:
         :param default:
-        :param required:
         :return:
         """
         ParamEnumSubset(
             help_string=help_string,
             default=default,
-            required=required,
             enum_type=enum_type,
         )
         if default is NO_DEFAULT:
@@ -554,19 +509,16 @@ class ParamCreator:
     def create_existing_bucket(
         help_string: str = NO_HELP,
         default: str = NO_DEFAULT,
-        required: bool = REQUIRED_DEFAULT,
     ) -> str:
         """
         Create a bucket name on gcp
         :param help_string:
         :param default:
-        :param required:
         :return:
         """
         ParamFunctions(
             help_string=help_string,
             default=default,
-            required=required,
             type_name="bucket_name",
             function_s2t=convert_str_to_str,
             function_t2s=convert_str_to_str,

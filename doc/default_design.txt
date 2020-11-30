@@ -1,0 +1,16 @@
+What we want?
+- that when defining configuration entries I will not need to do:
+    ======================
+    default=...,
+    required=False,
+    ======================
+    because of I have a default then obviously the entry is not required.
+    This means that:
+           have default -> is not required
+           required -> does not have default
+    That means that I only want to have either an entry with no default
+    or with a default
+    And I want the system itself to deduce if the value is required or not.
+- that I can supply a value in a config file even if the value is "without default/required"
+    and this means that I *** would not *** need to supply it on the command line.
+
