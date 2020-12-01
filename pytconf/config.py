@@ -77,6 +77,7 @@ class PytconfConf:
         self.free_args: List[str] = []
         self.app_name: str = "No application name"
         self.version: str = "No version"
+        self.default_function = None
 
     def register_main(
         self,
@@ -159,11 +160,8 @@ class PytconfConf:
     def show_help_for_config(cls, config):
         if config == Config:
             return
-        doc = get_first_line(config.__doc__)
-        if doc is not None:
-            print_title(f"  {doc}")
-        else:
-            print_title("  Undocumented parameter set")
+        doc = get_first_line(config, "Undocumented parameter set")
+        print_title(f"  {doc}")
         for name, param in the_registry.yield_name_data_for_config(config):
             if param.required:
                 default = color_warn("MANDATORY")
@@ -198,11 +196,15 @@ class PytconfConf:
             config = the_registry.get_config_for_name(flag_raw)
             param = the_registry.get_data_for_name(flag_raw)
             edit = value.startswith("=")
-            if edit:
-                v = param.s2t_generate_from_default(value[1:])
-            else:
-                v = param.s2t(value)
-            setattr(config, flag_raw, v)
+            # noinspection PyBroadException
+            try:
+                if edit:
+                    v = param.s2t_generate_from_default(value[1:])
+                else:
+                    v = param.s2t(value)
+                setattr(config, flag_raw, v)
+            except Exception:
+                errors.add_error(f"could not convert [{flag_raw}]")
         if unknown_flags:
             errors.add_error(f"unknown flags [{','.join(unknown_flags)}]")
 
@@ -392,9 +394,7 @@ class PytconfConf:
     def get_html_for_function(self, function_name, html_gen):
         with html_gen.tag("ul"):
             f = self.function_name_to_callable[function_name]
-            function_doc = get_first_line(f.__doc__)
-            if function_doc is None:
-                function_doc = "not description for this function"
+            function_doc = get_first_line(f, "no description for this function")
             html_gen.line("li", function_name, title="function name: ")
             html_gen.line("li", function_doc, title="function description: ")
             with html_gen.tag("li"):
@@ -407,9 +407,7 @@ class PytconfConf:
     def get_html_for_config(cls, config, html_gen):
         if config == Config:
             return
-        doc = get_first_line(config.__doc__)
-        if doc is None:
-            doc = "undocumented config"
+        doc = get_first_line(config, "undocumented config")
         html_gen.line("h3", doc, title="config: ")
         with html_gen.tag("table"):
             for name, param in the_registry.yield_name_data_for_config(config):
