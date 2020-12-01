@@ -4,8 +4,6 @@ import sys
 from collections import defaultdict
 from typing import Union, List, Any, Callable, Type, Dict, Set
 
-from yattag import Doc
-
 from pytconf.color_utils import (
     print_highlight,
     color_hi,
@@ -18,7 +16,7 @@ from pytconf.errors_collector import ErrorsCollector
 from pytconf.param_collector import the_collector
 from pytconf.pydoc import get_first_line
 from pytconf.registry import the_registry
-from pytconf.utils import get_logger, noun
+from pytconf.utils import get_logger, noun, HtmlGen
 
 DEFAULT_FUNCTION_GROUP_NAME = "default"
 DEFAULT_FUNCTION_GROUP_DESCRIPTION = "default command group"
@@ -52,15 +50,6 @@ class Config(metaclass=MetaConfig):
     """
     Base class for all configs
     """
-
-
-class HtmlGen:
-    def __init__(self):
-        document, tag, text, line = Doc().ttl()
-        self.document = document
-        self.tag = tag
-        self.text = text
-        self.line = line
 
 
 def is_help(string: str) -> bool:
@@ -481,27 +470,24 @@ def get_free_args() -> List[str]:
     return get_pytconf().free_args
 
 
-# TODO: remove default values for next function when ready to force
-# TODO: change function_group_name -> name
-# TODO: change function_group_description -> description
 def register_function_group(
-    function_group_name: str,
-    function_group_description: str,
-    show_meta: bool = True,
-    show: bool = True,
+    name: str,
+    description: str,
+    show_meta: bool,
+    show: bool,
 ) -> None:
     get_pytconf().register_function_group(
-        name=function_group_name,
-        description=function_group_description,
+        name=name,
+        description=description,
         show_meta=show_meta,
         show=show,
     )
 
 
 def register_main(
-    main_description: str = "NO DESCRIPTION",  # TODO: remove when ready to force
-    app_name: str = "NO APP",  # TODO: remove when ready to force
-    version: str = "NO VERSION",  # TODO: remove when ready to force
+    main_description: str,
+    app_name: str,
+    version: str,
 ) -> Callable[[Any], Any]:
     def identity(main_function):
         get_pytconf().register_main(
@@ -516,7 +502,7 @@ def register_main(
 
 
 def register_endpoint(
-    description: str = "No description",  # TODO: remove default value
+    description: str,
     name: Union[str, None] = None,
     configs: List[Type[Config]] = (),
     suggest_configs: List[Type[Config]] = (),

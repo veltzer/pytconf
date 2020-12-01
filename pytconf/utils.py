@@ -1,4 +1,6 @@
 import logging
+from yattag import Doc
+
 
 from pytconf.data import LOGGER_NAME
 
@@ -17,3 +19,12 @@ def noun(name: str, num: int) -> str:
     if num == 0 or num > 1:
         return name + "s"
     return name
+
+
+class HtmlGen:
+    def __init__(self):
+        document, tag, text, line = Doc().ttl()
+        self.document = document
+        self.tag = tag
+        self.text = text
+        self.line = line
