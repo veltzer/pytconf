@@ -13,9 +13,6 @@
 
 ![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)
 
-
-Actions
-
 ![build](https://github.com/veltzer/pytconf/workflows/build/badge.svg)
 
 pytconf handles configuration, config files and command line parsing
