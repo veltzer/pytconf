@@ -1,6 +1,7 @@
 - add help, write config file, show config, bash completions and more.
 
- -add dynamic loading of the actualy commands to make interactions faster.
+- add dynamic loading of the actual commands to make interactions faster.
+- add plugin based system to discover commands automatically with support for auto loading.
 
 - add the option to write a config file with all of the current values.
 	this option could be used by programs who want to install a config file with all the defaults.
