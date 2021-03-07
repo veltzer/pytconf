@@ -1,3 +1,5 @@
+- add ability to set the name of the current applcation on the terminal.
+
 - add help, write config file, show config, bash completions and more.
 
 - add dynamic loading of the actual commands to make interactions faster.
