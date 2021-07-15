@@ -197,6 +197,7 @@ class PytconfConf:
             param = the_registry.get_data_for_name(flag_raw)
             edit = value.startswith("=")
             # noinspection PyBroadException
+            # pylint: disable=broad-except
             try:
                 if edit:
                     v = param.s2t_generate_from_default(value[1:])
