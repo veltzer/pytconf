@@ -390,7 +390,8 @@ class PytconfConf:
                         self.function_group_names[function_group_name]
                     ):
                         self.get_html_for_function(function_name, html_gen)
-        return html_gen.document.getvalue()
+        # return html_gen.document.getvalue()
+        return html_gen.document
 
     def get_html_for_function(self, function_name, html_gen):
         with html_gen.tag("ul"):
