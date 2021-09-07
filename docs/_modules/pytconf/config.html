@@ -423,7 +423,8 @@
                         <span class="bp">self</span><span class="o">.</span><span class="n">function_group_names</span><span class="p">[</span><span class="n">function_group_name</span><span class="p">]</span>
                     <span class="p">):</span>
                         <span class="bp">self</span><span class="o">.</span><span class="n">get_html_for_function</span><span class="p">(</span><span class="n">function_name</span><span class="p">,</span> <span class="n">html_gen</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">html_gen</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">getvalue</span><span class="p">()</span></div>
+        <span class="c1"># return html_gen.document.getvalue()</span>
+        <span class="k">return</span> <span class="n">html_gen</span><span class="o">.</span><span class="n">document</span></div>
 
 <div class="viewcode-block" id="PytconfConf.get_html_for_function"><a class="viewcode-back" href="../../pytconf.html#pytconf.config.PytconfConf.get_html_for_function">[docs]</a>    <span class="k">def</span> <span class="nf">get_html_for_function</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">function_name</span><span class="p">,</span> <span class="n">html_gen</span><span class="p">):</span>
         <span class="k">with</span> <span class="n">html_gen</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="s2">&quot;ul&quot;</span><span class="p">):</span>
@@ -647,7 +648,7 @@
       &copy;2017, Mark Veltzer.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.0.2</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.0.1</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
     </div>
