@@ -5,23 +5,15 @@ import config.general
 project_github_username = "veltzer"
 project_name = "pytconf"
 github_repo_name = project_name
-project_website = "https://{project_github_username}.github.io/{project_name}".format(
-    **locals()
-)
-project_website_source = "https://github.com/{project_github_username}/{project_name}".format(
-    **locals()
-)
-project_website_git = "git://github.com/{project_github_username}/{project_name}.git".format(
-    **locals()
-)
+project_website = f"https://{project_github_username}.github.io/{project_name}"
+project_website_source = f"https://github.com/{project_github_username}/{project_name}"
+project_website_git = f"git://github.com/{project_github_username}/{project_name}.git"
 project_website_download_ppa = "https://launchpanet/~mark-veltzer/+archive/ubuntu/ppa"
 project_website_download_src = project_website_source
 # noinspection SpellCheckingInspection
 project_paypal_donate_button_id = "ASPRXR59H2NTQ"
 project_google_analytics_tracking_id = "UA-56436979-1"
-project_short_description = (
-    "pytconf handles configuration, config files and command line parsing"
-)
+project_short_description = "pytconf handles configuration and command line parsing"
 project_long_description = project_short_description
 # keywords to put on html pages or for search, dont put the name of the project or my details
 # as they will be added automatically...
