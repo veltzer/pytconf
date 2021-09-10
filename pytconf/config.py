@@ -60,19 +60,19 @@ class PytconfConf:
     def __init__(self):
         self.main_function: Union[Callable, None] = None
         self.main_description: str = "No application description"
-        self.function_name_to_configs: Dict[str, List[Type[Config]]] = dict()
-        self.function_name_to_suggest_configs: Dict[str, List[Type[Config]]] = dict()
-        self.function_name_to_callable: Dict[str, Callable] = dict()
-        self.allow_free_args: Dict[str, bool] = dict()
-        self.min_free_args: Dict[str, Union[int, None]] = dict()
-        self.max_free_args: Dict[str, Union[int, None]] = dict()
-        self.description: Dict[str, str] = dict()
+        self.function_name_to_configs: Dict[str, List[Type[Config]]] = {}
+        self.function_name_to_suggest_configs: Dict[str, List[Type[Config]]] = {}
+        self.function_name_to_callable: Dict[str, Callable] = {}
+        self.allow_free_args: Dict[str, bool] = {}
+        self.min_free_args: Dict[str, Union[int, None]] = {}
+        self.max_free_args: Dict[str, Union[int, None]] = {}
+        self.description: Dict[str, str] = {}
 
         self.function_group_names: Dict[str, Set[str]] = defaultdict(set)
         self.function_group_list: List[str] = []
-        self.function_group_descriptions: Dict[str, str] = dict()
-        self.function_group_show_meta: Dict[str, bool] = dict()
-        self.function_group_show: Dict[str, bool] = dict()
+        self.function_group_descriptions: Dict[str, str] = {}
+        self.function_group_show_meta: Dict[str, bool] = {}
+        self.function_group_show: Dict[str, bool] = {}
 
         self.free_args: List[str] = []
         self.app_name: str = "No application name"
@@ -288,7 +288,7 @@ class PytconfConf:
         if args is None:
             args = sys.argv[1:]
 
-        flags: Dict[str, str] = dict()
+        flags: Dict[str, str] = {}
         errors = ErrorsCollector()
         self.free_args = []
 
@@ -430,7 +430,7 @@ class PytconfConf:
 
     @classmethod
     def write_config_file_json(cls, filename: str) -> None:
-        values: Dict[str, str] = dict()
+        values: Dict[str, str] = {}
         for config in the_registry.yield_configs():
             for name, param in the_registry.yield_name_data_for_config(config):
                 values[name] = param.t2s(param.default)
