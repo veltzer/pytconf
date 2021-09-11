@@ -9,7 +9,7 @@ def get_readme():
 setuptools.setup(
     # the first three fields are a must according to the documentation
     name="pytconf",
-    version="0.0.74",
+    version="0.0.75",
     packages=[
         'pytconf',
     ],
@@ -35,7 +35,7 @@ setuptools.setup(
         'python3',
     ],
     install_requires=[
-        'colored',
+        'termcolor',
         'yattag',
         'pyfakeuse',
     ],
