@@ -1,6 +1,6 @@
 # THIS IS AN AUTO-GENERATED FILE. DO NOT EDIT!
 # production requirements
-colored
+termcolor
 yattag
 pyfakeuse
 # dev requirements
