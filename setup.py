@@ -35,7 +35,7 @@ setuptools.setup(
         'python3',
     ],
     install_requires=[
-        'termcolor',
+        'colored',
         'yattag',
         'pyfakeuse',
     ],

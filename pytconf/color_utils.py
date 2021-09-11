@@ -1,29 +1,29 @@
-from termcolor import colored, cprint
+from colored import stylize, fg, attr
 
 
 def print_highlight(text):
-    cprint(text=text, color="white", attrs=["bold"])
+    print(stylize(text, fg("white") + attr("bold")))
 
 
 def print_warn(text):
-    cprint(text=text, color="red", attrs=["bold"])
+    print(stylize(text, fg("red") + attr("bold")))
 
 
 def print_error(text):
-    cprint(text=text, color="red", attrs=["bold"])
+    print(stylize(text, fg("red") + attr("bold")))
 
 
 def print_title(text):
-    cprint(text=text, color="green", attrs=[])
+    print(stylize(text, fg("green")))
 
 
 def color_hi(text):
-    return colored(text=text, color="white", attrs=["bold"])
+    return stylize(text, fg("white") + attr("bold"))
 
 
 def color_warn(text):
-    return colored(text=text, color="red", attrs=["bold"])
+    return stylize(text, fg("red") + attr("bold"))
 
 
 def color_ok(text):
-    return colored(text=text, color="green", attrs=["bold"])
+    return stylize(text, fg("green") + attr("bold"))

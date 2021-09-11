@@ -7,7 +7,7 @@ console_scripts = []
 setup_requires = []
 
 run_requires = [
-    "termcolor",
+    "colored",
     "yattag",
     "pyfakeuse",
 ]
