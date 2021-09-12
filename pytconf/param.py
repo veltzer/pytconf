@@ -243,7 +243,10 @@ class ParamCreator:
     @staticmethod
     def create_list_int(
         help_string: str = NO_HELP,
-        default: List[int] = NO_DEFAULT,
+        # This is because of pylint
+        # default: List[int] = NO_DEFAULT,
+        # pylint: disable=dangerous-default-value
+        default: List[int] = [],
     ) -> List[int]:
         """
         Create a List[int] parameter
@@ -265,7 +268,10 @@ class ParamCreator:
     @staticmethod
     def create_list_str(
         help_string: str = NO_HELP,
-        default: List[str] = NO_DEFAULT,
+        # This is because of pylint
+        # default: List[str] = NO_DEFAULT,
+        # pylint: disable=dangerous-default-value
+        default: List[str] = [],
     ) -> List[str]:
         """
         Create a List[str] parameter
