@@ -18,7 +18,7 @@ class EnumSubset:
     def add(self, enum_value):
         assert (
             enum_value in enum_value.__class__.__members__.values()
-        ), "bad value {}".format(enum_value)
+        ), f"bad value {enum_value}"
         self.selected[enum_value] = None
 
     def delete(self, enum_value):

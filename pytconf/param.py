@@ -125,7 +125,7 @@ class ParamFilename(Param):
     def more_help(self):
         if self.suffixes is None:
             return "no limitation on suffixes"
-        return "allowed suffixes are {}".format(self.suffixes)
+        return f"allowed suffixes are {self.suffixes}"
 
 
 class ParamEnum(Param):
@@ -144,7 +144,7 @@ class ParamEnum(Param):
         super().collect()
 
     def get_type_name(self):
-        return "Enum[{}]".format(self.enum_type.__name__)
+        return f"Enum[{self.enum_type.__name__}]"
 
     def s2t(self, s: str) -> Any:
         return str_to_enum_value(s, self.enum_type)
@@ -153,7 +153,7 @@ class ParamEnum(Param):
         return t.name
 
     def more_help(self):
-        return "allowed values {}".format(enum_type_to_list_str(self.enum_type))
+        return f"allowed values {enum_type_to_list_str(self.enum_type)}"
 
 
 class ParamEnumSubset(Param):
@@ -172,7 +172,7 @@ class ParamEnumSubset(Param):
         super().collect()
 
     def get_type_name(self):
-        return "EnumSubset[{}]".format(self.enum_type.__name__)
+        return f"EnumSubset[{self.enum_type.__name__}]"
 
     def s2t(self, s: str) -> EnumSubset:
         return EnumSubset.from_string(e=self.enum_type, s=s)
@@ -184,7 +184,7 @@ class ParamEnumSubset(Param):
         pass
 
     def more_help(self):
-        return "allowed values {}".format(enum_type_to_list_str(self.enum_type))
+        return f"allowed values {enum_type_to_list_str(self.enum_type)}"
 
 
 class ParamChoice(Param):
@@ -209,7 +209,7 @@ class ParamChoice(Param):
         return t
 
     def more_help(self):
-        return "allowed values {}".format(",".join(self.choice_list))
+        return f"allowed values {','.join(self.choice_list)}"
 
 
 class ParamCreator:
