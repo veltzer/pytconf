@@ -1,5 +1,5 @@
 
-# *pytconf* project by Mark Veltzer
+# *pytconf* project by Vladimir
 
 ![PyPI - Status](https://img.shields.io/pypi/status/pytconf)
 ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/pytconf)
