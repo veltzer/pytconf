@@ -9,7 +9,7 @@ def get_readme():
 setuptools.setup(
     # the first three fields are a must according to the documentation
     name="pytconf",
-    version="0.0.76",
+    version="0.0.77",
     packages=[
         'pytconf',
     ],
@@ -40,7 +40,7 @@ setuptools.setup(
         'pyfakeuse',
     ],
     extras_require={
-    },
+    }},
     classifiers=[
         'Development Status :: 4 - Beta',
         'Environment :: Console',
