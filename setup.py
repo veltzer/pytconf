@@ -34,6 +34,11 @@ setuptools.setup(
     platforms=[
         'python3',
     ],
+    install_requires=[
+        'termcolor',
+        'yattag',
+        'pyfakeuse',
+    ],
     classifiers=[
         'Development Status :: 4 - Beta',
         'Environment :: Console',
@@ -47,5 +52,5 @@ setuptools.setup(
     ],
     data_files=[
     ],
-    python_requires=">=3.9",
+    python_requires=">=3.10",
 )
