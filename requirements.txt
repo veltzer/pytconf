@@ -4,20 +4,16 @@ termcolor
 yattag
 pyfakeuse
 # dev requirements
-pyclassifiers
 pypitools
-pydmt
-Sphinx
-pytest
-pytest-cov
-pylint
-pyflakes
-flake8
+pyclassifiers
 black
 # test requirements
+Sphinx
 pymakehelper
+pydmt
 pylint
 pytest
 pytest-cov
 flake8
+pyflakes
 pylogconf
