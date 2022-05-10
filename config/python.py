@@ -3,15 +3,8 @@ import config.project
 package_name = config.project.project_name
 
 dev_requires = [
-    "pyclassifiers",
     "pypitools",
-    "pydmt",
-    "Sphinx",
-    "pytest",
-    "pytest-cov",
-    "pylint",
-    "pyflakes",
-    "flake8",
+    "pyclassifiers",
     "black",
 ]
 install_requires = [
@@ -20,11 +13,14 @@ install_requires = [
     "pyfakeuse",
 ]
 test_requires = [
+    "Sphinx",
     "pymakehelper",
+    "pydmt",
     "pylint",
     "pytest",
     "pytest-cov",
     "flake8",
+    "pyflakes",
     "pylogconf",
 ]
 
