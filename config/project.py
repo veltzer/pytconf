@@ -1,4 +1,4 @@
-short_description = "pytconf handles configuration and command line parsing"
+description_short = "pytconf handles configuration and command line parsing"
 keywords = [
     "click",
     "argparse",
