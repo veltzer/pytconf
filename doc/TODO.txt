@@ -1,4 +1,14 @@
+
+- add libraries ability to either:
+	- commands
+	or
+        - flags to other commands
+	examples:
+	- pylogconf could add a command to show the current logging configuration
+	- pylogconf could add a --loglevel=[value] to every other command.
+
 - add ability to set the name of the current applcation on the terminal.
+	what does that mean?
 
 - add help, write config file, show config, bash completions and more.
 
