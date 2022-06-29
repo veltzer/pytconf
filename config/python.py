@@ -18,4 +18,5 @@ test_requires = [
     "flake8",
     "pyflakes",
     "pylogconf",
+    "mypy",
 ]
