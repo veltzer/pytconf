@@ -19,4 +19,5 @@ test_requires = [
     "pyflakes",
     "pylogconf",
     "mypy",
+    "types-termcolor",
 ]

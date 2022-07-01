@@ -32,12 +32,12 @@ class Unique:
 
 
 NO_DEFAULT = Unique()
-NO_DEFAULT_TYPE = type(NO_DEFAULT)
 
 
 def create_list_int(
-    default: Union[List[int], NO_DEFAULT_TYPE] = NO_DEFAULT,
+    default: Union[List[int], Unique] = NO_DEFAULT,
 ) -> List[int]:
+    assert isinstance(default, List)
     return default
 
 

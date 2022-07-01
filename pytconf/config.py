@@ -2,7 +2,7 @@ import json
 import os
 import sys
 from collections import defaultdict
-from typing import Union, List, Any, Callable, Type, Dict, Set, Tuple
+from typing import Union, List, Any, Callable, Dict, Set, Optional
 
 from pytconf.color_utils import (
     print_highlight,
@@ -52,9 +52,6 @@ class Config(metaclass=MetaConfig):
     """
 
 
-empty_config_tuple: Tuple[Config] = ()
-
-
 def is_help(string: str) -> bool:
     return string.lower()[:4] == "help"
 
@@ -63,8 +60,8 @@ class PytconfConf:
     def __init__(self):
         self.main_function: Union[Callable, None] = None
         self.main_description: str = "No application description"
-        self.function_name_to_configs: Dict[str, List[Type[Config]]] = {}
-        self.function_name_to_suggest_configs: Dict[str, List[Type[Config]]] = {}
+        self.function_name_to_configs: Dict[str, List[Config]] = {}
+        self.function_name_to_suggest_configs: Dict[str, List[Config]] = {}
         self.function_name_to_callable: Dict[str, Callable] = {}
         self.allow_free_args: Dict[str, bool] = {}
         self.min_free_args: Dict[str, Union[int, None]] = {}
@@ -99,8 +96,8 @@ class PytconfConf:
         function: Callable,
         description: str,
         name: str,
-        configs: Tuple[Config] = empty_config_tuple,
-        suggest_configs: Tuple[Config] = empty_config_tuple,
+        configs: Optional[List[Config]],
+        suggest_configs: Optional[List[Config]],
         group: str = DEFAULT_FUNCTION_GROUP_NAME,
         allow_free_args: bool = False,
         min_free_args: Union[int, None] = None,
@@ -108,8 +105,14 @@ class PytconfConf:
     ):
         self.description[name] = description
         self.function_name_to_callable[name] = function
-        self.function_name_to_configs[name] = configs
-        self.function_name_to_suggest_configs[name] = suggest_configs
+        if configs is None:
+            self.function_name_to_configs[name] = []
+        else:
+            self.function_name_to_configs[name] = configs
+        if suggest_configs is None:
+            self.function_name_to_suggest_configs[name] = []
+        else:
+            self.function_name_to_suggest_configs[name] = suggest_configs
         self.function_group_names[group].add(name)
         self.allow_free_args[name] = allow_free_args
         self.min_free_args[name] = min_free_args
@@ -322,13 +325,11 @@ class PytconfConf:
                         errors.unset_show_errors()
                     else:
                         errors.add_error(f"free args are not allowed [{','.join(self.free_args)}]")
-
-        if function_selected is None:
+            self.process_flags(function_selected, flags, errors)
+        else:
             errors.add_error("no command is selected")
             errors.set_do_help()
             errors.unset_show_errors()
-        else:
-            self.process_flags(function_selected, flags, errors)
 
         if errors.have_errors() or errors.get_do_help():
             if errors.get_show_errors():
@@ -343,8 +344,12 @@ class PytconfConf:
             return
 
         if launch:
-            function_to_run = self.function_name_to_callable[function_selected]
-            function_to_run()
+            if function_selected is None:
+                errors.add_error("no function to launch")
+                errors.set_do_help()
+            else:
+                function_to_run = self.function_name_to_callable[function_selected]
+                function_to_run()
 
     def parse_args(self, args, errors, flags):
         free_args_started = False
@@ -507,8 +512,8 @@ def register_main(
 def register_endpoint(
     description: str,
     name: Union[str, None] = None,
-    configs: Tuple[Config] = empty_config_tuple,
-    suggest_configs: Tuple[Config] = empty_config_tuple,
+    configs: Optional[List[Config]] = None,
+    suggest_configs: Optional[List[Config]] = None,
     group: str = DEFAULT_FUNCTION_GROUP_NAME,
     allow_free_args: bool = False,
     min_free_args: Union[int, None] = None,
@@ -542,8 +547,8 @@ def register_function(
     function: Callable,
     description: str,
     name: str,
-    configs: Tuple[Config] = empty_config_tuple,
-    suggest_configs: Tuple[Config] = empty_config_tuple,
+    configs: Optional[List[Config]] = None,
+    suggest_configs: Optional[List[Config]] = None,
     group: str = DEFAULT_FUNCTION_GROUP_NAME,
     allow_free_args: bool = False,
     min_free_args: Union[int, None] = None,
