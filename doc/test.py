@@ -4,11 +4,11 @@
 This is the essence of how pytconf works and how it is now designed
 """
 
-from typing import ClassVar
+from typing import ClassVar, List
 
 d = {}
 
-global_list = []
+global_list: List[int] = []
 
 
 class Meta(type):
