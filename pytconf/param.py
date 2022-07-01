@@ -1,6 +1,6 @@
 import abc
 from enum import Enum
-from typing import List, Union, Callable, Any, Type
+from typing import List, Union, Callable, Any, Type, Optional
 
 from pyfakeuse import fake_use
 
@@ -69,12 +69,12 @@ class ParamFunctions(Param):
 
     def __init__(
         self,
+        function_s2t: Callable,
+        function_s2t_generate_from_default: Callable,
+        function_t2s: Callable,
         help_string=NO_HELP,
         default=None,
         type_name=None,
-        function_s2t: Callable = None,
-        function_s2t_generate_from_default: Callable = None,
-        function_t2s: Callable = None,
     ):
         super().__init__(
             help_string=help_string,
@@ -100,7 +100,7 @@ class ParamFilename(Param):
     def __init__(
         self,
         help_string: str = NO_HELP,
-        default: str = NO_DEFAULT,
+        default: Union[Unique, str] = NO_DEFAULT,
         type_name=None,
         suffixes: List[str] = None,
     ):
@@ -260,6 +260,7 @@ class ParamCreator:
             type_name="List[int]",
             function_s2t=convert_str_to_list_int,
             function_t2s=convert_list_int_to_str,
+            function_s2t_generate_from_default=convert_str_to_list_int,
         )
         if default is NO_DEFAULT:
             return []
@@ -285,6 +286,7 @@ class ParamCreator:
             type_name="List[str]",
             function_s2t=convert_str_to_list_str,
             function_t2s=convert_list_str_to_str,
+            function_s2t_generate_from_default=convert_str_to_list_str,
         )
         if default is NO_DEFAULT:
             return []
@@ -307,6 +309,7 @@ class ParamCreator:
             type_name="Union[int, None]",
             function_s2t=convert_str_to_int_or_none,
             function_t2s=convert_int_or_none_to_str,
+            function_s2t_generate_from_default=convert_str_to_int_or_none,
         )
         if default is NO_DEFAULT:
             return None
@@ -315,7 +318,7 @@ class ParamCreator:
     @staticmethod
     def create_str(
         help_string: str = NO_HELP,
-        default: str = NO_DEFAULT,
+        default: Union[str, Unique] = NO_DEFAULT,
     ) -> str:
         """
         Create a string parameter
@@ -328,6 +331,7 @@ class ParamCreator:
             default=default,
             type_name="str",
             function_s2t=convert_str_to_str,
+            function_s2t_generate_from_default=convert_str_to_str,
             function_t2s=convert_str_to_str,
         )
         return default
@@ -335,7 +339,7 @@ class ParamCreator:
     @staticmethod
     def create_str_or_none(
         help_string: str = NO_HELP,
-        default: Union[str, None] = NO_DEFAULT,
+        default: Union[str, None, Unique] = NO_DEFAULT,
     ) -> Union[str, None]:
         """
         Create a string parameter
@@ -348,16 +352,18 @@ class ParamCreator:
             default=default,
             type_name="str_or_none",
             function_s2t=convert_str_to_str_or_none,
+            function_s2t_generate_from_default=convert_str_to_str_or_none,
             function_t2s=convert_str_or_none_to_str,
         )
         if default == NO_DEFAULT:
             return None
-        return default
+        ret: Optional[str] = default
+        return ret
 
     @staticmethod
     def create_bool(
         help_string: str = NO_HELP,
-        default: bool = NO_DEFAULT,
+        default: Union[bool, Unique] = NO_DEFAULT,
     ) -> bool:
         """
         Create a bool parameter
@@ -370,11 +376,12 @@ class ParamCreator:
             default=default,
             type_name="bool",
             function_s2t=convert_str_to_bool,
+            function_s2t_generate_from_default=convert_str_to_bool,
             function_t2s=convert_bool_to_str,
         )
         if default is NO_DEFAULT:
             return False
-        return default
+        return bool(default)
 
     @staticmethod
     def create_new_file(
@@ -493,7 +500,7 @@ class ParamCreator:
     def create_enum_subset(
         enum_type: Type[Enum],
         help_string: str = NO_HELP,
-        default: EnumSubset = NO_DEFAULT,
+        default: Union[EnumSubset, Unique] = NO_DEFAULT,
     ) -> EnumSubset:
         """
         Create an enum config
@@ -514,7 +521,7 @@ class ParamCreator:
     @staticmethod
     def create_existing_bucket(
         help_string: str = NO_HELP,
-        default: str = NO_DEFAULT,
+        default: Union[Unique, str] = NO_DEFAULT,
     ) -> str:
         """
         Create a bucket name on gcp
@@ -527,6 +534,7 @@ class ParamCreator:
             default=default,
             type_name="bucket_name",
             function_s2t=convert_str_to_str,
+            function_s2t_generate_from_default=convert_str_to_str,
             function_t2s=convert_str_to_str,
         )
         if default is NO_DEFAULT:

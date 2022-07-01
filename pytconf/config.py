@@ -2,7 +2,7 @@ import json
 import os
 import sys
 from collections import defaultdict
-from typing import Union, List, Any, Callable, Type, Dict, Set
+from typing import Union, List, Any, Callable, Type, Dict, Set, Tuple
 
 from pytconf.color_utils import (
     print_highlight,
@@ -52,6 +52,9 @@ class Config(metaclass=MetaConfig):
     """
 
 
+empty_config_tuple: Tuple[Config] = ()
+
+
 def is_help(string: str) -> bool:
     return string.lower()[:4] == "help"
 
@@ -96,8 +99,8 @@ class PytconfConf:
         function: Callable,
         description: str,
         name: str,
-        configs: List[Type[Config]] = (),
-        suggest_configs: List[Type[Config]] = (),
+        configs: Tuple[Config] = empty_config_tuple,
+        suggest_configs: Tuple[Config] = empty_config_tuple,
         group: str = DEFAULT_FUNCTION_GROUP_NAME,
         allow_free_args: bool = False,
         min_free_args: Union[int, None] = None,
@@ -504,8 +507,8 @@ def register_main(
 def register_endpoint(
     description: str,
     name: Union[str, None] = None,
-    configs: List[Type[Config]] = (),
-    suggest_configs: List[Type[Config]] = (),
+    configs: Tuple[Config] = empty_config_tuple,
+    suggest_configs: Tuple[Config] = empty_config_tuple,
     group: str = DEFAULT_FUNCTION_GROUP_NAME,
     allow_free_args: bool = False,
     min_free_args: Union[int, None] = None,
@@ -539,8 +542,8 @@ def register_function(
     function: Callable,
     description: str,
     name: str,
-    configs: List[Type[Config]] = (),
-    suggest_configs: List[Type[Config]] = (),
+    configs: Tuple[Config] = empty_config_tuple,
+    suggest_configs: Tuple[Config] = empty_config_tuple,
     group: str = DEFAULT_FUNCTION_GROUP_NAME,
     allow_free_args: bool = False,
     min_free_args: Union[int, None] = None,
