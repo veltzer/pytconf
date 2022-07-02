@@ -36,7 +36,9 @@
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Union</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Type</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Set</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Union</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Set</span><span class="p">,</span> <span class="n">Optional</span>
+<span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span>
+<span class="kn">import</span> <span class="nn">yaml</span>
 
 <span class="kn">from</span> <span class="nn">pytconf.color_utils</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">print_highlight</span><span class="p">,</span>
@@ -63,6 +65,16 @@
 <span class="n">SPECIAL_FUNCTION_GROUP_SHOW</span> <span class="o">=</span> <span class="kc">False</span>
 
 <span class="n">DEFAULT_FUNCTION_DESCRIPTION</span> <span class="o">=</span> <span class="s2">&quot;No function description available&quot;</span>
+
+
+<div class="viewcode-block" id="ConfigType"><a class="viewcode-back" href="../../pytconf.html#pytconf.config.ConfigType">[docs]</a><span class="k">class</span> <span class="nc">ConfigType</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+    <span class="n">USER</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">SYSTEM</span> <span class="o">=</span> <span class="mi">2</span></div>
+
+
+<div class="viewcode-block" id="ConfigFormat"><a class="viewcode-back" href="../../pytconf.html#pytconf.config.ConfigFormat">[docs]</a><span class="k">class</span> <span class="nc">ConfigFormat</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+    <span class="n">JSON</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">YAML</span> <span class="o">=</span> <span class="mi">2</span></div>
 
 
 <div class="viewcode-block" id="MetaConfig"><a class="viewcode-back" href="../../pytconf.html#pytconf.config.MetaConfig">[docs]</a><span class="k">class</span> <span class="nc">MetaConfig</span><span class="p">(</span><span class="nb">type</span><span class="p">):</span>
@@ -94,8 +106,8 @@
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">main_function</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Callable</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">main_description</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;No application description&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">function_name_to_configs</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">Type</span><span class="p">[</span><span class="n">Config</span><span class="p">]]]</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">function_name_to_suggest_configs</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">Type</span><span class="p">[</span><span class="n">Config</span><span class="p">]]]</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">function_name_to_configs</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">Config</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">function_name_to_suggest_configs</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">Config</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">function_name_to_callable</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Callable</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">allow_free_args</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">min_free_args</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="kc">None</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{}</span>
@@ -130,8 +142,8 @@
         <span class="n">function</span><span class="p">:</span> <span class="n">Callable</span><span class="p">,</span>
         <span class="n">description</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-        <span class="n">configs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Type</span><span class="p">[</span><span class="n">Config</span><span class="p">]]</span> <span class="o">=</span> <span class="p">(),</span>
-        <span class="n">suggest_configs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Type</span><span class="p">[</span><span class="n">Config</span><span class="p">]]</span> <span class="o">=</span> <span class="p">(),</span>
+        <span class="n">configs</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">Config</span><span class="p">]],</span>
+        <span class="n">suggest_configs</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">Config</span><span class="p">]],</span>
         <span class="n">group</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">DEFAULT_FUNCTION_GROUP_NAME</span><span class="p">,</span>
         <span class="n">allow_free_args</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
         <span class="n">min_free_args</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -139,8 +151,14 @@
     <span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">description</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">description</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">function_name_to_callable</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">function</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">function_name_to_configs</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">configs</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">function_name_to_suggest_configs</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">suggest_configs</span>
+        <span class="k">if</span> <span class="n">configs</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">function_name_to_configs</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">function_name_to_configs</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">configs</span>
+        <span class="k">if</span> <span class="n">suggest_configs</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">function_name_to_suggest_configs</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">function_name_to_suggest_configs</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">suggest_configs</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">function_group_names</span><span class="p">[</span><span class="n">group</span><span class="p">]</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">allow_free_args</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">allow_free_args</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">min_free_args</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">min_free_args</span>
@@ -264,11 +282,14 @@
             <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">new_flags</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
                 <span class="n">flags</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span></div>
 
-<div class="viewcode-block" id="PytconfConf.get_system_config"><a class="viewcode-back" href="../../pytconf.html#pytconf.config.PytconfConf.get_system_config">[docs]</a>    <span class="k">def</span> <span class="nf">get_system_config</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;/etc/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">app_name</span><span class="si">}</span><span class="s2">.json&quot;</span></div>
-
-<div class="viewcode-block" id="PytconfConf.get_user_config"><a class="viewcode-back" href="../../pytconf.html#pytconf.config.PytconfConf.get_user_config">[docs]</a>    <span class="k">def</span> <span class="nf">get_user_config</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;~/.config/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">app_name</span><span class="si">}</span><span class="s2">.json&quot;</span><span class="p">)</span></div>
+<div class="viewcode-block" id="PytconfConf.get_config"><a class="viewcode-back" href="../../pytconf.html#pytconf.config.PytconfConf.get_config">[docs]</a>    <span class="k">def</span> <span class="nf">get_config</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config_type</span><span class="p">:</span> <span class="n">ConfigType</span><span class="p">,</span> <span class="n">config_format</span><span class="p">:</span> <span class="n">ConfigFormat</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">config_format</span> <span class="o">==</span> <span class="n">ConfigFormat</span><span class="o">.</span><span class="n">JSON</span><span class="p">:</span>
+            <span class="n">suffix</span> <span class="o">=</span> <span class="s2">&quot;json&quot;</span>
+        <span class="k">if</span> <span class="n">config_format</span> <span class="o">==</span> <span class="n">ConfigFormat</span><span class="o">.</span><span class="n">YAML</span><span class="p">:</span>
+            <span class="n">suffix</span> <span class="o">=</span> <span class="s2">&quot;yaml&quot;</span>
+        <span class="k">if</span> <span class="n">config_type</span> <span class="o">==</span> <span class="n">ConfigType</span><span class="o">.</span><span class="n">USER</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;~/.config/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">app_name</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">suffix</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;/etc/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">app_name</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">suffix</span><span class="si">}</span><span class="s2">&quot;</span></div>
 
 <div class="viewcode-block" id="PytconfConf.register_function_group"><a class="viewcode-back" href="../../pytconf.html#pytconf.config.PytconfConf.register_function_group">[docs]</a>    <span class="k">def</span> <span class="nf">register_function_group</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
@@ -327,8 +348,10 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">free_args</span> <span class="o">=</span> <span class="p">[]</span>
 
         <span class="c1"># read config files</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">read_flags_from_config</span><span class="p">(</span><span class="n">file_name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">get_system_config</span><span class="p">(),</span> <span class="n">flags</span><span class="o">=</span><span class="n">flags</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">read_flags_from_config</span><span class="p">(</span><span class="n">file_name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">get_user_config</span><span class="p">(),</span> <span class="n">flags</span><span class="o">=</span><span class="n">flags</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">read_flags_from_config</span><span class="p">(</span><span class="n">file_name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">get_config</span><span class="p">(</span><span class="n">ConfigType</span><span class="o">.</span><span class="n">SYSTEM</span><span class="p">,</span> <span class="n">ConfigFormat</span><span class="o">.</span><span class="n">JSON</span><span class="p">),</span> <span class="n">flags</span><span class="o">=</span><span class="n">flags</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">read_flags_from_config</span><span class="p">(</span><span class="n">file_name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">get_config</span><span class="p">(</span><span class="n">ConfigType</span><span class="o">.</span><span class="n">SYSTEM</span><span class="p">,</span> <span class="n">ConfigFormat</span><span class="o">.</span><span class="n">YAML</span><span class="p">),</span> <span class="n">flags</span><span class="o">=</span><span class="n">flags</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">read_flags_from_config</span><span class="p">(</span><span class="n">file_name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">get_config</span><span class="p">(</span><span class="n">ConfigType</span><span class="o">.</span><span class="n">USER</span><span class="p">,</span> <span class="n">ConfigFormat</span><span class="o">.</span><span class="n">JSON</span><span class="p">),</span> <span class="n">flags</span><span class="o">=</span><span class="n">flags</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">read_flags_from_config</span><span class="p">(</span><span class="n">file_name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">get_config</span><span class="p">(</span><span class="n">ConfigType</span><span class="o">.</span><span class="n">USER</span><span class="p">,</span> <span class="n">ConfigFormat</span><span class="o">.</span><span class="n">YAML</span><span class="p">),</span> <span class="n">flags</span><span class="o">=</span><span class="n">flags</span><span class="p">)</span>
 
         <span class="n">function_selected</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_function_selected</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">errors</span><span class="p">)</span>
 
@@ -353,13 +376,11 @@
                         <span class="n">errors</span><span class="o">.</span><span class="n">unset_show_errors</span><span class="p">()</span>
                     <span class="k">else</span><span class="p">:</span>
                         <span class="n">errors</span><span class="o">.</span><span class="n">add_error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;free args are not allowed [</span><span class="si">{</span><span class="s1">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">free_args</span><span class="p">)</span><span class="si">}</span><span class="s2">]&quot;</span><span class="p">)</span>
-
-        <span class="k">if</span> <span class="n">function_selected</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">process_flags</span><span class="p">(</span><span class="n">function_selected</span><span class="p">,</span> <span class="n">flags</span><span class="p">,</span> <span class="n">errors</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
             <span class="n">errors</span><span class="o">.</span><span class="n">add_error</span><span class="p">(</span><span class="s2">&quot;no command is selected&quot;</span><span class="p">)</span>
             <span class="n">errors</span><span class="o">.</span><span class="n">set_do_help</span><span class="p">()</span>
             <span class="n">errors</span><span class="o">.</span><span class="n">unset_show_errors</span><span class="p">()</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">process_flags</span><span class="p">(</span><span class="n">function_selected</span><span class="p">,</span> <span class="n">flags</span><span class="p">,</span> <span class="n">errors</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">errors</span><span class="o">.</span><span class="n">have_errors</span><span class="p">()</span> <span class="ow">or</span> <span class="n">errors</span><span class="o">.</span><span class="n">get_do_help</span><span class="p">():</span>
             <span class="k">if</span> <span class="n">errors</span><span class="o">.</span><span class="n">get_show_errors</span><span class="p">():</span>
@@ -373,9 +394,16 @@
                 <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
             <span class="k">return</span>
 
+        <span class="bp">self</span><span class="o">.</span><span class="n">launch</span><span class="p">(</span><span class="n">launch</span><span class="p">,</span> <span class="n">function_selected</span><span class="p">,</span> <span class="n">errors</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="PytconfConf.launch"><a class="viewcode-back" href="../../pytconf.html#pytconf.config.PytconfConf.launch">[docs]</a>    <span class="k">def</span> <span class="nf">launch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">launch</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">function_selected</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">errors</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">launch</span><span class="p">:</span>
-            <span class="n">function_to_run</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">function_name_to_callable</span><span class="p">[</span><span class="n">function_selected</span><span class="p">]</span>
-            <span class="n">function_to_run</span><span class="p">()</span></div>
+            <span class="k">if</span> <span class="n">function_selected</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">errors</span><span class="o">.</span><span class="n">add_error</span><span class="p">(</span><span class="s2">&quot;no function to launch&quot;</span><span class="p">)</span>
+                <span class="n">errors</span><span class="o">.</span><span class="n">set_do_help</span><span class="p">()</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">function_to_run</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">function_name_to_callable</span><span class="p">[</span><span class="n">function_selected</span><span class="p">]</span>
+                <span class="n">function_to_run</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="PytconfConf.parse_args"><a class="viewcode-back" href="../../pytconf.html#pytconf.config.PytconfConf.parse_args">[docs]</a>    <span class="k">def</span> <span class="nf">parse_args</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">errors</span><span class="p">,</span> <span class="n">flags</span><span class="p">):</span>
         <span class="n">free_args_started</span> <span class="o">=</span> <span class="kc">False</span>
@@ -462,20 +490,21 @@
                     <span class="n">html_gen</span><span class="o">.</span><span class="n">line</span><span class="p">(</span><span class="s2">&quot;td&quot;</span><span class="p">,</span> <span class="n">default</span><span class="p">)</span>
                     <span class="n">html_gen</span><span class="o">.</span><span class="n">line</span><span class="p">(</span><span class="s2">&quot;td&quot;</span><span class="p">,</span> <span class="n">more_help</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="PytconfConf.write_config_file_json"><a class="viewcode-back" href="../../pytconf.html#pytconf.config.PytconfConf.write_config_file_json">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">write_config_file_json</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="viewcode-block" id="PytconfConf.write_config_file"><a class="viewcode-back" href="../../pytconf.html#pytconf.config.PytconfConf.write_config_file">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">write_config_file</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">config_format</span><span class="p">:</span> <span class="n">ConfigFormat</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">values</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="k">for</span> <span class="n">config</span> <span class="ow">in</span> <span class="n">the_registry</span><span class="o">.</span><span class="n">yield_configs</span><span class="p">():</span>
             <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">param</span> <span class="ow">in</span> <span class="n">the_registry</span><span class="o">.</span><span class="n">yield_name_data_for_config</span><span class="p">(</span><span class="n">config</span><span class="p">):</span>
                 <span class="n">values</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">t2s</span><span class="p">(</span><span class="n">param</span><span class="o">.</span><span class="n">default</span><span class="p">)</span>
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s2">&quot;wt&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-            <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span></div>
+            <span class="k">if</span> <span class="n">config_format</span> <span class="o">==</span> <span class="n">ConfigFormat</span><span class="o">.</span><span class="n">JSON</span><span class="p">:</span>
+                <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">config_format</span> <span class="o">==</span> <span class="n">ConfigFormat</span><span class="o">.</span><span class="n">YAML</span><span class="p">:</span>
+                <span class="n">yaml</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="PytconfConf.write_config_file_json_user"><a class="viewcode-back" href="../../pytconf.html#pytconf.config.PytconfConf.write_config_file_json_user">[docs]</a>    <span class="k">def</span> <span class="nf">write_config_file_json_user</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">write_config_file_json</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_user_config</span><span class="p">())</span></div>
-
-<div class="viewcode-block" id="PytconfConf.write_config_file_json_system"><a class="viewcode-back" href="../../pytconf.html#pytconf.config.PytconfConf.write_config_file_json_system">[docs]</a>    <span class="k">def</span> <span class="nf">write_config_file_json_system</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">write_config_file_json</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_system_config</span><span class="p">())</span></div></div>
+<div class="viewcode-block" id="PytconfConf.write_config"><a class="viewcode-back" href="../../pytconf.html#pytconf.config.PytconfConf.write_config">[docs]</a>    <span class="k">def</span> <span class="nf">write_config</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config_type</span><span class="p">:</span> <span class="n">ConfigType</span><span class="p">,</span> <span class="n">config_format</span><span class="p">:</span> <span class="n">ConfigFormat</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">filename</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_config</span><span class="p">(</span><span class="n">config_type</span><span class="p">,</span> <span class="n">config_format</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">write_config_file</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">config_format</span><span class="p">)</span></div></div>
 
 
 <span class="n">_pytconf</span> <span class="o">=</span> <span class="n">PytconfConf</span><span class="p">()</span>
@@ -538,8 +567,8 @@
 <div class="viewcode-block" id="register_endpoint"><a class="viewcode-back" href="../../pytconf.html#pytconf.config.register_endpoint">[docs]</a><span class="k">def</span> <span class="nf">register_endpoint</span><span class="p">(</span>
     <span class="n">description</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="n">name</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">configs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Type</span><span class="p">[</span><span class="n">Config</span><span class="p">]]</span> <span class="o">=</span> <span class="p">(),</span>
-    <span class="n">suggest_configs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Type</span><span class="p">[</span><span class="n">Config</span><span class="p">]]</span> <span class="o">=</span> <span class="p">(),</span>
+    <span class="n">configs</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">Config</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">suggest_configs</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">Config</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">group</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">DEFAULT_FUNCTION_GROUP_NAME</span><span class="p">,</span>
     <span class="n">allow_free_args</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="n">min_free_args</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -573,8 +602,8 @@
     <span class="n">function</span><span class="p">:</span> <span class="n">Callable</span><span class="p">,</span>
     <span class="n">description</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="n">configs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Type</span><span class="p">[</span><span class="n">Config</span><span class="p">]]</span> <span class="o">=</span> <span class="p">(),</span>
-    <span class="n">suggest_configs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Type</span><span class="p">[</span><span class="n">Config</span><span class="p">]]</span> <span class="o">=</span> <span class="p">(),</span>
+    <span class="n">configs</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">Config</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">suggest_configs</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">Config</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">group</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">DEFAULT_FUNCTION_GROUP_NAME</span><span class="p">,</span>
     <span class="n">allow_free_args</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="n">min_free_args</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -593,26 +622,12 @@
     <span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="write_config_file_json_user"><a class="viewcode-back" href="../../pytconf.html#pytconf.config.write_config_file_json_user">[docs]</a><span class="k">def</span> <span class="nf">write_config_file_json_user</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-    <span class="n">filename</span> <span class="o">=</span> <span class="n">get_pytconf</span><span class="p">()</span><span class="o">.</span><span class="n">get_user_config</span><span class="p">()</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
-        <span class="n">get_pytconf</span><span class="p">()</span><span class="o">.</span><span class="n">write_config_file_json_user</span><span class="p">()</span></div>
+<div class="viewcode-block" id="write_config_file"><a class="viewcode-back" href="../../pytconf.html#pytconf.config.write_config_file">[docs]</a><span class="k">def</span> <span class="nf">write_config_file</span><span class="p">(</span><span class="n">config_type</span><span class="p">:</span> <span class="n">ConfigType</span><span class="p">,</span> <span class="n">config_format</span><span class="p">:</span> <span class="n">ConfigFormat</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">get_pytconf</span><span class="p">()</span><span class="o">.</span><span class="n">write_config</span><span class="p">(</span><span class="n">config_type</span><span class="p">,</span> <span class="n">config_format</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="rm_config_file_json_user"><a class="viewcode-back" href="../../pytconf.html#pytconf.config.rm_config_file_json_user">[docs]</a><span class="k">def</span> <span class="nf">rm_config_file_json_user</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-    <span class="n">filename</span> <span class="o">=</span> <span class="n">get_pytconf</span><span class="p">()</span><span class="o">.</span><span class="n">get_user_config</span><span class="p">()</span>
-    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
-        <span class="n">os</span><span class="o">.</span><span class="n">unlink</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span></div>
-
-
-<div class="viewcode-block" id="write_config_file_json_system"><a class="viewcode-back" href="../../pytconf.html#pytconf.config.write_config_file_json_system">[docs]</a><span class="k">def</span> <span class="nf">write_config_file_json_system</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-    <span class="n">filename</span> <span class="o">=</span> <span class="n">get_pytconf</span><span class="p">()</span><span class="o">.</span><span class="n">get_system_config</span><span class="p">()</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
-        <span class="n">get_pytconf</span><span class="p">()</span><span class="o">.</span><span class="n">write_config_file_json_system</span><span class="p">()</span></div>
-
-
-<div class="viewcode-block" id="rm_config_file_json_system"><a class="viewcode-back" href="../../pytconf.html#pytconf.config.rm_config_file_json_system">[docs]</a><span class="k">def</span> <span class="nf">rm_config_file_json_system</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-    <span class="n">filename</span> <span class="o">=</span> <span class="n">get_pytconf</span><span class="p">()</span><span class="o">.</span><span class="n">get_system_config</span><span class="p">()</span>
+<div class="viewcode-block" id="rm_config_file"><a class="viewcode-back" href="../../pytconf.html#pytconf.config.rm_config_file">[docs]</a><span class="k">def</span> <span class="nf">rm_config_file</span><span class="p">(</span><span class="n">config_type</span><span class="p">:</span> <span class="n">ConfigType</span><span class="p">,</span> <span class="n">config_format</span><span class="p">:</span> <span class="n">ConfigFormat</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">filename</span> <span class="o">=</span> <span class="n">get_pytconf</span><span class="p">()</span><span class="o">.</span><span class="n">get_config</span><span class="p">(</span><span class="n">config_type</span><span class="p">,</span> <span class="n">config_format</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
         <span class="n">os</span><span class="o">.</span><span class="n">unlink</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span></div>
 </pre></div>
