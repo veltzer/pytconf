@@ -17,3 +17,6 @@ pytest-cov
 flake8
 pyflakes
 pylogconf
+mypy
+types-termcolor
+types-PyYAML
