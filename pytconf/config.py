@@ -240,22 +240,33 @@ class PytconfConf:
             )
 
     @staticmethod
-    def read_flags_from_config(file_name: str, flags: Dict[str, str]) -> None:
+    def read_flags_from_config(
+        app_name: str,
+        config_type: ConfigType,
+        config_format: ConfigFormat,
+        flags: Dict[str, str],
+    ) -> None:
+        file_name: str = PytconfConf.get_config(app_name, config_type, config_format)
         if os.path.isfile(file_name):
             with open(file_name, "rt") as json_file:
-                new_flags: Dict[str, str] = json.load(json_file)
+                new_flags: Dict[str, str]
+                if config_format == ConfigFormat.JSON:
+                    new_flags = json.load(json_file)
+                if config_format == ConfigFormat.YAML:
+                    new_flags = yaml.safe_load(json_file)
                 assert isinstance(flags, dict)
             for k, v in new_flags.items():
                 flags[k] = v
 
-    def get_config(self, config_type: ConfigType, config_format: ConfigFormat):
+    @staticmethod
+    def get_config(app_name: str, config_type: ConfigType, config_format: ConfigFormat):
         if config_format == ConfigFormat.JSON:
             suffix = "json"
         if config_format == ConfigFormat.YAML:
             suffix = "yaml"
         if config_type == ConfigType.USER:
-            return os.path.expanduser(f"~/.config/{self.app_name}.{suffix}")
-        return f"/etc/{self.app_name}.{suffix}"
+            return os.path.expanduser(f"~/.config/{app_name}.{suffix}")
+        return f"/etc/{app_name}.{suffix}"
 
     def register_function_group(
         self,
@@ -314,10 +325,10 @@ class PytconfConf:
         self.free_args = []
 
         # read config files
-        self.read_flags_from_config(file_name=self.get_config(ConfigType.SYSTEM, ConfigFormat.JSON), flags=flags)
-        self.read_flags_from_config(file_name=self.get_config(ConfigType.SYSTEM, ConfigFormat.YAML), flags=flags)
-        self.read_flags_from_config(file_name=self.get_config(ConfigType.USER, ConfigFormat.JSON), flags=flags)
-        self.read_flags_from_config(file_name=self.get_config(ConfigType.USER, ConfigFormat.YAML), flags=flags)
+        self.read_flags_from_config(self.app_name, ConfigType.SYSTEM, ConfigFormat.JSON, flags=flags)
+        self.read_flags_from_config(self.app_name, ConfigType.SYSTEM, ConfigFormat.YAML, flags=flags)
+        self.read_flags_from_config(self.app_name, ConfigType.USER, ConfigFormat.JSON, flags=flags)
+        self.read_flags_from_config(self.app_name, ConfigType.USER, ConfigFormat.YAML, flags=flags)
 
         function_selected = self.get_function_selected(args, errors)
 
@@ -469,7 +480,7 @@ class PytconfConf:
                 yaml.dump(values, f, indent=4)
 
     def write_config(self, config_type: ConfigType, config_format: ConfigFormat) -> None:
-        filename = self.get_config(config_type, config_format)
+        filename = PytconfConf.get_config(self.app_name, config_type, config_format)
         self.write_config_file(filename, config_format)
 
 
@@ -592,7 +603,7 @@ def write_config_file(config_type: ConfigType, config_format: ConfigFormat) -> N
     get_pytconf().write_config(config_type, config_format)
 
 
-def rm_config_file(config_type: ConfigType, config_format: ConfigFormat) -> None:
-    filename = get_pytconf().get_config(config_type, config_format)
+def rm_config_file(app_name: str, config_type: ConfigType, config_format: ConfigFormat) -> None:
+    filename = PytconfConf.get_config(app_name, config_type, config_format)
     if os.path.isfile(filename):
         os.unlink(filename)
