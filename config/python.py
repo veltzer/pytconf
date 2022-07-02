@@ -20,4 +20,5 @@ test_requires = [
     "pylogconf",
     "mypy",
     "types-termcolor",
+    "types-PyYAML",
 ]

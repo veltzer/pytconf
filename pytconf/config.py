@@ -3,6 +3,8 @@ import os
 import sys
 from collections import defaultdict
 from typing import Union, List, Any, Callable, Dict, Set, Optional
+from enum import Enum
+import yaml
 
 from pytconf.color_utils import (
     print_highlight,
@@ -29,6 +31,16 @@ SPECIAL_FUNCTION_GROUP_SHOW_META = False
 SPECIAL_FUNCTION_GROUP_SHOW = False
 
 DEFAULT_FUNCTION_DESCRIPTION = "No function description available"
+
+
+class ConfigType(Enum):
+    USER = 1
+    SYSTEM = 2
+
+
+class ConfigFormat(Enum):
+    JSON = 1
+    YAML = 2
 
 
 class MetaConfig(type):
@@ -236,11 +248,14 @@ class PytconfConf:
             for k, v in new_flags.items():
                 flags[k] = v
 
-    def get_system_config(self):
-        return f"/etc/{self.app_name}.json"
-
-    def get_user_config(self):
-        return os.path.expanduser(f"~/.config/{self.app_name}.json")
+    def get_config(self, config_type: ConfigType, config_format: ConfigFormat):
+        if config_format == ConfigFormat.JSON:
+            suffix = "json"
+        if config_format == ConfigFormat.YAML:
+            suffix = "yaml"
+        if config_type == ConfigType.USER:
+            return os.path.expanduser(f"~/.config/{self.app_name}.{suffix}")
+        return f"/etc/{self.app_name}.{suffix}"
 
     def register_function_group(
         self,
@@ -299,8 +314,10 @@ class PytconfConf:
         self.free_args = []
 
         # read config files
-        self.read_flags_from_config(file_name=self.get_system_config(), flags=flags)
-        self.read_flags_from_config(file_name=self.get_user_config(), flags=flags)
+        self.read_flags_from_config(file_name=self.get_config(ConfigType.SYSTEM, ConfigFormat.JSON), flags=flags)
+        self.read_flags_from_config(file_name=self.get_config(ConfigType.SYSTEM, ConfigFormat.YAML), flags=flags)
+        self.read_flags_from_config(file_name=self.get_config(ConfigType.USER, ConfigFormat.JSON), flags=flags)
+        self.read_flags_from_config(file_name=self.get_config(ConfigType.USER, ConfigFormat.YAML), flags=flags)
 
         function_selected = self.get_function_selected(args, errors)
 
@@ -343,6 +360,9 @@ class PytconfConf:
                 sys.exit(1)
             return
 
+        self.launch(launch, function_selected, errors)
+
+    def launch(self, launch: bool, function_selected: Optional[str], errors):
         if launch:
             if function_selected is None:
                 errors.add_error("no function to launch")
@@ -437,19 +457,20 @@ class PytconfConf:
                     html_gen.line("td", more_help)
 
     @classmethod
-    def write_config_file_json(cls, filename: str) -> None:
+    def write_config_file(cls, filename: str, config_format: ConfigFormat) -> None:
         values: Dict[str, str] = {}
         for config in the_registry.yield_configs():
             for name, param in the_registry.yield_name_data_for_config(config):
                 values[name] = param.t2s(param.default)
         with open(filename, "wt") as f:
-            json.dump(values, f, indent=4)
+            if config_format == ConfigFormat.JSON:
+                json.dump(values, f, indent=4)
+            if config_format == ConfigFormat.YAML:
+                yaml.dump(values, f, indent=4)
 
-    def write_config_file_json_user(self) -> None:
-        self.write_config_file_json(self.get_user_config())
-
-    def write_config_file_json_system(self) -> None:
-        self.write_config_file_json(self.get_system_config())
+    def write_config(self, config_type: ConfigType, config_format: ConfigFormat) -> None:
+        filename = self.get_config(config_type, config_format)
+        self.write_config_file(filename, config_format)
 
 
 _pytconf = PytconfConf()
@@ -567,25 +588,11 @@ def register_function(
     )
 
 
-def write_config_file_json_user() -> None:
-    filename = get_pytconf().get_user_config()
-    if not os.path.isfile(filename):
-        get_pytconf().write_config_file_json_user()
+def write_config_file(config_type: ConfigType, config_format: ConfigFormat) -> None:
+    get_pytconf().write_config(config_type, config_format)
 
 
-def rm_config_file_json_user() -> None:
-    filename = get_pytconf().get_user_config()
-    if os.path.isfile(filename):
-        os.unlink(filename)
-
-
-def write_config_file_json_system() -> None:
-    filename = get_pytconf().get_system_config()
-    if not os.path.isfile(filename):
-        get_pytconf().write_config_file_json_system()
-
-
-def rm_config_file_json_system() -> None:
-    filename = get_pytconf().get_system_config()
+def rm_config_file(config_type: ConfigType, config_format: ConfigFormat) -> None:
+    filename = get_pytconf().get_config(config_type, config_format)
     if os.path.isfile(filename):
         os.unlink(filename)
