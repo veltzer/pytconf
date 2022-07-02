@@ -178,8 +178,7 @@ class ParamEnumSubset(Param):
         return EnumSubset.from_string(e=self.enum_type, s=s)
 
     def t2s(self, t: Any) -> str:
-        assert isinstance(t, EnumSubset)
-        return t.to_string()
+        return t.to_string()  # type: ignore
 
     def s2t_generate_from_default(self, s: str) -> EnumSubset:
         pass
@@ -237,9 +236,7 @@ class ParamCreator:
             function_t2s=convert_int_to_str,
             function_s2t_generate_from_default=convert_str_to_int_default,
         )
-        if isinstance(default, Unique):
-            return 0
-        return default
+        return default  # type: ignore
 
     @staticmethod
     def create_list_int(
@@ -312,9 +309,7 @@ class ParamCreator:
             function_t2s=convert_int_or_none_to_str,
             function_s2t_generate_from_default=convert_str_to_int_or_none,
         )
-        if isinstance(default, Unique):
-            return None
-        return default
+        return default  # type: ignore
 
     @staticmethod
     def create_str(
@@ -335,8 +330,7 @@ class ParamCreator:
             function_s2t_generate_from_default=convert_str_to_str,
             function_t2s=convert_str_to_str,
         )
-        assert isinstance(default, str)
-        return default
+        return default  # type: ignore
 
     @staticmethod
     def create_str_or_none(
@@ -357,9 +351,7 @@ class ParamCreator:
             function_s2t_generate_from_default=convert_str_to_str_or_none,
             function_t2s=convert_str_or_none_to_str,
         )
-        if isinstance(default, Unique):
-            return None
-        return default
+        return default  # type: ignore
 
     @staticmethod
     def create_bool(
@@ -403,9 +395,7 @@ class ParamCreator:
             type_name="new_file",
             suffixes=suffixes,
         )
-        if isinstance(default, Unique):
-            return ""
-        return default
+        return default  # type: ignore
 
     @staticmethod
     def create_existing_file(
@@ -426,9 +416,7 @@ class ParamCreator:
             type_name="existing_file",
             suffixes=suffixes,
         )
-        if isinstance(default, Unique):
-            return ""
-        return default
+        return default  # type: ignore
 
     @staticmethod
     def create_existing_folder(
@@ -449,9 +437,7 @@ class ParamCreator:
             type_name="existing_folder",
             suffixes=suffixes,
         )
-        if isinstance(default, Unique):
-            return ""
-        return default
+        return default  # type: ignore
 
     @staticmethod
     def create_choice(
@@ -471,9 +457,7 @@ class ParamCreator:
             default=default,
             choice_list=choice_list,
         )
-        if isinstance(default, Unique):
-            return ""
-        return default
+        return default  # type: ignore
 
     @staticmethod
     def create_enum(
@@ -493,9 +477,7 @@ class ParamCreator:
             default=default,
             enum_type=enum_type,
         )
-        if isinstance(default, Unique):
-            return enum_type
-        return default
+        return default  # type: ignore
 
     @staticmethod
     def create_enum_subset(
@@ -515,9 +497,7 @@ class ParamCreator:
             default=default,
             enum_type=enum_type,
         )
-        if isinstance(default, Unique):
-            return EnumSubset(enum_type=enum_type, list_of_values=[])
-        return default
+        return default  # type: ignore
 
     @staticmethod
     def create_existing_bucket(
@@ -538,6 +518,4 @@ class ParamCreator:
             function_s2t_generate_from_default=convert_str_to_str,
             function_t2s=convert_str_to_str,
         )
-        if isinstance(default, Unique):
-            return ""
-        return default
+        return default  # type: ignore

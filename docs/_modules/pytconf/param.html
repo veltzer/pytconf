@@ -212,8 +212,7 @@
         <span class="k">return</span> <span class="n">EnumSubset</span><span class="o">.</span><span class="n">from_string</span><span class="p">(</span><span class="n">e</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">enum_type</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="n">s</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="ParamEnumSubset.t2s"><a class="viewcode-back" href="../../pytconf.html#pytconf.param.ParamEnumSubset.t2s">[docs]</a>    <span class="k">def</span> <span class="nf">t2s</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">EnumSubset</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">t</span><span class="o">.</span><span class="n">to_string</span><span class="p">()</span></div>
+        <span class="k">return</span> <span class="n">t</span><span class="o">.</span><span class="n">to_string</span><span class="p">()</span>  <span class="c1"># type: ignore</span></div>
 
 <div class="viewcode-block" id="ParamEnumSubset.s2t_generate_from_default"><a class="viewcode-back" href="../../pytconf.html#pytconf.param.ParamEnumSubset.s2t_generate_from_default">[docs]</a>    <span class="k">def</span> <span class="nf">s2t_generate_from_default</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">EnumSubset</span><span class="p">:</span>
         <span class="k">pass</span></div>
@@ -271,9 +270,7 @@
             <span class="n">function_t2s</span><span class="o">=</span><span class="n">convert_int_to_str</span><span class="p">,</span>
             <span class="n">function_s2t_generate_from_default</span><span class="o">=</span><span class="n">convert_str_to_int_default</span><span class="p">,</span>
         <span class="p">)</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">default</span><span class="p">,</span> <span class="n">Unique</span><span class="p">):</span>
-            <span class="k">return</span> <span class="mi">0</span>
-        <span class="k">return</span> <span class="n">default</span></div>
+        <span class="k">return</span> <span class="n">default</span>  <span class="c1"># type: ignore</span></div>
 
 <div class="viewcode-block" id="ParamCreator.create_list_int"><a class="viewcode-back" href="../../pytconf.html#pytconf.param.ParamCreator.create_list_int">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">create_list_int</span><span class="p">(</span>
@@ -346,9 +343,7 @@
             <span class="n">function_t2s</span><span class="o">=</span><span class="n">convert_int_or_none_to_str</span><span class="p">,</span>
             <span class="n">function_s2t_generate_from_default</span><span class="o">=</span><span class="n">convert_str_to_int_or_none</span><span class="p">,</span>
         <span class="p">)</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">default</span><span class="p">,</span> <span class="n">Unique</span><span class="p">):</span>
-            <span class="k">return</span> <span class="kc">None</span>
-        <span class="k">return</span> <span class="n">default</span></div>
+        <span class="k">return</span> <span class="n">default</span>  <span class="c1"># type: ignore</span></div>
 
 <div class="viewcode-block" id="ParamCreator.create_str"><a class="viewcode-back" href="../../pytconf.html#pytconf.param.ParamCreator.create_str">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">create_str</span><span class="p">(</span>
@@ -369,8 +364,7 @@
             <span class="n">function_s2t_generate_from_default</span><span class="o">=</span><span class="n">convert_str_to_str</span><span class="p">,</span>
             <span class="n">function_t2s</span><span class="o">=</span><span class="n">convert_str_to_str</span><span class="p">,</span>
         <span class="p">)</span>
-        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">default</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">default</span></div>
+        <span class="k">return</span> <span class="n">default</span>  <span class="c1"># type: ignore</span></div>
 
 <div class="viewcode-block" id="ParamCreator.create_str_or_none"><a class="viewcode-back" href="../../pytconf.html#pytconf.param.ParamCreator.create_str_or_none">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">create_str_or_none</span><span class="p">(</span>
@@ -391,9 +385,7 @@
             <span class="n">function_s2t_generate_from_default</span><span class="o">=</span><span class="n">convert_str_to_str_or_none</span><span class="p">,</span>
             <span class="n">function_t2s</span><span class="o">=</span><span class="n">convert_str_or_none_to_str</span><span class="p">,</span>
         <span class="p">)</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">default</span><span class="p">,</span> <span class="n">Unique</span><span class="p">):</span>
-            <span class="k">return</span> <span class="kc">None</span>
-        <span class="k">return</span> <span class="n">default</span></div>
+        <span class="k">return</span> <span class="n">default</span>  <span class="c1"># type: ignore</span></div>
 
 <div class="viewcode-block" id="ParamCreator.create_bool"><a class="viewcode-back" href="../../pytconf.html#pytconf.param.ParamCreator.create_bool">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">create_bool</span><span class="p">(</span>
@@ -437,9 +429,7 @@
             <span class="n">type_name</span><span class="o">=</span><span class="s2">&quot;new_file&quot;</span><span class="p">,</span>
             <span class="n">suffixes</span><span class="o">=</span><span class="n">suffixes</span><span class="p">,</span>
         <span class="p">)</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">default</span><span class="p">,</span> <span class="n">Unique</span><span class="p">):</span>
-            <span class="k">return</span> <span class="s2">&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">default</span></div>
+        <span class="k">return</span> <span class="n">default</span>  <span class="c1"># type: ignore</span></div>
 
 <div class="viewcode-block" id="ParamCreator.create_existing_file"><a class="viewcode-back" href="../../pytconf.html#pytconf.param.ParamCreator.create_existing_file">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">create_existing_file</span><span class="p">(</span>
@@ -460,9 +450,7 @@
             <span class="n">type_name</span><span class="o">=</span><span class="s2">&quot;existing_file&quot;</span><span class="p">,</span>
             <span class="n">suffixes</span><span class="o">=</span><span class="n">suffixes</span><span class="p">,</span>
         <span class="p">)</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">default</span><span class="p">,</span> <span class="n">Unique</span><span class="p">):</span>
-            <span class="k">return</span> <span class="s2">&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">default</span></div>
+        <span class="k">return</span> <span class="n">default</span>  <span class="c1"># type: ignore</span></div>
 
 <div class="viewcode-block" id="ParamCreator.create_existing_folder"><a class="viewcode-back" href="../../pytconf.html#pytconf.param.ParamCreator.create_existing_folder">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">create_existing_folder</span><span class="p">(</span>
@@ -483,9 +471,7 @@
             <span class="n">type_name</span><span class="o">=</span><span class="s2">&quot;existing_folder&quot;</span><span class="p">,</span>
             <span class="n">suffixes</span><span class="o">=</span><span class="n">suffixes</span><span class="p">,</span>
         <span class="p">)</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">default</span><span class="p">,</span> <span class="n">Unique</span><span class="p">):</span>
-            <span class="k">return</span> <span class="s2">&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">default</span></div>
+        <span class="k">return</span> <span class="n">default</span>  <span class="c1"># type: ignore</span></div>
 
 <div class="viewcode-block" id="ParamCreator.create_choice"><a class="viewcode-back" href="../../pytconf.html#pytconf.param.ParamCreator.create_choice">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">create_choice</span><span class="p">(</span>
@@ -505,9 +491,7 @@
             <span class="n">default</span><span class="o">=</span><span class="n">default</span><span class="p">,</span>
             <span class="n">choice_list</span><span class="o">=</span><span class="n">choice_list</span><span class="p">,</span>
         <span class="p">)</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">default</span><span class="p">,</span> <span class="n">Unique</span><span class="p">):</span>
-            <span class="k">return</span> <span class="s2">&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">default</span></div>
+        <span class="k">return</span> <span class="n">default</span>  <span class="c1"># type: ignore</span></div>
 
 <div class="viewcode-block" id="ParamCreator.create_enum"><a class="viewcode-back" href="../../pytconf.html#pytconf.param.ParamCreator.create_enum">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">create_enum</span><span class="p">(</span>
@@ -527,9 +511,7 @@
             <span class="n">default</span><span class="o">=</span><span class="n">default</span><span class="p">,</span>
             <span class="n">enum_type</span><span class="o">=</span><span class="n">enum_type</span><span class="p">,</span>
         <span class="p">)</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">default</span><span class="p">,</span> <span class="n">Unique</span><span class="p">):</span>
-            <span class="k">return</span> <span class="n">enum_type</span>
-        <span class="k">return</span> <span class="n">default</span></div>
+        <span class="k">return</span> <span class="n">default</span>  <span class="c1"># type: ignore</span></div>
 
 <div class="viewcode-block" id="ParamCreator.create_enum_subset"><a class="viewcode-back" href="../../pytconf.html#pytconf.param.ParamCreator.create_enum_subset">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">create_enum_subset</span><span class="p">(</span>
@@ -549,9 +531,7 @@
             <span class="n">default</span><span class="o">=</span><span class="n">default</span><span class="p">,</span>
             <span class="n">enum_type</span><span class="o">=</span><span class="n">enum_type</span><span class="p">,</span>
         <span class="p">)</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">default</span><span class="p">,</span> <span class="n">Unique</span><span class="p">):</span>
-            <span class="k">return</span> <span class="n">EnumSubset</span><span class="p">(</span><span class="n">enum_type</span><span class="o">=</span><span class="n">enum_type</span><span class="p">,</span> <span class="n">list_of_values</span><span class="o">=</span><span class="p">[])</span>
-        <span class="k">return</span> <span class="n">default</span></div>
+        <span class="k">return</span> <span class="n">default</span>  <span class="c1"># type: ignore</span></div>
 
 <div class="viewcode-block" id="ParamCreator.create_existing_bucket"><a class="viewcode-back" href="../../pytconf.html#pytconf.param.ParamCreator.create_existing_bucket">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">create_existing_bucket</span><span class="p">(</span>
@@ -572,9 +552,7 @@
             <span class="n">function_s2t_generate_from_default</span><span class="o">=</span><span class="n">convert_str_to_str</span><span class="p">,</span>
             <span class="n">function_t2s</span><span class="o">=</span><span class="n">convert_str_to_str</span><span class="p">,</span>
         <span class="p">)</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">default</span><span class="p">,</span> <span class="n">Unique</span><span class="p">):</span>
-            <span class="k">return</span> <span class="s2">&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">default</span></div></div>
+        <span class="k">return</span> <span class="n">default</span>  <span class="c1"># type: ignore</span></div></div>
 </pre></div>
 
           </div>
