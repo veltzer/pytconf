@@ -1,3 +1,8 @@
+- add the ability to have absolute param names:
+	$ command --ConfigDebug.debug=True
+	This way we could have same name parameters in different configs.
+	If an ambigious parameter is supplied then give an error.
+
 - add ability to add more detailed description about a command
 	This is needed, for instance, in the pypitools package where I want to have a short description
 	for a command but a long one as well.
