@@ -1,6 +1,5 @@
 dev_requires = [
     "pypitools",
-    "pyclassifiers",
     "black",
 ]
 install_requires = [
@@ -8,10 +7,13 @@ install_requires = [
     "yattag",
     "pyfakeuse",
 ]
-test_requires = [
+make_requires = [
+    "pyclassifiers",
     "Sphinx",
     "pymakehelper",
     "pydmt",
+]
+test_requires = [
     "pylint",
     "pytest",
     "pytest-cov",
