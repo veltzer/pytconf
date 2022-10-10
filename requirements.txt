@@ -5,12 +5,8 @@ yattag
 pyfakeuse
 # dev requirements
 pypitools
-pyclassifiers
 black
 # test requirements
-Sphinx
-pymakehelper
-pydmt
 pylint
 pytest
 pytest-cov
