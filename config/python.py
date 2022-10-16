@@ -9,7 +9,7 @@ install_requires = [
 ]
 make_requires = [
     "pyclassifiers",
-    "Sphinx",
+    "sphinx",
     "pymakehelper",
     "pydmt",
 ]
