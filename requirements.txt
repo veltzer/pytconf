@@ -3,16 +3,3 @@
 termcolor
 yattag
 pyfakeuse
-# dev requirements
-pypitools
-black
-# test requirements
-pylint
-pytest
-pytest-cov
-flake8
-pyflakes
-pylogconf
-mypy
-types-termcolor
-types-PyYAML
