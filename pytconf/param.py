@@ -33,7 +33,7 @@ class Param(abc.ABC):
         self,
         help_string=NO_HELP,
         default: Any = NO_DEFAULT,
-        type_name: str = None,
+        type_name: Optional[str] = None,
     ):
         super().__init__()
         self.help_string = help_string
@@ -102,7 +102,7 @@ class ParamFilename(Param):
         help_string: str = NO_HELP,
         default: Union[Unique, str] = NO_DEFAULT,
         type_name=None,
-        suffixes: List[str] = None,
+        suffixes: Optional[List[str]] = None,
     ):
         super().__init__(
             help_string=help_string,
@@ -144,7 +144,8 @@ class ParamEnum(Param):
         super().collect()
 
     def get_type_name(self):
-        return f"Enum[{self.enum_type.__name__}]"
+        # pylint: disable=protected-access
+        return f"Enum[{self.enum_type._name_}]"
 
     def s2t(self, s: str) -> Any:
         return str_to_enum_value(s, self.enum_type)
@@ -161,7 +162,7 @@ class ParamEnumSubset(Param):
         self,
         help_string=NO_HELP,
         default: Any = NO_DEFAULT,
-        enum_type: Enum = None,
+        enum_type: Optional[Enum] = None,
     ):
         super().__init__(
             help_string=help_string,
@@ -172,7 +173,8 @@ class ParamEnumSubset(Param):
         super().collect()
 
     def get_type_name(self):
-        return f"EnumSubset[{self.enum_type.__name__}]"
+        # pylint: disable=protected-access
+        return f"EnumSubset[{self.enum_type._name_}]"
 
     def s2t(self, s: str) -> EnumSubset:
         return EnumSubset.from_string(e=self.enum_type, s=s)
@@ -180,8 +182,8 @@ class ParamEnumSubset(Param):
     def t2s(self, t: Any) -> str:
         return t.to_string()  # type: ignore
 
-    def s2t_generate_from_default(self, s: str) -> EnumSubset:
-        pass
+    def s2t_generate_from_default(self, s: str) -> Optional[EnumSubset]:
+        return None
 
     def more_help(self):
         return f"allowed values {enum_type_to_list_str(self.enum_type)}"
@@ -192,7 +194,7 @@ class ParamChoice(Param):
         self,
         help_string=NO_HELP,
         default: Union[str, Unique] = NO_DEFAULT,
-        choice_list: List[str] = None
+        choice_list: Optional[List[str]] = None
     ):
         super().__init__(
             help_string=help_string,
@@ -380,7 +382,7 @@ class ParamCreator:
     def create_new_file(
         help_string: str = NO_HELP,
         default: Union[str, Unique] = NO_DEFAULT,
-        suffixes: List[str] = None,
+        suffixes: Optional[List[str]] = None,
     ) -> str:
         """
         Create a new file parameter
