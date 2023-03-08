@@ -145,7 +145,7 @@ class ParamEnum(Param):
 
     def get_type_name(self):
         # pylint: disable=protected-access
-        return f"Enum[{self.enum_type._name_}]"
+        return f"Enum[{self.enum_type._name_}]"  # type=ignore
 
     def s2t(self, s: str) -> Any:
         return str_to_enum_value(s, self.enum_type)
@@ -174,7 +174,7 @@ class ParamEnumSubset(Param):
 
     def get_type_name(self):
         # pylint: disable=protected-access
-        return f"EnumSubset[{self.enum_type._name_}]"
+        return f"EnumSubset[{self.enum_type._name_}]"  # type: ignore
 
     def s2t(self, s: str) -> EnumSubset:
         return EnumSubset.from_string(e=self.enum_type, s=s)
@@ -186,7 +186,7 @@ class ParamEnumSubset(Param):
         return None
 
     def more_help(self):
-        return f"allowed values {enum_type_to_list_str(self.enum_type)}"
+        return f"allowed values {enum_type_to_list_str(self.enum_type)}"  # type: ignore
 
 
 class ParamChoice(Param):
@@ -211,7 +211,7 @@ class ParamChoice(Param):
         return t
 
     def more_help(self):
-        return f"allowed values {','.join(self.choice_list)}"
+        return f"allowed values {','.join(self.choice_list)}"  # type: ignore
 
 
 class ParamCreator:

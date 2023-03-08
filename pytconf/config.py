@@ -430,7 +430,7 @@ class PytconfConf:
                     ):
                         self.get_html_for_function(function_name, html_gen)
         # return html_gen.document.getvalue()
-        return html_gen.document
+        return html_gen.document  # type: ignore
 
     def get_html_for_function(self, function_name, html_gen):
         with html_gen.tag("ul"):
