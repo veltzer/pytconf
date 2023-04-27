@@ -19,8 +19,8 @@ test_requires = [
     "pytest-cov",
     "flake8",
     "pyflakes",
-    "pylogconf",
     "mypy",
+    "pylogconf",
     "types-termcolor",
     "types-PyYAML",
 ]
