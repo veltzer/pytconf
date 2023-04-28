@@ -4,7 +4,7 @@
     import pydmt.helpers.python
     import pydmt.helpers.urls
     import config.python
-    import user.personal
+    import config.personal
     import config.project
     import config.version
     import pydmt.helpers.python
@@ -25,10 +25,10 @@ setuptools.setup(
     description="${config.project.description_short}",
     long_description=get_readme(),
     long_description_content_type="text/x-rst",
-    author="${user.personal.fullname}",
-    author_email="${user.personal.email}",
-    maintainer="${user.personal.fullname}",
-    maintainer_email="${user.personal.email}",
+    author="${config.personal.fullname}",
+    author_email="${config.personal.email}",
+    maintainer="${config.personal.fullname}",
+    maintainer_email="${config.personal.email}",
     keywords=${pydmt.helpers.python.array_indented(1, config.project.keywords)},
     url="${pydmt.helpers.urls.get_website()}",
     download_url="${pydmt.helpers.urls.get_website_source()}",
