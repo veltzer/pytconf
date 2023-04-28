@@ -7,6 +7,7 @@
     import config.personal
     import config.project
     import config.version
+    import config.platform
     import pydmt.helpers.python
 %>import setuptools
 
@@ -32,15 +33,15 @@ setuptools.setup(
     keywords=${pydmt.helpers.python.array_indented(1, config.project.keywords)},
     url="${pydmt.helpers.urls.get_website()}",
     download_url="${pydmt.helpers.urls.get_website_source()}",
-    license="${pydmt.helpers.python.get_license_type()}",
-    platforms=${pydmt.helpers.python.array_indented(1, pydmt.helpers.python.get_platforms())},
+    license="${config.platform.license_type}",
+    platforms=${pydmt.helpers.python.array_indented(1, config.platform.platforms)},
 % if hasattr(config.python, "install_requires"):
     install_requires=${pydmt.helpers.python.array_indented(1, config.python.install_requires)},
 % endif
 % if hasattr(config.python, "extras_requires"):
     extras_require=${pydmt.helpers.python.dict_indented(1, config.python.extras_require)},
 % endif
-    classifiers=${pydmt.helpers.python.array_indented(1, pydmt.helpers.python.get_classifiers())},
+    classifiers=${pydmt.helpers.python.array_indented(1, config.platform.classifiers)},
 % if hasattr(config.python, "data_files"):
     data_files=${pydmt.helpers.python.array_indented(1, config.project.data_files)},
 % endif
