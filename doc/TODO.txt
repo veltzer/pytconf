@@ -8,7 +8,7 @@
 	for a command but a long one as well.
 	Should we have a flag to see the long descriptions? Probably...
 
-- add support for config file in yaml.
+- add support for reading the config file in yaml format.
 
 - add libraries ability to either:
 	- commands
