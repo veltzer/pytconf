@@ -1,4 +1,5 @@
 import unittest
+from pytconf.config import FunctionData
 
 from pytconf import (
     config_arg_parse_and_launch,
@@ -34,11 +35,12 @@ class TestBasic(unittest.TestCase):
 
     def test_parsing(self):
         save = ConfigTotal.num
-        register_function(
+        data = FunctionData(
             name="foo",
             description="foobar",
             function=raise_value_error,
         )
+        register_function(data)
         config_arg_parse_and_launch(
             args=["foo", "--num=30"],
             launch=False,
@@ -48,22 +50,24 @@ class TestBasic(unittest.TestCase):
         ConfigTotal.num = save
 
     def test_command_running(self):
-        register_function(
+        data = FunctionData(
             name="foo",
             description="foobar",
             function=raise_value_error,
             allow_free_args=True,
         )
+        register_function(data)
         with self.assertRaises(ValueError):
             config_arg_parse_and_launch(args=["foo"])
 
     def test_free_args(self):
-        register_function(
+        data = FunctionData(
             name="foo",
             description="foobar",
             function=raise_value_error,
             allow_free_args=True,
         )
+        register_function(data)
         config_arg_parse_and_launch(
             args=["foo", "--num=30", "zoo"],
             launch=False,

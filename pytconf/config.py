@@ -1,9 +1,9 @@
 import json
 import os
 import sys
-from collections import defaultdict
-from typing import Union, List, Any, Callable, Dict, Set, Optional
+from typing import List, Any, Callable, Dict, Set, Optional
 from enum import Enum
+from dataclasses import dataclass, field
 import yaml
 
 from pytconf.color_utils import (
@@ -68,28 +68,43 @@ def is_help(string: str) -> bool:
     return string.lower()[:4] == "help"
 
 
+@dataclass
+class FunctionData:
+    name: str
+    description: str
+    function: Callable
+    configs: List[Config] = field(default_factory=list)
+    suggest_configs: List[Config] = field(default_factory=list)
+    allow_free_args: bool = False
+    min_free_args: Optional[int] = None
+    max_free_args: Optional[int] = None
+    group: str = DEFAULT_FUNCTION_GROUP_NAME
+
+
+@dataclass
+class FunctionGroupData:
+    name: str
+    description: str
+    show_meta: bool = False
+    show: bool = False
+    names: Set[str] = field(default_factory=set)
+    list_names: List[str] = field(default_factory=list)
+
+
 class PytconfConf:
     def __init__(self):
-        self.main_function: Union[Callable, None] = None
+        self.main_function: Optional[Callable] = None
         self.main_description: str = "No application description"
-        self.function_name_to_configs: Dict[str, List[Config]] = {}
-        self.function_name_to_suggest_configs: Dict[str, List[Config]] = {}
-        self.function_name_to_callable: Dict[str, Callable] = {}
-        self.allow_free_args: Dict[str, bool] = {}
-        self.min_free_args: Dict[str, Union[int, None]] = {}
-        self.max_free_args: Dict[str, Union[int, None]] = {}
-        self.description: Dict[str, str] = {}
 
-        self.function_group_names: Dict[str, Set[str]] = defaultdict(set)
-        self.function_group_list: List[str] = []
-        self.function_group_descriptions: Dict[str, str] = {}
-        self.function_group_show_meta: Dict[str, bool] = {}
-        self.function_group_show: Dict[str, bool] = {}
+        self.functions: Dict[str, FunctionData] = {}
+        self.groups: Dict[str, FunctionGroupData] = {}
 
         self.free_args: List[str] = []
         self.app_name: str = "No application name"
         self.version: str = "No version"
         self.default_function = None
+
+        self.register_defaults()
 
     def register_main(
         self,
@@ -107,34 +122,11 @@ class PytconfConf:
         self,
         function_name: str,
     ) -> bool:
-        return function_name in self.function_name_to_configs
+        return function_name in self.functions
 
-    def register_function(
-        self,
-        function: Callable,
-        description: str,
-        name: str,
-        configs: Optional[List[Config]] = None,
-        suggest_configs: Optional[List[Config]] = None,
-        group: str = DEFAULT_FUNCTION_GROUP_NAME,
-        allow_free_args: bool = False,
-        min_free_args: Union[int, None] = None,
-        max_free_args: Union[int, None] = None,
-    ):
-        self.description[name] = description
-        self.function_name_to_callable[name] = function
-        if configs is None:
-            self.function_name_to_configs[name] = []
-        else:
-            self.function_name_to_configs[name] = configs
-        if suggest_configs is None:
-            self.function_name_to_suggest_configs[name] = []
-        else:
-            self.function_name_to_suggest_configs[name] = suggest_configs
-        self.function_group_names[group].add(name)
-        self.allow_free_args[name] = allow_free_args
-        self.min_free_args[name] = min_free_args
-        self.max_free_args[name] = max_free_args
+    def register_function(self, data: FunctionData):
+        self.functions[data.name] = data
+        self.groups[data.group].names.add(data.name)
 
     @classmethod
     def print_errors(cls, errors: ErrorsCollector) -> None:
@@ -145,36 +137,33 @@ class PytconfConf:
         print(f"Usage: {color_hi(self.app_name)} COMMAND [ARGS]...")
         space = " " * 2
         print_highlight(f"\n{space}{self.main_description}\n")
-        for function_group in self.function_group_list:
-            show = self.function_group_show[function_group]
-            if not show:
+        for name, group in self.groups.items():
+            if not group.show:
                 continue
-            show_meta = self.function_group_show_meta[function_group]
-            if show_meta:
-                description = self.function_group_descriptions[function_group]
-                print(f"{space}{function_group}: {description}")
+            if group.show_meta:
+                print(f"{space}{group.name}: {group.description}")
                 cmd_space = space + " " * 2
             else:
                 cmd_space = space
-            for name in sorted(self.function_group_names[function_group]):
-                function_doc = self.description[name]
-                print(f"{cmd_space}{color_hi(name)}: {function_doc}")
+            for name in sorted(group.names):
+                data = self.functions[name]
+                print(f"{cmd_space}{color_hi(name)}: {data.description}")
             print()
 
     def show_help_for_function(
         self,
-        function_name: str,
+        name: str,
         show_help_full: bool = False,
         show_help_suggest: bool = False,
     ) -> None:
-        print(f"Usage: {self.app_name} {function_name} [OPTIONS] [ARGS]...")
-        function_doc = self.description[function_name]
-        print_highlight(f"\n  {function_doc}")
+        print(f"Usage: {self.app_name} {name} [OPTIONS] [ARGS]...")
+        data = self.functions[name]
+        print_highlight(f"\n  {data.description}")
         print("\nOptions:\n")
-        for config in self.function_name_to_configs[function_name]:
+        for config in data.configs:
             self.show_help_for_config(config)
         if show_help_suggest:
-            for config in self.function_name_to_suggest_configs[function_name]:
+            for config in data.suggest_configs:
                 self.show_help_for_config(config)
         if show_help_full:
             for config in the_registry.yield_configs():
@@ -198,7 +187,7 @@ class PytconfConf:
         print()
 
     def process_flags(
-        self, function_selected: str, flags: Dict[str, str], errors: ErrorsCollector,
+        self, select: FunctionData, flags: Dict[str, str], errors: ErrorsCollector,
     ) -> None:
         """
         Parse the args and fill the global data
@@ -235,8 +224,7 @@ class PytconfConf:
 
         # check for missing parameters
         missing_parameters = []
-        configs = self.function_name_to_configs[function_selected]
-        for config in configs:
+        for config in select.configs:
             for name, param in the_registry.yield_name_data_for_config(config):
                 if param.required and name not in flags:
                     missing_parameters.append(name)
@@ -276,41 +264,37 @@ class PytconfConf:
 
     def register_function_group(
         self,
-        name: str,
-        description: str,
-        show_meta: bool,
-        show: bool,
+        data: FunctionGroupData,
     ):
-        self.function_group_list.append(name)
-        self.function_group_descriptions[name] = description
-        self.function_group_show_meta[name] = show_meta
-        self.function_group_show[name] = show
+        self.groups[data.name] = data
 
     def register_defaults(self):
-        self.register_function_group(
+        data = FunctionGroupData(
             name=DEFAULT_FUNCTION_GROUP_NAME,
             description=DEFAULT_FUNCTION_GROUP_DESCRIPTION,
             show_meta=DEFAULT_FUNCTION_GROUP_SHOW_META,
             show=DEFAULT_FUNCTION_GROUP_SHOW,
         )
-        self.register_function_group(
+        self.register_function_group(data)
+        data = FunctionGroupData(
             name=SPECIAL_FUNCTION_GROUP_NAME,
             description=SPECIAL_FUNCTION_GROUP_DESCRIPTION,
             show_meta=SPECIAL_FUNCTION_GROUP_SHOW_META,
             show=SPECIAL_FUNCTION_GROUP_SHOW,
         )
+        self.register_function_group(data)
 
         def do_help():
             if self.free_args:
                 for arg in self.free_args:
                     if self.has_function(arg):
-                        self.show_help_for_function(function_name=arg)
+                        self.show_help_for_function(name=arg)
                     else:
                         print(f"have no function called [{arg}]")
                         sys.exit(1)
             else:
                 self.show_help()
-        self.register_function(
+        data = FunctionData(
             function=do_help,
             name="help",
             description="show help",
@@ -318,13 +302,14 @@ class PytconfConf:
             max_free_args=2,
             group=SPECIAL_FUNCTION_GROUP_NAME,
         )
+        self.register_function(data)
 
-    def get_function_selected(self, args: List[str], errors) -> Union[str, None]:
+    def get_function_selected(self, args: List[str], errors) -> Optional[FunctionData]:
         function_selected = None
         if len(args) > 0:
             command = args.pop(0)
-            if command in self.function_name_to_callable:
-                function_selected = command
+            if command in self.functions:
+                function_selected = self.functions[command]
             else:
                 if is_help(command):
                     errors.set_do_help()
@@ -336,12 +321,11 @@ class PytconfConf:
 
     def config_arg_parse_and_launch(
         self,
-        args: Union[List[str], None] = None,
+        args: Optional[List[str]] = None,
         launch=True,
         do_exit=True,
     ) -> None:
 
-        self.register_defaults()
         if args is None:
             args = sys.argv[1:]
 
@@ -355,22 +339,20 @@ class PytconfConf:
         self.read_flags_from_config(self.app_name, ConfigType.USER, ConfigFormat.JSON, flags=flags)
         self.read_flags_from_config(self.app_name, ConfigType.USER, ConfigFormat.YAML, flags=flags)
 
-        function_selected = self.get_function_selected(args, errors)
+        select = self.get_function_selected(args, errors)
 
         # now parse the args
         self.parse_args(args, errors, flags)
 
         # if we have command we can check free args errors
-        if function_selected is not None:
-            if self.allow_free_args[function_selected]:
-                min_args = self.min_free_args[function_selected]
-                if min_args is not None:
-                    if len(self.free_args) < min_args:
-                        errors.add_error(f"too few free args - {min_args} required")
-                max_args = self.max_free_args[function_selected]
-                if max_args is not None:
-                    if len(self.free_args) >= max_args:
-                        errors.add_error(f"too many free args - {max_args} required")
+        if select is not None:
+            if select.allow_free_args:
+                if select.min_free_args is not None:
+                    if len(self.free_args) < select.min_free_args:
+                        errors.add_error(f"too few free args - {select.min_free_args} required")
+                if select.max_free_args is not None:
+                    if len(self.free_args) >= select.max_free_args:
+                        errors.add_error(f"too many free args - {select.max_free_args} required")
             else:
                 if len(self.free_args) > 0:
                     if len(self.free_args) == 1 and is_help(self.free_args[0]):
@@ -378,7 +360,7 @@ class PytconfConf:
                         errors.unset_show_errors()
                     else:
                         errors.add_error(f"free args are not allowed [{','.join(self.free_args)}]")
-            self.process_flags(function_selected, flags, errors)
+            self.process_flags(select, flags, errors)
         else:
             errors.add_error("no command is selected")
             errors.set_do_help()
@@ -388,24 +370,23 @@ class PytconfConf:
             if errors.get_show_errors():
                 self.print_errors(errors)
             if errors.get_do_help():
-                if function_selected:
-                    self.show_help_for_function(function_name=function_selected)
+                if select:
+                    self.show_help_for_function(select.name)
                 else:
                     self.show_help()
             if do_exit:
                 sys.exit(1)
             return
 
-        self.launch(launch, function_selected, errors)
+        self.launch(launch, select, errors)
 
-    def launch(self, launch: bool, function_selected: Optional[str], errors):
+    def launch(self, launch: bool, select: Optional[FunctionData], errors):
         if launch:
-            if function_selected is None:
+            if select is None:
                 errors.add_error("no function to launch")
                 errors.set_do_help()
             else:
-                function_to_run = self.function_name_to_callable[function_selected]
-                function_to_run()
+                select.function()
 
     def parse_args(self, args, errors, flags):
         free_args_started = False
@@ -436,36 +417,31 @@ class PytconfConf:
         main_doc = self.main_description
         html_gen.line("h1", main_doc)
         html_gen.line("h2", "API specifications")
-        single_group = len(self.function_group_list) == 1
+        single_group = len(self.groups) == 1
         with html_gen.tag("ul"):
-            for function_group_name in self.function_group_list:
+            for name, group in self.groups.items():
                 if not single_group:
-                    function_group_description = self.function_group_descriptions[
-                        function_group_name
-                    ]
-                    html_gen.line("li", function_group_name, title="function group name: ")
+                    html_gen.line("li", group.name, title="function group name: ")
                     html_gen.line(
                         "li",
-                        function_group_description,
+                        group.description,
                         title="function group description: ",
                     )
                 with html_gen.tag("li"):
-                    for function_name in sorted(
-                        self.function_group_names[function_group_name]
-                    ):
-                        self.get_html_for_function(function_name, html_gen)
+                    for name in sorted(self.functions.keys()):
+                        self.get_html_for_function(name, html_gen)
         # return html_gen.document.getvalue()
         return html_gen.document  # type: ignore
 
-    def get_html_for_function(self, function_name, html_gen):
+    def get_html_for_function(self, name:str, html_gen):
+        data = self.functions[name]
         with html_gen.tag("ul"):
-            f = self.function_name_to_callable[function_name]
-            function_doc = get_first_line(f, "no description for this function")
-            html_gen.line("li", function_name, title="function name: ")
+            function_doc = get_first_line(data.function, "no description for this function")
+            html_gen.line("li", name, title="function name: ")
             html_gen.line("li", function_doc, title="function description: ")
             with html_gen.tag("li"):
                 with html_gen.tag("ul"):
-                    for config in self.function_name_to_configs[function_name]:
+                    for config in data.configs:
                         with html_gen.tag("li"):
                             self.get_html_for_config(config, html_gen)
 
@@ -541,12 +517,13 @@ def register_function_group(
     show_meta: bool,
     show: bool,
 ) -> None:
-    get_pytconf().register_function_group(
+    data = FunctionGroupData(
         name=name,
         description=description,
         show_meta=show_meta,
         show=show,
     )
+    get_pytconf().register_function_group(data)
 
 
 def register_main(
@@ -568,60 +545,45 @@ def register_main(
 
 def register_endpoint(
     description: str,
-    name: Union[str, None] = None,
+    name: Optional[str] = None,
     configs: Optional[List[Config]] = None,
     suggest_configs: Optional[List[Config]] = None,
     group: str = DEFAULT_FUNCTION_GROUP_NAME,
     allow_free_args: bool = False,
-    min_free_args: Union[int, None] = None,
-    max_free_args: Union[int, None] = None,
+    min_free_args: Optional[int] = None,
+    max_free_args: Optional[int] = None,
 ) -> Callable[[Any], Any]:
     logger = get_logger()
     logger.debug("registering endpoint")
+    if configs is None:
+        configs = []
+    if suggest_configs is None:
+        suggest_configs = []
 
     def identity(function):
         if name is None:
             function_name = function.__name__
         else:
             function_name = name
-        register_function(
-            function=function,
-            description=description,
+        data = FunctionData(
             name=function_name,
             configs=configs,
             suggest_configs=suggest_configs,
-            group=group,
+            description=description,
             allow_free_args=allow_free_args,
             min_free_args=min_free_args,
             max_free_args=max_free_args,
+            group=group,
+            function=function,
         )
+        register_function(data=data)
         return function
 
     return identity
 
 
-def register_function(
-    function: Callable,
-    description: str,
-    name: str,
-    configs: Optional[List[Config]] = None,
-    suggest_configs: Optional[List[Config]] = None,
-    group: str = DEFAULT_FUNCTION_GROUP_NAME,
-    allow_free_args: bool = False,
-    min_free_args: Union[int, None] = None,
-    max_free_args: Union[int, None] = None,
-) -> None:
-    get_pytconf().register_function(
-        function=function,
-        description=description,
-        name=name,
-        configs=configs,
-        suggest_configs=suggest_configs,
-        group=group,
-        allow_free_args=allow_free_args,
-        min_free_args=min_free_args,
-        max_free_args=max_free_args,
-    )
+def register_function(data: FunctionData) -> None:
+    get_pytconf().register_function(data)
 
 
 def write_config_file(config_type: ConfigType, config_format: ConfigFormat) -> None:
