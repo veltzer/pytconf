@@ -144,8 +144,7 @@ class ParamEnum(Param):
         super().collect()
 
     def get_type_name(self):
-        # pylint: disable=protected-access
-        return f"Enum[{self.enum_type._name_}]"  # type=ignore
+        return f"Enum[{self.enum_type.__name__}]"
 
     def s2t(self, s: str) -> Any:
         return str_to_enum_value(s, self.enum_type)
