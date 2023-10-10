@@ -316,6 +316,7 @@ class PytconfConf:
             description="show help",
             allow_free_args=True,
             max_free_args=2,
+            group=SPECIAL_FUNCTION_GROUP_NAME,
         )
 
     def get_function_selected(self, args: List[str], errors) -> Union[str, None]:
