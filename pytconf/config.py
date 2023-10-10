@@ -103,13 +103,19 @@ class PytconfConf:
         self.app_name = app_name
         self.version = version
 
+    def has_function(
+        self,
+        function_name: str,
+    ) -> bool:
+        return function_name in self.function_name_to_configs
+
     def register_function(
         self,
         function: Callable,
         description: str,
         name: str,
-        configs: Optional[List[Config]],
-        suggest_configs: Optional[List[Config]],
+        configs: Optional[List[Config]] = None,
+        suggest_configs: Optional[List[Config]] = None,
         group: str = DEFAULT_FUNCTION_GROUP_NAME,
         allow_free_args: bool = False,
         min_free_args: Union[int, None] = None,
@@ -292,6 +298,24 @@ class PytconfConf:
             description=SPECIAL_FUNCTION_GROUP_DESCRIPTION,
             show_meta=SPECIAL_FUNCTION_GROUP_SHOW_META,
             show=SPECIAL_FUNCTION_GROUP_SHOW,
+        )
+
+        def do_help():
+            if self.free_args:
+                for arg in self.free_args:
+                    if self.has_function(arg):
+                        self.show_help_for_function(function_name=arg)
+                    else:
+                        print(f"have no function called [{arg}]")
+                        sys.exit(1)
+            else:
+                self.show_help()
+        self.register_function(
+            function=do_help,
+            name="help",
+            description="show help",
+            allow_free_args=True,
+            max_free_args=2,
         )
 
     def get_function_selected(self, args: List[str], errors) -> Union[str, None]:
