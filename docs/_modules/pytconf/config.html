@@ -4,10 +4,10 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>pytconf.config &#8212; pytconf 0.0.85 documentation</title>
+    <title>pytconf.config &#8212; pytconf 0.0.86 documentation</title>
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=4f649999" />
     <link rel="stylesheet" type="text/css" href="../../_static/alabaster.css?v=039e1c02" />
-    <script src="../../_static/documentation_options.js?v=04662272"></script>
+    <script src="../../_static/documentation_options.js?v=339ea818"></script>
     <script src="../../_static/doctools.js?v=888ff710"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
@@ -154,6 +154,15 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">version</span> <span class="o">=</span> <span class="n">version</span></div>
 
 
+<div class="viewcode-block" id="PytconfConf.has_function">
+<a class="viewcode-back" href="../../pytconf.html#pytconf.config.PytconfConf.has_function">[docs]</a>
+    <span class="k">def</span> <span class="nf">has_function</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">function_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">function_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">function_name_to_configs</span></div>
+
+
 <div class="viewcode-block" id="PytconfConf.register_function">
 <a class="viewcode-back" href="../../pytconf.html#pytconf.config.PytconfConf.register_function">[docs]</a>
     <span class="k">def</span> <span class="nf">register_function</span><span class="p">(</span>
@@ -161,8 +170,8 @@
         <span class="n">function</span><span class="p">:</span> <span class="n">Callable</span><span class="p">,</span>
         <span class="n">description</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-        <span class="n">configs</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">Config</span><span class="p">]],</span>
-        <span class="n">suggest_configs</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">Config</span><span class="p">]],</span>
+        <span class="n">configs</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">Config</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">suggest_configs</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">Config</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">group</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">DEFAULT_FUNCTION_GROUP_NAME</span><span class="p">,</span>
         <span class="n">allow_free_args</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
         <span class="n">min_free_args</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -372,6 +381,24 @@
             <span class="n">description</span><span class="o">=</span><span class="n">SPECIAL_FUNCTION_GROUP_DESCRIPTION</span><span class="p">,</span>
             <span class="n">show_meta</span><span class="o">=</span><span class="n">SPECIAL_FUNCTION_GROUP_SHOW_META</span><span class="p">,</span>
             <span class="n">show</span><span class="o">=</span><span class="n">SPECIAL_FUNCTION_GROUP_SHOW</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">do_help</span><span class="p">():</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">free_args</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">arg</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">free_args</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">has_function</span><span class="p">(</span><span class="n">arg</span><span class="p">):</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">show_help_for_function</span><span class="p">(</span><span class="n">function_name</span><span class="o">=</span><span class="n">arg</span><span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;have no function called [</span><span class="si">{</span><span class="n">arg</span><span class="si">}</span><span class="s2">]&quot;</span><span class="p">)</span>
+                        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">show_help</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">register_function</span><span class="p">(</span>
+            <span class="n">function</span><span class="o">=</span><span class="n">do_help</span><span class="p">,</span>
+            <span class="n">name</span><span class="o">=</span><span class="s2">&quot;help&quot;</span><span class="p">,</span>
+            <span class="n">description</span><span class="o">=</span><span class="s2">&quot;show help&quot;</span><span class="p">,</span>
+            <span class="n">allow_free_args</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">max_free_args</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
         <span class="p">)</span></div>
 
 
