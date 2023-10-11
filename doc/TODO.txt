@@ -1,6 +1,3 @@
-- add ability to configure colors on and off.
-	using env variable
-
 - add ability to auto complete.
 
 - add ability to search for close matches

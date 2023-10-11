@@ -1,0 +1,1 @@
+- added ability to configure colors on and off using env variable.
