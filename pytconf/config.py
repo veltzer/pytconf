@@ -282,20 +282,37 @@ class PytconfConf:
         self.register_function(data)
 
         def do_complete():
-            data = os.environ["COMP_LINE"].split()
+            comp_line = os.environ["COMP_LINE"]
+            data = comp_line.split()
             if len(data) == 1:
-                to_complete = data[0]
                 for f in self.functions:
-                    if f.startswith(to_complete):
-                        print(f)
-            else:
-                print("cannot auto complete")
+                    print(f)
+            elif len(data) >= 2:
+                if comp_line.endswith(" "):
+                    select = data[1]
+                    if select in self.functions:
+                        fdata = self.functions[select]
+                        for config in fdata.configs:
+                            for name, _param in the_registry.yield_name_data_for_config(config):
+                                print(f"--{name}")
+                    else:
+                        print("your first argument is not a valid function")
+                        print("ERROR")
+                else:
+                    to_complete = data[1]
+                    found = False
+                    for f in self.functions:
+                        if f.startswith(to_complete):
+                            found = True
+                            print(f)
+                    if not found:
+                        for f in self.functions:
+                            print(f)
         data = FunctionData(
             function=do_complete,
             name="complete",
             description="do auto-complete",
             allow_free_args=True,
-            max_free_args=2,
             group=SPECIAL_FUNCTION_GROUP_NAME,
         )
         self.register_function(data)
