@@ -281,6 +281,25 @@ class PytconfConf:
         )
         self.register_function(data)
 
+        def do_complete():
+            data = os.environ["COMP_LINE"].split()
+            if len(data) == 1:
+                to_complete = data[0]
+                for f in self.functions:
+                    if f.startswith(to_complete):
+                        print(f)
+            else:
+                print("cannot auto complete")
+        data = FunctionData(
+            function=do_complete,
+            name="complete",
+            description="do auto-complete",
+            allow_free_args=True,
+            max_free_args=2,
+            group=SPECIAL_FUNCTION_GROUP_NAME,
+        )
+        self.register_function(data)
+
     def get_function_selected(self, args: List[str], errors) -> Optional[FunctionData]:
         function_selected = None
         if len(args) > 0:
