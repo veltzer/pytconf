@@ -1,1 +1,2 @@
 - added ability to configure colors on and off using env variable.
+- layed the basic framework for auto-completion

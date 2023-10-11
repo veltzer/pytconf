@@ -4,10 +4,10 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>pytconf.config &#8212; pytconf 0.0.93 documentation</title>
+    <title>pytconf.config &#8212; pytconf 0.0.94 documentation</title>
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=4f649999" />
     <link rel="stylesheet" type="text/css" href="../../_static/alabaster.css?v=039e1c02" />
-    <script src="../../_static/documentation_options.js?v=0f58e6e2"></script>
+    <script src="../../_static/documentation_options.js?v=c4d1762f"></script>
     <script src="../../_static/doctools.js?v=888ff710"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
@@ -99,13 +99,6 @@
 <a class="viewcode-back" href="../../pytconf.html#pytconf.config.Config">[docs]</a>
 <span class="k">class</span> <span class="nc">Config</span><span class="p">(</span><span class="n">metaclass</span><span class="o">=</span><span class="n">MetaConfig</span><span class="p">):</span>
     <span class="k">pass</span></div>
-
-
-
-<div class="viewcode-block" id="is_help">
-<a class="viewcode-back" href="../../pytconf.html#pytconf.config.is_help">[docs]</a>
-<span class="k">def</span> <span class="nf">is_help</span><span class="p">(</span><span class="n">string</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-    <span class="k">return</span> <span class="n">string</span><span class="o">.</span><span class="n">lower</span><span class="p">()[:</span><span class="mi">4</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;help&quot;</span></div>
 
 
 
@@ -262,11 +255,7 @@
         <span class="n">unknown_flags</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">flag_raw</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">flags</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">the_registry</span><span class="o">.</span><span class="n">has_name</span><span class="p">(</span><span class="n">flag_raw</span><span class="p">):</span>
-                <span class="k">if</span> <span class="n">is_help</span><span class="p">(</span><span class="n">flag_raw</span><span class="p">):</span>
-                    <span class="n">errors</span><span class="o">.</span><span class="n">set_do_help</span><span class="p">()</span>
-                    <span class="n">errors</span><span class="o">.</span><span class="n">unset_show_errors</span><span class="p">()</span>
-                <span class="k">else</span><span class="p">:</span>
-                    <span class="n">unknown_flags</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">flag_raw</span><span class="p">)</span>
+                <span class="n">unknown_flags</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">flag_raw</span><span class="p">)</span>
                 <span class="k">continue</span>
             <span class="n">config</span> <span class="o">=</span> <span class="n">the_registry</span><span class="o">.</span><span class="n">get_config_for_name</span><span class="p">(</span><span class="n">flag_raw</span><span class="p">)</span>
             <span class="n">param</span> <span class="o">=</span> <span class="n">the_registry</span><span class="o">.</span><span class="n">get_data_for_name</span><span class="p">(</span><span class="n">flag_raw</span><span class="p">)</span>
@@ -376,6 +365,42 @@
             <span class="n">max_free_args</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
             <span class="n">group</span><span class="o">=</span><span class="n">SPECIAL_FUNCTION_GROUP_NAME</span><span class="p">,</span>
         <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">register_function</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">do_complete</span><span class="p">():</span>
+            <span class="n">comp_line</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;COMP_LINE&quot;</span><span class="p">]</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">comp_line</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">functions</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">comp_line</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">):</span>
+                    <span class="n">select</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+                    <span class="k">if</span> <span class="n">select</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">functions</span><span class="p">:</span>
+                        <span class="n">fdata</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">functions</span><span class="p">[</span><span class="n">select</span><span class="p">]</span>
+                        <span class="k">for</span> <span class="n">config</span> <span class="ow">in</span> <span class="n">fdata</span><span class="o">.</span><span class="n">configs</span><span class="p">:</span>
+                            <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">_param</span> <span class="ow">in</span> <span class="n">the_registry</span><span class="o">.</span><span class="n">yield_name_data_for_config</span><span class="p">(</span><span class="n">config</span><span class="p">):</span>
+                                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;--</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;your first argument is not a valid function&quot;</span><span class="p">)</span>
+                        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;ERROR&quot;</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">to_complete</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+                    <span class="n">found</span> <span class="o">=</span> <span class="kc">False</span>
+                    <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">functions</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="n">f</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">to_complete</span><span class="p">):</span>
+                            <span class="n">found</span> <span class="o">=</span> <span class="kc">True</span>
+                            <span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="ow">not</span> <span class="n">found</span><span class="p">:</span>
+                        <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">functions</span><span class="p">:</span>
+                            <span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">FunctionData</span><span class="p">(</span>
+            <span class="n">function</span><span class="o">=</span><span class="n">do_complete</span><span class="p">,</span>
+            <span class="n">name</span><span class="o">=</span><span class="s2">&quot;complete&quot;</span><span class="p">,</span>
+            <span class="n">description</span><span class="o">=</span><span class="s2">&quot;do auto-complete&quot;</span><span class="p">,</span>
+            <span class="n">allow_free_args</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">group</span><span class="o">=</span><span class="n">SPECIAL_FUNCTION_GROUP_NAME</span><span class="p">,</span>
+        <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">register_function</span><span class="p">(</span><span class="n">data</span><span class="p">)</span></div>
 
 
@@ -388,12 +413,8 @@
             <span class="k">if</span> <span class="n">command</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">functions</span><span class="p">:</span>
                 <span class="n">function_selected</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">functions</span><span class="p">[</span><span class="n">command</span><span class="p">]</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="k">if</span> <span class="n">is_help</span><span class="p">(</span><span class="n">command</span><span class="p">):</span>
-                    <span class="n">errors</span><span class="o">.</span><span class="n">set_do_help</span><span class="p">()</span>
-                    <span class="n">errors</span><span class="o">.</span><span class="n">unset_show_errors</span><span class="p">()</span>
-                <span class="k">else</span><span class="p">:</span>
-                    <span class="n">errors</span><span class="o">.</span><span class="n">add_error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;unknown command [</span><span class="si">{</span><span class="n">command</span><span class="si">}</span><span class="s2">]&quot;</span><span class="p">)</span>
-                    <span class="n">errors</span><span class="o">.</span><span class="n">set_force_show_errors</span><span class="p">()</span>
+                <span class="n">errors</span><span class="o">.</span><span class="n">add_error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;unknown command [</span><span class="si">{</span><span class="n">command</span><span class="si">}</span><span class="s2">]&quot;</span><span class="p">)</span>
+                <span class="n">errors</span><span class="o">.</span><span class="n">set_force_show_errors</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">function_selected</span></div>
 
 
@@ -435,11 +456,7 @@
                         <span class="n">errors</span><span class="o">.</span><span class="n">add_error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;too many free args - </span><span class="si">{</span><span class="n">select</span><span class="o">.</span><span class="n">max_free_args</span><span class="si">}</span><span class="s2"> required&quot;</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">free_args</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-                    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">free_args</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">is_help</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">free_args</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
-                        <span class="n">errors</span><span class="o">.</span><span class="n">set_do_help</span><span class="p">()</span>
-                        <span class="n">errors</span><span class="o">.</span><span class="n">unset_show_errors</span><span class="p">()</span>
-                    <span class="k">else</span><span class="p">:</span>
-                        <span class="n">errors</span><span class="o">.</span><span class="n">add_error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;free args are not allowed [</span><span class="si">{</span><span class="s1">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">free_args</span><span class="p">)</span><span class="si">}</span><span class="s2">]&quot;</span><span class="p">)</span>
+                    <span class="n">errors</span><span class="o">.</span><span class="n">add_error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;free args are not allowed [</span><span class="si">{</span><span class="s1">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">free_args</span><span class="p">)</span><span class="si">}</span><span class="s2">]&quot;</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">process_flags</span><span class="p">(</span><span class="n">select</span><span class="p">,</span> <span class="n">flags</span><span class="p">,</span> <span class="n">errors</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">errors</span><span class="o">.</span><span class="n">add_error</span><span class="p">(</span><span class="s2">&quot;no command is selected&quot;</span><span class="p">)</span>
