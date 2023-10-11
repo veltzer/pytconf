@@ -18,7 +18,7 @@ from pytconf.errors_collector import ErrorsCollector
 from pytconf.param_collector import the_collector
 from pytconf.pydoc import get_first_line
 from pytconf.registry import the_registry
-from pytconf.utils import get_logger, noun, HtmlGen
+from pytconf.utils import noun, HtmlGen
 
 DEFAULT_FUNCTION_GROUP_NAME = "default"
 DEFAULT_FUNCTION_GROUP_DESCRIPTION = "default command group"
@@ -44,9 +44,6 @@ class ConfigFormat(Enum):
 
 
 class MetaConfig(type):
-    """
-    Meta class for all configs
-    """
     def __new__(cls, name, bases, namespace):
         ret = super().__new__(cls, name, bases, namespace)
         i = 0
@@ -59,9 +56,7 @@ class MetaConfig(type):
 
 
 class Config(metaclass=MetaConfig):
-    """
-    Base class for all configs
-    """
+    pass
 
 
 def is_help(string: str) -> bool:
@@ -189,13 +184,6 @@ class PytconfConf:
     def process_flags(
         self, select: FunctionData, flags: Dict[str, str], errors: ErrorsCollector,
     ) -> None:
-        """
-        Parse the args and fill the global data
-        :param function_selected:
-        :param flags:
-        :param errors:
-        """
-
         # set the flags into the "default" field and collect unknown flags
         unknown_flags = []
         for flag_raw, value in flags.items():
@@ -469,6 +457,12 @@ class PytconfConf:
                     html_gen.line("td", more_help)
 
     @classmethod
+    def rm_config_file(cls, app_name: str, config_type: ConfigType, config_format: ConfigFormat) -> None:
+        filename = cls.get_config(app_name, config_type, config_format)
+        if os.path.isfile(filename):
+            os.unlink(filename)
+
+    @classmethod
     def write_config_file(cls, filename: str, config_format: ConfigFormat) -> None:
         values: Dict[str, str] = {}
         for config in the_registry.yield_configs():
@@ -497,9 +491,6 @@ def config_arg_parse_and_launch(
     launch=True,
     do_exit=True,
 ) -> None:
-    """
-    This is the real API
-    """
     get_pytconf().config_arg_parse_and_launch(
         args=args,
         launch=launch,
@@ -553,8 +544,6 @@ def register_endpoint(
     min_free_args: Optional[int] = None,
     max_free_args: Optional[int] = None,
 ) -> Callable[[Any], Any]:
-    logger = get_logger()
-    logger.debug("registering endpoint")
     if configs is None:
         configs = []
     if suggest_configs is None:
@@ -576,21 +565,7 @@ def register_endpoint(
             group=group,
             function=function,
         )
-        register_function(data=data)
+        get_pytconf().register_function(data=data)
         return function
 
     return identity
-
-
-def register_function(data: FunctionData) -> None:
-    get_pytconf().register_function(data)
-
-
-def write_config_file(config_type: ConfigType, config_format: ConfigFormat) -> None:
-    get_pytconf().write_config(config_type, config_format)
-
-
-def rm_config_file(app_name: str, config_type: ConfigType, config_format: ConfigFormat) -> None:
-    filename = PytconfConf.get_config(app_name, config_type, config_format)
-    if os.path.isfile(filename):
-        os.unlink(filename)
