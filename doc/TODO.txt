@@ -1,3 +1,8 @@
+- add ability to configure colors on and off.
+	using env variable
+
+- add ability to auto complete.
+
 - add the ability to have absolute param names:
 	$ command --ConfigDebug.debug=True
 	This way we could have same name parameters in different configs.
