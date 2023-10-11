@@ -113,10 +113,7 @@ class PytconfConf:
         self.app_name = app_name
         self.version = version
 
-    def has_function(
-        self,
-        function_name: str,
-    ) -> bool:
+    def has_function(self, function_name: str) -> bool:
         return function_name in self.functions
 
     def register_function(self, data: FunctionData):
@@ -402,24 +399,16 @@ class PytconfConf:
 
     def get_html(self) -> str:
         html_gen = HtmlGen()
-        main_doc = self.main_description
-        html_gen.line("h1", main_doc)
+        html_gen.line("h1", self.main_description)
         html_gen.line("h2", "API specifications")
-        single_group = len(self.groups) == 1
         with html_gen.tag("ul"):
             for name, group in self.groups.items():
-                if not single_group:
-                    html_gen.line("li", group.name, title="function group name: ")
-                    html_gen.line(
-                        "li",
-                        group.description,
-                        title="function group description: ",
-                    )
+                html_gen.line("li", group.name, title="function group name: ")
+                html_gen.line("li", group.description, title="function group description: ")
                 with html_gen.tag("li"):
                     for name in sorted(self.functions.keys()):
                         self.get_html_for_function(name, html_gen)
-        # return html_gen.document.getvalue()
-        return html_gen.document  # type: ignore
+        return html_gen.document
 
     def get_html_for_function(self, name:str, html_gen):
         data = self.functions[name]
