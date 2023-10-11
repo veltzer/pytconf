@@ -59,10 +59,6 @@ class Config(metaclass=MetaConfig):
     pass
 
 
-def is_help(string: str) -> bool:
-    return string.lower()[:4] == "help"
-
-
 @dataclass
 class FunctionData:
     name: str
@@ -185,11 +181,7 @@ class PytconfConf:
         unknown_flags = []
         for flag_raw, value in flags.items():
             if not the_registry.has_name(flag_raw):
-                if is_help(flag_raw):
-                    errors.set_do_help()
-                    errors.unset_show_errors()
-                else:
-                    unknown_flags.append(flag_raw)
+                unknown_flags.append(flag_raw)
                 continue
             config = the_registry.get_config_for_name(flag_raw)
             param = the_registry.get_data_for_name(flag_raw)
@@ -296,12 +288,8 @@ class PytconfConf:
             if command in self.functions:
                 function_selected = self.functions[command]
             else:
-                if is_help(command):
-                    errors.set_do_help()
-                    errors.unset_show_errors()
-                else:
-                    errors.add_error(f"unknown command [{command}]")
-                    errors.set_force_show_errors()
+                errors.add_error(f"unknown command [{command}]")
+                errors.set_force_show_errors()
         return function_selected
 
     def config_arg_parse_and_launch(
@@ -340,11 +328,7 @@ class PytconfConf:
                         errors.add_error(f"too many free args - {select.max_free_args} required")
             else:
                 if len(self.free_args) > 0:
-                    if len(self.free_args) == 1 and is_help(self.free_args[0]):
-                        errors.set_do_help()
-                        errors.unset_show_errors()
-                    else:
-                        errors.add_error(f"free args are not allowed [{','.join(self.free_args)}]")
+                    errors.add_error(f"free args are not allowed [{','.join(self.free_args)}]")
             self.process_flags(select, flags, errors)
         else:
             errors.add_error("no command is selected")
