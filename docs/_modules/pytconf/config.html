@@ -4,10 +4,10 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>pytconf.config &#8212; pytconf 0.0.92 documentation</title>
+    <title>pytconf.config &#8212; pytconf 0.0.93 documentation</title>
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=4f649999" />
     <link rel="stylesheet" type="text/css" href="../../_static/alabaster.css?v=039e1c02" />
-    <script src="../../_static/documentation_options.js?v=ab2062fb"></script>
+    <script src="../../_static/documentation_options.js?v=0f58e6e2"></script>
     <script src="../../_static/doctools.js?v=888ff710"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
@@ -172,10 +172,7 @@
 
 <div class="viewcode-block" id="PytconfConf.has_function">
 <a class="viewcode-back" href="../../pytconf.html#pytconf.config.PytconfConf.has_function">[docs]</a>
-    <span class="k">def</span> <span class="nf">has_function</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span>
-        <span class="n">function_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">has_function</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">function_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">function_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">functions</span></div>
 
 
@@ -506,24 +503,16 @@
 <a class="viewcode-back" href="../../pytconf.html#pytconf.config.PytconfConf.get_html">[docs]</a>
     <span class="k">def</span> <span class="nf">get_html</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="n">html_gen</span> <span class="o">=</span> <span class="n">HtmlGen</span><span class="p">()</span>
-        <span class="n">main_doc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">main_description</span>
-        <span class="n">html_gen</span><span class="o">.</span><span class="n">line</span><span class="p">(</span><span class="s2">&quot;h1&quot;</span><span class="p">,</span> <span class="n">main_doc</span><span class="p">)</span>
+        <span class="n">html_gen</span><span class="o">.</span><span class="n">line</span><span class="p">(</span><span class="s2">&quot;h1&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">main_description</span><span class="p">)</span>
         <span class="n">html_gen</span><span class="o">.</span><span class="n">line</span><span class="p">(</span><span class="s2">&quot;h2&quot;</span><span class="p">,</span> <span class="s2">&quot;API specifications&quot;</span><span class="p">)</span>
-        <span class="n">single_group</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">groups</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span>
         <span class="k">with</span> <span class="n">html_gen</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="s2">&quot;ul&quot;</span><span class="p">):</span>
             <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">group</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">groups</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-                <span class="k">if</span> <span class="ow">not</span> <span class="n">single_group</span><span class="p">:</span>
-                    <span class="n">html_gen</span><span class="o">.</span><span class="n">line</span><span class="p">(</span><span class="s2">&quot;li&quot;</span><span class="p">,</span> <span class="n">group</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;function group name: &quot;</span><span class="p">)</span>
-                    <span class="n">html_gen</span><span class="o">.</span><span class="n">line</span><span class="p">(</span>
-                        <span class="s2">&quot;li&quot;</span><span class="p">,</span>
-                        <span class="n">group</span><span class="o">.</span><span class="n">description</span><span class="p">,</span>
-                        <span class="n">title</span><span class="o">=</span><span class="s2">&quot;function group description: &quot;</span><span class="p">,</span>
-                    <span class="p">)</span>
+                <span class="n">html_gen</span><span class="o">.</span><span class="n">line</span><span class="p">(</span><span class="s2">&quot;li&quot;</span><span class="p">,</span> <span class="n">group</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;function group name: &quot;</span><span class="p">)</span>
+                <span class="n">html_gen</span><span class="o">.</span><span class="n">line</span><span class="p">(</span><span class="s2">&quot;li&quot;</span><span class="p">,</span> <span class="n">group</span><span class="o">.</span><span class="n">description</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;function group description: &quot;</span><span class="p">)</span>
                 <span class="k">with</span> <span class="n">html_gen</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="s2">&quot;li&quot;</span><span class="p">):</span>
                     <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">functions</span><span class="o">.</span><span class="n">keys</span><span class="p">()):</span>
                         <span class="bp">self</span><span class="o">.</span><span class="n">get_html_for_function</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">html_gen</span><span class="p">)</span>
-        <span class="c1"># return html_gen.document.getvalue()</span>
-        <span class="k">return</span> <span class="n">html_gen</span><span class="o">.</span><span class="n">document</span>  <span class="c1"># type: ignore</span></div>
+        <span class="k">return</span> <span class="n">html_gen</span><span class="o">.</span><span class="n">document</span></div>
 
 
 <div class="viewcode-block" id="PytconfConf.get_html_for_function">
