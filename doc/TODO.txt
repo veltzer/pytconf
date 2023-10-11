@@ -3,6 +3,11 @@
 
 - add ability to auto complete.
 
+- add ability to search for close matches
+	for instance
+	$ pypitools uploda
+	Did you means "pypitools upload"?
+
 - add the ability to have absolute param names:
 	$ command --ConfigDebug.debug=True
 	This way we could have same name parameters in different configs.
