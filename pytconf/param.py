@@ -2,8 +2,6 @@ import abc
 from enum import Enum
 from typing import List, Union, Callable, Any, Optional
 
-from pyfakeuse import fake_use
-
 from pytconf.enum_subset import EnumSubset
 
 from pytconf.extended_enum import str_to_enum_value, enum_type_to_list_str
@@ -59,7 +57,7 @@ class Param(abc.ABC):
         pass
 
     def more_help(self) -> Optional[str]:
-        return fake_use(self)
+        return None
 
 
 class ParamFunctions(Param):

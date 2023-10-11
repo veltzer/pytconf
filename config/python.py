@@ -5,7 +5,6 @@ dev_requires = [
 install_requires = [
     "termcolor",
     "yattag",
-    "pyfakeuse",
 ]
 make_requires = [
     "pyclassifiers",

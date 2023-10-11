@@ -1,12 +1,4 @@
-import logging
 from yattag import Doc
-
-
-from pytconf.data import LOGGER_NAME
-
-
-def get_logger():
-    return logging.getLogger(LOGGER_NAME)
 
 
 def noun(name: str, num: int) -> str:

@@ -37,7 +37,6 @@ setuptools.setup(
     install_requires=[
         "termcolor",
         "yattag",
-        "pyfakeuse",
     ],
     classifiers=[
         "Development Status :: 4 - Beta",
