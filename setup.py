@@ -2,14 +2,14 @@ import setuptools
 
 
 def get_readme():
-    with open('README.rst') as f:
+    with open("README.rst") as f:
         return f.read()
 
 
 setuptools.setup(
     # the first three fields are a must according to the documentation
     name="pytconf",
-    version="0.0.94",
+    version="0.0.95",
     packages=[
         "pytconf",
     ],
