@@ -578,3 +578,11 @@ def register_endpoint(
         return function
 
     return identity
+
+
+def rm_config_file(app_name: str, config_type: ConfigType, config_format: ConfigFormat) -> None:
+    get_pytconf().rm_config_file(app_name=app_name, config_type=config_type, config_format=config_format)
+
+
+def write_config_file(filename: str, config_format: ConfigFormat) -> None:
+    get_pytconf().write_config_file(filename=filename, config_format=config_format)
