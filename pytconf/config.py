@@ -543,6 +543,35 @@ def register_main(
     return identity
 
 
+def register_function(
+    name: str,
+    description: str,
+    function: Callable,
+    configs: Optional[List[Config]] = None,
+    suggest_configs: Optional[List[Config]] = None,
+    allow_free_args: bool = False,
+    min_free_args: Optional[int] = None,
+    max_free_args: Optional[int] = None,
+    group: str = DEFAULT_FUNCTION_GROUP_NAME,
+):
+    if configs is None:
+        configs = []
+    if suggest_configs is None:
+        suggest_configs = []
+    data = FunctionData(
+        name=name,
+        description=description,
+        function=function,
+        configs=configs,
+        suggest_configs=suggest_configs,
+        allow_free_args=allow_free_args,
+        min_free_args=min_free_args,
+        max_free_args=max_free_args,
+        group=group,
+    )
+    get_pytconf().register_function(data=data)
+
+
 def register_endpoint(
     description: str,
     name: Optional[str] = None,
