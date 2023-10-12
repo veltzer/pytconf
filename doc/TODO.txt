@@ -17,18 +17,24 @@
 
 - add support for reading the config file in yaml format.
 
-- add libraries ability to either:
-	- commands
+- add the ability for libraries to either:
+	- add commands
 	or
-        - flags to other commands
+        - add flags to other commands
 	examples:
 	- pylogconf could add a command to show the current logging configuration
 	- pylogconf could add a --loglevel=[value] to every other command.
 
 - add ability to set the name of the current applcation on the terminal.
-	what does that mean?
+	meaning that when the application starts running the terminal will change
+	it's name to the name of the application and not just "python".
 
-- add help, write config file, show config, bash completions and more.
+- add more "hidden" commands:
+	write config file
+	show config.
+	show config file name
+- add flag that will show the hidden commands also
+	help --all?
 
 - add dynamic loading of the actual commands to make interactions faster.
 - add plugin based system to discover commands automatically with support for auto loading.
