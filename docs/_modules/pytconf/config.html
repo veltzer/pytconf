@@ -4,10 +4,10 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>pytconf.config &#8212; pytconf 0.0.96 documentation</title>
+    <title>pytconf.config &#8212; pytconf 0.0.97 documentation</title>
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=4f649999" />
     <link rel="stylesheet" type="text/css" href="../../_static/alabaster.css?v=039e1c02" />
-    <script src="../../_static/documentation_options.js?v=5751785c"></script>
+    <script src="../../_static/documentation_options.js?v=f329fc45"></script>
     <script src="../../_static/doctools.js?v=888ff710"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
@@ -673,6 +673,38 @@
         <span class="k">return</span> <span class="n">main_function</span>
 
     <span class="k">return</span> <span class="n">identity</span></div>
+
+
+
+<div class="viewcode-block" id="register_function">
+<a class="viewcode-back" href="../../pytconf.html#pytconf.config.register_function">[docs]</a>
+<span class="k">def</span> <span class="nf">register_function</span><span class="p">(</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">description</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">function</span><span class="p">:</span> <span class="n">Callable</span><span class="p">,</span>
+    <span class="n">configs</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">Config</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">suggest_configs</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">Config</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">allow_free_args</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">min_free_args</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">max_free_args</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">group</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">DEFAULT_FUNCTION_GROUP_NAME</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="k">if</span> <span class="n">configs</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">configs</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">if</span> <span class="n">suggest_configs</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">suggest_configs</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">FunctionData</span><span class="p">(</span>
+        <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=</span><span class="n">description</span><span class="p">,</span>
+        <span class="n">function</span><span class="o">=</span><span class="n">function</span><span class="p">,</span>
+        <span class="n">configs</span><span class="o">=</span><span class="n">configs</span><span class="p">,</span>
+        <span class="n">suggest_configs</span><span class="o">=</span><span class="n">suggest_configs</span><span class="p">,</span>
+        <span class="n">allow_free_args</span><span class="o">=</span><span class="n">allow_free_args</span><span class="p">,</span>
+        <span class="n">min_free_args</span><span class="o">=</span><span class="n">min_free_args</span><span class="p">,</span>
+        <span class="n">max_free_args</span><span class="o">=</span><span class="n">max_free_args</span><span class="p">,</span>
+        <span class="n">group</span><span class="o">=</span><span class="n">group</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">get_pytconf</span><span class="p">()</span><span class="o">.</span><span class="n">register_function</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">)</span></div>
 
 
 
