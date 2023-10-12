@@ -6,5 +6,6 @@ from pytconf.config import ( # noqa F401
     register_endpoint,
     get_free_args,
     write_config_file,
+    write_config,
     rm_config_file,
 )
