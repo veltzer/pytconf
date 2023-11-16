@@ -14,7 +14,7 @@ setuptools.setup(
         "pytconf",
     ],
     # from here all is optional
-    description="pytconf handles configuration and command line parsing",
+    description="Configuration, command line and injection framework for python",
     long_description=get_readme(),
     long_description_content_type="text/x-rst",
     author="Mark Veltzer",
