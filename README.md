@@ -1,6 +1,6 @@
 # *pytconf* project by Mark Veltzer
 
-description: pytconf handles configuration and command line parsing
+description: Configuration, command line and injection framework for python
 
 project website: https://veltzer.github.io/pytconf
 
