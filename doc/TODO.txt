@@ -1,3 +1,6 @@
+- when completing commands show only commands
+	which are visible (so don't show "complete" for instance).
+
 - when printing help, for instance:
 	==================
 	Usage: pygitpub fix_metadata [OPTIONS] [ARGS]...
