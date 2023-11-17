@@ -1,4 +1,18 @@
-- add ability to auto complete.
+- when printing help, for instance:
+	==================
+	Usage: pygitpub fix_metadata [OPTIONS] [ARGS]...
+
+	  Fix the metadata of the project on github to match the source code
+
+	Options:
+
+	  Paramters for your github account
+	    username [str]: What is your github username? [MANDATORY]
+	    token [str]: What is your github token? [MANDATORY]
+	    token_name [str]: What is the name of the token on github? [MANDATORY]
+	===================
+	I don't see the values for "username", "token", "token_name" even though they are supplied
+	in "~/.config/pygitpub.yaml".
 
 - add ability to search for close matches
 	for instance
