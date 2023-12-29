@@ -9,7 +9,7 @@ def get_readme():
 setuptools.setup(
     # the first three fields are a must according to the documentation
     name="pytconf",
-    version="0.0.98",
+    version="0.0.99",
     packages=[
         "pytconf",
     ],
@@ -48,6 +48,7 @@ setuptools.setup(
         "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
         "Programming Language :: Python :: 3.10",
+        "Programming Language :: Python :: 3.11",
         "Topic :: Utilities",
         "License :: OSI Approved :: MIT License",
     ],
