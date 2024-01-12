@@ -1,0 +1,5 @@
+- https://github.com/pallets/click
+- https://docs.python.org/3/library/argparse.html
+- https://www.pyinvoke.org/
+- https://pythonhosted.org/argh/index.html
+- https://pypi.org/project/Baker/1.2/
