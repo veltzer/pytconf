@@ -282,10 +282,10 @@ class PytconfConf:
         self.register_function(data)
 
         def do_complete():
-            if "COMP_LINE" not in os.environ:
-                print("COMP_LINE env var must be defined", file=sys.stderr)
-                sys.exit(1)
-            comp_line = os.environ["COMP_LINE"]
+            if "COMP_LINE" in os.environ:
+                comp_line = os.environ["COMP_LINE"]
+            else:
+                comp_line = ""
             data = comp_line.split()
             if len(data) == 1:
                 for f in self.functions:
