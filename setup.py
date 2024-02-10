@@ -9,7 +9,7 @@ def get_readme():
 setuptools.setup(
     # the first three fields are a must according to the documentation
     name="pytconf",
-    version="0.1.11",
+    version="0.1.12",
     packages=[
         "pytconf",
     ],
