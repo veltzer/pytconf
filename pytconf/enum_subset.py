@@ -25,8 +25,7 @@ class EnumSubset:
         del self.selected[enum_value]
 
     def yield_values(self):
-        for value in self.selected.keys():
-            yield value
+        yield from self.selected.keys()
 
     def values(self):
         return self.selected.keys()
