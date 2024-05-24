@@ -231,6 +231,7 @@ class PytconfConf:
 
     @staticmethod
     def get_config(app_name: str, config_type: ConfigType, config_format: ConfigFormat):
+        suffix = None
         if config_format == ConfigFormat.JSON:
             suffix = "json"
         if config_format == ConfigFormat.YAML:
