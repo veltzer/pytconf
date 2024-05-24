@@ -312,6 +312,7 @@
 <a class="viewcode-back" href="../../pytconf.html#pytconf.config.PytconfConf.get_config">[docs]</a>
     <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">get_config</span><span class="p">(</span><span class="n">app_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">config_type</span><span class="p">:</span> <span class="n">ConfigType</span><span class="p">,</span> <span class="n">config_format</span><span class="p">:</span> <span class="n">ConfigFormat</span><span class="p">):</span>
+        <span class="n">suffix</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">if</span> <span class="n">config_format</span> <span class="o">==</span> <span class="n">ConfigFormat</span><span class="o">.</span><span class="n">JSON</span><span class="p">:</span>
             <span class="n">suffix</span> <span class="o">=</span> <span class="s2">&quot;json&quot;</span>
         <span class="k">if</span> <span class="n">config_format</span> <span class="o">==</span> <span class="n">ConfigFormat</span><span class="o">.</span><span class="n">YAML</span><span class="p">:</span>
