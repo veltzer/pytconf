@@ -21,6 +21,7 @@ test_requires: List[str] = [
     "pytest",
     "pytest-cov",
     "flake8",
+    "pycodestyle",
     "pyflakes",
     "mypy",
     "pylogconf",

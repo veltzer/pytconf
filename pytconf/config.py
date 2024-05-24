@@ -433,7 +433,7 @@ class PytconfConf:
                         self.get_html_for_function(name, html_gen)
         return html_gen.document
 
-    def get_html_for_function(self, name:str, html_gen):
+    def get_html_for_function(self, name: str, html_gen):
         data = self.functions[name]
         with html_gen.tag("ul"):
             function_doc = get_first_line(data.function, "no description for this function")

@@ -8,6 +8,7 @@ pylint
 pytest
 pytest-cov
 flake8
+pycodestyle
 pyflakes
 mypy
 pylogconf
