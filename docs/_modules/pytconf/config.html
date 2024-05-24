@@ -538,7 +538,7 @@
 
 <div class="viewcode-block" id="PytconfConf.get_html_for_function">
 <a class="viewcode-back" href="../../pytconf.html#pytconf.config.PytconfConf.get_html_for_function">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_html_for_function</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span> <span class="n">html_gen</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">get_html_for_function</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">html_gen</span><span class="p">):</span>
         <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">functions</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
         <span class="k">with</span> <span class="n">html_gen</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span><span class="s2">&quot;ul&quot;</span><span class="p">):</span>
             <span class="n">function_doc</span> <span class="o">=</span> <span class="n">get_first_line</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">function</span><span class="p">,</span> <span class="s2">&quot;no description for this function&quot;</span><span class="p">)</span>
