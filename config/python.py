@@ -21,11 +21,10 @@ test_requires: List[str] = [
     "pytest",
     "pytest-cov",
     "flake8",
-    "pycodestyle",
     "pyflakes",
+    "pycodestyle",
     "mypy",
-    "pylogconf",
+    # types
     "types-termcolor",
-    "types-PyYAML",
 ]
 requires = config_requires + install_requires + build_requires + test_requires
