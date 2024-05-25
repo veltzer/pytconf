@@ -8,9 +8,7 @@ pylint
 pytest
 pytest-cov
 flake8
-pycodestyle
 pyflakes
+pycodestyle
 mypy
-pylogconf
 types-termcolor
-types-PyYAML
