@@ -26,5 +26,6 @@ test_requires: List[str] = [
     "mypy",
     # types
     "types-termcolor",
+    "types-PyYAML",
 ]
 requires = config_requires + install_requires + build_requires + test_requires
