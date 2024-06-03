@@ -12,3 +12,4 @@ pyflakes
 pycodestyle
 mypy
 types-termcolor
+types-PyYAML
