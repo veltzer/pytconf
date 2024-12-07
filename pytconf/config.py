@@ -547,6 +547,7 @@ def register_main(
     return identity
 
 
+# pylint: disable=too-many-positional-arguments
 def register_function(
     name: str,
     description: str,
@@ -576,6 +577,7 @@ def register_function(
     get_pytconf().register_function(data=data)
 
 
+# pylint: disable=too-many-positional-arguments
 def register_endpoint(
     description: str,
     name: Optional[str] = None,

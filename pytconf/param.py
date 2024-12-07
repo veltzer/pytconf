@@ -65,6 +65,7 @@ class ParamFunctions(Param):
     Parent class of all parameters of configuration
     """
 
+    # pylint: disable=too-many-positional-arguments
     def __init__(
         self,
         function_s2t: Callable,
