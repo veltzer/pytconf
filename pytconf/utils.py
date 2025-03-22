@@ -1,3 +1,8 @@
+"""
+Utils module for the pytconf project
+"""
+
+
 from yattag import Doc
 
 
@@ -14,6 +19,7 @@ def noun(name: str, num: int) -> str:
 
 
 class HtmlGen:
+    """ html generator """
     def __init__(self):
         document, tag, text, line = Doc().ttl()
         self.document = document

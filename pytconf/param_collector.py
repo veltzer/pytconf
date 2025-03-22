@@ -1,3 +1,8 @@
+"""
+A collector for all parameters
+"""
+
+
 class ParamCollector:
     def __init__(self):
         self.data = []
