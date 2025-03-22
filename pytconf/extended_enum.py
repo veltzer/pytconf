@@ -1,3 +1,8 @@
+"""
+Pythons Enum plus several methods
+"""
+
+
 from enum import Enum
 from typing import List
 

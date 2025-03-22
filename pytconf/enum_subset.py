@@ -1,3 +1,7 @@
+"""
+A subset of enum values
+"""
+
 from collections import OrderedDict
 from enum import Enum
 
