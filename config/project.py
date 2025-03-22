@@ -1,6 +1,4 @@
-"""
-project definitions
-"""
+""" project definitions """
 
 name = "pytconf"
 description_short = "Configuration, command line and injection framework for python"
