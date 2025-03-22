@@ -1,3 +1,7 @@
+"""
+basic tests
+"""
+
 import unittest
 from pytconf.config import FunctionData, get_pytconf
 
@@ -22,6 +26,7 @@ def raise_value_error() -> None:
 
 
 class TestBasic(unittest.TestCase):
+    """ all basic tests """
     def test_config_type(self):
         self.assertEqual(type(ConfigTotal.num), int)
 

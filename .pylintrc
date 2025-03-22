@@ -143,7 +143,8 @@ confidence=HIGH,
 # --enable=similarities". If you want to run only the classes checker, but have
 # no Warning level messages displayed, use "--disable=all --enable=classes
 # --disable=W".
-disable=raw-checker-failed,
+disable=
+	raw-checker-failed,
         bad-inline-option,
         locally-disabled,
         file-ignored,
@@ -151,11 +152,11 @@ disable=raw-checker-failed,
         useless-suppression,
         deprecated-pragma,
         use-symbolic-message-instead,
-	missing-function-docstring, # MV
+# missing-function-docstring,
 	invalid-name,
 	too-few-public-methods,
-	missing-class-docstring,
-	missing-module-docstring,
+# missing-class-docstring,
+# missing-module-docstring,
 	unspecified-encoding,
 	too-many-locals,
 	too-many-arguments,

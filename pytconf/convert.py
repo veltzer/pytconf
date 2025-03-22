@@ -1,3 +1,7 @@
+"""
+pytconf conversion utils
+"""
+
 from typing import List, Union
 
 

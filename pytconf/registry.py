@@ -1,3 +1,8 @@
+"""
+registry of config names
+"""
+
+
 class Registry:
     def __init__(self):
         self.names = set()

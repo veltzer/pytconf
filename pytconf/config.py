@@ -1,3 +1,7 @@
+"""
+main configuration object for pytconf
+"""
+
 import json
 import os
 import sys

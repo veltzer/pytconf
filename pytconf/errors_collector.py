@@ -1,3 +1,8 @@
+"""
+A collection of errors module
+"""
+
+
 from typing import List, Generator
 
 
@@ -13,9 +18,11 @@ class ErrorsCollector:
         self.force_show_errors: bool = False
 
     def add_error(self, msg: str) -> None:
+        """ add an error """
         self._errors.append(msg)
 
     def have_errors(self) -> bool:
+        """ do I have any erorrs """
         return len(self._errors) > 0
 
     def set_do_help(self) -> None:

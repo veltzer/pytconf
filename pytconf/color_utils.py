@@ -1,3 +1,8 @@
+"""
+helpers to print stuff in color
+"""
+
+
 import os
 from termcolor import colored, cprint
 
