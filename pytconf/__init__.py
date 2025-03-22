@@ -1,3 +1,5 @@
+""" initialization of the condif module """
+
 from pytconf.param import ParamCreator  # noqa F401
 from pytconf.config import (  # noqa F401
     Config,

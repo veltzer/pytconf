@@ -1,3 +1,8 @@
+"""
+Documentation functions
+"""
+
+
 from typing import Union
 
 
