@@ -1,6 +1,4 @@
-"""
-python depedencies for this project
-"""
+""" python depedencies for this project """
 
 
 from typing import List
