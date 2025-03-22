@@ -22,18 +22,22 @@ class ConfigTotal(Config):
 
 
 def raise_value_error() -> None:
+    """ function that raises an error """
     raise ValueError()
 
 
 class TestBasic(unittest.TestCase):
     """ all basic tests """
     def test_config_type(self):
+        """ test that configurtion type is the right type """
         self.assertEqual(type(ConfigTotal.num), int)
 
     def test_config_value(self):
+        """ test the value of the config option """
         self.assertEqual(ConfigTotal.num, 10)
 
     def test_parsing(self):
+        """ test command line parser """
         save = ConfigTotal.num
         data = FunctionData(
             name="foo",
@@ -50,6 +54,7 @@ class TestBasic(unittest.TestCase):
         ConfigTotal.num = save
 
     def test_command_running(self):
+        """ test that the right command is run """
         data = FunctionData(
             name="foo",
             description="foobar",
@@ -61,6 +66,7 @@ class TestBasic(unittest.TestCase):
             config_arg_parse_and_launch(args=["foo"])
 
     def test_free_args(self):
+        """ test correct free argument parsing """
         data = FunctionData(
             name="foo",
             description="foobar",
