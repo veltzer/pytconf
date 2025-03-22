@@ -1,3 +1,8 @@
+"""
+Pytconf param types
+"""
+
+
 import abc
 from enum import Enum
 from typing import List, Union, Callable, Any, Optional
@@ -16,7 +21,7 @@ NO_HELP = "No help for this configuration option"
 
 
 class Unique:
-    pass
+    """ A object with a unique value """
 
 
 NO_DEFAULT = Unique()
@@ -40,23 +45,27 @@ class Param(abc.ABC):
         self.type_name = type_name
 
     def get_type_name(self):
+        """ get the type name of the current object """
         return self.type_name
 
     def collect(self):
+        """ collect the current object """
         the_collector.add_data(self)
 
     @abc.abstractmethod
     def s2t(self, s: str) -> object:
-        pass
+        """ translate string ot this type """
 
     def s2t_generate_from_default(self, s: str) -> object:
+        """ generate object from default string """
         raise ValueError("we do not support generation from default")
 
     @abc.abstractmethod
     def t2s(self, t: object) -> str:
-        pass
+        """ translate self to string """
 
     def more_help(self) -> Optional[str]:
+        """ get more help """
         return None
 
 
