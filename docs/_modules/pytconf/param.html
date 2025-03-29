@@ -31,7 +31,12 @@
           <div class="body" role="main">
             
   <h1>Source code for pytconf.param</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">abc</span>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Pytconf param types</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">abc</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">enum</span><span class="w"> </span><span class="kn">import</span> <span class="n">Enum</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Optional</span>
 
@@ -51,7 +56,7 @@
 <div class="viewcode-block" id="Unique">
 <a class="viewcode-back" href="../../pytconf.html#pytconf.param.Unique">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">Unique</span><span class="p">:</span>
-    <span class="k">pass</span></div>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot; A object with a unique value &quot;&quot;&quot;</span></div>
 
 
 
@@ -80,12 +85,14 @@
 <div class="viewcode-block" id="Param.get_type_name">
 <a class="viewcode-back" href="../../pytconf.html#pytconf.param.Param.get_type_name">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">get_type_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot; get the type name of the current object &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">type_name</span></div>
 
 
 <div class="viewcode-block" id="Param.collect">
 <a class="viewcode-back" href="../../pytconf.html#pytconf.param.Param.collect">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">collect</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot; collect the current object &quot;&quot;&quot;</span>
         <span class="n">the_collector</span><span class="o">.</span><span class="n">add_data</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
 
 
@@ -93,12 +100,13 @@
 <a class="viewcode-back" href="../../pytconf.html#pytconf.param.Param.s2t">[docs]</a>
     <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">s2t</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">object</span><span class="p">:</span>
-        <span class="k">pass</span></div>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot; translate string ot this type &quot;&quot;&quot;</span></div>
 
 
 <div class="viewcode-block" id="Param.s2t_generate_from_default">
 <a class="viewcode-back" href="../../pytconf.html#pytconf.param.Param.s2t_generate_from_default">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">s2t_generate_from_default</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">object</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot; generate object from default string &quot;&quot;&quot;</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;we do not support generation from default&quot;</span><span class="p">)</span></div>
 
 
@@ -106,12 +114,13 @@
 <a class="viewcode-back" href="../../pytconf.html#pytconf.param.Param.t2s">[docs]</a>
     <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">t2s</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t</span><span class="p">:</span> <span class="nb">object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-        <span class="k">pass</span></div>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot; translate self to string &quot;&quot;&quot;</span></div>
 
 
 <div class="viewcode-block" id="Param.more_help">
 <a class="viewcode-back" href="../../pytconf.html#pytconf.param.Param.more_help">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">more_help</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot; get more help &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="kc">None</span></div>
 </div>
 
