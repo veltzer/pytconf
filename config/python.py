@@ -26,6 +26,7 @@ test_requires: List[str] = [
     "pyflakes",
     "pycodestyle",
     "mypy",
+    "pyrefly",
     # types
     "types-termcolor",
     "types-PyYAML",
