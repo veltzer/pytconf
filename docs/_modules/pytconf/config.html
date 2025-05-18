@@ -303,14 +303,14 @@
         <span class="n">file_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">PytconfConf</span><span class="o">.</span><span class="n">get_config</span><span class="p">(</span><span class="n">app_name</span><span class="p">,</span> <span class="n">config_type</span><span class="p">,</span> <span class="n">config_format</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">file_name</span><span class="p">):</span>
             <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="s2">&quot;rt&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">json_file</span><span class="p">:</span>
-                <span class="n">new_flags</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span>
+                <span class="n">new_flags</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
                 <span class="k">if</span> <span class="n">config_format</span> <span class="o">==</span> <span class="n">ConfigFormat</span><span class="o">.</span><span class="n">JSON</span><span class="p">:</span>
                     <span class="n">new_flags</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">json_file</span><span class="p">)</span>
                 <span class="k">if</span> <span class="n">config_format</span> <span class="o">==</span> <span class="n">ConfigFormat</span><span class="o">.</span><span class="n">YAML</span><span class="p">:</span>
                     <span class="n">new_flags</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">safe_load</span><span class="p">(</span><span class="n">json_file</span><span class="p">)</span>
                 <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">flags</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span>
-            <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">new_flags</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-                <span class="n">flags</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span></div>
+                <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">new_flags</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                    <span class="n">flags</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span></div>
 
 
 <div class="viewcode-block" id="PytconfConf.get_config">
