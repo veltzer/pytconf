@@ -224,14 +224,14 @@ class PytconfConf:
         file_name: str = PytconfConf.get_config(app_name, config_type, config_format)
         if os.path.isfile(file_name):
             with open(file_name, "rt") as json_file:
-                new_flags: Dict[str, str]
+                new_flags: Dict[str, str] = {}
                 if config_format == ConfigFormat.JSON:
                     new_flags = json.load(json_file)
                 if config_format == ConfigFormat.YAML:
                     new_flags = yaml.safe_load(json_file)
                 assert isinstance(flags, dict)
-            for k, v in new_flags.items():
-                flags[k] = v
+                for k, v in new_flags.items():
+                    flags[k] = v
 
     @staticmethod
     def get_config(app_name: str, config_type: ConfigType, config_format: ConfigFormat):
