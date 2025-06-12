@@ -12,6 +12,6 @@ project website: https://veltzer.github.io/pytconf
 
 author: Mark Veltzer
 
-version: 0.1.18
+version: 0.1.19
 
 	Mark Veltzer <mark.veltzer@gmail.com>, Copyright © 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025
