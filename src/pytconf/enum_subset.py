@@ -5,7 +5,7 @@ A subset of enum values
 from collections import OrderedDict
 from enum import Enum
 
-from typing import List, Dict, Any
+from typing import Any
 
 from pytconf.extended_enum import str_to_enum_value, ExtendedEnum
 
