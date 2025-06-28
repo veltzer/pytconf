@@ -20,7 +20,7 @@ class ExtendedEnum(Enum):
         raise ValueError(f"cannot find value [{s}]")
 
 
-def enum_type_to_list_str(e: Enum) -> List[str]:
+def enum_type_to_list_str(e: Enum) -> list[str]:
     a = [x.name for x in e]  # type: ignore
     return a
 

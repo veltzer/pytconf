@@ -5,13 +5,13 @@ pytconf conversion utils
 from typing import List, Union
 
 
-def convert_str_to_int_or_none(s: str) -> Union[int, None]:
+def convert_str_to_int_or_none(s: str) -> int | None:
     if s == "None":
         return None
     return int(s)
 
 
-def convert_int_or_none_to_str(v: Union[int, None]) -> str:
+def convert_int_or_none_to_str(v: int | None) -> str:
     if v is None:
         return "None"
     return str(v)
@@ -48,19 +48,19 @@ def convert_bool_to_str(b: bool) -> str:
     return str(b)
 
 
-def convert_str_to_list_int(s: str) -> List[int]:
+def convert_str_to_list_int(s: str) -> list[int]:
     return [int(x) for x in s.split(",")]
 
 
-def convert_list_int_to_str(li: List[int]) -> str:
+def convert_list_int_to_str(li: list[int]) -> str:
     return ",".join([str(x) for x in li])
 
 
-def convert_str_to_list_str(s: str) -> List[str]:
+def convert_str_to_list_str(s: str) -> list[str]:
     return s.split(",")
 
 
-def convert_list_str_to_str(li: List[str]) -> str:
+def convert_list_str_to_str(li: list[str]) -> str:
     return ",".join(li)
 
 
@@ -68,13 +68,13 @@ def convert_str_to_str(e: str) -> str:
     return e
 
 
-def convert_str_to_str_or_none(s: str) -> Union[str, None]:
+def convert_str_to_str_or_none(s: str) -> str | None:
     if s == "None":
         return None
     return s
 
 
-def convert_str_or_none_to_str(v: Union[str, None]) -> str:
+def convert_str_or_none_to_str(v: str | None) -> str:
     if v is None:
         return "None"
     return v

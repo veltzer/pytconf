@@ -8,7 +8,7 @@ from typing import List
 
 d = {}
 
-global_list: List[int] = []
+global_list: list[int] = []
 
 
 class Meta(type):

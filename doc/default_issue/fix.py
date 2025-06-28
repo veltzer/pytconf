@@ -37,7 +37,7 @@ NO_DEFAULT_TYPE = type(NO_DEFAULT)
 
 def create_list_int(
     default=None,
-) -> List[int]:
+) -> list[int]:
     if default is None:
         return []
     return default

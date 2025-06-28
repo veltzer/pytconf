@@ -5,7 +5,8 @@ main configuration object for pytconf
 import json
 import os
 import sys
-from typing import List, Any, Callable, Dict, Set, Optional
+from typing import List, Any, Dict, Set, Optional
+from collections.abc import Callable
 from enum import Enum
 from dataclasses import dataclass, field
 import yaml
@@ -68,11 +69,11 @@ class FunctionData:
     name: str
     description: str
     function: Callable
-    configs: List[Config] = field(default_factory=list)
-    suggest_configs: List[Config] = field(default_factory=list)
+    configs: list[Config] = field(default_factory=list)
+    suggest_configs: list[Config] = field(default_factory=list)
     allow_free_args: bool = False
-    min_free_args: Optional[int] = None
-    max_free_args: Optional[int] = None
+    min_free_args: int | None = None
+    max_free_args: int | None = None
     group: str = DEFAULT_FUNCTION_GROUP_NAME
 
 
@@ -82,19 +83,19 @@ class FunctionGroupData:
     description: str
     show_meta: bool = False
     show: bool = False
-    names: Set[str] = field(default_factory=set)
-    list_names: List[str] = field(default_factory=list)
+    names: set[str] = field(default_factory=set)
+    list_names: list[str] = field(default_factory=list)
 
 
 class PytconfConf:
     def __init__(self):
-        self.main_function: Optional[Callable] = None
+        self.main_function: Callable | None = None
         self.main_description: str = "No application description"
 
-        self.functions: Dict[str, FunctionData] = {}
-        self.groups: Dict[str, FunctionGroupData] = {}
+        self.functions: dict[str, FunctionData] = {}
+        self.groups: dict[str, FunctionGroupData] = {}
 
-        self.free_args: List[str] = []
+        self.free_args: list[str] = []
         self.app_name: str = "No application name"
         self.version: str = "No version"
         self.default_function = None
@@ -179,7 +180,7 @@ class PytconfConf:
         print()
 
     def process_flags(
-        self, select: FunctionData, flags: Dict[str, str], errors: ErrorsCollector,
+        self, select: FunctionData, flags: dict[str, str], errors: ErrorsCollector,
     ) -> None:
         # set the flags into the "default" field and collect unknown flags
         unknown_flags = []
@@ -219,12 +220,12 @@ class PytconfConf:
         app_name: str,
         config_type: ConfigType,
         config_format: ConfigFormat,
-        flags: Dict[str, str],
+        flags: dict[str, str],
     ) -> None:
         file_name: str = PytconfConf.get_config(app_name, config_type, config_format)
         if os.path.isfile(file_name):
-            with open(file_name, "rt") as json_file:
-                new_flags: Dict[str, str] = {}
+            with open(file_name) as json_file:
+                new_flags: dict[str, str] = {}
                 if config_format == ConfigFormat.JSON:
                     new_flags = json.load(json_file)
                 if config_format == ConfigFormat.YAML:
@@ -325,7 +326,7 @@ class PytconfConf:
         )
         self.register_function(data)
 
-    def get_function_selected(self, args: List[str], errors) -> Optional[FunctionData]:
+    def get_function_selected(self, args: list[str], errors) -> FunctionData | None:
         function_selected = None
         if len(args) > 0:
             command = args.pop(0)
@@ -338,7 +339,7 @@ class PytconfConf:
 
     def config_arg_parse_and_launch(
         self,
-        args: Optional[List[str]] = None,
+        args: list[str] | None = None,
         launch=True,
         do_exit=True,
     ) -> None:
@@ -346,7 +347,7 @@ class PytconfConf:
         if args is None:
             args = sys.argv[1:]
 
-        flags: Dict[str, str] = {}
+        flags: dict[str, str] = {}
         errors = ErrorsCollector()
         self.free_args = []
 
@@ -393,7 +394,7 @@ class PytconfConf:
 
         self.launch(launch, select, errors)
 
-    def launch(self, launch: bool, select: Optional[FunctionData], errors):
+    def launch(self, launch: bool, select: FunctionData | None, errors):
         if launch:
             if select is None:
                 errors.add_error("no function to launch")
@@ -481,11 +482,11 @@ class PytconfConf:
 
     @classmethod
     def write_config_file(cls, filename: str, config_format: ConfigFormat) -> None:
-        values: Dict[str, str] = {}
+        values: dict[str, str] = {}
         for config in the_registry.yield_configs():
             for name, param in the_registry.yield_name_data_for_config(config):
                 values[name] = param.t2s(param.default)
-        with open(filename, "wt") as f:
+        with open(filename, "w") as f:
             if config_format == ConfigFormat.JSON:
                 json.dump(values, f, indent=4)
             if config_format == ConfigFormat.YAML:
@@ -515,7 +516,7 @@ def config_arg_parse_and_launch(
     )
 
 
-def get_free_args() -> List[str]:
+def get_free_args() -> list[str]:
     return get_pytconf().free_args
 
 
@@ -556,11 +557,11 @@ def register_function(
     name: str,
     description: str,
     function: Callable,
-    configs: Optional[List[Config]] = None,
-    suggest_configs: Optional[List[Config]] = None,
+    configs: list[Config] | None = None,
+    suggest_configs: list[Config] | None = None,
     allow_free_args: bool = False,
-    min_free_args: Optional[int] = None,
-    max_free_args: Optional[int] = None,
+    min_free_args: int | None = None,
+    max_free_args: int | None = None,
     group: str = DEFAULT_FUNCTION_GROUP_NAME,
 ):
     if configs is None:
@@ -584,13 +585,13 @@ def register_function(
 # pylint: disable=too-many-positional-arguments
 def register_endpoint(
     description: str,
-    name: Optional[str] = None,
-    configs: Optional[List[Config]] = None,
-    suggest_configs: Optional[List[Config]] = None,
+    name: str | None = None,
+    configs: list[Config] | None = None,
+    suggest_configs: list[Config] | None = None,
     group: str = DEFAULT_FUNCTION_GROUP_NAME,
     allow_free_args: bool = False,
-    min_free_args: Optional[int] = None,
-    max_free_args: Optional[int] = None,
+    min_free_args: int | None = None,
+    max_free_args: int | None = None,
 ) -> Callable[[Any], Any]:
     if configs is None:
         configs = []
