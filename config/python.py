@@ -14,9 +14,8 @@ build_requires: list[str] = [
 test_requires: list[str] = [
     "pylint",
     "pytest",
-    "pytest-cov",
     "mypy",
-    "pyrefly",
+    "ruff",
     # types
     "types-termcolor",
     "types-PyYAML",
