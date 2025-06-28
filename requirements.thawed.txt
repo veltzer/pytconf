@@ -1,16 +1,13 @@
 # THIS IS AN AUTO-GENERATED FILE. DO NOT EDIT!
+mypy
 pyclassifiers
-termcolor
-yattag
-pymakehelper
 pydmt
 pylint
+pymakehelper
+pyrefly
 pytest
 pytest-cov
-flake8
-pyflakes
-pycodestyle
-mypy
-pyrefly
-types-termcolor
+termcolor
 types-PyYAML
+types-termcolor
+yattag
