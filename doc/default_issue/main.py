@@ -35,9 +35,9 @@ NO_DEFAULT = Unique()
 
 
 def create_list_int(
-    default: Union[List[int], Unique] = NO_DEFAULT,
-) -> List[int]:
-    assert isinstance(default, List)
+    default: list[int] | Unique = NO_DEFAULT,
+) -> list[int]:
+    assert isinstance(default, list)
     return default
 
 

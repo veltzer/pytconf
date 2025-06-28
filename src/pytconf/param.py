@@ -5,7 +5,8 @@ Pytconf param types
 
 import abc
 from enum import Enum
-from typing import List, Union, Callable, Any, Optional
+from typing import List, Union, Any, Optional
+from collections.abc import Callable
 
 from pytconf.enum_subset import EnumSubset
 
@@ -36,7 +37,7 @@ class Param(abc.ABC):
         self,
         help_string=NO_HELP,
         default: Any = NO_DEFAULT,
-        type_name: Optional[str] = None,
+        type_name: str | None = None,
     ):
         super().__init__()
         self.help_string = help_string
@@ -64,7 +65,7 @@ class Param(abc.ABC):
     def t2s(self, t: object) -> str:
         """ translate self to string """
 
-    def more_help(self) -> Optional[str]:
+    def more_help(self) -> str | None:
         """ get more help """
         return None
 
@@ -108,9 +109,9 @@ class ParamFilename(Param):
     def __init__(
         self,
         help_string: str = NO_HELP,
-        default: Union[Unique, str] = NO_DEFAULT,
+        default: Unique | str = NO_DEFAULT,
         type_name=None,
-        suffixes: Optional[List[str]] = None,
+        suffixes: list[str] | None = None,
     ):
         super().__init__(
             help_string=help_string,
@@ -169,7 +170,7 @@ class ParamEnumSubset(Param):
         self,
         help_string=NO_HELP,
         default: Any = NO_DEFAULT,
-        enum_type: Optional[Enum] = None,
+        enum_type: Enum | None = None,
     ):
         super().__init__(
             help_string=help_string,
@@ -189,7 +190,7 @@ class ParamEnumSubset(Param):
     def t2s(self, t: Any) -> str:
         return t.to_string()  # type: ignore
 
-    def s2t_generate_from_default(self, s: str) -> Optional[EnumSubset]:
+    def s2t_generate_from_default(self, s: str) -> EnumSubset | None:
         return None
 
     def more_help(self):
@@ -200,8 +201,8 @@ class ParamChoice(Param):
     def __init__(
         self,
         help_string=NO_HELP,
-        default: Union[str, Unique] = NO_DEFAULT,
-        choice_list: Optional[List[str]] = None
+        default: str | Unique = NO_DEFAULT,
+        choice_list: list[str] | None = None
     ):
         super().__init__(
             help_string=help_string,
@@ -229,7 +230,7 @@ class ParamCreator:
     @staticmethod
     def create_int(
         help_string: str = NO_HELP,
-        default: Union[int, Unique] = NO_DEFAULT,
+        default: int | Unique = NO_DEFAULT,
     ) -> int:
         """
         Create an int parameter
@@ -253,8 +254,8 @@ class ParamCreator:
         # This is because of pylint
         # default: List[int] = NO_DEFAULT,
         # pylint: disable=dangerous-default-value
-        default: List[int] = [],
-    ) -> List[int]:
+        default: list[int] = [],
+    ) -> list[int]:
         """
         Create a List[int] parameter
         :param help_string:
@@ -279,8 +280,8 @@ class ParamCreator:
         # This is because of pylint
         # default: List[str] = NO_DEFAULT,
         # pylint: disable=dangerous-default-value
-        default: List[str] = [],
-    ) -> List[str]:
+        default: list[str] = [],
+    ) -> list[str]:
         """
         Create a List[str] parameter
         :param help_string:
@@ -302,8 +303,8 @@ class ParamCreator:
     @staticmethod
     def create_int_or_none(
         help_string: str = NO_HELP,
-        default: Union[int, None, Unique] = NO_DEFAULT,
-    ) -> Optional[int]:
+        default: int | None | Unique = NO_DEFAULT,
+    ) -> int | None:
         """
         Create an int parameter
         :param help_string:
@@ -323,7 +324,7 @@ class ParamCreator:
     @staticmethod
     def create_str(
         help_string: str = NO_HELP,
-        default: Union[str, Unique] = NO_DEFAULT,
+        default: str | Unique = NO_DEFAULT,
     ) -> str:
         """
         Create a string parameter
@@ -344,8 +345,8 @@ class ParamCreator:
     @staticmethod
     def create_str_or_none(
         help_string: str = NO_HELP,
-        default: Union[str, None, Unique] = NO_DEFAULT,
-    ) -> Optional[str]:
+        default: str | None | Unique = NO_DEFAULT,
+    ) -> str | None:
         """
         Create a string parameter
         :param help_string:
@@ -365,7 +366,7 @@ class ParamCreator:
     @staticmethod
     def create_bool(
         help_string: str = NO_HELP,
-        default: Union[bool, Unique] = NO_DEFAULT,
+        default: bool | Unique = NO_DEFAULT,
     ) -> bool:
         """
         Create a bool parameter
@@ -388,8 +389,8 @@ class ParamCreator:
     @staticmethod
     def create_new_file(
         help_string: str = NO_HELP,
-        default: Union[str, Unique] = NO_DEFAULT,
-        suffixes: Optional[List[str]] = None,
+        default: str | Unique = NO_DEFAULT,
+        suffixes: list[str] | None = None,
     ) -> str:
         """
         Create a new file parameter
@@ -409,8 +410,8 @@ class ParamCreator:
     @staticmethod
     def create_existing_file(
         help_string: str = NO_HELP,
-        default: Union[str, Unique] = NO_DEFAULT,
-        suffixes: Optional[List[str]] = None,
+        default: str | Unique = NO_DEFAULT,
+        suffixes: list[str] | None = None,
     ) -> str:
         """
         Create a new file parameter
@@ -430,8 +431,8 @@ class ParamCreator:
     @staticmethod
     def create_existing_folder(
         help_string: str = NO_HELP,
-        default: Union[str, Unique] = NO_DEFAULT,
-        suffixes: Optional[List[str]] = None,
+        default: str | Unique = NO_DEFAULT,
+        suffixes: list[str] | None = None,
     ) -> str:
         """
         Create a new folder parameter
@@ -450,9 +451,9 @@ class ParamCreator:
 
     @staticmethod
     def create_choice(
-        choice_list: List[str],
+        choice_list: list[str],
         help_string: str = NO_HELP,
-        default: Union[str, Unique] = NO_DEFAULT,
+        default: str | Unique = NO_DEFAULT,
     ) -> str:
         """
         Create a choice config
@@ -472,7 +473,7 @@ class ParamCreator:
     def create_enum(
         enum_type: Enum,
         help_string: str = NO_HELP,
-        default: Union[Enum, Unique] = NO_DEFAULT,
+        default: Enum | Unique = NO_DEFAULT,
     ) -> Enum:
         """
         Create an enum config
@@ -492,7 +493,7 @@ class ParamCreator:
     def create_enum_subset(
         enum_type: Enum,
         help_string: str = NO_HELP,
-        default: Union[EnumSubset, Unique] = NO_DEFAULT,
+        default: EnumSubset | Unique = NO_DEFAULT,
     ) -> EnumSubset:
         """
         Create an enum config
@@ -511,7 +512,7 @@ class ParamCreator:
     @staticmethod
     def create_existing_bucket(
         help_string: str = NO_HELP,
-        default: Union[str, Unique] = NO_DEFAULT,
+        default: str | Unique = NO_DEFAULT,
     ) -> str:
         """
         Create a bucket name on gcp

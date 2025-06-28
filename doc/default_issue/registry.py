@@ -20,8 +20,7 @@ class Registry:
         self.config_names[config][name] = data
 
     def yield_configs(self):
-        for config in self.configs:
-            yield config
+        yield from self.configs
 
     def yield_names_for_config(self, config):
         yield from self.config_names[config].keys()

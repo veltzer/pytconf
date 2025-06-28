@@ -12,8 +12,7 @@ class ParamCollector:
         return self.data[i]
 
     def yield_items(self):
-        for item in self.data:
-            yield item
+        yield from self.data
 
 
 the_collector: ParamCollector = ParamCollector()

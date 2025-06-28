@@ -3,7 +3,8 @@ A collection of errors module
 """
 
 
-from typing import List, Generator
+from typing import List
+from collections.abc import Generator
 
 
 class ErrorsCollector:
@@ -12,7 +13,7 @@ class ErrorsCollector:
     Regular errors are the ones to be printed and carry the error_type = false.
     """
     def __init__(self):
-        self._errors: List[str] = []
+        self._errors: list[str] = []
         self.do_help: bool = False
         self.show_errors: bool = True
         self.force_show_errors: bool = False
