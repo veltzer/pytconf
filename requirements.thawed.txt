@@ -4,9 +4,8 @@ pyclassifiers
 pydmt
 pylint
 pymakehelper
-pyrefly
 pytest
-pytest-cov
+ruff
 termcolor
 types-PyYAML
 types-termcolor
