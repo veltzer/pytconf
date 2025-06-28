@@ -3,9 +3,6 @@ Documentation functions
 """
 
 
-from typing import Union
-
-
 def get_first_line(o, default_val: str) -> str | None:
     """
     Get first line for a pydoc string

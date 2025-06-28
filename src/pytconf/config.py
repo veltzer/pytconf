@@ -5,7 +5,7 @@ main configuration object for pytconf
 import json
 import os
 import sys
-from typing import List, Any, Dict, Set, Optional
+from typing import Any
 from collections.abc import Callable
 from enum import Enum
 from dataclasses import dataclass, field

@@ -3,7 +3,6 @@ A collection of errors module
 """
 
 
-from typing import List
 from collections.abc import Generator
 
 

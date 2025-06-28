@@ -2,8 +2,6 @@
 pytconf conversion utils
 """
 
-from typing import List, Union
-
 
 def convert_str_to_int_or_none(s: str) -> int | None:
     if s == "None":

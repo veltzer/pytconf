@@ -5,7 +5,7 @@ Pytconf param types
 
 import abc
 from enum import Enum
-from typing import List, Union, Any, Optional
+from typing import Any
 from collections.abc import Callable
 
 from pytconf.enum_subset import EnumSubset
