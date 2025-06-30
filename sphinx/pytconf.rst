@@ -9,109 +9,109 @@ pytconf.color\_utils module
 
 .. automodule:: pytconf.color_utils
    :members:
-   :show-inheritance:
    :undoc-members:
+   :show-inheritance:
 
 pytconf.config module
 ---------------------
 
 .. automodule:: pytconf.config
    :members:
-   :show-inheritance:
    :undoc-members:
+   :show-inheritance:
 
 pytconf.convert module
 ----------------------
 
 .. automodule:: pytconf.convert
    :members:
-   :show-inheritance:
    :undoc-members:
+   :show-inheritance:
 
 pytconf.data module
 -------------------
 
 .. automodule:: pytconf.data
    :members:
-   :show-inheritance:
    :undoc-members:
+   :show-inheritance:
 
 pytconf.enum\_subset module
 ---------------------------
 
 .. automodule:: pytconf.enum_subset
    :members:
-   :show-inheritance:
    :undoc-members:
+   :show-inheritance:
 
 pytconf.errors\_collector module
 --------------------------------
 
 .. automodule:: pytconf.errors_collector
    :members:
-   :show-inheritance:
    :undoc-members:
+   :show-inheritance:
 
 pytconf.extended\_enum module
 -----------------------------
 
 .. automodule:: pytconf.extended_enum
    :members:
-   :show-inheritance:
    :undoc-members:
+   :show-inheritance:
 
 pytconf.param module
 --------------------
 
 .. automodule:: pytconf.param
    :members:
-   :show-inheritance:
    :undoc-members:
+   :show-inheritance:
 
 pytconf.param\_collector module
 -------------------------------
 
 .. automodule:: pytconf.param_collector
    :members:
-   :show-inheritance:
    :undoc-members:
+   :show-inheritance:
 
 pytconf.pydoc module
 --------------------
 
 .. automodule:: pytconf.pydoc
    :members:
-   :show-inheritance:
    :undoc-members:
+   :show-inheritance:
 
 pytconf.registry module
 -----------------------
 
 .. automodule:: pytconf.registry
    :members:
-   :show-inheritance:
    :undoc-members:
+   :show-inheritance:
 
 pytconf.static module
 ---------------------
 
 .. automodule:: pytconf.static
    :members:
-   :show-inheritance:
    :undoc-members:
+   :show-inheritance:
 
 pytconf.utils module
 --------------------
 
 .. automodule:: pytconf.utils
    :members:
-   :show-inheritance:
    :undoc-members:
+   :show-inheritance:
 
 Module contents
 ---------------
 
 .. automodule:: pytconf
    :members:
-   :show-inheritance:
    :undoc-members:
+   :show-inheritance:
