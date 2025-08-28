@@ -8,7 +8,7 @@ from yattag import Doc
 
 def noun(name: str, num: int) -> str:
     """
-    This function returns a noun in it's right for a specific quantity
+    This function returns a noun in its right for a specific quantity
     :param name:
     :param num:
     :return:

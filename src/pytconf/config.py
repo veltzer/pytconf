@@ -202,7 +202,8 @@ class PytconfConf:
             except Exception:
                 errors.add_error(f"could not convert [{flag_raw}]")
         if unknown_flags:
-            errors.add_error(f"unknown flags [{','.join(unknown_flags)}]")
+            all_unknown_flags = ",".join(unknown_flags)
+            errors.add_error(f"unknown flags [{all_unknown_flags}]")
 
         # check for missing parameters
         missing_parameters = []
@@ -211,8 +212,10 @@ class PytconfConf:
                 if param.required and name not in flags:
                     missing_parameters.append(name)
         if missing_parameters:
+            noun_formatted=noun("parameter", len(missing_parameters))
+            all_missing_parameters = ",".join(missing_parameters)
             errors.add_error(
-                f"missing {noun('parameter', len(missing_parameters))} [{','.join(missing_parameters)}]"
+                f"missing {noun_formatted} [{all_missing_parameters}]"
             )
 
     @staticmethod
@@ -373,7 +376,8 @@ class PytconfConf:
                         errors.add_error(f"too many free args - {select.max_free_args} required")
             else:
                 if len(self.free_args) > 0:
-                    errors.add_error(f"free args are not allowed [{','.join(self.free_args)}]")
+                    all_free_args = ",".join(self.free_args)
+                    errors.add_error(f"free args are not allowed [{all_free_args}]")
             self.process_flags(select, flags, errors)
         else:
             errors.add_error("no command is selected")
