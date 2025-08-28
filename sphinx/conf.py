@@ -17,7 +17,7 @@ sys.path.insert(0, os.path.abspath(".."))
 warning_is_error = True
 
 # Enable "nit-picky mode". This will issue warnings for all missing
-# cross-references (e.g., a link to a class that doesn"t exist).
+# cross-references (e.g., a link to a class that doesnt exist).
 # nitpicky = True
 
 import config.project
