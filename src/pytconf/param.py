@@ -219,7 +219,8 @@ class ParamChoice(Param):
         return t
 
     def more_help(self):
-        return f"allowed values {','.join(self.choice_list)}"  # type: ignore
+        all_choice_list = ",".join(self.choice_list)
+        return f"allowed values {all_choice_list}"  # type: ignore
 
 
 class ParamCreator:
