@@ -1,6 +1,5 @@
-#!/usr/bin/python3
+#!/usr/bin/env python
 
-from typing import List, Union
 from registry import the_registry
 from param_collector import the_collector
 

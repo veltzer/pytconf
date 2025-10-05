@@ -253,12 +253,12 @@ class ParamCreator:
     def create_list_int(
         help_string: str = NO_HELP,
         # This is because of pylint
-        # default: List[int] = NO_DEFAULT,
+        # default: list[int] = NO_DEFAULT,
         # pylint: disable=dangerous-default-value
         default: list[int] = [],
     ) -> list[int]:
         """
-        Create a List[int] parameter
+        Create a list[int] parameter
         :param help_string:
         :param default:
         :return:
@@ -266,7 +266,7 @@ class ParamCreator:
         ParamFunctions(
             help_string=help_string,
             default=default,
-            type_name="List[int]",
+            type_name="list[int]",
             function_s2t=convert_str_to_list_int,
             function_t2s=convert_list_int_to_str,
             function_s2t_generate_from_default=convert_str_to_list_int,
@@ -279,12 +279,12 @@ class ParamCreator:
     def create_list_str(
         help_string: str = NO_HELP,
         # This is because of pylint
-        # default: List[str] = NO_DEFAULT,
+        # default: list[str] = NO_DEFAULT,
         # pylint: disable=dangerous-default-value
         default: list[str] = [],
     ) -> list[str]:
         """
-        Create a List[str] parameter
+        Create a list[str] parameter
         :param help_string:
         :param default:
         :return:
@@ -292,7 +292,7 @@ class ParamCreator:
         ParamFunctions(
             help_string=help_string,
             default=default,
-            type_name="List[str]",
+            type_name="list[str]",
             function_s2t=convert_str_to_list_str,
             function_t2s=convert_list_str_to_str,
             function_s2t_generate_from_default=convert_str_to_list_str,

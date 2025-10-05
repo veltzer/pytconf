@@ -386,12 +386,12 @@
     <span class="k">def</span><span class="w"> </span><span class="nf">create_list_int</span><span class="p">(</span>
         <span class="n">help_string</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">NO_HELP</span><span class="p">,</span>
         <span class="c1"># This is because of pylint</span>
-        <span class="c1"># default: List[int] = NO_DEFAULT,</span>
+        <span class="c1"># default: list[int] = NO_DEFAULT,</span>
         <span class="c1"># pylint: disable=dangerous-default-value</span>
         <span class="n">default</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">[],</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Create a List[int] parameter</span>
+<span class="sd">        Create a list[int] parameter</span>
 <span class="sd">        :param help_string:</span>
 <span class="sd">        :param default:</span>
 <span class="sd">        :return:</span>
@@ -399,7 +399,7 @@
         <span class="n">ParamFunctions</span><span class="p">(</span>
             <span class="n">help_string</span><span class="o">=</span><span class="n">help_string</span><span class="p">,</span>
             <span class="n">default</span><span class="o">=</span><span class="n">default</span><span class="p">,</span>
-            <span class="n">type_name</span><span class="o">=</span><span class="s2">&quot;List[int]&quot;</span><span class="p">,</span>
+            <span class="n">type_name</span><span class="o">=</span><span class="s2">&quot;list[int]&quot;</span><span class="p">,</span>
             <span class="n">function_s2t</span><span class="o">=</span><span class="n">convert_str_to_list_int</span><span class="p">,</span>
             <span class="n">function_t2s</span><span class="o">=</span><span class="n">convert_list_int_to_str</span><span class="p">,</span>
             <span class="n">function_s2t_generate_from_default</span><span class="o">=</span><span class="n">convert_str_to_list_int</span><span class="p">,</span>
@@ -415,12 +415,12 @@
     <span class="k">def</span><span class="w"> </span><span class="nf">create_list_str</span><span class="p">(</span>
         <span class="n">help_string</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">NO_HELP</span><span class="p">,</span>
         <span class="c1"># This is because of pylint</span>
-        <span class="c1"># default: List[str] = NO_DEFAULT,</span>
+        <span class="c1"># default: list[str] = NO_DEFAULT,</span>
         <span class="c1"># pylint: disable=dangerous-default-value</span>
         <span class="n">default</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[],</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Create a List[str] parameter</span>
+<span class="sd">        Create a list[str] parameter</span>
 <span class="sd">        :param help_string:</span>
 <span class="sd">        :param default:</span>
 <span class="sd">        :return:</span>
@@ -428,7 +428,7 @@
         <span class="n">ParamFunctions</span><span class="p">(</span>
             <span class="n">help_string</span><span class="o">=</span><span class="n">help_string</span><span class="p">,</span>
             <span class="n">default</span><span class="o">=</span><span class="n">default</span><span class="p">,</span>
-            <span class="n">type_name</span><span class="o">=</span><span class="s2">&quot;List[str]&quot;</span><span class="p">,</span>
+            <span class="n">type_name</span><span class="o">=</span><span class="s2">&quot;list[str]&quot;</span><span class="p">,</span>
             <span class="n">function_s2t</span><span class="o">=</span><span class="n">convert_str_to_list_str</span><span class="p">,</span>
             <span class="n">function_t2s</span><span class="o">=</span><span class="n">convert_list_str_to_str</span><span class="p">,</span>
             <span class="n">function_s2t_generate_from_default</span><span class="o">=</span><span class="n">convert_str_to_list_str</span><span class="p">,</span>
