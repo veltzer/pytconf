@@ -1,10 +1,8 @@
-#!/usr/bin/python3
+#!/usr/bin/env python
 
 """
 This is the essence of how pytconf works and how it is now designed
 """
-
-from typing import List
 
 d = {}
 
