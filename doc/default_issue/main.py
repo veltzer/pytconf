@@ -1,5 +1,9 @@
 #!/usr/bin/env python
 
+"""
+Testing the default issue
+"""
+
 from registry import the_registry
 from param_collector import the_collector
 
@@ -9,8 +13,8 @@ class MetaConfig(type):
     Meta class for all configs
     """
 
-    def __new__(mcs, name, bases, namespace):
-        ret = super().__new__(mcs, name, bases, namespace)
+    def __new__(cls, name, bases, namespace):
+        ret = super().__new__(cls, name, bases, namespace)
         i = 0
         for k, v in namespace.items():
             if not k.startswith("__") and not isinstance(v, classmethod):
@@ -44,5 +48,6 @@ class Foobar(Config):
     columns = create_list_int()
 
 
+# pylint: disable=not-an-iterable
 for x in Foobar.columns:
     print(x)

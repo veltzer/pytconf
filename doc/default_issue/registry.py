@@ -1,10 +1,15 @@
+"""
+A registry for all configurations
+"""
+
+
 class Registry:
     def __init__(self):
         self.names = set()
         self.configs = set()
-        self.name_to_data = dict()
-        self.name_to_config = dict()
-        self.config_names = dict()
+        self.name_to_data = {}
+        self.name_to_config = {}
+        self.config_names = {}
 
     def register(self, config, name, data):
         if name in self.names:
@@ -14,7 +19,7 @@ class Registry:
         self.names.add(name)
         self.configs.add(config)
         if config not in self.config_names:
-            self.config_names[config] = dict()
+            self.config_names[config] = {}
         self.name_to_data[name] = data
         self.name_to_config[name] = config
         self.config_names[config][name] = data
