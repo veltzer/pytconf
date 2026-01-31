@@ -5,6 +5,10 @@ Config for sphinx
 import os
 import sys
 from pydmt.helpers.signature import get_copyright_years_long
+
+sys.path.insert(0, os.path.abspath("../src"))
+sys.path.insert(0, os.path.abspath(".."))
+# pylint: disable=wrong-import-position
 import config.project
 import config.personal
 import config.version
@@ -18,8 +22,6 @@ extensions = [
 
 # Add the projects "src" directory to the Python path.
 # This allows Sphinx to find and import your package.
-sys.path.insert(0, os.path.abspath("../src"))
-sys.path.insert(0, os.path.abspath(".."))
 
 # Treat all warnings as errors.
 # This can also be set by passing the -W flag to the sphinx-build command.
