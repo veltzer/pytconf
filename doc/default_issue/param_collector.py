@@ -1,3 +1,7 @@
+"""
+This is a class which collects parameters
+"""
+
 class ParamCollector:
     def __init__(self):
         self.data = []
