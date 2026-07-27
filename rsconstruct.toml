@@ -1,7 +1,7 @@
 # Canonical shared rsconstruct.toml — this file is IDENTICAL in every repo.
 #
 # Do not edit per-repo copies. Edit the canonical copy
-# (/home/mark/git/veltzer/rsconstruct.canonical.toml) and sync it out.
+# (/home/mark/git/rsconstruct.canonical.toml) and sync it out.
 # Repo-specific configuration (dependencies, explicit generators, excludes,
 # one-off workarounds) lives in rsconstruct.local.toml, which rsconstruct
 # deep-merges over this file at load time.
