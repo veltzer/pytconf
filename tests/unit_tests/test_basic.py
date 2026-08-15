@@ -3,14 +3,14 @@ basic tests
 """
 
 import unittest
-from pytconf.config import FunctionData, get_pytconf
 
 from pytconf import (
-    config_arg_parse_and_launch,
     Config,
-    get_free_args,
     ParamCreator,
+    config_arg_parse_and_launch,
+    get_free_args,
 )
+from pytconf.config import FunctionData, get_pytconf
 
 
 class ConfigTotal(Config):

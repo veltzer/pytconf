@@ -4,18 +4,28 @@ Pytconf param types
 
 
 import abc
+from collections.abc import Callable
 from enum import Enum
 from typing import Any
-from collections.abc import Callable
 
+from pytconf.convert import (
+    convert_bool_to_str,
+    convert_int_or_none_to_str,
+    convert_int_to_str,
+    convert_list_int_to_str,
+    convert_list_str_to_str,
+    convert_str_or_none_to_str,
+    convert_str_to_bool,
+    convert_str_to_int,
+    convert_str_to_int_default,
+    convert_str_to_int_or_none,
+    convert_str_to_list_int,
+    convert_str_to_list_str,
+    convert_str_to_str,
+    convert_str_to_str_or_none,
+)
 from pytconf.enum_subset import EnumSubset
-
-from pytconf.extended_enum import str_to_enum_value, enum_type_to_list_str
-
-from pytconf.convert import convert_str_to_str, convert_str_to_int, convert_int_to_str, convert_str_to_int_default, \
-    convert_str_to_list_int, convert_list_int_to_str, convert_str_to_list_str, convert_list_str_to_str, \
-    convert_str_to_int_or_none, convert_int_or_none_to_str, convert_str_to_str_or_none, convert_str_or_none_to_str, \
-    convert_str_to_bool, convert_bool_to_str
+from pytconf.extended_enum import enum_type_to_list_str, str_to_enum_value
 from pytconf.param_collector import the_collector
 
 NO_HELP = "No help for this configuration option"
@@ -255,7 +265,7 @@ class ParamCreator:
         # This is because of pylint
         # default: list[int] = NO_DEFAULT,
         # pylint: disable=dangerous-default-value
-        default: list[int] = [],
+        default: list[int] = [],  # noqa: B006
     ) -> list[int]:
         """
         Create a list[int] parameter
@@ -281,7 +291,7 @@ class ParamCreator:
         # This is because of pylint
         # default: list[str] = NO_DEFAULT,
         # pylint: disable=dangerous-default-value
-        default: list[str] = [],
+        default: list[str] = [],  # noqa: B006
     ) -> list[str]:
         """
         Create a list[str] parameter

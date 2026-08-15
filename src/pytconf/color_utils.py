@@ -4,6 +4,7 @@ helpers to print stuff in color
 
 
 import os
+
 from termcolor import colored, cprint
 
 
@@ -43,10 +44,10 @@ color = "PYTCONF_DISABLE_COLORS" not in os.environ
 
 
 if not color:
-    print_highlight = print  # noqa: F811
-    print_warn = print  # noqa: F811
-    print_error = print  # noqa: F811
-    print_title = print  # noqa: F811
-    color_hi = identity  # noqa: F811
-    color_warm = identity  # noqa: F811
-    color_ok = identity  # noqa: F811
+    print_highlight = print
+    print_warn = print
+    print_error = print
+    print_title = print
+    color_hi = identity
+    color_warm = identity
+    color_ok = identity

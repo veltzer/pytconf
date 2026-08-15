@@ -37,9 +37,7 @@ def convert_int_to_str(i: int) -> str:
 
 
 def convert_str_to_bool(s: str) -> bool:
-    if s in {"TRUE", "true", "True", "yes", "Yes", "1", "y", "Y", "t", "T"}:
-        return True
-    return False
+    return s in {"TRUE", "true", "True", "yes", "Yes", "1", "y", "Y", "t", "T"}
 
 
 def convert_bool_to_str(b: bool) -> str:
