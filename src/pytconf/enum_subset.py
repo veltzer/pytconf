@@ -4,10 +4,9 @@ A subset of enum values
 
 from collections import OrderedDict
 from enum import Enum
-
 from typing import Any
 
-from pytconf.extended_enum import str_to_enum_value, ExtendedEnum
+from pytconf.extended_enum import ExtendedEnum, str_to_enum_value
 
 
 class EnumSubset:

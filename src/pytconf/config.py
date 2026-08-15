@@ -5,25 +5,26 @@ main configuration object for pytconf
 import json
 import os
 import sys
-from typing import Any
 from collections.abc import Callable
-from enum import Enum
 from dataclasses import dataclass, field
+from enum import Enum
+from typing import Any
+
 import yaml
 
 from pytconf.color_utils import (
-    print_highlight,
     color_hi,
-    print_title,
     color_ok,
     color_warn,
     print_error,
+    print_highlight,
+    print_title,
 )
 from pytconf.errors_collector import ErrorsCollector
 from pytconf.param_collector import the_collector
 from pytconf.pydoc import get_first_line
 from pytconf.registry import the_registry
-from pytconf.utils import noun, HtmlGen
+from pytconf.utils import HtmlGen, noun
 
 DEFAULT_FUNCTION_GROUP_NAME = "default"
 DEFAULT_FUNCTION_GROUP_DESCRIPTION = "default command group"
@@ -199,7 +200,7 @@ class PytconfConf:
                 else:
                     v = param.s2t(value)
                 setattr(config, flag_raw, v)
-            except Exception:
+            except Exception:  # noqa: BLE001
                 errors.add_error(f"could not convert [{flag_raw}]")
         if unknown_flags:
             all_unknown_flags = ",".join(unknown_flags)
@@ -368,12 +369,10 @@ class PytconfConf:
         # if we have command we can check free args errors
         if select is not None:
             if select.allow_free_args:
-                if select.min_free_args is not None:
-                    if len(self.free_args) < select.min_free_args:
-                        errors.add_error(f"too few free args - {select.min_free_args} required")
-                if select.max_free_args is not None:
-                    if len(self.free_args) >= select.max_free_args:
-                        errors.add_error(f"too many free args - {select.max_free_args} required")
+                if select.min_free_args is not None and len(self.free_args) < select.min_free_args:
+                    errors.add_error(f"too few free args - {select.min_free_args} required")
+                if select.max_free_args is not None and len(self.free_args) >= select.max_free_args:
+                    errors.add_error(f"too many free args - {select.max_free_args} required")
             else:
                 if len(self.free_args) > 0:
                     all_free_args = ",".join(self.free_args)
@@ -449,11 +448,10 @@ class PytconfConf:
             function_doc = get_first_line(data.function, "no description for this function")
             html_gen.line("li", name, title="function name: ")
             html_gen.line("li", function_doc, title="function description: ")
-            with html_gen.tag("li"):
-                with html_gen.tag("ul"):
-                    for config in data.configs:
-                        with html_gen.tag("li"):
-                            self.get_html_for_config(config, html_gen)
+            with html_gen.tag("li"), html_gen.tag("ul"):
+                for config in data.configs:
+                    with html_gen.tag("li"):
+                        self.get_html_for_config(config, html_gen)
 
     @classmethod
     def get_html_for_config(cls, config, html_gen):
