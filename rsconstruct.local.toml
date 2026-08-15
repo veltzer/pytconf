@@ -15,4 +15,5 @@ enabled = false
 pip = [
     "termcolor",
     "yattag",
+    "types-PyYAML",
 ]
