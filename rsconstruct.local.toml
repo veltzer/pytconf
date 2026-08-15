@@ -16,4 +16,5 @@ pip = [
     "termcolor",
     "yattag",
     "types-PyYAML",
+    "pyyaml",
 ]
