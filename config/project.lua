@@ -7,3 +7,4 @@ KEYWORDS = {
     "command-line-parser",
     "configuration",
 }
+PYPI = true
