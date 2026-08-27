@@ -40,5 +40,5 @@ class ErrorsCollector:
     def set_force_show_errors(self) -> None:
         self.force_show_errors = True
 
-    def yield_errors(self) -> Generator[str, None, None]:
+    def yield_errors(self) -> Generator[str]:
         yield from self._errors
