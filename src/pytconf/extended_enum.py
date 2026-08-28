@@ -38,7 +38,7 @@ def str_to_enum_value(s, e: Enum) -> Enum:
 def str_to_enum_int(s: str, e: Enum) -> int:
     for x in type(e):
         if s == x.name:
-            return x.value
+            return int(x.value)
     raise ValueError(f"cannot find value [{s}]")
 
 
