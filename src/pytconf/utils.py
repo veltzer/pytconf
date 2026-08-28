@@ -26,3 +26,7 @@ class HtmlGen:
         self.tag = tag
         self.text = text
         self.line = line
+
+    def getvalue(self) -> str:
+        """ the generated html as a string """
+        return str(self.document.getvalue())

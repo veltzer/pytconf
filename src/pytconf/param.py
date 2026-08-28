@@ -90,7 +90,7 @@ class ParamFunctions(Param):
         self,
         function_s2t: Callable,
         function_s2t_generate_from_default: Callable,
-        function_t2s: Callable,
+        function_t2s: Callable[[Any], str],
         help_string=NO_HELP,
         default=None,
         type_name=None,
@@ -169,7 +169,7 @@ class ParamEnum(Param):
         return str_to_enum_value(s, self.enum_type)
 
     def t2s(self, t: Any) -> str:
-        return t.name
+        return str(t.name)
 
     def more_help(self):
         return f"allowed values {enum_type_to_list_str(self.enum_type)}"
@@ -195,6 +195,7 @@ class ParamEnumSubset(Param):
         return f"EnumSubset[{self.enum_type._name_}]"  # type: ignore
 
     def s2t(self, s: str) -> EnumSubset:
+        assert self.enum_type is not None, "ParamEnumSubset requires enum_type"
         return EnumSubset.from_string(e=self.enum_type, s=s)
 
     def t2s(self, t: Any) -> str:
@@ -226,7 +227,7 @@ class ParamChoice(Param):
         return s
 
     def t2s(self, t: Any) -> str:
-        return t
+        return str(t)
 
     def more_help(self):
         all_choice_list = ",".join(self.choice_list)

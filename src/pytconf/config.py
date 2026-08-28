@@ -440,7 +440,7 @@ class PytconfConf:
                 with html_gen.tag("li"):
                     for name in sorted(self.functions.keys()):
                         self.get_html_for_function(name, html_gen)
-        return html_gen.document
+        return html_gen.getvalue()
 
     def get_html_for_function(self, name: str, html_gen):
         data = self.functions[name]
@@ -502,7 +502,7 @@ class PytconfConf:
 _pytconf = PytconfConf()
 
 
-def get_pytconf():
+def get_pytconf() -> PytconfConf:
     return _pytconf
 
 

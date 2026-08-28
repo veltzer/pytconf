@@ -2,6 +2,10 @@
 A subset of enum values
 """
 
+# pylint does not yet model PEP 649 lazy annotations, so the class-body
+# self-references below need explicit postponed evaluation.
+from __future__ import annotations
+
 from collections import OrderedDict
 from enum import Enum
 from typing import Any
@@ -39,21 +43,21 @@ class EnumSubset:
     def has_value(self, item):
         return item in {x.value for x in self.selected}
 
-    def list_of_strings(self):
-        my_list = []
+    def list_of_strings(self) -> list[str]:
+        my_list: list[str] = []
         for x in self.selected:
             my_list.append(x.name)
         return my_list
 
-    def to_string(self):
+    def to_string(self) -> str:
         return ",".join(self.list_of_strings())
 
     @classmethod
-    def from_enum_all(cls, e):
+    def from_enum_all(cls, e: ExtendedEnum) -> EnumSubset:
         return g_from_enum_all(e)
 
     @classmethod
-    def from_string(cls, e, s):
+    def from_string(cls, e: Enum, s: str) -> EnumSubset:
         return g_from_string(e, s)
 
 
