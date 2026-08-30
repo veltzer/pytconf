@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "pytconf"
-version = "0.1.22"
+version = "0.1.23"
 requires-python = ">=3.14"
 authors = [
 	{ name = "Mark Veltzer", email = "mark.veltzer@gmail.com" }
@@ -97,6 +97,7 @@ dev = [
     "pylint",
     "pytest",
     "ruff",
+    "sphinx",
     "types-PyYAML",
     "pyyaml",
 ]
