@@ -521,9 +521,10 @@ wheels = [
 
 [[package]]
 name = "pytconf"
-version = "0.1.23"
+version = "0.1.24"
 source = { editable = "." }
 dependencies = [
+    { name = "pyyaml" },
     { name = "termcolor" },
     { name = "yattag" },
 ]
@@ -533,7 +534,6 @@ dev = [
     { name = "mypy" },
     { name = "pylint" },
     { name = "pytest" },
-    { name = "pyyaml" },
     { name = "ruff" },
     { name = "sphinx" },
     { name = "types-pyyaml" },
@@ -541,6 +541,7 @@ dev = [
 
 [package.metadata]
 requires-dist = [
+    { name = "pyyaml" },
     { name = "termcolor" },
     { name = "yattag" },
 ]
@@ -550,7 +551,6 @@ dev = [
     { name = "mypy" },
     { name = "pylint" },
     { name = "pytest" },
-    { name = "pyyaml" },
     { name = "ruff" },
     { name = "sphinx" },
     { name = "types-pyyaml" },

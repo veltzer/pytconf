@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "pytconf"
-version = "0.1.23"
+version = "0.1.24"
 requires-python = ">=3.14"
 authors = [
 	{ name = "Mark Veltzer", email = "mark.veltzer@gmail.com" }
@@ -34,6 +34,7 @@ classifiers = [
     "License :: OSI Approved :: MIT License",
 ]
 dependencies = [
+    "pyyaml",
     "termcolor",
     "yattag",
 ]
@@ -99,5 +100,4 @@ dev = [
     "ruff",
     "sphinx",
     "types-PyYAML",
-    "pyyaml",
 ]
