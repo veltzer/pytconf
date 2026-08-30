@@ -46,8 +46,9 @@ src_dirs = ["config"]
 src_dirs = ["sphinx"]
 output_dir = "docs"
 dep_inputs = ["src/pytconf/*.py"]
-# keep the doctree cache out of docs/ — docs/ is published to GitHub Pages
-args = ["-d", "out/sphinx-doctrees"]
+# -E -a: full cold build every run, no incremental caching; -d keeps the
+# (now write-only) doctree cache out of docs/, which is published to Pages
+args = ["-d", "out/sphinx-doctrees", "-E", "-a"]
 
 # ─── toml / yaml / json ──────────────────────────────────────────────────────
 
