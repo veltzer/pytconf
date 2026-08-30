@@ -23,8 +23,8 @@ warning_is_error = True
 project = "pytconf"
 author = "Mark Veltzer"
 project_copyright = "2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026 Mark Veltzer"
-version = "0.1.22"
-release = "0.1.22"
+version = "0.1.23"
+release = "0.1.23"
 
 html_theme_options = {
         "show_powered_by": False,
