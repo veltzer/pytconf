@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "pytconf"
-version = "0.1.24"
+version = "0.1.25"
 requires-python = ">=3.14"
 authors = [
 	{ name = "Mark Veltzer", email = "mark.veltzer@gmail.com" }
