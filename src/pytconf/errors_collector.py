@@ -11,7 +11,7 @@ class ErrorsCollector:
     This collector support two types of error. Regular errors and special errors
     Regular errors are the ones to be printed and carry the error_type = false.
     """
-    def __init__(self):
+    def __init__(self) -> None:
         self._errors: list[str] = []
         self.do_help: bool = False
         self.show_errors: bool = True

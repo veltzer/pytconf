@@ -89,7 +89,7 @@ class FunctionGroupData:
 
 
 class PytconfConf:
-    def __init__(self):
+    def __init__(self) -> None:
         self.main_function: Callable | None = None
         self.main_description: str = "No application description"
 
