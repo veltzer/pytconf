@@ -5,7 +5,7 @@
 
 description: Configuration, command line and injection framework for python
 
-project website: https://veltzer.github.io/pytconf
+project website: <https://veltzer.github.io/pytconf>
 
 author: Mark Veltzer
 
