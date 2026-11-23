@@ -4,6 +4,8 @@ basic tests
 
 import unittest
 
+import pytest
+
 from pytconf import (
     Config,
     ParamCreator,
@@ -23,18 +25,18 @@ class ConfigTotal(Config):
 
 def raise_value_error() -> None:
     """ function that raises an error """
-    raise ValueError
+    raise ValueError("raised on purpose")
 
 
 class TestBasic(unittest.TestCase):
     """ all basic tests """
     def test_config_type(self):
         """ test that configurtion type is the right type """
-        self.assertEqual(type(ConfigTotal.num), int)
+        assert type(ConfigTotal.num) is int
 
     def test_config_value(self):
         """ test the value of the config option """
-        self.assertEqual(ConfigTotal.num, 10)
+        assert ConfigTotal.num == 10
 
     def test_parsing(self):
         """ test command line parser """
@@ -50,7 +52,7 @@ class TestBasic(unittest.TestCase):
             launch=False,
             do_exit=False,
         )
-        self.assertEqual(ConfigTotal.num, 30)
+        assert ConfigTotal.num == 30
         ConfigTotal.num = save
 
     def test_command_running(self):
@@ -62,7 +64,7 @@ class TestBasic(unittest.TestCase):
             allow_free_args=True,
         )
         get_pytconf().register_function(data)
-        with self.assertRaises(ValueError):
+        with pytest.raises(ValueError, match="raised on purpose"):
             config_arg_parse_and_launch(args=["foo"])
 
     def test_free_args(self):
@@ -79,4 +81,4 @@ class TestBasic(unittest.TestCase):
             launch=False,
             do_exit=False,
         )
-        self.assertListEqual(get_free_args(), ["zoo"])
+        assert get_free_args() == ["zoo"]

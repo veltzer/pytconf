@@ -86,7 +86,6 @@ class ParamFunctions(Param):
     Parent class of all parameters of configuration
     """
 
-    # pylint: disable=too-many-positional-arguments
     def __init__(
         self,
         function_s2t: Callable,
@@ -267,17 +266,16 @@ class ParamCreator:
     @staticmethod
     def create_list_int(
         help_string: str = NO_HELP,
-        # This is because of pylint
-        # default: list[int] = NO_DEFAULT,
-        # pylint: disable=dangerous-default-value
-        default: list[int] = [],  # noqa: B006
+        default: list[int] | Unique | None = None,
     ) -> list[int]:
         """
         Create a list[int] parameter
         :param help_string:
-        :param default:
+        :param default: None (the default) means an empty list
         :return:
         """
+        if default is None:
+            default = []
         ParamFunctions(
             help_string=help_string,
             default=default,
@@ -286,24 +284,23 @@ class ParamCreator:
             function_t2s=convert_list_int_to_str,
             function_s2t_generate_from_default=convert_str_to_list_int,
         )
-        if default is NO_DEFAULT:
+        if not isinstance(default, list):
             return []
         return default
 
     @staticmethod
     def create_list_str(
         help_string: str = NO_HELP,
-        # This is because of pylint
-        # default: list[str] = NO_DEFAULT,
-        # pylint: disable=dangerous-default-value
-        default: list[str] = [],  # noqa: B006
+        default: list[str] | Unique | None = None,
     ) -> list[str]:
         """
         Create a list[str] parameter
         :param help_string:
-        :param default:
+        :param default: None (the default) means an empty list
         :return:
         """
+        if default is None:
+            default = []
         ParamFunctions(
             help_string=help_string,
             default=default,
@@ -312,7 +309,7 @@ class ParamCreator:
             function_t2s=convert_list_str_to_str,
             function_s2t_generate_from_default=convert_str_to_list_str,
         )
-        if default is NO_DEFAULT:
+        if not isinstance(default, list):
             return []
         return default
 

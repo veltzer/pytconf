@@ -11,7 +11,6 @@ global_list: list[int] = []
 
 class Meta(type):
     def __new__(cls, name, bases, namespace):
-        # pylint: disable=global-statement
         global global_list
         ret = super().__new__(cls, name, bases, namespace)
         i = 0

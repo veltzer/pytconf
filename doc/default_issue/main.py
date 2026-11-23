@@ -48,6 +48,5 @@ class Foobar(Config):
     columns = create_list_int()
 
 
-# pylint: disable=not-an-iterable
 for x in Foobar.columns:
     print(x)

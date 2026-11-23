@@ -189,12 +189,10 @@ class PytconfConf:
             config = the_registry.get_config_for_name(flag_raw)
             param = the_registry.get_data_for_name(flag_raw)
             edit = value.startswith("=")
-            # noinspection PyBroadException
-            # pylint: disable=broad-except
             try:
                 v = param.s2t_generate_from_default(value[1:]) if edit else param.s2t(value)
                 setattr(config, flag_raw, v)
-            except Exception:  # noqa: BLE001
+            except (ValueError, AssertionError, TypeError, AttributeError, KeyError, IndexError):
                 errors.add_error(f"could not convert [{flag_raw}]")
         if unknown_flags:
             all_unknown_flags = ",".join(unknown_flags)
@@ -537,7 +535,6 @@ def register_main(
     return identity
 
 
-# pylint: disable=too-many-positional-arguments
 def register_function(
     name: str,
     description: str,
@@ -567,7 +564,6 @@ def register_function(
     get_pytconf().register_function(data=data)
 
 
-# pylint: disable=too-many-positional-arguments
 def register_endpoint(
     description: str,
     name: str | None = None,
