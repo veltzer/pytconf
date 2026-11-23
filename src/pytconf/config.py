@@ -70,8 +70,8 @@ class FunctionData:
     name: str
     description: str
     function: Callable
-    configs: list[Config] = field(default_factory=list)
-    suggest_configs: list[Config] = field(default_factory=list)
+    configs: list[type[Config]] = field(default_factory=list)
+    suggest_configs: list[type[Config]] = field(default_factory=list)
     allow_free_args: bool = False
     min_free_args: int | None = None
     max_free_args: int | None = None
@@ -131,7 +131,7 @@ class PytconfConf:
         print(f"Usage: {color_hi(self.app_name)} COMMAND [ARGS]...")
         space = " " * 2
         print_highlight(f"\n{space}{self.main_description}\n")
-        for name, group in self.groups.items():
+        for group in self.groups.values():
             if not group.show:
                 continue
             if group.show_meta:
@@ -170,10 +170,7 @@ class PytconfConf:
         doc = get_first_line(config, "Undocumented parameter set")
         print_title(f"  {doc}")
         for name, param in the_registry.yield_name_data_for_config(config):
-            if param.required:
-                default = color_warn("MANDATORY")
-            else:
-                default = color_ok(param.t2s(param.default))
+            default = color_warn("MANDATORY") if param.required else color_ok(param.t2s(param.default))
             print(f"    {color_hi(name)} [{param.get_type_name()}]: {param.help_string} [{default}]")
             more_help = param.more_help()
             if more_help is not None:
@@ -195,10 +192,7 @@ class PytconfConf:
             # noinspection PyBroadException
             # pylint: disable=broad-except
             try:
-                if edit:
-                    v = param.s2t_generate_from_default(value[1:])
-                else:
-                    v = param.s2t(value)
+                v = param.s2t_generate_from_default(value[1:]) if edit else param.s2t(value)
                 setattr(config, flag_raw, v)
             except Exception:  # noqa: BLE001
                 errors.add_error(f"could not convert [{flag_raw}]")
@@ -235,8 +229,7 @@ class PytconfConf:
                 if config_format == ConfigFormat.YAML:
                     new_flags = yaml.safe_load(json_file)
                 assert isinstance(flags, dict)
-                for k, v in new_flags.items():
-                    flags[k] = v
+                flags.update(new_flags)
 
     @staticmethod
     def get_config(app_name: str, config_type: ConfigType, config_format: ConfigFormat):
@@ -292,10 +285,7 @@ class PytconfConf:
         self.register_function(data)
 
         def do_complete():
-            if "COMP_LINE" in os.environ:
-                comp_line = os.environ["COMP_LINE"]
-            else:
-                comp_line = ""
+            comp_line = os.environ.get("COMP_LINE", "")
             data = comp_line.split()
             if len(data) == 1:
                 for f in self.functions:
@@ -373,10 +363,9 @@ class PytconfConf:
                     errors.add_error(f"too few free args - {select.min_free_args} required")
                 if select.max_free_args is not None and len(self.free_args) >= select.max_free_args:
                     errors.add_error(f"too many free args - {select.max_free_args} required")
-            else:
-                if len(self.free_args) > 0:
-                    all_free_args = ",".join(self.free_args)
-                    errors.add_error(f"free args are not allowed [{all_free_args}]")
+            elif len(self.free_args) > 0:
+                all_free_args = ",".join(self.free_args)
+                errors.add_error(f"free args are not allowed [{all_free_args}]")
             self.process_flags(select, flags, errors)
         else:
             errors.add_error("no command is selected")
@@ -434,7 +423,7 @@ class PytconfConf:
         html_gen.line("h1", self.main_description)
         html_gen.line("h2", "API specifications")
         with html_gen.tag("ul"):
-            for name, group in self.groups.items():
+            for group in self.groups.values():
                 html_gen.line("li", group.name, title="function group name: ")
                 html_gen.line("li", group.description, title="function group description: ")
                 with html_gen.tag("li"):
@@ -462,14 +451,8 @@ class PytconfConf:
         with html_gen.tag("table"):
             for name, param in the_registry.yield_name_data_for_config(config):
                 with html_gen.tag("tr"):
-                    if param.required:
-                        default = "MANDATORY"
-                    else:
-                        default = param.t2s(param.default)
-                    if param.more_help() is None:
-                        more_help = "No more help is documented"
-                    else:
-                        more_help = param.more_help()
+                    default = "MANDATORY" if param.required else param.t2s(param.default)
+                    more_help = "No more help is documented" if param.more_help() is None else param.more_help()
                     html_gen.line("td", name)
                     html_gen.line("td", param.help_string)
                     html_gen.line("td", param.get_type_name())
@@ -559,8 +542,8 @@ def register_function(
     name: str,
     description: str,
     function: Callable,
-    configs: list[Config] | None = None,
-    suggest_configs: list[Config] | None = None,
+    configs: list[type[Config]] | None = None,
+    suggest_configs: list[type[Config]] | None = None,
     allow_free_args: bool = False,
     min_free_args: int | None = None,
     max_free_args: int | None = None,
@@ -588,8 +571,8 @@ def register_function(
 def register_endpoint(
     description: str,
     name: str | None = None,
-    configs: list[Config] | None = None,
-    suggest_configs: list[Config] | None = None,
+    configs: list[type[Config]] | None = None,
+    suggest_configs: list[type[Config]] | None = None,
     group: str = DEFAULT_FUNCTION_GROUP_NAME,
     allow_free_args: bool = False,
     min_free_args: int | None = None,
@@ -601,10 +584,7 @@ def register_endpoint(
         suggest_configs = []
 
     def identity(function):
-        if name is None:
-            function_name = function.__name__
-        else:
-            function_name = name
+        function_name = function.__name__ if name is None else name
         data = FunctionData(
             name=function_name,
             configs=configs,

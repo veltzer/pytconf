@@ -1,14 +1,27 @@
 """ initialization of the condif module """
 
-from pytconf.param import ParamCreator  # noqa F401
-from pytconf.config import (  # noqa F401
+from pytconf.config import (
     Config,
-    register_main,
     config_arg_parse_and_launch,
+    get_free_args,
     register_endpoint,
     register_function,
-    get_free_args,
-    write_config_file,
-    write_config,
+    register_main,
     rm_config_file,
+    write_config,
+    write_config_file,
 )
+from pytconf.param import ParamCreator
+
+__all__ = [
+    "Config",
+    "ParamCreator",
+    "config_arg_parse_and_launch",
+    "get_free_args",
+    "register_endpoint",
+    "register_function",
+    "register_main",
+    "rm_config_file",
+    "write_config",
+    "write_config_file",
+]

@@ -19,17 +19,18 @@ class ExtendedEnum(Enum):
         raise ValueError(f"cannot find value [{s}]")
 
 
-def enum_type_to_list_str(e: Enum) -> list[str]:
-    a = [x.name for x in e]  # type: ignore
-    return a
+def enum_type_to_list_str(e: type[Enum]) -> list[str]:
+    return [x.name for x in e]
 
 
 def enum_value_to_str(ev: Enum) -> str:
     return ev.name
 
 
-def str_to_enum_value(s, e: Enum) -> Enum:
-    for x in type(e):
+def str_to_enum_value(s, e: Enum | type[Enum]) -> Enum:
+    # accepts the enum class (as pytconf passes it) or a member of it
+    enum_class = e if isinstance(e, type) else type(e)
+    for x in enum_class:
         if s == x.name:
             return x
     raise ValueError(f"cannot find value [{s}]")

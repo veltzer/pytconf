@@ -7,6 +7,7 @@ A subset of enum values
 from __future__ import annotations
 
 from collections import OrderedDict
+from collections.abc import Iterable
 from enum import Enum
 from typing import Any
 
@@ -15,7 +16,7 @@ from pytconf.extended_enum import ExtendedEnum, str_to_enum_value
 
 class EnumSubset:
 
-    def __init__(self, enum_type: Enum, list_of_values: list[Enum]) -> None:
+    def __init__(self, enum_type: type[Enum], list_of_values: Iterable[Enum]) -> None:
         self.enum_type = enum_type
         # TODO: this should actually be an ordered set
         self.selected: dict[Any, None] = OrderedDict()
@@ -44,28 +45,25 @@ class EnumSubset:
         return item in {x.value for x in self.selected}
 
     def list_of_strings(self) -> list[str]:
-        my_list: list[str] = []
-        for x in self.selected:
-            my_list.append(x.name)
-        return my_list
+        return [x.name for x in self.selected]
 
     def to_string(self) -> str:
         return ",".join(self.list_of_strings())
 
     @classmethod
-    def from_enum_all(cls, e: ExtendedEnum) -> EnumSubset:
+    def from_enum_all(cls, e: type[ExtendedEnum]) -> EnumSubset:
         return g_from_enum_all(e)
 
     @classmethod
-    def from_string(cls, e: Enum, s: str) -> EnumSubset:
+    def from_string(cls, e: type[Enum], s: str) -> EnumSubset:
         return g_from_string(e, s)
 
 
-def g_from_enum_all(e: ExtendedEnum) -> EnumSubset:
+def g_from_enum_all(e: type[ExtendedEnum]) -> EnumSubset:
     return EnumSubset(enum_type=e, list_of_values=e.get_list_of_all_values(),)
 
 
-def g_from_string(e: Enum, s: str) -> EnumSubset:
+def g_from_string(e: type[Enum], s: str) -> EnumSubset:
     r = EnumSubset(enum_type=e, list_of_values=[])
     for name in s.split(","):
         v = str_to_enum_value(s=name, e=e)

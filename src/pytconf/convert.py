@@ -28,8 +28,7 @@ def convert_str_to_int_default(i: int, s: str) -> int:
         return i * int(s[1:])
     if s.startswith("/"):
         return i // int(s[1:])
-    assert False, "you should not get here"
-    return 0
+    raise AssertionError("you should not get here")
 
 
 def convert_int_to_str(i: int) -> str:

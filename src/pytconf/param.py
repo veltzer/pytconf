@@ -4,6 +4,7 @@ Pytconf param types
 
 
 import abc
+import typing
 from collections.abc import Callable
 from enum import Enum
 from typing import Any
@@ -69,7 +70,7 @@ class Param(abc.ABC):
 
     def s2t_generate_from_default(self, s: str) -> object:
         """ generate object from default string """
-        raise ValueError("we do not support generation from default")
+        raise ValueError(f"we do not support generation from default [{s}]")
 
     @abc.abstractmethod
     def t2s(self, t: object) -> str:
@@ -150,7 +151,7 @@ class ParamFilename(Param):
 class ParamEnum(Param):
     def __init__(
         self,
-        enum_type: Enum,
+        enum_type: type[Enum],
         help_string=NO_HELP,
         default: Any = NO_DEFAULT,
     ):
@@ -180,7 +181,7 @@ class ParamEnumSubset(Param):
         self,
         help_string=NO_HELP,
         default: Any = NO_DEFAULT,
-        enum_type: Enum | None = None,
+        enum_type: type[Enum] | None = None,
     ):
         super().__init__(
             help_string=help_string,
@@ -191,21 +192,24 @@ class ParamEnumSubset(Param):
         super().collect()
 
     def get_type_name(self):
-        # pylint: disable=protected-access
-        return f"EnumSubset[{self.enum_type._name_}]"  # type: ignore
+        name = self.enum_type.__name__ if self.enum_type is not None else "None"
+        return f"EnumSubset[{name}]"
 
     def s2t(self, s: str) -> EnumSubset:
         assert self.enum_type is not None, "ParamEnumSubset requires enum_type"
         return EnumSubset.from_string(e=self.enum_type, s=s)
 
     def t2s(self, t: Any) -> str:
-        return t.to_string()  # type: ignore
+        return str(t.to_string())
 
+    @typing.override
     def s2t_generate_from_default(self, s: str) -> EnumSubset | None:
         return None
 
     def more_help(self):
-        return f"allowed values {enum_type_to_list_str(self.enum_type)}"  # type: ignore
+        if self.enum_type is None:
+            return None
+        return f"allowed values {enum_type_to_list_str(self.enum_type)}"
 
 
 class ParamChoice(Param):
@@ -230,8 +234,8 @@ class ParamChoice(Param):
         return str(t)
 
     def more_help(self):
-        all_choice_list = ",".join(self.choice_list)
-        return f"allowed values {all_choice_list}"  # type: ignore
+        all_choice_list = ",".join(self.choice_list or [])
+        return f"allowed values {all_choice_list}"
 
 
 class ParamCreator:
@@ -258,7 +262,7 @@ class ParamCreator:
             function_t2s=convert_int_to_str,
             function_s2t_generate_from_default=convert_str_to_int_default,
         )
-        return default  # type: ignore
+        return typing.cast(int, default)
 
     @staticmethod
     def create_list_int(
@@ -315,7 +319,7 @@ class ParamCreator:
     @staticmethod
     def create_int_or_none(
         help_string: str = NO_HELP,
-        default: int | None | Unique = NO_DEFAULT,
+        default: int | Unique | None = NO_DEFAULT,
     ) -> int | None:
         """
         Create an int parameter
@@ -331,7 +335,7 @@ class ParamCreator:
             function_t2s=convert_int_or_none_to_str,
             function_s2t_generate_from_default=convert_str_to_int_or_none,
         )
-        return default  # type: ignore
+        return typing.cast(int | None, default)
 
     @staticmethod
     def create_str(
@@ -352,12 +356,12 @@ class ParamCreator:
             function_s2t_generate_from_default=convert_str_to_str,
             function_t2s=convert_str_to_str,
         )
-        return default  # type: ignore
+        return typing.cast(str, default)
 
     @staticmethod
     def create_str_or_none(
         help_string: str = NO_HELP,
-        default: str | None | Unique = NO_DEFAULT,
+        default: str | Unique | None = NO_DEFAULT,
     ) -> str | None:
         """
         Create a string parameter
@@ -373,7 +377,7 @@ class ParamCreator:
             function_s2t_generate_from_default=convert_str_to_str_or_none,
             function_t2s=convert_str_or_none_to_str,
         )
-        return default  # type: ignore
+        return typing.cast(str | None, default)
 
     @staticmethod
     def create_bool(
@@ -417,7 +421,7 @@ class ParamCreator:
             type_name="new_file",
             suffixes=suffixes,
         )
-        return default  # type: ignore
+        return typing.cast(str, default)
 
     @staticmethod
     def create_existing_file(
@@ -438,7 +442,7 @@ class ParamCreator:
             type_name="existing_file",
             suffixes=suffixes,
         )
-        return default  # type: ignore
+        return typing.cast(str, default)
 
     @staticmethod
     def create_existing_folder(
@@ -459,7 +463,7 @@ class ParamCreator:
             type_name="existing_folder",
             suffixes=suffixes,
         )
-        return default  # type: ignore
+        return typing.cast(str, default)
 
     @staticmethod
     def create_choice(
@@ -479,11 +483,11 @@ class ParamCreator:
             default=default,
             choice_list=choice_list,
         )
-        return default  # type: ignore
+        return typing.cast(str, default)
 
     @staticmethod
     def create_enum(
-        enum_type: Enum,
+        enum_type: type[Enum],
         help_string: str = NO_HELP,
         default: Enum | Unique = NO_DEFAULT,
     ) -> Enum:
@@ -499,11 +503,11 @@ class ParamCreator:
             default=default,
             enum_type=enum_type,
         )
-        return default  # type: ignore
+        return typing.cast(Enum, default)
 
     @staticmethod
     def create_enum_subset(
-        enum_type: Enum,
+        enum_type: type[Enum],
         help_string: str = NO_HELP,
         default: EnumSubset | Unique = NO_DEFAULT,
     ) -> EnumSubset:
@@ -519,7 +523,7 @@ class ParamCreator:
             default=default,
             enum_type=enum_type,
         )
-        return default  # type: ignore
+        return typing.cast(EnumSubset, default)
 
     @staticmethod
     def create_existing_bucket(
@@ -540,4 +544,4 @@ class ParamCreator:
             function_s2t_generate_from_default=convert_str_to_str,
             function_t2s=convert_str_to_str,
         )
-        return default  # type: ignore
+        return typing.cast(str, default)

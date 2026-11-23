@@ -23,7 +23,7 @@ class ConfigTotal(Config):
 
 def raise_value_error() -> None:
     """ function that raises an error """
-    raise ValueError()
+    raise ValueError
 
 
 class TestBasic(unittest.TestCase):
