@@ -5,8 +5,6 @@ Pytconf param types
 
 import abc
 import typing
-from collections.abc import Callable
-from enum import Enum
 from typing import Any
 
 from pytconf.convert import (
@@ -28,6 +26,10 @@ from pytconf.convert import (
 from pytconf.enum_subset import EnumSubset
 from pytconf.extended_enum import enum_type_to_list_str, str_to_enum_value
 from pytconf.param_collector import the_collector
+
+if typing.TYPE_CHECKING:
+    from collections.abc import Callable
+    from enum import Enum
 
 NO_HELP = "No help for this configuration option"
 
@@ -261,7 +263,7 @@ class ParamCreator:
             function_t2s=convert_int_to_str,
             function_s2t_generate_from_default=convert_str_to_int_default,
         )
-        return typing.cast(int, default)
+        return typing.cast("int", default)
 
     @staticmethod
     def create_list_int(
@@ -332,7 +334,7 @@ class ParamCreator:
             function_t2s=convert_int_or_none_to_str,
             function_s2t_generate_from_default=convert_str_to_int_or_none,
         )
-        return typing.cast(int | None, default)
+        return typing.cast("int | None", default)
 
     @staticmethod
     def create_str(
@@ -353,7 +355,7 @@ class ParamCreator:
             function_s2t_generate_from_default=convert_str_to_str,
             function_t2s=convert_str_to_str,
         )
-        return typing.cast(str, default)
+        return typing.cast("str", default)
 
     @staticmethod
     def create_str_or_none(
@@ -374,7 +376,7 @@ class ParamCreator:
             function_s2t_generate_from_default=convert_str_to_str_or_none,
             function_t2s=convert_str_or_none_to_str,
         )
-        return typing.cast(str | None, default)
+        return typing.cast("str | None", default)
 
     @staticmethod
     def create_bool(
@@ -418,7 +420,7 @@ class ParamCreator:
             type_name="new_file",
             suffixes=suffixes,
         )
-        return typing.cast(str, default)
+        return typing.cast("str", default)
 
     @staticmethod
     def create_existing_file(
@@ -439,7 +441,7 @@ class ParamCreator:
             type_name="existing_file",
             suffixes=suffixes,
         )
-        return typing.cast(str, default)
+        return typing.cast("str", default)
 
     @staticmethod
     def create_existing_folder(
@@ -460,7 +462,7 @@ class ParamCreator:
             type_name="existing_folder",
             suffixes=suffixes,
         )
-        return typing.cast(str, default)
+        return typing.cast("str", default)
 
     @staticmethod
     def create_choice(
@@ -480,7 +482,7 @@ class ParamCreator:
             default=default,
             choice_list=choice_list,
         )
-        return typing.cast(str, default)
+        return typing.cast("str", default)
 
     @staticmethod
     def create_enum(
@@ -500,7 +502,7 @@ class ParamCreator:
             default=default,
             enum_type=enum_type,
         )
-        return typing.cast(Enum, default)
+        return typing.cast("Enum", default)
 
     @staticmethod
     def create_enum_subset(
@@ -520,7 +522,7 @@ class ParamCreator:
             default=default,
             enum_type=enum_type,
         )
-        return typing.cast(EnumSubset, default)
+        return typing.cast("EnumSubset", default)
 
     @staticmethod
     def create_existing_bucket(
@@ -541,4 +543,4 @@ class ParamCreator:
             function_s2t_generate_from_default=convert_str_to_str,
             function_t2s=convert_str_to_str,
         )
-        return typing.cast(str, default)
+        return typing.cast("str", default)

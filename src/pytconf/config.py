@@ -5,10 +5,9 @@ main configuration object for pytconf
 import json
 import os
 import sys
-from collections.abc import Callable
 from dataclasses import dataclass, field
 from enum import Enum
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
 import yaml
 
@@ -25,6 +24,9 @@ from pytconf.param_collector import the_collector
 from pytconf.pydoc import get_first_line
 from pytconf.registry import the_registry
 from pytconf.utils import HtmlGen, noun
+
+if TYPE_CHECKING:
+    from collections.abc import Callable
 
 DEFAULT_FUNCTION_GROUP_NAME = "default"
 DEFAULT_FUNCTION_GROUP_DESCRIPTION = "default command group"

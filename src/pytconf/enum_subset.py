@@ -7,18 +7,20 @@ A subset of enum values
 from __future__ import annotations
 
 from collections import OrderedDict
-from collections.abc import Iterable
-from enum import Enum
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
 from pytconf.extended_enum import ExtendedEnum, str_to_enum_value
+
+if TYPE_CHECKING:
+    from collections.abc import Iterable
+    from enum import Enum
 
 
 class EnumSubset:
 
     def __init__(self, enum_type: type[Enum], list_of_values: Iterable[Enum]) -> None:
         self.enum_type = enum_type
-        # TODO: this should actually be an ordered set
+        # a list for now; an ordered set is what this should be (doc/TOFIX.md)
         self.selected: dict[Any, None] = OrderedDict()
         for value in list_of_values:
             self.add(value)

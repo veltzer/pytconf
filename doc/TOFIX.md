@@ -24,3 +24,4 @@ Findings from a code scan on 2026-10-04.
 - `src/pytconf/data.py:5` - duplicate `LOGGER_NAME` already generated in `static.py`; remove `data.py`.
 - `doc/default_issue/Makefile:3` - runs `pylint`, which is not in the dev group or the fleet toolchain; delete the Makefile (the `doc/default_issue/` experiment is superseded by `src/pytconf`).
 - `src/pytconf/__init__.py:3` - `# noqa F401` without the colon is a blanket `noqa` to ruff; replace with `__all__`. Docstring on line 1 says "condif".
+- `src/pytconf/enum_subset.py` - the values of an `EnumSubset` should be kept in an ordered set. (was a TODO comment in the code)

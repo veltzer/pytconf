@@ -3,7 +3,10 @@ A collection of errors module
 """
 
 
-from collections.abc import Generator
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from collections.abc import Generator
 
 
 class ErrorsCollector:
