@@ -83,10 +83,6 @@ search-path = [
     "src",
     ".",
 ]
-# Third-party libraries without type information.
-ignore-missing-imports = [
-    "pytconf.*",
-]
 
 [tool.pyrefly.errors]
 no-any-return = "error"
