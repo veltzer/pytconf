@@ -90,8 +90,8 @@ class ParamFunctions(Param):
 
     def __init__(
         self,
-        function_s2t: Callable,
-        function_s2t_generate_from_default: Callable,
+        function_s2t: Callable[..., Any],
+        function_s2t_generate_from_default: Callable[..., Any],
         function_t2s: Callable[[Any], str],
         help_string=NO_HELP,
         default=None,

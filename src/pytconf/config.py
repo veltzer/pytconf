@@ -71,7 +71,7 @@ class Config(metaclass=MetaConfig):
 class FunctionData:
     name: str
     description: str
-    function: Callable
+    function: Callable[..., Any]
     configs: list[type[Config]] = field(default_factory=list)
     suggest_configs: list[type[Config]] = field(default_factory=list)
     allow_free_args: bool = False
@@ -92,7 +92,7 @@ class FunctionGroupData:
 
 class PytconfConf:
     def __init__(self) -> None:
-        self.main_function: Callable | None = None
+        self.main_function: Callable[..., Any] | None = None
         self.main_description: str = "No application description"
 
         self.functions: dict[str, FunctionData] = {}
@@ -106,7 +106,7 @@ class PytconfConf:
 
     def register_main(
         self,
-        main_function: Callable,
+        main_function: Callable[..., Any],
         main_description: str,
         app_name: str,
         version: str,
@@ -543,7 +543,7 @@ def register_main(
 def register_function(
     name: str,
     description: str,
-    function: Callable,
+    function: Callable[..., Any],
     configs: list[type[Config]] | None = None,
     suggest_configs: list[type[Config]] | None = None,
     *,
