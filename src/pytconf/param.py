@@ -381,6 +381,7 @@ class ParamCreator:
     @staticmethod
     def create_bool(
         help_string: str = NO_HELP,
+        *,
         default: bool | Unique = NO_DEFAULT,
     ) -> bool:
         """

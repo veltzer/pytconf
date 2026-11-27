@@ -149,6 +149,7 @@ class PytconfConf:
     def show_help_for_function(
         self,
         name: str,
+        *,
         show_help_full: bool = False,
         show_help_suggest: bool = False,
     ) -> None:
@@ -334,6 +335,7 @@ class PytconfConf:
     def config_arg_parse_and_launch(
         self,
         args: list[str] | None = None,
+        *,
         launch=True,
         do_exit=True,
     ) -> None:
@@ -384,9 +386,9 @@ class PytconfConf:
                 sys.exit(1)
             return
 
-        self.launch(launch, select, errors)
+        self.launch(launch=launch, select=select, errors=errors)
 
-    def launch(self, launch: bool, select: FunctionData | None, errors):
+    def launch(self, *, launch: bool, select: FunctionData | None, errors):
         if launch:
             if select is None:
                 errors.add_error("no function to launch")
@@ -491,6 +493,7 @@ def get_pytconf() -> PytconfConf:
 
 def config_arg_parse_and_launch(
     args=None,
+    *,
     launch=True,
     do_exit=True,
 ) -> None:
@@ -508,6 +511,7 @@ def get_free_args() -> list[str]:
 def register_function_group(
     name: str,
     description: str,
+    *,
     show_meta: bool,
     show: bool,
 ) -> None:
@@ -543,6 +547,7 @@ def register_function(
     function: Callable,
     configs: list[type[Config]] | None = None,
     suggest_configs: list[type[Config]] | None = None,
+    *,
     allow_free_args: bool = False,
     min_free_args: int | None = None,
     max_free_args: int | None = None,
@@ -572,6 +577,7 @@ def register_endpoint(
     configs: list[type[Config]] | None = None,
     suggest_configs: list[type[Config]] | None = None,
     group: str = DEFAULT_FUNCTION_GROUP_NAME,
+    *,
     allow_free_args: bool = False,
     min_free_args: int | None = None,
     max_free_args: int | None = None,

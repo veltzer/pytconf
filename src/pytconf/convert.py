@@ -39,7 +39,7 @@ def convert_str_to_bool(s: str) -> bool:
     return s in {"TRUE", "true", "True", "yes", "Yes", "1", "y", "Y", "t", "T"}
 
 
-def convert_bool_to_str(b: bool) -> str:
+def convert_bool_to_str(b: bool) -> str:  # noqa: FBT001  a t2s converter: ParamFunctions calls every one of them with the value alone
     return str(b)
 
 
