@@ -5,7 +5,7 @@ Pytconf param types
 
 import abc
 import typing
-from typing import Any
+from typing import Any, override
 
 from pytconf.convert import (
     convert_bool_to_str,
@@ -110,6 +110,7 @@ class ParamFunctions(Param):
     def s2t(self, s: str) -> Any:
         return self.function_s2t(s)
 
+    @override
     def s2t_generate_from_default(self, s: str) -> Any:
         return self.function_s2t_generate_from_default(self.default, s)
 
@@ -143,6 +144,7 @@ class ParamFilename(Param):
     def t2s(self, t):
         return t
 
+    @override
     def more_help(self):
         if self.suffixes is None:
             return "no limitation on suffixes"
@@ -164,6 +166,7 @@ class ParamEnum(Param):
         self.enum_type = enum_type
         super().collect()
 
+    @override
     def get_type_name(self):
         return f"Enum[{self.enum_type.__name__}]"
 
@@ -173,6 +176,7 @@ class ParamEnum(Param):
     def t2s(self, t: Any) -> str:
         return str(t.name)
 
+    @override
     def more_help(self):
         return f"allowed values {enum_type_to_list_str(self.enum_type)}"
 
@@ -192,6 +196,7 @@ class ParamEnumSubset(Param):
         self.enum_type = enum_type
         super().collect()
 
+    @override
     def get_type_name(self):
         name = self.enum_type.__name__ if self.enum_type is not None else "None"
         return f"EnumSubset[{name}]"
@@ -207,6 +212,7 @@ class ParamEnumSubset(Param):
     def s2t_generate_from_default(self, s: str) -> EnumSubset | None:
         return None
 
+    @override
     def more_help(self):
         if self.enum_type is None:
             return None
@@ -234,6 +240,7 @@ class ParamChoice(Param):
     def t2s(self, t: Any) -> str:
         return str(t)
 
+    @override
     def more_help(self):
         all_choice_list = ",".join(self.choice_list or [])
         return f"allowed values {all_choice_list}"
