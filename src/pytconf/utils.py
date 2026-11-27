@@ -20,7 +20,7 @@ def noun(name: str, num: int) -> str:
 
 class HtmlGen:
     """ html generator """
-    def __init__(self):
+    def __init__(self) -> None:
         document, tag, text, line = Doc().ttl()
         self.document = document
         self.tag = tag

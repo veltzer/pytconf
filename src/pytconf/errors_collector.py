@@ -31,7 +31,7 @@ class ErrorsCollector:
     def set_do_help(self) -> None:
         self.do_help = True
 
-    def get_show_errors(self):
+    def get_show_errors(self) -> bool:
         return self.show_errors or self.force_show_errors
 
     def get_do_help(self) -> bool:

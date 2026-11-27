@@ -48,21 +48,21 @@ class Param(abc.ABC):
 
     def __init__(
         self,
-        help_string=NO_HELP,
+        help_string: str = NO_HELP,
         default: Any = NO_DEFAULT,
         type_name: str | None = None,
-    ):
+    ) -> None:
         super().__init__()
         self.help_string = help_string
         self.required = default is NO_DEFAULT
         self.default = default
         self.type_name = type_name
 
-    def get_type_name(self):
+    def get_type_name(self) -> str | None:
         """ get the type name of the current object """
         return self.type_name
 
-    def collect(self):
+    def collect(self) -> None:
         """ collect the current object """
         the_collector.add_data(self)
 
@@ -93,10 +93,10 @@ class ParamFunctions(Param):
         function_s2t: Callable[..., Any],
         function_s2t_generate_from_default: Callable[..., Any],
         function_t2s: Callable[[Any], str],
-        help_string=NO_HELP,
-        default=None,
-        type_name=None,
-    ):
+        help_string: str = NO_HELP,
+        default: Any = None,
+        type_name: str | None = None,
+    ) -> None:
         super().__init__(
             help_string=help_string,
             default=default,
@@ -123,9 +123,9 @@ class ParamFilename(Param):
         self,
         help_string: str = NO_HELP,
         default: Unique | str = NO_DEFAULT,
-        type_name=None,
+        type_name: str | None = None,
         suffixes: list[str] | None = None,
-    ):
+    ) -> None:
         super().__init__(
             help_string=help_string,
             default=default,
@@ -134,18 +134,18 @@ class ParamFilename(Param):
         self.suffixes = suffixes
         super().collect()
 
-    def s2t(self, s):
+    def s2t(self, s: str):
         if self.suffixes is not None:
             assert any(
                 s.endswith(x) for x in self.suffixes
             ), "filename suffix is not accepted"
         return s
 
-    def t2s(self, t):
-        return t
+    def t2s(self, t: Any) -> str:
+        return str(t)
 
     @override
-    def more_help(self):
+    def more_help(self) -> str:
         if self.suffixes is None:
             return "no limitation on suffixes"
         return f"allowed suffixes are {self.suffixes}"
@@ -155,9 +155,9 @@ class ParamEnum(Param):
     def __init__(
         self,
         enum_type: type[Enum],
-        help_string=NO_HELP,
+        help_string: str = NO_HELP,
         default: Any = NO_DEFAULT,
-    ):
+    ) -> None:
         super().__init__(
             help_string=help_string,
             default=default,
@@ -167,7 +167,7 @@ class ParamEnum(Param):
         super().collect()
 
     @override
-    def get_type_name(self):
+    def get_type_name(self) -> str:
         return f"Enum[{self.enum_type.__name__}]"
 
     def s2t(self, s: str) -> Any:
@@ -177,17 +177,17 @@ class ParamEnum(Param):
         return str(t.name)
 
     @override
-    def more_help(self):
+    def more_help(self) -> str:
         return f"allowed values {enum_type_to_list_str(self.enum_type)}"
 
 
 class ParamEnumSubset(Param):
     def __init__(
         self,
-        help_string=NO_HELP,
+        help_string: str = NO_HELP,
         default: Any = NO_DEFAULT,
         enum_type: type[Enum] | None = None,
-    ):
+    ) -> None:
         super().__init__(
             help_string=help_string,
             default=default,
@@ -197,7 +197,7 @@ class ParamEnumSubset(Param):
         super().collect()
 
     @override
-    def get_type_name(self):
+    def get_type_name(self) -> str:
         name = self.enum_type.__name__ if self.enum_type is not None else "None"
         return f"EnumSubset[{name}]"
 
@@ -213,7 +213,7 @@ class ParamEnumSubset(Param):
         return None
 
     @override
-    def more_help(self):
+    def more_help(self) -> str | None:
         if self.enum_type is None:
             return None
         return f"allowed values {enum_type_to_list_str(self.enum_type)}"
@@ -222,10 +222,10 @@ class ParamEnumSubset(Param):
 class ParamChoice(Param):
     def __init__(
         self,
-        help_string=NO_HELP,
+        help_string: str = NO_HELP,
         default: str | Unique = NO_DEFAULT,
         choice_list: list[str] | None = None
-    ):
+    ) -> None:
         super().__init__(
             help_string=help_string,
             default=default,
@@ -241,7 +241,7 @@ class ParamChoice(Param):
         return str(t)
 
     @override
-    def more_help(self):
+    def more_help(self) -> str:
         all_choice_list = ",".join(self.choice_list or [])
         return f"allowed values {all_choice_list}"
 

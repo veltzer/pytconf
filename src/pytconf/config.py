@@ -52,7 +52,7 @@ class ConfigFormat(Enum):
 
 
 class MetaConfig(type):
-    def __new__(cls, name, bases, namespace):
+    def __new__(cls, name: str, bases: tuple[type, ...], namespace: dict[str, Any]) -> MetaConfig:
         ret = super().__new__(cls, name, bases, namespace)
         i = 0
         for k, v in namespace.items():
@@ -110,7 +110,7 @@ class PytconfConf:
         main_description: str,
         app_name: str,
         version: str,
-    ):
+    ) -> None:
         self.main_function = main_function
         self.main_description = main_description
         self.app_name = app_name
@@ -119,7 +119,7 @@ class PytconfConf:
     def has_function(self, function_name: str) -> bool:
         return function_name in self.functions
 
-    def register_function(self, data: FunctionData):
+    def register_function(self, data: FunctionData) -> None:
         self.functions[data.name] = data
         self.groups[data.group].names.add(data.name)
 
@@ -166,7 +166,7 @@ class PytconfConf:
                 self.show_help_for_config(config)
 
     @classmethod
-    def show_help_for_config(cls, config):
+    def show_help_for_config(cls, config: type[Config]) -> None:
         if config == Config:
             return
         doc = get_first_line(config, "Undocumented parameter set")
@@ -232,7 +232,7 @@ class PytconfConf:
                 flags.update(new_flags)
 
     @staticmethod
-    def get_config(app_name: str, config_type: ConfigType, config_format: ConfigFormat):
+    def get_config(app_name: str, config_type: ConfigType, config_format: ConfigFormat) -> str:
         suffix = None
         if config_format == ConfigFormat.JSON:
             suffix = "json"
@@ -245,10 +245,10 @@ class PytconfConf:
     def register_function_group(
         self,
         data: FunctionGroupData,
-    ):
+    ) -> None:
         self.groups[data.name] = data
 
-    def register_defaults(self):
+    def register_defaults(self) -> None:
         data = FunctionGroupData(
             name=DEFAULT_FUNCTION_GROUP_NAME,
             description=DEFAULT_FUNCTION_GROUP_DESCRIPTION,
@@ -264,7 +264,7 @@ class PytconfConf:
         )
         self.register_function_group(data)
 
-        def do_help():
+        def do_help() -> None:
             if self.free_args:
                 for arg in self.free_args:
                     if self.has_function(arg):
@@ -284,7 +284,7 @@ class PytconfConf:
         )
         self.register_function(data)
 
-        def do_complete():
+        def do_complete() -> None:
             comp_line = os.environ.get("COMP_LINE", "")
             data = comp_line.split()
             if len(data) == 1:
@@ -320,7 +320,7 @@ class PytconfConf:
         )
         self.register_function(data)
 
-    def get_function_selected(self, args: list[str], errors) -> FunctionData | None:
+    def get_function_selected(self, args: list[str], errors: ErrorsCollector) -> FunctionData | None:
         function_selected = None
         if len(args) > 0:
             command = args.pop(0)
@@ -335,8 +335,8 @@ class PytconfConf:
         self,
         args: list[str] | None = None,
         *,
-        launch=True,
-        do_exit=True,
+        launch: bool = True,
+        do_exit: bool = True,
     ) -> None:
 
         if args is None:
@@ -387,7 +387,7 @@ class PytconfConf:
 
         self.launch(launch=launch, select=select, errors=errors)
 
-    def launch(self, *, launch: bool, select: FunctionData | None, errors):
+    def launch(self, *, launch: bool, select: FunctionData | None, errors: ErrorsCollector) -> None:
         if launch:
             if select is None:
                 errors.add_error("no function to launch")
@@ -395,7 +395,7 @@ class PytconfConf:
             else:
                 select.function()
 
-    def parse_args(self, args, errors, flags):
+    def parse_args(self, args: list[str], errors: ErrorsCollector, flags: dict[str, str]) -> None:
         free_args_started = False
         while args:
             current = args.pop(0)
@@ -432,7 +432,7 @@ class PytconfConf:
                         self.get_html_for_function(name, html_gen)
         return html_gen.getvalue()
 
-    def get_html_for_function(self, name: str, html_gen):
+    def get_html_for_function(self, name: str, html_gen: HtmlGen) -> None:
         data = self.functions[name]
         with html_gen.tag("ul"):
             function_doc = get_first_line(data.function, "no description for this function")
@@ -444,7 +444,7 @@ class PytconfConf:
                         self.get_html_for_config(config, html_gen)
 
     @classmethod
-    def get_html_for_config(cls, config, html_gen):
+    def get_html_for_config(cls, config: type[Config], html_gen: Any) -> None:
         if config == Config:
             return
         doc = get_first_line(config, "undocumented config")
@@ -491,10 +491,10 @@ def get_pytconf() -> PytconfConf:
 
 
 def config_arg_parse_and_launch(
-    args=None,
+    args: list[str] | None = None,
     *,
-    launch=True,
-    do_exit=True,
+    launch: bool = True,
+    do_exit: bool = True,
 ) -> None:
     get_pytconf().config_arg_parse_and_launch(
         args=args,
@@ -528,7 +528,7 @@ def register_main(
     app_name: str,
     version: str,
 ) -> Callable[[Any], Any]:
-    def identity(main_function):
+    def identity(main_function: Callable[..., Any]):
         get_pytconf().register_main(
             main_function=main_function,
             main_description=main_description,
@@ -551,7 +551,7 @@ def register_function(
     min_free_args: int | None = None,
     max_free_args: int | None = None,
     group: str = DEFAULT_FUNCTION_GROUP_NAME,
-):
+) -> None:
     if configs is None:
         configs = []
     if suggest_configs is None:
@@ -586,7 +586,7 @@ def register_endpoint(
     if suggest_configs is None:
         suggest_configs = []
 
-    def identity(function):
+    def identity(function: Callable[..., Any]):
         function_name = function.__name__ if name is None else name
         data = FunctionData(
             name=function_name,

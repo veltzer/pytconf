@@ -2,16 +2,18 @@
 registry of config names
 """
 
+from typing import Any
+
 
 class Registry:
-    def __init__(self):
+    def __init__(self) -> None:
         self.names = set()
         self.configs = set()
         self.name_to_data = {}
         self.name_to_config = {}
         self.config_names = {}
 
-    def register(self, config, name, data):
+    def register(self, config: type, name: str, data: Any) -> None:
         if name in self.names:
             raise ValueError(
                 f"pytconf: name [{name}] appears more than once"
@@ -27,19 +29,19 @@ class Registry:
     def yield_configs(self):
         yield from self.configs
 
-    def yield_names_for_config(self, config):
+    def yield_names_for_config(self, config: type):
         yield from self.config_names[config].keys()
 
-    def yield_name_data_for_config(self, config):
+    def yield_name_data_for_config(self, config: type):
         yield from self.config_names[config].items()
 
-    def get_data_for_name(self, name):
+    def get_data_for_name(self, name: str):
         return self.name_to_data[name]
 
-    def get_config_for_name(self, name):
+    def get_config_for_name(self, name: str):
         return self.name_to_config[name]
 
-    def has_name(self, name):
+    def has_name(self, name: str) -> bool:
         return name in self.names
 
 

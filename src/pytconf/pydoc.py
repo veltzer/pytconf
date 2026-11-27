@@ -3,7 +3,7 @@ Documentation functions
 """
 
 
-def get_first_line(o, default_val: str) -> str | None:
+def get_first_line(o: object, default_val: str) -> str | None:
     """
     Get first line for a pydoc string
     :param o: object which is documented (class or function)

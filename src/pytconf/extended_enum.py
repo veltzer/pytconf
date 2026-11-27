@@ -4,11 +4,15 @@ Pythons Enum plus several methods
 
 
 from enum import Enum
+from typing import TYPE_CHECKING, Self
+
+if TYPE_CHECKING:
+    from collections.abc import ValuesView
 
 
 class ExtendedEnum(Enum):
     @classmethod
-    def get_list_of_all_values(cls):
+    def get_list_of_all_values(cls) -> ValuesView[Self]:
         return cls.__members__.values()
 
     @classmethod
@@ -27,7 +31,7 @@ def enum_value_to_str(ev: Enum) -> str:
     return ev.name
 
 
-def str_to_enum_value(s, e: Enum | type[Enum]) -> Enum:
+def str_to_enum_value(s: str, e: Enum | type[Enum]) -> Enum:
     # accepts the enum class (as pytconf passes it) or a member of it
     enum_class = e if isinstance(e, type) else type(e)
     for x in enum_class:

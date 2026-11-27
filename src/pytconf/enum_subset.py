@@ -25,13 +25,13 @@ class EnumSubset:
         for value in list_of_values:
             self.add(value)
 
-    def add(self, enum_value):
+    def add(self, enum_value: Enum) -> None:
         assert (
             enum_value in enum_value.__class__.__members__.values()
         ), f"bad value {enum_value}"
         self.selected[enum_value] = None
 
-    def delete(self, enum_value):
+    def delete(self, enum_value: Enum) -> None:
         del self.selected[enum_value]
 
     def yield_values(self):
@@ -40,10 +40,10 @@ class EnumSubset:
     def values(self):
         return self.selected.keys()
 
-    def __contains__(self, item):
+    def __contains__(self, item: object) -> bool:
         return item in self.selected
 
-    def has_value(self, item):
+    def has_value(self, item: object) -> bool:
         return item in {x.value for x in self.selected}
 
     def list_of_strings(self) -> list[str]:
