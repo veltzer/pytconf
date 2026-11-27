@@ -9,7 +9,7 @@ project website: <https://veltzer.github.io/pytconf>
 
 author: Mark Veltzer
 
-version: 0.1.27
+version: 0.1.28
 
 ## github
 

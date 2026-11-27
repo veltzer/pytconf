@@ -1,5 +1,5 @@
 """ version which can be consumed from within the module """
-VERSION_STR = "0.1.27"
+VERSION_STR = "0.1.28"
 DESCRIPTION = "Configuration, command line and injection framework for python"
 APP_NAME = "pytconf"
 LOGGER_NAME = "pytconf"
