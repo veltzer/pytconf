@@ -101,7 +101,6 @@ class PytconfConf:
         self.free_args: list[str] = []
         self.app_name: str = "No application name"
         self.version: str = "No version"
-        self.default_function = None
 
         self.register_defaults()
 
